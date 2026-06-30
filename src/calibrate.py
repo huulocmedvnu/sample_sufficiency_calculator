@@ -17,9 +17,13 @@ Run:
     DATA=/path/to/sig_excl3_corrected.npz python src/calibrate.py
 """
 import os
+import json
 import numpy as np
 from calculator import (calculate_experimental_cell_quota, rms_angular_error,
-                        calculate_optimal_resource_allocation)
+                        calculate_optimal_resource_allocation,
+                        calculate_cell_quota_anisotropic)
+
+FIXTURE = os.path.join(os.path.dirname(__file__), "..", "fixtures", "tahoe_calibration.json")
 
 # sigma^2 = mean per-cell variance per PCA dim, calibrated once from the plate-6 checkpoint subsample
 # (60k cells projected through the excl3 PCA, pca_excl3.npz): mean over 50 dims = 7.66 (range 0.03-31.7).
@@ -91,6 +95,41 @@ def main():
           "signatures (n* > N0 -> 0% savings, cells are NOT redundant); only very strong perturbers are\n"
           "over-sampled and safely downsamplable. Downsampling here applies to centroid/pseudobulk\n"
           "analysis only, and the speedup is polynomial (linear-to-quadratic), never exponential.")
+    anisotropic_demo()
+
+
+def anisotropic_demo():
+    """ANISOTROPIC quota (docs/THEORY.md) on the real PCA-space covariance, vs the isotropic form."""
+    if not os.path.exists(FIXTURE):
+        print("\n[aniso] fixture missing; skipping anisotropic demo"); return
+    fx = json.load(open(FIXTURE))
+    ell = np.array(fx["per_component_variance"]); d = fx["num_dimensions"]
+    theta = 0.1
+    print(f"\n=== ANISOTROPIC quota (docs/THEORY.md) vs isotropic, real Sigma (trace={ell.sum():.0f}, "
+          f"range {ell.min():.2f}..{ell.max():.2f}) ===")
+    # consistency: Sigma = sigma^2 I must reproduce the isotropic formula
+    v0 = np.zeros(d); v0[0] = 2.97
+    chk = calculate_cell_quota_anisotropic(ell.mean() * np.ones(d), v0, theta)
+    print(f"[consistency] Sigma=sigma^2 I: anisotropic n*={chk['required_cells_per_arm']:.0f} "
+          f"== isotropic n*={calculate_experimental_cell_quota(ell.mean(),d,2.97,theta):.0f}  "
+          f"(ratio {chk['isotropic_ratio']:.3f})")
+    print(f"\n{'drug':18s} {'m':>6s} {'n*_iso':>9s} {'n*_aniso':>10s} {'aniso/iso':>10s} {'d_eff':>6s}")
+    for name, vec in fx["example_perturbation_vectors"].items():
+        v = np.array(vec); m = float(np.linalg.norm(v))
+        r = calculate_cell_quota_anisotropic(ell, v, theta)
+        n_iso = calculate_experimental_cell_quota(ell.mean(), d, m, theta)
+        print(f"{name[:18]:18s} {m:>6.2f} {n_iso:>9,.0f} {r['required_cells_per_arm']:>10,.0f} "
+              f"{r['isotropic_ratio']:>10.3f} {r['effective_dimensions']:>6.1f}")
+    # tail / confidence quota
+    v = np.array(fx["example_perturbation_vectors"]["Resveratrol"])
+    rc = calculate_cell_quota_anisotropic(ell, v, theta, confidence=0.05)
+    print(f"\n[tail] Resveratrol: mean n*={rc['required_cells_per_arm']:,.0f}; "
+          f"95%-confident (P(theta>0.1)<=0.05) n*={rc['required_cells_per_arm_confident']:,.0f} "
+          f"(x{rc['required_cells_per_arm_confident']/rc['required_cells_per_arm']:.2f}, d_eff={rc['effective_dimensions']:.1f})")
+    print("Honest finding: on THIS atlas the anisotropic MEAN-quota correction is small (~2-3%) because\n"
+          "drug directions carry little variance along themselves (not aligned with the top noise PCs);\n"
+          "the anisotropic value-add is d_eff<<d-1 and the rigorous tail quota. The correction would be\n"
+          "LARGE on data where perturbations align with dominant (cell-cycle/lineage) axes.")
 
 
 if __name__ == "__main__":

@@ -110,6 +110,32 @@ which is the verification check `calibrate.py` prints.
 
 ---
 
+## Anisotropic form (peer-review standard) — `docs/THEORY.md`
+
+The isotropic `σ²I` above is a placeholder; single-cell noise is strongly anisotropic. The rigorous
+result (full derivation, distribution, finite-sample tail bound, and validity regime in
+[`docs/THEORY.md`](docs/THEORY.md)) replaces `(d−1)σ²` with the **signal-orthogonal noise trace**:
+
+```
+            2 · tr(P Σ P)            2 · Σ_k (1 − u_k²) ℓ_k
+n*_aniso = ────────────────  =  ──────────────────────────   (P = I − uuᵀ, u = v/‖v‖)
+              m² · θ²                     m² · θ²                ℓ_k = per-PC variance
+```
+
+Variance **along** the signal is subtracted out (`u_k²ℓ_k`); only perpendicular noise rotates the
+direction. This **contains the isotropic formula** as the case `Σ = σ²I` (verified in `calibrate.py`).
+`calculate_cell_quota_anisotropic(covariance, perturbation_vector, tolerance, ...)` also returns the
+**effective noise dimension** `d_eff = tr(PΣP)²/tr((PΣP)²)` and, with `confidence=δ`, a Hanson–Wright
+**tail-controlled quota** guaranteeing `P(θ>θ*) ≤ δ` (not just the mean).
+
+**Honest empirical finding (Tahoe-100M):** on this atlas the anisotropic *mean-quota* correction is
+**small (~2–3%; ratio 0.98)** — drug directions carry only ~2–5% of total variance along themselves, so
+they are not aligned with the dominant cell-cycle/lineage PCs, and with d=50 no single axis can move the
+trace much. The anisotropic machinery's real value here is (i) `d_eff ≈ 28 ≪ 49` and (ii) the rigorous
+**tail quota** (95%-confident Resveratrol = 78k vs mean 41k cells/arm, a 1.9× safety factor). On data
+where perturbations *do* align with high-variance axes the correction is large — the ratio formula in
+§8 of `THEORY.md` says exactly when.
+
 ## The dual-sided framework: one threshold, two ledgers
 
 `calculate_optimal_resource_allocation(single_cell_variance, num_dimensions, perturbation_magnitude,
@@ -194,10 +220,15 @@ n = calculate_experimental_cell_quota(single_cell_variance=7.66, num_dimensions=
 ```
 sample_sufficiency_calculator/
 ├── src/
-│   ├── calculator.py   # calculate_experimental_cell_quota(...)  -> n* (wet-lab quota)
-│   │                   # calculate_optimal_resource_allocation(...) -> {n*, dry-lab reduction, ...}
+│   ├── calculator.py   # calculate_experimental_cell_quota(...)        -> n* (isotropic)
+│   │                   # calculate_cell_quota_anisotropic(...)         -> n* (anisotropic + tail)
+│   │                   # calculate_optimal_resource_allocation(...)    -> {n*, dry-lab reduction, ...}
 │   │                   # rms_angular_error(...)
-│   └── calibrate.py    # empirical calibration / verifiable demo on the cached array
+│   └── calibrate.py    # verifiable demo: isotropic, dual-sided, and anisotropic (self-contained)
+├── docs/
+│   └── THEORY.md       # rigorous anisotropic proof (Delta method, generalized-chi2, tail bound)
+├── fixtures/
+│   └── tahoe_calibration.json   # per-PC variances + example drug vectors (self-contained demo)
 ├── README.md
 └── .gitignore
 ```

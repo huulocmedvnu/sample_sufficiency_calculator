@@ -87,6 +87,76 @@ def rms_angular_error(single_cell_variance: float, num_dimensions: int,
                      / (n_cells_per_arm * perturbation_magnitude ** 2))
 
 
+def calculate_cell_quota_anisotropic(covariance, perturbation_vector, tolerance=0.01,
+                                     large_control_pool=False, confidence=None, hw_constant=2.0):
+    """ANISOTROPIC cell quota (peer-review form) — no isotropic simplification. See docs/THEORY.md.
+
+    Implements  n* = 2 * tr(P Sigma P) / (m^2 * tolerance^2),  P = I - u u^T,  u = v/||v||,
+    where only the noise PERPENDICULAR to the signal rotates the direction. Variance ALONG the signal
+    is subtracted out. Reduces to the isotropic 2*(d-1)*sigma^2/(m^2 t^2) when Sigma = sigma^2 I.
+
+    Parameters
+    ----------
+    covariance : array
+        Per-cell residual covariance Sigma in the SAME basis as `perturbation_vector`. Either a 1-D
+        array of per-dimension variances (e.g. PCA explained-variances ell_k; Sigma=diag) or a full
+        d x d matrix. Use WITHIN-condition (mean-centred per group) variance, not total.
+    perturbation_vector : array
+        v = mu_treated - mu_control (length d). m=||v||, u=v/m.
+    tolerance : float
+        Target RMS angular error (radians).
+    large_control_pool : bool
+        True -> shared/huge DMSO pool (control arm noiseless, factor 1). False -> equal arms (factor 2).
+    confidence : float or None
+        If set to delta in (0,1), also return a tail-controlled quota guaranteeing P(theta>tol)<=delta
+        via a Hanson-Wright bound (generalized chi-square). `hw_constant` is the absolute constant.
+
+    Returns
+    -------
+    dict: required_cells_per_arm (mean), [required_cells_per_arm_confident], perp_noise_trace,
+          effective_dimensions, magnitude, isotropic_ratio (n*_aniso / n*_iso).
+    """
+    import math
+    import numpy as np
+    v = np.asarray(perturbation_vector, dtype=float)
+    d = v.size
+    m = float(np.linalg.norm(v))
+    if m <= 0:
+        raise ValueError("perturbation_vector must be nonzero")
+    if tolerance <= 0:
+        raise ValueError("tolerance must be > 0")
+    u = v / m
+    cov = np.asarray(covariance, dtype=float)
+    Sigma = np.diag(cov) if cov.ndim == 1 else cov
+    if Sigma.shape != (d, d):
+        raise ValueError("covariance must be length-d (diagonal) or d x d")
+    P = np.eye(d) - np.outer(u, u)
+    M = P @ Sigma @ P                       # P Sigma P
+    tr = float(np.trace(M))                 # = sum_k (1 - u_k^2) ell_k  for diagonal Sigma
+    arm = 1.0 if large_control_pool else 2.0
+    n_mean = arm * tr / (m ** 2 * tolerance ** 2)
+    tr_sq = float(np.trace(M @ M))
+    out = {
+        "required_cells_per_arm": n_mean,
+        "perp_noise_trace": tr,
+        "effective_dimensions": (tr ** 2 / tr_sq) if tr_sq > 0 else 0.0,
+        "magnitude": m,
+        # ratio vs the isotropic estimate that uses the *mean* variance sigma^2 = tr(Sigma)/d
+        "isotropic_ratio": tr / ((d - 1) * (np.trace(Sigma) / d)),
+    }
+    if confidence is not None:
+        if not (0.0 < confidence < 1.0):
+            raise ValueError("confidence (delta) must be in (0,1)")
+        fro = math.sqrt(tr_sq)
+        op = float(np.linalg.eigvalsh(M)[-1])
+        L = math.log(1.0 / confidence)
+        n_conf = arm * (tr + math.sqrt(hw_constant * L) * fro + hw_constant * L * op) \
+            / (m ** 2 * tolerance ** 2)
+        out["required_cells_per_arm_confident"] = n_conf
+        out["confidence"] = confidence
+    return out
+
+
 # complexity exponents for the dry-lab cost model (cost ~ N**p, or N*log N for 'nlogn')
 _COMPLEXITY = {"linear": 1.0, "ram": 1.0, "storage": 1.0, "pca": 1.0,
                "quadratic": 2.0, "pairwise": 2.0, "kernel": 2.0, "distance": 2.0}
