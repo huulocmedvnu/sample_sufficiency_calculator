@@ -87,6 +87,85 @@ def rms_angular_error(single_cell_variance: float, num_dimensions: int,
                      / (n_cells_per_arm * perturbation_magnitude ** 2))
 
 
+# complexity exponents for the dry-lab cost model (cost ~ N**p, or N*log N for 'nlogn')
+_COMPLEXITY = {"linear": 1.0, "ram": 1.0, "storage": 1.0, "pca": 1.0,
+               "quadratic": 2.0, "pairwise": 2.0, "kernel": 2.0, "distance": 2.0}
+
+
+def calculate_optimal_resource_allocation(single_cell_variance: float,
+                                          num_dimensions: int,
+                                          perturbation_magnitude: float,
+                                          tolerance: float = 0.01,
+                                          baseline_cells_per_well: float = 1394.0,
+                                          complexity: str = "linear") -> dict:
+    """Dual-sided sample-sufficiency: one info-saturation threshold n*, read two ways.
+
+    WET-LAB (budget gating): n* = cells you must sequence per arm to resolve this drug's perturbation
+    DIRECTION to `tolerance` radians (RMS). If n* < cells you currently run, you are over-sequencing
+    and can multiplex more conditions per lane instead.
+
+    DRY-LAB (safe downsampling): IF a well already has `baseline_cells_per_well` >= n*, you may
+    downsample that well to n* cells before CENTROID/PSEUDOBULK analysis and still preserve its
+    perturbation direction (hence the drug-drug similarity graph) to `tolerance`. The compute you
+    save scales with the algorithm's complexity in N:
+        linear (RAM, storage, streaming, PCA-fit):  saved = 1 - (n*/N0)
+        quadratic (cell-cell pairwise / kernels):    saved = 1 - (n*/N0)**2
+    If n* >= N0 the well is UNDER-sampled (no redundancy) -> ratio 0; do NOT downsample.
+
+    SCOPE / honesty: n* governs centroid/direction-based (pseudobulk) analyses only. It does NOT
+    license downsampling for CELL-RESOLUTION tasks (per-cell UMAP local structure, rare-population
+    or cell-type detection) — those are governed by local density, not by this angular threshold, and
+    can be distorted by downsampling. Runtime gains are POLYNOMIAL (linear-to-quadratic), never
+    exponential.
+
+    Parameters
+    ----------
+    single_cell_variance, num_dimensions, perturbation_magnitude, tolerance
+        As in `calculate_experimental_cell_quota`.
+    baseline_cells_per_well : float, default 1394
+        Cells currently acquired per well (the over/under-sampling reference). Default = the Tahoe-100M
+        excl3 atlas median (RESEARCH_LOG §27); override with your platform's number.
+    complexity : str, default 'linear'
+        Cost model for the dry-lab op: 'linear'/'ram'/'pca' (p=1), 'quadratic'/'pairwise' (p=2),
+        or 'nlogn' (N log N).
+
+    Returns
+    -------
+    dict with at least `required_cells_per_well` and `dry_lab_compute_reduction_ratio`, plus
+    `regime`, `wet_lab_multiplex_gain`, `baseline_cells_per_well`, `complexity`.
+    """
+    import math
+    n_star = calculate_experimental_cell_quota(single_cell_variance, num_dimensions,
+                                               perturbation_magnitude, tolerance)
+    N0 = float(baseline_cells_per_well)
+    over_sampled = n_star < N0
+
+    if not over_sampled:
+        ratio = 0.0
+        regime = "UNDER-sampled (n* >= N0): cells are not redundant — acquire MORE, do not downsample"
+        multiplex = 1.0
+    else:
+        key = complexity.lower()
+        if key == "nlogn":
+            ratio = 1.0 - (n_star * math.log(max(n_star, 2))) / (N0 * math.log(max(N0, 2)))
+        else:
+            p = _COMPLEXITY.get(key)
+            if p is None:
+                raise ValueError(f"unknown complexity '{complexity}'; use {sorted(_COMPLEXITY)} or 'nlogn'")
+            ratio = 1.0 - (n_star / N0) ** p
+        regime = "over-sampled: downsampling to n* is safe for centroid/pseudobulk analysis"
+        multiplex = N0 / n_star          # extra conditions per fixed per-lane read budget
+
+    return {
+        "required_cells_per_well": n_star,
+        "dry_lab_compute_reduction_ratio": max(0.0, ratio),
+        "regime": regime,
+        "wet_lab_multiplex_gain": multiplex,
+        "baseline_cells_per_well": N0,
+        "complexity": complexity,
+    }
+
+
 if __name__ == "__main__":
     # quick self-check with the calibrated Tahoe-100M constant (see calibrate.py / README)
     for m, lab in [(2.97, "Resveratrol (strong)"), (1.33, "weak signature")]:

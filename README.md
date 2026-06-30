@@ -1,14 +1,19 @@
-# Sample-Sufficiency Calculator for Single-Cell Perturbation-Direction Screens
+# Dual-Sided Sample-Sufficiency Calculator for Single-Cell Perturbation Screens
 
-A small, dependency-light power calculator that answers one practical question for single-cell drug
-screens that compare **perturbation *directions*** (cosine / correlation of treated-vs-control
-centroids in a PCA embedding):
+A small, dependency-light calculator built on **one information-saturation threshold `n*`** (the cells
+needed to resolve a drug's perturbation *direction* to an angular tolerance), read across **two
+ledgers**:
 
-> **How many cells per arm do I need to pin down a drug's transcriptional direction to within a
-> given angular tolerance?**
+> **Wet-lab:** how many cells per arm must I sequence to pin a drug's direction to within tolerance —
+> and if I'm over that, how much can I multiplex instead?
+>
+> **Dry-lab:** when is it provably safe to downsample over-acquired wells before heavy matrix
+> operations, and how much RAM/CPU does that actually save?
 
-It returns a **cell quota `n*`** so experimentalists can size (and cost) a screen instead of
-over-sequencing. Strong perturbations need quadratically fewer cells than weak ones.
+Strong perturbations need quadratically fewer cells than weak ones (`n* ∝ 1/m²`), so `n*` is the lever
+for both sequencing budget and compute budget. The dry-lab guarantee is scoped to **centroid /
+pseudobulk** analyses (the drug-similarity graph) and the speedups are **polynomial, not exponential**
+— see the honest scope notes below.
 
 ---
 
@@ -105,6 +110,58 @@ which is the verification check `calibrate.py` prints.
 
 ---
 
+## The dual-sided framework: one threshold, two ledgers
+
+`calculate_optimal_resource_allocation(single_cell_variance, num_dimensions, perturbation_magnitude,
+tolerance=0.01, baseline_cells_per_well=1394, complexity="linear")` reads the **same** saturation
+threshold `n*` two ways, and returns `required_cells_per_well` and `dry_lab_compute_reduction_ratio`.
+
+### Wet-lab ledger — budget gating & multiplexing
+`n*` is the cells/arm needed to resolve a drug's direction to `tolerance`. If your current depth `N0`
+exceeds `n*`, the surplus `N0 − n*` reads are wasted on a saturated estimate. The freed budget can
+instead **multiplex more conditions per lane**: `wet_lab_multiplex_gain = N0 / n*` extra wells fit in
+the same per-lane read budget. (If `n* > N0` you are *under*-sampled — sequence deeper, don't multiplex.)
+
+### Dry-lab ledger — provably-safe downsampling, with honest scope
+**Claim (provable).** For **centroid / pseudobulk** analyses — the drug–drug similarity graph, drug-
+level PCA/clustering — downsampling a well from `N0` to `n*` cells keeps each perturbation centroid
+within angular tolerance `tolerance` *by construction* (that is exactly what `n*` solves). So the
+similarity matrix entries, and the drug-level embedding built from them, are preserved to that
+tolerance. This is a direct corollary of the Delta-method bound above, not a separate assumption.
+
+**Cost saved is POLYNOMIAL, not exponential.** Reducing per-well cells from `N0` to `n*` reduces:
+
+```
+RAM / storage / streaming / PCA-fit   (cost ~ N)     :  saved = 1 - (n*/N0)
+cell-cell pairwise / kernels / k-NN   (cost ~ N^2)   :  saved = 1 - (n*/N0)^2
+neighbour graphs / UMAP               (cost ~ N logN):  saved = 1 - (n* log n*)/(N0 log N0)
+```
+
+No standard single-cell operation is exponential in N, so no amount of downsampling yields an
+exponential speedup — the gains are linear-to-quadratic. `dry_lab_compute_reduction_ratio` reports the
+`max(0, …)` of the chosen `complexity` model (0 when the well is under-sampled — nothing to cut).
+
+**Scope limit (do not over-claim).** `n*` governs **direction/centroid** information only. It does
+**not** certify preservation of **cell-resolution** structure — per-cell UMAP local neighbourhoods,
+rare-population or cell-type detection, trajectory branch points — which are set by *local density*,
+not by this angular threshold, and **can be distorted** by downsampling. Use `n*` to thin
+**over-sampled wells before pseudobulk/graph analysis**, not to subsample an atlas before cell-level
+embedding. Global PCA eigenvalue spectra converge with sampling error (random-matrix theory), so they
+are preserved *approximately*, not exactly.
+
+### Calibration reality check (Tahoe-100M, θ=0.1 rad, N0=1394 cells/well)
+
+| signature | m | n*/well | regime | dry save (lin / quad) | wet multiplex |
+|---|---:|---:|:--:|:--:|:--:|
+| Resveratrol (validated mTORi) | 2.97 | 8,518 | **UNDER** | 0% / 0% | — |
+| weak (25th pct) | 1.33 | 42,571 | **UNDER** | 0% / 0% | — |
+| strong cytotoxic (max) | 14.35 | 365 | OVER | **74% / 93%** | **3.8×** |
+
+**Honest finding:** at a tight tolerance this atlas is *under-sampled* for moderate/weak signatures
+(those cells are **not** redundant), and only **very strong** perturbers are over-sampled enough to
+downsample. The "massive redundant matrix" intuition holds only for high-magnitude drugs or loose
+tolerances — the calculator tells you exactly which regime you are in (`regime` field).
+
 ## How a wet-lab uses it to cut sequencing cost
 
 1. **Estimate `sigma^2` once** for your platform/pipeline: run a pilot (any condition), embed the
@@ -137,7 +194,9 @@ n = calculate_experimental_cell_quota(single_cell_variance=7.66, num_dimensions=
 ```
 sample_sufficiency_calculator/
 ├── src/
-│   ├── calculator.py   # calculate_experimental_cell_quota(...) + rms_angular_error(...)
+│   ├── calculator.py   # calculate_experimental_cell_quota(...)  -> n* (wet-lab quota)
+│   │                   # calculate_optimal_resource_allocation(...) -> {n*, dry-lab reduction, ...}
+│   │                   # rms_angular_error(...)
 │   └── calibrate.py    # empirical calibration / verifiable demo on the cached array
 ├── README.md
 └── .gitignore
