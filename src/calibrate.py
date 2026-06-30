@@ -2,9 +2,9 @@
 calibrate.py — empirical calibration / verifiable demonstration of the cell-quota calculator.
 
 Pulls real perturbation magnitudes from the cached Tahoe-100M drug-similarity array
-(`sig_excl3_corrected.npz`, the batch-clean 292-drug matrix, RESEARCH_LOG §27/§30) and combines them
-with the per-cell PCA variance (sigma^2) calibrated from the plate-6 checkpoint subsample, to print
-the concrete cell quota n* for a STRONG signature (Resveratrol, a validated mTOR-inhibitor hit, §30)
+(a batch-clean 292-perturbagen reference array) and combines them
+with the per-cell PCA variance (sigma^2) calibrated from a reference-atlas cell subsample, to print
+the concrete cell quota n* for a STRONG signature (Resveratrol, a moderate-magnitude exemplar)
 versus a WEAK signature.
 
 Honest note: these are computed from the data, not assumed. With the real per-cell PCA variance
@@ -14,7 +14,7 @@ is not reproducible from this data and is not used here.)
 
 Run:
     python src/calibrate.py
-    DATA=/path/to/sig_excl3_corrected.npz python src/calibrate.py
+    DATA=/path/to/reference_perturbations.npz python src/calibrate.py
 """
 import os
 import json
@@ -25,19 +25,17 @@ from calculator import (calculate_experimental_cell_quota, rms_angular_error,
 
 FIXTURE = os.path.join(os.path.dirname(__file__), "..", "fixtures", "tahoe_calibration.json")
 
-# sigma^2 = mean per-cell variance per PCA dim, calibrated once from the plate-6 checkpoint subsample
-# (60k cells projected through the excl3 PCA, pca_excl3.npz): mean over 50 dims = 7.66 (range 0.03-31.7).
+# sigma^2 = mean per-cell variance per PCA dim, calibrated once from a reference-atlas cell subsample
+# (cells projected through the shared PCA): mean over 50 dims = 7.66 (per-dim range 0.03-31.7).
 SIGMA2 = 7.66
 NUM_DIMS = 50
-# baseline cells per (drug,line) well in the excl3 atlas (15,200 groups, 28.7M cells): MEDIAN = 1394.
+# baseline cells per (drug,line) well in the reference atlas: MEDIAN = 1394.
 BASELINE_CELLS_PER_WELL = 1394
 
-# Default path to the cached array. We use the RAW perturbation array (sig_excl3.npz), NOT the
-# consensus-corrected one: sigma^2 (=7.66) was measured in the RAW PCA space, so the magnitude m must
-# come from the same RAW space for a consistent power calculation. (The consensus correction is a
-# batch-removal step for the similarity matrix; it compresses magnitudes into a different scale.)
-DEFAULT_DATA = os.environ.get(
-    "DATA", "/mnt/hdd2/loc-tran/obgyn/outputs/drugsim_cache/sig_excl3.npz")
+# Optional path to a cached perturbation array (the RAW perturbation vectors, in the SAME PCA space
+# sigma^2 was measured in). Override with $DATA; if absent, the documented FALLBACK magnitudes are used,
+# so the demo runs self-contained. (Array produced by the companion calibration pipeline.)
+DEFAULT_DATA = os.environ.get("DATA", "data/reference_perturbations.npz")
 
 # fallback magnitudes (raw perturbation ||v|| in PCA space) if the array is unavailable
 FALLBACK = {"Resveratrol": 2.969, "weak(p25)": 1.328}

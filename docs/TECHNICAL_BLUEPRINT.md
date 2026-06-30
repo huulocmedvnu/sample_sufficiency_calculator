@@ -2,7 +2,7 @@
 ### Anisotropic Sample-Sufficiency for Single-Cell Perturbation-Direction Screens
 **Status:** frozen source-of-truth for manuscript drafting (target: *Nature Methods* / *Bioinformatics*).
 **Provenance:** repository `sample_sufficiency_calculator` (proof `docs/THEORY.md`, code `src/calculator.py`,
-tests `tests/`), external calibrator `obgyn/scripts/calibrate_emeraldbay.py`. All numbers below are
+tests `tests/`), external calibrator the companion calibration pipeline. All numbers below are
 machine-generated; do not paraphrase the figures.
 
 ---
@@ -15,11 +15,11 @@ have been corrected throughout this document. **Use the corrected values.**
 1. **Regime-gating tolerance is θ★ = 0.20 rad, not 0.1 rad.** The gating experiment
    (`calibrate_emeraldbay.py`) was run at θ★ = 0.20 rad; compliance was defined as realized RMS angle at
    n★ ≤ 1.15·θ★. The "0.1 rad" in the brief is incorrect.
-2. **The two high-magnitude validation groups are `DMSO_T0 × HS-578T` and `DMSO_T0 × AN3-CA`, not "drug
+2. **The two high-magnitude validation groups are `DMSO_T0 × Representative Line 1` and `DMSO_T0 × Representative Line 2`, not "drug
    effects".** These are the time-zero (DMSO_T0) reference population's displacement from the per-line
-   centroid baseline. Only `Encorafenib × HEC-1-A` is an actual drug perturbation. The held-out test
+   centroid baseline. Only `Encorafenib × Representative Line 3` is an actual drug perturbation. The held-out test
    validates the *angular-error geometry*; it is agnostic to biological interpretation. Do **not**
-   describe HS-578T/AN3-CA as "strong drug effects".
+   describe Representative Line 1/Representative Line 2 as "strong drug effects".
 3. **σ² = 2.1 (EmeraldBay) and σ² = 7.66 (Tahoe) are different variance definitions and are NOT a clean
    head-to-head.** EmeraldBay's 2.1 is the *within-condition residual* variance; the Tahoe calculator
    default 7.66 is a *marginal* per-cell variance (includes between-condition/between-line structure).
@@ -142,7 +142,7 @@ input validation, and Laurent–Massart tail coverage — empirical Pr(θ>θ★)
 **Rationale.** The quota is a theorem; an independent atlas cannot re-prove it but can test whether the
 CLT/Gaussian-centroid *assumptions* hold on real, out-of-distribution single cells and whether the
 plug-in calibration transfers. EmeraldBay (1.8×10⁶ cells; **5-day** culture vs Tahoe's 24 h; pooled
-MOSAIC) shares the 5 gyn/breast lines and the token/expression schema.
+MOSAIC) shares the 5 representative cell lines and the token/expression schema.
 
 **Procedure (`calibrate_emeraldbay.py`).** All 116 shards (≈58 GB) were streamed and discarded, retaining
 **142,883 cells** of the 5 shared lines; EmeraldBay's *own* HVG(2000)+PCA(50) embedding was fit. The
@@ -160,9 +160,9 @@ linearity-through-origin (slope should equal tr(PΣP)/m²).
 
 | Validation group (actual identity) | N | m | mean rel. err | fitted slope | expected slope tr(PΣP)/m² | intercept | R² |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| DMSO_T0 × HS-578T (high magnitude) | 1067 | 12.41 | 1.4% | 0.7692 | 0.7628 | −4.8×10⁻⁵ | 0.9979 |
-| DMSO_T0 × AN3-CA (moderate-high) | 752 | 6.39 | 0.8% | 1.3791 | 1.3753 | −2.6×10⁻⁴ | 0.9996 |
-| Encorafenib × HEC-1-A (drug; low SNR) | 1117 | 3.02 | 2.4% | 6.6596 | 7.8217 | 6.8×10⁻³ | 0.9954 |
+| DMSO_T0 × Representative Line 1 (high magnitude) | 1067 | 12.41 | 1.4% | 0.7692 | 0.7628 | −4.8×10⁻⁵ | 0.9979 |
+| DMSO_T0 × Representative Line 2 (moderate-high) | 752 | 6.39 | 0.8% | 1.3791 | 1.3753 | −2.6×10⁻⁴ | 0.9996 |
+| Encorafenib × Representative Line 3 (drug; low SNR) | 1117 | 3.02 | 2.4% | 6.6596 | 7.8217 | 6.8×10⁻³ | 0.9954 |
 
 The realized curve matches the closed form to **0.8–2.4% mean relative error**, with
 realized² ∝ (1/n − 1/N) **linear-through-origin (R² > 0.99, intercept ≈ 0)** in all three cases. For the
@@ -225,9 +225,9 @@ pipeline (the within-condition residual variance, not the marginal).
   (`calculate_cell_quota_anisotropic`, `calculate_experimental_cell_quota`,
   `calculate_optimal_resource_allocation`). Verification: `tests/verify_theory.py`,
   `tests/test_calculator.py`, `tests/test_emeraldbay_integration.py`; CI `.github/workflows/ci.yml`.
-- External calibrator: `obgyn/scripts/calibrate_emeraldbay.py` → `fixtures/emeraldbay_calibration.json`.
+- External calibrator: the companion calibration pipeline → `fixtures/emeraldbay_calibration.json`.
 - Constants of record: d = 50; Tahoe marginal σ² = 7.66, N₀ = 1394; EmeraldBay within-condition
-  σ² ≈ 2.12, 142,883 gyn cells, 101 gated wells, θ★ = 0.20 rad; Monte-Carlo K = 50,000, seed = 0,
+  σ² ≈ 2.12, 142,883 cells, 101 gated wells, θ★ = 0.20 rad; Monte-Carlo K = 50,000, seed = 0,
   relative error 0.13%; symbolic residual 2.8×10⁻¹⁷.
 - **Honesty ledger for reviewers:** (i) σ² values use different variance definitions across atlases
   (item 3); (ii) the two high-m validation groups are DMSO_T0 reference populations, not drug effects

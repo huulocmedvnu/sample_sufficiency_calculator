@@ -89,10 +89,10 @@ perturbation_magnitude, tolerance)` in `src/calculator.py`. The `1/m^2` factor i
 ## Calibration on Tahoe-100M (verifiable demonstration)
 
 `src/calibrate.py` reads real perturbation magnitudes from the batch-clean drug-similarity array
-(`sig_excl3_corrected.npz`, 292 drugs; RESEARCH_LOG §27/§30) and the per-cell PCA variance
-`sigma^2 = 7.66` (mean over 50 dims, calibrated from the plate-6 checkpoint subsample of 60k cells
+(a batch-clean 292-perturbagen reference array) and the per-cell PCA variance
+`sigma^2 = 7.66` (mean over 50 dims, calibrated from a reference-atlas subsample of 60k cells
 projected through the PCA). It contrasts a **strong** signature — **Resveratrol** (`m = 2.97`), the
-validated functional mTORC1-inhibitor hit from §30 — against a **weak** signature (`m = 1.33`, 25th
+moderate-magnitude pathway-modulator profile — against a **weak** signature (`m = 1.33`, 25th
 percentile):
 
 | tolerance | Resveratrol (m=2.97) | weak signature (m=1.33) |
@@ -143,7 +143,7 @@ where perturbations *do* align with high-variance axes the correction is large �
 The formula is a theorem (verified symbolically + by Monte Carlo), so a second dataset can't make it
 *more* true — but it **can** test whether the CLT/Gaussian-centroid *assumptions* hold on real,
 independent single cells, and whether the calibration transfers. We did this on **tahoebio/EmeraldBay**
-(a separate 1.8 M-cell, 5-day atlas sharing the 5 gyn/breast lines), re-estimating σ² and m from
+(a separate 1.8 M-cell, 5-day atlas sharing the 5 representative cell lines), re-estimating σ² and m from
 EmeraldBay's *own* cells (within-condition σ² ≈ 2.1, vs Tahoe's marginal 7.66 — re-estimation is
 necessary, confirming σ² is the platform-specific input).
 
@@ -152,9 +152,9 @@ necessary, confirming σ² is the platform-specific input).
 
 | group (N, m) | mean rel. err | fitted slope vs `tr(PΣP)/m²` | R² |
 |---|---|---|---|
-| HS-578T (1067, 12.4) | **1.4%** | 0.769 vs 0.763 | **0.998** |
-| AN3-CA (752, 6.4) | **0.8%** | 1.379 vs 1.375 | **0.9996** |
-| HEC-1-A (1117, 3.0) | 2.4% | 6.66 vs 7.82 | 0.995 |
+| Representative Line 1 (1067, 12.4) | **1.4%** | 0.769 vs 0.763 | **0.998** |
+| Representative Line 2 (752, 6.4) | **0.8%** | 1.379 vs 1.375 | **0.9996** |
+| Representative Line 3 (1117, 3.0) | 2.4% | 6.66 vs 7.82 | 0.995 |
 
 `realized² ∝ (1/n − 1/N)` is linear-through-origin with **R² > 0.99**, and the fitted slope matches the
 anisotropic `tr(PΣP)/m²` to **<1% for strong signatures** (the weaker m≈3 group deviates ~15% at small
@@ -163,7 +163,7 @@ n — the expected breakdown of the first-order law at lower SNR, §5 of `THEORY
 
 This is distilled into `fixtures/emeraldbay_calibration.json` and asserted by
 `tests/test_emeraldbay_integration.py` (runs in CI, no network). The streaming calibrator that produced
-it is `obgyn/scripts/calibrate_emeraldbay.py` (one-time 58 GB job; figure
+it is the companion calibration pipeline (one-time 58 GB job; figure
 `emeraldbay_heldout_validation.png`).
 
 ## The dual-sided framework: one threshold, two ledgers
@@ -209,7 +209,7 @@ are preserved *approximately*, not exactly.
 
 | signature | m | n*/well | regime | dry save (lin / quad) | wet multiplex |
 |---|---:|---:|:--:|:--:|:--:|
-| Resveratrol (validated mTORi) | 2.97 | 8,518 | **UNDER** | 0% / 0% | — |
+| Resveratrol (moderate-signal modulator) | 2.97 | 8,518 | **UNDER** | 0% / 0% | — |
 | weak (25th pct) | 1.33 | 42,571 | **UNDER** | 0% / 0% | — |
 | strong cytotoxic (max) | 14.35 | 365 | OVER | **74% / 93%** | **3.8×** |
 
@@ -234,7 +234,7 @@ tolerances — the calculator tells you exactly which regime you are in (`regime
 
 ```bash
 python src/calibrate.py                 # demo on the cached Tahoe array
-DATA=/path/to/sig_excl3_corrected.npz python src/calibrate.py
+DATA=/path/to/reference_perturbations.npz python src/calibrate.py
 python src/calculator.py                # self-check
 ```
 
@@ -296,41 +296,41 @@ regimes, and input validation.
 
 ## License / status
 
-Research utility derived from the Tahoe-100M OBGYN drug-similarity work (RESEARCH_LOG §26–§31).
+Research utility calibrated and validated on two public reference perturbation atlases.
 Provided as-is; validate `sigma^2` on your own platform before planning a screen.
 
 ## II. Dataset Inventory & Scale Audit
 
-*Scale ledger of the two perturbation atlases used to calibrate and validate the calculator. **GLOBAL** rows are dataset-level (published/metadata); **CAPTURED** rows are computed directly from the cached arrays this project actually streamed — Tahoe = the five 5 µM-dose plates (3/6/9/12/13), EmeraldBay = the five gyn/breast lines. Per-well cell-count distributions are only reported for CAPTURED data, since global per-well counts are not in either dataset's metadata.*
+*Scale ledger of two large-scale, independent, multi-line reference perturbation atlases used purely for empirical validation. **GLOBAL** rows are dataset-level (published/metadata); **CAPTURED** rows are computed from the cached arrays of the companion calibration pipeline. Per-well cell-count distributions are reported for CAPTURED data only, since global per-well counts are not in either atlas's metadata. Cell-line identities are anonymized to Representative Lines 1-5 (five established cancer lines common to both atlases; identities retained in the committed fixtures).*
 
 ### A. Global inventory
 
-| Dataset | Total cells (global) | Unique drugs | Unique cell lines | Wells (line × condition) |
+| Reference atlas | Total cells (global) | Unique perturbagens | Unique cell lines | Wells (line × condition) |
 |---|---:|---:|---:|---:|
-| **Tahoe-100M** | ~100,000,000 | 379 | 50 | ~56,850 (379 drug × 3 dose × 50 line) |
-| **EmeraldBay** | ~1,831,756 | 27 molecules (93 treatment conditions) | 52 | 4,992 |
+| **Atlas A (Tahoe-100M)** | ~100,000,000 | 379 | 50 | ~56,850 |
+| **Atlas B (EmeraldBay)** | ~1,831,756 | 27 molecules (93 conditions) | 52 | 4,992 |
 
 ### B. Per-well cell-count distribution (CAPTURED data only)
 
-| Dataset (captured scope) | Wells | Cells | Min | Median | Mean | Max |
+| Atlas (captured scope) | Wells | Cells | Min | Median | Mean | Max |
 |---|---:|---:|---:|---:|---:|---:|
-| Tahoe-100M — 5 µM plates 3/6/9/12/13 | 20,000 | 33,450,029 | 1 | 1,192 | 1,673 | 23,043 |
-| EmeraldBay — 5 gyn/breast lines | 430 | 141,720 | 11 | 310 | 330 | 1,978 |
+| Atlas A — 5 dose-matched plates | 20,000 | 33,450,029 | 1 | 1,192 | 1,673 | 23,043 |
+| Atlas B — 5 representative lines | 430 | 141,720 | 11 | 310 | 330 | 1,978 |
 
-*Tahoe captured median **1,192** cells/well sits far below the median quota n★≈23,934 needed at θ=0.1 rad — i.e. most wells are under-sampled at tight tolerance (see `docs/SCALE_AUDIT.md`).*
+*Atlas A captured median **1,192** cells/well sits far below the median quota n★≈23,934 required at θ=0.1 rad — i.e. most wells are under-sampled at tight tolerance (see `docs/SCALE_AUDIT.md`).*
 
-### C. Gyn/breast cross-tabulation — vehicle vs active perturbations (CAPTURED)
+### C. Cell-line cross-tabulation — vehicle vs active perturbations (CAPTURED)
 
-| Cell line (CVCL) | Dataset | Vehicle wells | Vehicle cells | Active wells | Active cells | Total cells |
+| Cell line | Atlas | Vehicle wells | Vehicle cells | Active wells | Active cells | Total cells |
 |---|---|---:|---:|---:|---:|---:|
-| HEC-1-A (CVCL_0293) | Tahoe (5 µM plates) | 5 | 15,032 | 395 | 808,138 | 823,170 |
-| AN3-CA (CVCL_0028) | Tahoe (5 µM plates) | 5 | 4,665 | 395 | 205,950 | 210,615 |
-| C-33 A (CVCL_1094) | Tahoe (5 µM plates) | 5 | 11,593 | 395 | 530,215 | 541,808 |
-| BT-474 (CVCL_0179) | Tahoe (5 µM plates) | 5 | 10,018 | 395 | 431,939 | 441,957 |
-| HS-578T (CVCL_0332) | Tahoe (5 µM plates) | 5 | 12,414 | 395 | 592,831 | 605,245 |
-| HEC-1-A | EmeraldBay (gyn) | 2 | 2,296 | 84 | 33,122 | 35,418 |
-| AN3-CA | EmeraldBay (gyn) | 2 | 1,544 | 84 | 15,558 | 17,102 |
-| C-33 A | EmeraldBay (gyn) | 2 | 1,010 | 84 | 15,642 | 16,652 |
-| BT-474 | EmeraldBay (gyn) | 2 | 2,439 | 84 | 36,837 | 39,276 |
-| HS-578T | EmeraldBay (gyn) | 2 | 2,584 | 84 | 30,688 | 33,272 |
+| Representative Line 1 | Atlas A | 5 | 12,414 | 395 | 592,831 | 605,245 |
+| Representative Line 2 | Atlas A | 5 | 4,665 | 395 | 205,950 | 210,615 |
+| Representative Line 3 | Atlas A | 5 | 15,032 | 395 | 808,138 | 823,170 |
+| Representative Line 4 | Atlas A | 5 | 10,018 | 395 | 431,939 | 441,957 |
+| Representative Line 5 | Atlas A | 5 | 11,593 | 395 | 530,215 | 541,808 |
+| Representative Line 1 | Atlas B | 2 | 2,584 | 84 | 30,688 | 33,272 |
+| Representative Line 2 | Atlas B | 2 | 1,544 | 84 | 15,558 | 17,102 |
+| Representative Line 3 | Atlas B | 2 | 2,296 | 84 | 33,122 | 35,418 |
+| Representative Line 4 | Atlas B | 2 | 2,439 | 84 | 36,837 | 39,276 |
+| Representative Line 5 | Atlas B | 2 | 1,010 | 84 | 15,642 | 16,652 |
 

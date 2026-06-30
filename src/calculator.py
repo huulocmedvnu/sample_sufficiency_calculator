@@ -197,7 +197,7 @@ def calculate_optimal_resource_allocation(single_cell_variance: float,
         As in `calculate_experimental_cell_quota`.
     baseline_cells_per_well : float, default 1394
         Cells currently acquired per well (the over/under-sampling reference). Default = the Tahoe-100M
-        excl3 atlas median (RESEARCH_LOG §27); override with your platform's number.
+        a reference-atlas median; override with your platform's number.
     complexity : str, default 'linear'
         Cost model for the dry-lab op: 'linear'/'ram'/'pca' (p=1), 'quadratic'/'pairwise' (p=2),
         or 'nlogn' (N log N).

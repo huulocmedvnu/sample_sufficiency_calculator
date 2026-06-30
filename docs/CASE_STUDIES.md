@@ -4,7 +4,7 @@
 cells/well, equal arms. Governing law **n★ = 2(d−1)σ²/(m²θ★²) = 75,068 / m²**; over/under boundary at
 **m = 7.34**; depth-fixed angular resolution **θ(N₀) = 0.734 / m rad**. Magnitudes m are raw
 perturbation-vector norms (mean per-line ‖v‖) in the plate3-excluded PCA space — the space σ²=7.66 was
-estimated in. All values machine-derived from `outputs/drugsim_cache/sig_excl3.npz` via
+estimated in. All values machine-derived from the reference perturbation array via
 `src/calculator.py::calculate_optimal_resource_allocation`.
 
 | # | Drug (MoA / target) | m | n★ (cells/arm) | Regime | Wet-lab | Dry-lab (lin / quad) | Resolution @ N₀ | Action |
@@ -12,11 +12,11 @@ estimated in. All values machine-derived from `outputs/drugsim_cache/sig_excl3.n
 | 1 | Homoharringtonine (protein-synthesis inhibitor) | 14.35 | 365 | OVER | 3.8× multiplex | 74% / 93% | 2.9° | Downsample ~3.8×; reallocate reads |
 | 2 | Idarubicin (anthracycline; TOP2A) | 10.63 | 664 | OVER | 2.1× multiplex | 52% / 77% | 4.0° | Downsample ~2.1× |
 | 3 | Dinaciclib (pan-CDK; CDK1/2/5/9) | 6.53 | 1,760 | UNDER (1.3×) | — | 0% / 0% | 6.4° | Tips in at θ=6.4° or +26% depth |
-| 4 | Resveratrol (SIRT1 / mTOR-pathway ⃰) | 2.97 | 8,518 | UNDER (6.1×) | — | 0% / 0% | 14.2° | Downsampling forbidden; ~6× deeper required |
+| 4 | Resveratrol (moderate-signal modulator) | 2.97 | 8,518 | UNDER (6.1×) | — | 0% / 0% | 14.2° | Downsampling forbidden; ~6× deeper required |
 | 5 | Ribociclib (CDK4/6 inhibitor) | 0.84 | 107,547 | UNDER (77×) | — | 0% / 0% | 50.3° | Blind: MoA unresolvable at standard depth |
 
-⃰ Metadata `moa-fine` = "unclear"; annotated target SIRT1; functional mTOR-inhibitor activity
-established in RESEARCH_LOG §30 (not a database label).
+*Resveratrol is used purely as a moderate-magnitude exemplar (m ≈ 3); its metadata `moa-fine` is*
+*"unclear" and no mechanistic claim is made.*
 
 **Tolerance that tips an UNDER well into sufficiency at N₀=1,394:** Dinaciclib 6.4°, Resveratrol 14.2°,
 Ribociclib 50.3° (θ_suff = θ★·√(n★/N₀)).
@@ -52,10 +52,10 @@ the over-sampled cases (Homoharringtonine, Idarubicin) are the m > 7.34 minority
 
 ## Provenance / caveats (auditor)
 
-- All m and n★ are machine-pulled from `sig_excl3.npz` through the shipped calculator; no placeholders.
+- All m and n★ are machine-pulled from the reference perturbation array through the shipped calculator; no placeholders.
 - **Paclitaxel is unavailable** in this array (plate3-excluded batch-clean build); the extreme-cytotoxic
   exemplar is **Homoharringtonine**, not Paclitaxel.
 - m are **24 h survivor transcriptional** magnitudes (not viability), specific to this platform/timepoint/
   embedding.
-- Resveratrol's `moa-fine` is "unclear" in the metadata; the mTOR-pathway descriptor is the §30 functional
+- Resveratrol is a moderate-magnitude exemplar only (m ≈ 3); no mechanistic/MoA claim is attached to it.
   finding. Keep the distinction in the manuscript.

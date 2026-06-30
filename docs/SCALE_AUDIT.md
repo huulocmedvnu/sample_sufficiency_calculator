@@ -94,4 +94,4 @@ B → C: relaxing θ★ from 5.7° to 11.5° quarters every quota).
 > achievable error carries the finite-population factor (1/n − 1/N₀) with N₀ the per-well acquired count.
 
 *(Constants of record and provenance: `docs/SUPPLEMENT.md`. Numbers above generated from
-`outputs/drugsim_cache/sig_excl3.npz` via the calculator.)*
+the reference perturbation array via the calculator.)*
