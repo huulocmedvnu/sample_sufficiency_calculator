@@ -12,3 +12,8 @@ venv/
 *.h5ad
 *.parquet
 data/
+
+# Manuscript agent-team intermediates (drafts/factchecks)
+agents/out/
+*.env
+deepseek.env

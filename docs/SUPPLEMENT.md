@@ -17,6 +17,8 @@ calibrator lives in the companion data repository.
 | [`docs/CASE_STUDIES.md`](CASE_STUDIES.md) | 5 real-drug sufficiency spectrum | Results: empirical case studies table + analysis paragraph |
 | [`docs/INVARIANCE.md`](INVARIANCE.md) | Downsampling-invariance demo (OVER vs UNDER) | Results: "Downstream Functional Invariance" subsection |
 | [`docs/MANUSCRIPT_DRAFT.md`](MANUSCRIPT_DRAFT.md) | Full assembled manuscript draft | Submission scaffold (Claude-drafted from the source-of-truth) |
+| [`docs/MANUSCRIPT_DEEPSEEK.md`](MANUSCRIPT_DEEPSEEK.md) | Agent-team manuscript (DeepSeek writers + Claude audit) | Independent machine-drafted scaffold; cross-check against `MANUSCRIPT_DRAFT.md` |
+| [`../agents/`](../agents/) | Manuscript agent team (`team.py`, `ds_client.py`) | Reproducible fact-gated drafting pipeline; see `agents/README.md` |
 | [`docs/SCALE_AUDIT.md`](SCALE_AUDIT.md) | n★ is per-arm; project-budget ledger; Methods definition | Methods: "Cell Quota per Perturbation" def. + scale-budgeting |
 | [`../src/calculator.py`](../src/calculator.py) | Estimator | `calculate_experimental_cell_quota` (isotropic), `calculate_cell_quota_anisotropic` (+ tail), `calculate_optimal_resource_allocation` (dual-sided), `rms_angular_error` |
 | [`../src/calibrate.py`](../src/calibrate.py) | Tahoe calibration demo | Reproduce the σ²/N₀/quota numbers from cached arrays |
