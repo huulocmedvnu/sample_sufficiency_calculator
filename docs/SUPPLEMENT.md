@@ -18,6 +18,7 @@ calibrator lives in the companion data repository.
 | [`docs/INVARIANCE.md`](INVARIANCE.md) | Downsampling-invariance demo (OVER vs UNDER) | Results: "Downstream Functional Invariance" subsection |
 | [`docs/MANUSCRIPT_DRAFT.md`](MANUSCRIPT_DRAFT.md) | Full assembled manuscript draft | Submission scaffold (Claude-drafted from the source-of-truth) |
 | [`docs/MANUSCRIPT_DEEPSEEK.md`](MANUSCRIPT_DEEPSEEK.md) | Agent-team manuscript (DeepSeek writers + Claude audit) | Independent machine-drafted scaffold; cross-check against `MANUSCRIPT_DRAFT.md` |
+| [`docs/manuscript.md`](manuscript.md) | **Compilable** manuscript (unified `$…$` math, pure-ASCII prose) | `pandoc docs/manuscript.md -o manuscript.pdf --pdf-engine=xelatex`; regenerate via `scripts/normalize_manuscript.py` |
 | [`../agents/`](../agents/) | Manuscript agent team (`team.py`, `ds_client.py`) | Reproducible fact-gated drafting pipeline; see `agents/README.md` |
 | [`docs/REFERENCES.md`](REFERENCES.md) | Verified bibliography (17 refs) + per-claim citation map + BibTeX | Crossref-verified citations; `scripts/verify_references.py` re-checks every DOI |
 | [`docs/SCALE_AUDIT.md`](SCALE_AUDIT.md) | n★ is per-arm; project-budget ledger; Methods definition | Methods: "Cell Quota per Perturbation" def. + scale-budgeting |
