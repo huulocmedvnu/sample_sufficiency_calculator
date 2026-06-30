@@ -138,6 +138,34 @@ trace much. The anisotropic machinery's real value here is (i) `d_eff ≈ 28 ≪
 where perturbations *do* align with high-variance axes the correction is large — the ratio formula in
 §8 of `THEORY.md` says exactly when.
 
+## External validation on an independent atlas (EmeraldBay)
+
+The formula is a theorem (verified symbolically + by Monte Carlo), so a second dataset can't make it
+*more* true — but it **can** test whether the CLT/Gaussian-centroid *assumptions* hold on real,
+independent single cells, and whether the calibration transfers. We did this on **tahoebio/EmeraldBay**
+(a separate 1.8 M-cell, 5-day atlas sharing the 5 gyn/breast lines), re-estimating σ² and m from
+EmeraldBay's *own* cells (within-condition σ² ≈ 2.1, vs Tahoe's marginal 7.66 — re-estimation is
+necessary, confirming σ² is the platform-specific input).
+
+**Held-out angular-error curves** (realized RMS angle from n subsampled cells vs the closed form
+`θ²(n)=tr(PΣP)/m²·(1/n−1/N)`, finite-population-corrected):
+
+| group (N, m) | mean rel. err | fitted slope vs `tr(PΣP)/m²` | R² |
+|---|---|---|---|
+| HS-578T (1067, 12.4) | **1.4%** | 0.769 vs 0.763 | **0.998** |
+| AN3-CA (752, 6.4) | **0.8%** | 1.379 vs 1.375 | **0.9996** |
+| HEC-1-A (1117, 3.0) | 2.4% | 6.66 vs 7.82 | 0.995 |
+
+`realized² ∝ (1/n − 1/N)` is linear-through-origin with **R² > 0.99**, and the fitted slope matches the
+anisotropic `tr(PΣP)/m²` to **<1% for strong signatures** (the weaker m≈3 group deviates ~15% at small
+n — the expected breakdown of the first-order law at lower SNR, §5 of `THEORY.md`). **Regime gating:** of
+101 wells, the 15 predicted OVER-sampled all met the tolerance when downsampled to n* (**100%**).
+
+This is distilled into `fixtures/emeraldbay_calibration.json` and asserted by
+`tests/test_emeraldbay_integration.py` (runs in CI, no network). The streaming calibrator that produced
+it is `obgyn/scripts/calibrate_emeraldbay.py` (one-time 58 GB job; figure
+`emeraldbay_heldout_validation.png`).
+
 ## The dual-sided framework: one threshold, two ledgers
 
 `calculate_optimal_resource_allocation(single_cell_variance, num_dimensions, perturbation_magnitude,
