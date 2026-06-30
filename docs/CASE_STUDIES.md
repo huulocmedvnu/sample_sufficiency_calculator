@@ -41,6 +41,15 @@ Ribociclib (m = 0.8) share a CDK-inhibitor annotation yet occupy opposite extrem
 establishing that sample sufficiency must be calibrated per-compound from its empirical perturbation
 magnitude, never inferred from drug-class labels.
 
+## Population context (do not over-read the strong tail)
+
+These five profiles are **illustrative tiers spanning the spectrum, not a typical sample**. Across the
+full 292-drug Tahoe panel at the same configuration, the **median n★ is 23,934 cells** (IQR
+12,087–42,571); only **2%** of drugs are over-sampled (n★ < N₀ = 1,394), 64% require 10 k–50 k, and 17%
+are ghosts (> 50 k). At a tight ~5.7° tolerance the *typical* perturbation is therefore **under-sampled**;
+the over-sampled cases (Homoharringtonine, Idarubicin) are the m > 7.34 minority. See
+[`SCALE_AUDIT.md`](SCALE_AUDIT.md) for the distribution and the project-budget ledger.
+
 ## Provenance / caveats (auditor)
 
 - All m and n★ are machine-pulled from `sig_excl3.npz` through the shipped calculator; no placeholders.

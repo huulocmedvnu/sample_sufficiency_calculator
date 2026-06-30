@@ -45,6 +45,8 @@ Tail-controlled: `n★_δ = (2/m²θ★²)[tr(PΣP) + 2‖PΣP‖_F√L + 2‖P�
 | Standard tolerance θ★ | 0.1 rad (5.73°) | case studies / resource demo |
 | Tahoe quota law @ standard config | n★ = 75,068 / m² | derived |
 | Over/under boundary | m = 7.34 (n★ = N₀) | derived |
+| **n★ distribution** (292 drugs, θ=0.1) | median 23,934; only 2% over-sampled; 64% need 10k–50k; 17% ghost >50k | `SCALE_AUDIT.md` |
+| 100×3×2 screen budget | flat 39.2M vs adaptive(cap10k) 5.7M vs θ=0.2 3.8M cells | `SCALE_AUDIT.md` |
 | Depth-fixed resolution | θ(N₀) = 0.734 / m rad | derived |
 | **EmeraldBay** within-condition σ² | ≈ 2.12 | `calibrate_emeraldbay.py` (≠ marginal 7.66; see caveats) |
 | EmeraldBay gyn cells streamed | 142,883 (of 58 GB / 116 shards) | §32 |

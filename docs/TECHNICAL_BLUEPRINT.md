@@ -200,6 +200,15 @@ linear (RAM, storage, PCA-fit): 1 − n★/N₀; quadratic (cell-cell pairwise /
 1 − (n★/N₀)²; near-linear (neighbour graphs ~ N log N). On the Tahoe over-sampled cytotoxic example this
 is **74% (linear) / 93% (quadratic)** reduction.
 
+**Population-scale framing (correction of a common misconception).** The small n★ values of strong
+cytotoxics are *not* representative: across the 292-drug Tahoe panel at θ★ = 0.1 rad the **median n★ is
+23,934 cells/arm** (only 2% over-sampled; 64% need 10 k–50 k; 17% > 50 k). At a tight MoA tolerance the
+*typical* well is **under-sampled** — atlases are large by aggregating many conditions, not because any
+single condition is cheap. n★ is strictly **per-arm/per-condition**: the global atlas size enters no term
+of the variance S = Σ_t/n_t + Σ_c/n_c, only the per-well sum Σ_w n★_w sets project budget (see
+`SCALE_AUDIT.md`). A 100-drug × 3-dose × 2-line screen costs ≈ 39 M cells under flat loading vs ≈ 5.7 M
+under magnitude-adaptive allocation with a 10 k/well cap (85/100 drugs then capped below 0.1 rad).
+
 **Scope limitations (must be stated in the manuscript).** n★ certifies **centroid/direction** information
 only. It does **not** guarantee preservation of **cell-resolution** structure — per-cell UMAP local
 neighbourhoods, **rare-population / cell-type detection**, or trajectory branch points — which are
