@@ -19,6 +19,7 @@ calibrator lives in the companion data repository.
 | [`docs/MANUSCRIPT_DRAFT.md`](MANUSCRIPT_DRAFT.md) | Full assembled manuscript draft | Submission scaffold (Claude-drafted from the source-of-truth) |
 | [`docs/MANUSCRIPT_DEEPSEEK.md`](MANUSCRIPT_DEEPSEEK.md) | Agent-team manuscript (DeepSeek writers + Claude audit) | Independent machine-drafted scaffold; cross-check against `MANUSCRIPT_DRAFT.md` |
 | [`../agents/`](../agents/) | Manuscript agent team (`team.py`, `ds_client.py`) | Reproducible fact-gated drafting pipeline; see `agents/README.md` |
+| [`docs/REFERENCES.md`](REFERENCES.md) | Verified bibliography (17 refs) + per-claim citation map + BibTeX | Crossref-verified citations; `scripts/verify_references.py` re-checks every DOI |
 | [`docs/SCALE_AUDIT.md`](SCALE_AUDIT.md) | n★ is per-arm; project-budget ledger; Methods definition | Methods: "Cell Quota per Perturbation" def. + scale-budgeting |
 | [`../src/calculator.py`](../src/calculator.py) | Estimator | `calculate_experimental_cell_quota` (isotropic), `calculate_cell_quota_anisotropic` (+ tail), `calculate_optimal_resource_allocation` (dual-sided), `rms_angular_error` |
 | [`../src/calibrate.py`](../src/calibrate.py) | Tahoe calibration demo | Reproduce the σ²/N₀/quota numbers from cached arrays |
