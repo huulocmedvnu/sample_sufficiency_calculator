@@ -298,3 +298,39 @@ regimes, and input validation.
 
 Research utility derived from the Tahoe-100M OBGYN drug-similarity work (RESEARCH_LOG §26–§31).
 Provided as-is; validate `sigma^2` on your own platform before planning a screen.
+
+## II. Dataset Inventory & Scale Audit
+
+*Scale ledger of the two perturbation atlases used to calibrate and validate the calculator. **GLOBAL** rows are dataset-level (published/metadata); **CAPTURED** rows are computed directly from the cached arrays this project actually streamed — Tahoe = the five 5 µM-dose plates (3/6/9/12/13), EmeraldBay = the five gyn/breast lines. Per-well cell-count distributions are only reported for CAPTURED data, since global per-well counts are not in either dataset's metadata.*
+
+### A. Global inventory
+
+| Dataset | Total cells (global) | Unique drugs | Unique cell lines | Wells (line × condition) |
+|---|---:|---:|---:|---:|
+| **Tahoe-100M** | ~100,000,000 | 379 | 50 | ~56,850 (379 drug × 3 dose × 50 line) |
+| **EmeraldBay** | ~1,831,756 | 27 molecules (93 treatment conditions) | 52 | 4,992 |
+
+### B. Per-well cell-count distribution (CAPTURED data only)
+
+| Dataset (captured scope) | Wells | Cells | Min | Median | Mean | Max |
+|---|---:|---:|---:|---:|---:|---:|
+| Tahoe-100M — 5 µM plates 3/6/9/12/13 | 20,000 | 33,450,029 | 1 | 1,192 | 1,673 | 23,043 |
+| EmeraldBay — 5 gyn/breast lines | 430 | 141,720 | 11 | 310 | 330 | 1,978 |
+
+*Tahoe captured median **1,192** cells/well sits far below the median quota n★≈23,934 needed at θ=0.1 rad — i.e. most wells are under-sampled at tight tolerance (see `docs/SCALE_AUDIT.md`).*
+
+### C. Gyn/breast cross-tabulation — vehicle vs active perturbations (CAPTURED)
+
+| Cell line (CVCL) | Dataset | Vehicle wells | Vehicle cells | Active wells | Active cells | Total cells |
+|---|---|---:|---:|---:|---:|---:|
+| HEC-1-A (CVCL_0293) | Tahoe (5 µM plates) | 5 | 15,032 | 395 | 808,138 | 823,170 |
+| AN3-CA (CVCL_0028) | Tahoe (5 µM plates) | 5 | 4,665 | 395 | 205,950 | 210,615 |
+| C-33 A (CVCL_1094) | Tahoe (5 µM plates) | 5 | 11,593 | 395 | 530,215 | 541,808 |
+| BT-474 (CVCL_0179) | Tahoe (5 µM plates) | 5 | 10,018 | 395 | 431,939 | 441,957 |
+| HS-578T (CVCL_0332) | Tahoe (5 µM plates) | 5 | 12,414 | 395 | 592,831 | 605,245 |
+| HEC-1-A | EmeraldBay (gyn) | 2 | 2,296 | 84 | 33,122 | 35,418 |
+| AN3-CA | EmeraldBay (gyn) | 2 | 1,544 | 84 | 15,558 | 17,102 |
+| C-33 A | EmeraldBay (gyn) | 2 | 1,010 | 84 | 15,642 | 16,652 |
+| BT-474 | EmeraldBay (gyn) | 2 | 2,439 | 84 | 36,837 | 39,276 |
+| HS-578T | EmeraldBay (gyn) | 2 | 2,584 | 84 | 30,688 | 33,272 |
+
