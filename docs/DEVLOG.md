@@ -58,7 +58,14 @@ scripts/verify_references.py` (32/32 DOIs).
 
 7. **Editable Word output** (`8c375e3`). `manuscript.docx` built via pandoc; all math is **native Office
    Math (OMML)** equation objects (editable in Word, not images), plus native Word tables and the
-   numbered reference list.
+   numbered reference list. Fixed a normalizer bug that double-escaped `\arccos` (LaTeX tolerated it; the
+   docx math parser did not).
+
+8. **Key Points + Limitations** (`646f1c1`). Added a Briefings in Bioinformatics-style **Key Points** box
+   (5 high-level bullets) between the Abstract and Introduction. Rewrote the Limitations in the neutral
+   register and removed the redundant inline "Limitations." paragraph the Discussion still carried,
+   folding its unique points (Gaussian-centroid assumption; additive vs multiplicative/rotational batch)
+   into the list — now 10 numbered items.
 
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
