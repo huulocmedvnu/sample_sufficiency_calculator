@@ -55,7 +55,7 @@ Tail-controlled: `n★_δ = (2/m²θ★²)[tr(PΣP) + 2‖PΣP‖_F√L + 2‖P�
 | 100×3×2 screen budget | flat 39.2M vs adaptive(cap10k) 5.7M vs θ=0.2 3.8M cells | `SCALE_AUDIT.md` |
 | Depth-fixed resolution | θ(N₀) = 0.734 / m rad | derived |
 | **EmeraldBay** within-condition σ² | ≈ 2.12 | `calibrate_emeraldbay.py` (≠ marginal 7.66; see caveats) |
-| EmeraldBay cells streamed (5 representative lines) | 142,883 (of 58 GB / 116 shards) | companion pipeline |
+| EmeraldBay cells streamed (5 shared cell lines) | 142,883 (of 58 GB / 116 shards) | companion pipeline |
 | EmeraldBay wells gated | 101; predicted OVER = 15 → 100% met tol | gating, θ★ = 0.20 rad |
 | Symbolic Jacobian residual | zero matrix; max float diff 2.8×10⁻¹⁷ | `verify_theory.py` L1 |
 | Monte-Carlo check | K=50,000; seed=0; rel. err 0.13%; ρ²=3.82×10⁵; d_eff=12.2 | `verify_theory.py` L2 |
@@ -66,9 +66,9 @@ Tail-controlled: `n★_δ = (2/m²θ★²)[tr(PΣP) + 2‖PΣP‖_F√L + 2‖P�
 
 | Group (actual identity) | N | m | mean rel. err | slope vs tr(PΣP)/m² | R² |
 |---|---:|---:|---:|---:|---:|
-| DMSO_T0 × Representative Line 1 | 1067 | 12.41 | 1.4% | 0.769 vs 0.763 | 0.9979 |
-| DMSO_T0 × Representative Line 2 | 752 | 6.39 | 0.8% | 1.379 vs 1.375 | 0.9996 |
-| Encorafenib × Representative Line 3 | 1117 | 3.02 | 2.4% | 6.66 vs 7.82 | 0.9954 |
+| DMSO_T0 × HS-578T | 1067 | 12.41 | 1.4% | 0.769 vs 0.763 | 0.9979 |
+| DMSO_T0 × AN3-CA | 752 | 6.39 | 0.8% | 1.379 vs 1.375 | 0.9996 |
+| Encorafenib × HEC-1-A | 1117 | 3.02 | 2.4% | 6.66 vs 7.82 | 0.9954 |
 
 **Case-study spectrum (Tahoe; n★ = 75,068/m²):** Homoharringtonine m=14.4 n★=365 OVER (3.8× / 74%·93%);
 Idarubicin m=10.6 n★=664 OVER (2.1× / 52%·77%); Dinaciclib m=6.5 n★=1,760 UNDER; Resveratrol m=3.0
@@ -81,7 +81,7 @@ n★=8,518 UNDER; Ribociclib m=0.84 n★=107,547 UNDER (ghost). Full table → [
 1. **Variance-definition mismatch.** EmeraldBay σ²≈2.1 is *within-condition*; Tahoe 7.66 is *marginal* —
    not a clean platform head-to-head. Both establish σ² as a platform/pipeline-specific plug-in.
 2. **DMSO_T0 group identity.** The two high-m validation groups are time-zero reference populations, not
-   drug effects; only Encorafenib×Representative Line 3 is a drug. The held-out test validates geometry, not biology.
+   drug effects; only Encorafenib×HEC-1-A is a drug. The held-out test validates geometry, not biology.
 3. **Low-SNR breakdown is expected, not hidden.** Encorafenib (m=3.0) shows a ~15% slope deficit at small
    n — the first-order Delta breakdown when ρ²=m²/(uᵀSu) is not ≫1 (THEORY §5).
 4. **Gating tolerance = 0.20 rad** in the EmeraldBay experiment (not 0.1).

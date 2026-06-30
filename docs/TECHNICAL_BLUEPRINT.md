@@ -15,11 +15,11 @@ have been corrected throughout this document. **Use the corrected values.**
 1. **Regime-gating tolerance is θ★ = 0.20 rad, not 0.1 rad.** The gating experiment
    (`calibrate_emeraldbay.py`) was run at θ★ = 0.20 rad; compliance was defined as realized RMS angle at
    n★ ≤ 1.15·θ★. The "0.1 rad" in the brief is incorrect.
-2. **The two high-magnitude validation groups are `DMSO_T0 × Representative Line 1` and `DMSO_T0 × Representative Line 2`, not "drug
+2. **The two high-magnitude validation groups are `DMSO_T0 × HS-578T` and `DMSO_T0 × AN3-CA`, not "drug
    effects".** These are the time-zero (DMSO_T0) reference population's displacement from the per-line
-   centroid baseline. Only `Encorafenib × Representative Line 3` is an actual drug perturbation. The held-out test
+   centroid baseline. Only `Encorafenib × HEC-1-A` is an actual drug perturbation. The held-out test
    validates the *angular-error geometry*; it is agnostic to biological interpretation. Do **not**
-   describe Representative Line 1/Representative Line 2 as "strong drug effects".
+   describe HS-578T/AN3-CA as "strong drug effects".
 3. **σ² = 2.1 (EmeraldBay) and σ² = 7.66 (Tahoe) are different variance definitions and are NOT a clean
    head-to-head.** EmeraldBay's 2.1 is the *within-condition residual* variance; the Tahoe calculator
    default 7.66 is a *marginal* per-cell variance (includes between-condition/between-line structure).
@@ -160,9 +160,9 @@ linearity-through-origin (slope should equal tr(PΣP)/m²).
 
 | Validation group (actual identity) | N | m | mean rel. err | fitted slope | expected slope tr(PΣP)/m² | intercept | R² |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| DMSO_T0 × Representative Line 1 (high magnitude) | 1067 | 12.41 | 1.4% | 0.7692 | 0.7628 | −4.8×10⁻⁵ | 0.9979 |
-| DMSO_T0 × Representative Line 2 (moderate-high) | 752 | 6.39 | 0.8% | 1.3791 | 1.3753 | −2.6×10⁻⁴ | 0.9996 |
-| Encorafenib × Representative Line 3 (drug; low SNR) | 1117 | 3.02 | 2.4% | 6.6596 | 7.8217 | 6.8×10⁻³ | 0.9954 |
+| DMSO_T0 × HS-578T (high magnitude) | 1067 | 12.41 | 1.4% | 0.7692 | 0.7628 | −4.8×10⁻⁵ | 0.9979 |
+| DMSO_T0 × AN3-CA (moderate-high) | 752 | 6.39 | 0.8% | 1.3791 | 1.3753 | −2.6×10⁻⁴ | 0.9996 |
+| Encorafenib × HEC-1-A (drug; low SNR) | 1117 | 3.02 | 2.4% | 6.6596 | 7.8217 | 6.8×10⁻³ | 0.9954 |
 
 The realized curve matches the closed form to **0.8–2.4% mean relative error**, with
 realized² ∝ (1/n − 1/N) **linear-through-origin (R² > 0.99, intercept ≈ 0)** in all three cases. For the
@@ -185,9 +185,9 @@ perturbation condition* (the treated arm — the total cells aggregated into the
 `docs/SCALE_AUDIT.md` §4). A condition may in principle reach n★ by pooling cells across replicate wells,
 which raises the question of whether single-well under-sampling is rescued once replicates are pooled. We
 tested this directly on both reference atlases, and **in these data it is not**, because the conditions
-are essentially **unreplicated**: in Atlas A, **R = 1 for 96%** of (perturbagen × line) conditions
-(maximum R = 3), and Atlas B contributes a single pooled sample per (perturbagen × dose) condition
-(median ≈ 306 cells). Pooled cells per condition (Atlas A median 1,190) are therefore indistinguishable
+are essentially **unreplicated**: in Tahoe-100M, **R = 1 for 96%** of (perturbagen × line) conditions
+(maximum R = 3), and EmeraldBay contributes a single pooled sample per (perturbagen × dose) condition
+(median ≈ 306 cells). Pooled cells per condition (Tahoe-100M median 1,190) are therefore indistinguishable
 from single-well counts. Re-gating the 14,600 Atlas-A conditions that carry a measured magnitude (θ★ = 0.1
 rad) moves the over-sampled fraction from **2.4% (single-well) to 2.5% (pooled)** — only **12/14,600 =
 0.08%** of conditions cross UNDER → OVER. The median condition requires n★ ≈ 24,000 cells but holds ≈

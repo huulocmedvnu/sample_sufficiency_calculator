@@ -4,9 +4,9 @@
 Builds the README "## II. Dataset Inventory & Scale Audit" tables for the two public reference
 perturbation atlases used for empirical validation (Tahoe-100M and EmeraldBay). GLOBAL figures are
 dataset-level (published/metadata); CAPTURED per-well distributions are computed from the cached arrays
-produced by the companion calibration pipeline (default $DATA_DIR). Cell-line identities are anonymized
-to "Representative Line 1-5" in the public tables; real identifiers are retained in the committed
-calibration fixtures for reproducibility.
+produced by the companion calibration pipeline (default $DATA_DIR). Cell lines are reported by their
+real identifiers (HS-578T, AN3-CA, HEC-1-A, BT-474, C-33 A); these are the five established cancer lines
+common to both atlases.
 
   python scripts/dataset_inventory.py            # uses $DATA_DIR (default below)
 """
@@ -16,13 +16,13 @@ import pyarrow.parquet as pq
 
 DATA_DIR = os.environ.get("DATA_DIR", "data")   # companion-pipeline cache
 README = os.path.join(os.path.dirname(__file__), "..", "README.md")
-# five established cancer lines common to both atlases -> anonymized labels (identities kept in fixtures)
-REF_BY_CVCL = {"CVCL_0332": "Representative Line 1", "CVCL_0028": "Representative Line 2",
-               "CVCL_0293": "Representative Line 3", "CVCL_0179": "Representative Line 4",
-               "CVCL_1094": "Representative Line 5"}
-REF_BY_NAME = {"HS-578T": "Representative Line 1", "AN3-CA": "Representative Line 2",
-               "HEC-1-A": "Representative Line 3", "BT-474": "Representative Line 4",
-               "C-33 A": "Representative Line 5"}
+# five established cancer lines common to both atlases, reported by their real identifiers
+REF_BY_CVCL = {"CVCL_0332": "HS-578T", "CVCL_0028": "AN3-CA",
+               "CVCL_0293": "HEC-1-A", "CVCL_0179": "BT-474",
+               "CVCL_1094": "C-33 A"}
+REF_BY_NAME = {"HS-578T": "HS-578T", "AN3-CA": "AN3-CA",
+               "HEC-1-A": "HEC-1-A", "BT-474": "BT-474",
+               "C-33 A": "C-33 A"}
 
 
 def dist(c):
@@ -31,7 +31,7 @@ def dist(c):
                 mean=int(round(c.mean())), max=int(c.max()))
 
 
-# ---- Atlas A (Tahoe-100M): captured = the five dose-matched plates 3/6/9/12/13 ----
+# ---- Tahoe-100M: captured = the five dose-matched plates 3/6/9/12/13 ----
 grp = {}
 for ck in glob.glob(f"{DATA_DIR}/drugsim_cache/plate*.npz"):
     z = np.load(ck, allow_pickle=True); p = int(z["plate"])
@@ -50,7 +50,7 @@ for cv, lab in REF_BY_CVCL.items():
     act = [v for k, v in grp.items() if k[1] == cv and k[0] != "DMSO_TF"]
     A_x.append((lab, len(veh), sum(veh), len(act), sum(act)))
 
-# ---- Atlas B (EmeraldBay): global from metadata; captured = the five representative lines ----
+# ---- EmeraldBay: global from metadata; captured = the five shared cell lines ----
 from huggingface_hub import HfFileSystem
 fs = HfFileSystem(); REPO = "datasets/tahoebio/EmeraldBay"
 dmeta = pq.read_table(io.BytesIO(fs.cat_file(f"{REPO}/metadata/drug_metadata.parquet"))).to_pandas()
@@ -71,31 +71,31 @@ M = ["## II. Dataset Inventory & Scale Audit\n",
      "purely for empirical validation. **GLOBAL** rows are dataset-level (published/metadata); "
      "**CAPTURED** rows are computed from the cached arrays of the companion calibration pipeline. "
      "Per-well cell-count distributions are reported for CAPTURED data only, since global per-well "
-     "counts are not in either atlas's metadata. Cell-line identities are anonymized to Representative "
-     "Lines 1-5 (five established cancer lines common to both atlases; identities retained in the "
-     "committed fixtures).*\n",
+     "counts are not in either atlas's metadata. Cell lines are reported by their real identifiers "
+     "(HS-578T, AN3-CA, HEC-1-A, BT-474, C-33 A), the five established cancer lines common to both "
+     "atlases.*\n",
      "### A. Global inventory\n",
      "| Reference atlas | Total cells (global) | Unique perturbagens | Unique cell lines | Wells (line × condition) |",
      "|---|---:|---:|---:|---:|",
-     "| **Atlas A (Tahoe-100M)** | ~100,000,000 | 379 | 50 | ~56,850 |",
-     f"| **Atlas B (EmeraldBay)** | ~1,831,756 | {len(dmeta)} molecules ({B_cond} conditions) | {B_lines} | {B_wells:,} |",
+     "| **Tahoe-100M** | ~100,000,000 | 379 | 50 | ~56,850 |",
+     f"| **EmeraldBay** | ~1,831,756 | {len(dmeta)} molecules ({B_cond} conditions) | {B_lines} | {B_wells:,} |",
      "",
      "### B. Per-well cell-count distribution (CAPTURED data only)\n",
      "| Atlas (captured scope) | Wells | Cells | Min | Median | Mean | Max |",
      "|---|---:|---:|---:|---:|---:|---:|",
-     f"| Atlas A — 5 dose-matched plates | {A['n']:,} | {A['total']:,} | {A['min']} | {A['median']:,} | {A['mean']:,} | {A['max']:,} |",
-     f"| Atlas B — 5 representative lines | {B['n']:,} | {B['total']:,} | {B['min']} | {B['median']} | {B['mean']} | {B['max']:,} |",
+     f"| Tahoe-100M — 5 dose-matched plates | {A['n']:,} | {A['total']:,} | {A['min']} | {A['median']:,} | {A['mean']:,} | {A['max']:,} |",
+     f"| EmeraldBay — five cell lines | {B['n']:,} | {B['total']:,} | {B['min']} | {B['median']} | {B['mean']} | {B['max']:,} |",
      "",
-     f"*Atlas A captured median **{A['median']:,}** cells/well sits far below the median quota "
+     f"*Tahoe-100M captured median **{A['median']:,}** cells/well sits far below the median quota "
      "n★≈23,934 required at θ=0.1 rad — i.e. most wells are under-sampled at tight tolerance "
-     "(see `docs/SCALE_AUDIT.md`). Atlas A conditions are essentially unreplicated (R=1 for {:.0f}% of drug-line conditions, max R={}), so pooling replicate wells does not change this gating — only ~0.08% of conditions cross UNDER->OVER when pooled (docs/SCALE_AUDIT.md sec 5).*\n".format(R1_pct, Rmax),
+     "(see `docs/SCALE_AUDIT.md`). Tahoe-100M conditions are essentially unreplicated (R=1 for {:.0f}% of drug-line conditions, max R={}), so pooling replicate wells does not change this gating — only ~0.08% of conditions cross UNDER->OVER when pooled (docs/SCALE_AUDIT.md sec 5).*\n".format(R1_pct, Rmax),
      "### C. Cell-line cross-tabulation — vehicle vs active perturbations (CAPTURED)\n",
      "| Cell line | Atlas | Vehicle wells | Vehicle cells | Active wells | Active cells | Total cells |",
      "|---|---|---:|---:|---:|---:|---:|"]
 for lab, vw, vc, aw, ac in A_x:
-    M.append(f"| {lab} | Atlas A | {vw} | {vc:,} | {aw} | {ac:,} | {vc+ac:,} |")
+    M.append(f"| {lab} | Tahoe-100M | {vw} | {vc:,} | {aw} | {ac:,} | {vc+ac:,} |")
 for lab, vw, vc, aw, ac in B_x:
-    M.append(f"| {lab} | Atlas B | {vw} | {vc:,} | {aw} | {ac:,} | {vc+ac:,} |")
+    M.append(f"| {lab} | EmeraldBay | {vw} | {vc:,} | {aw} | {ac:,} | {vc+ac:,} |")
 M.append("")
 md = "\n".join(M)
 print(md)

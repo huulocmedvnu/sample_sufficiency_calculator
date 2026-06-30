@@ -152,9 +152,9 @@ necessary, confirming σ² is the platform-specific input).
 
 | group (N, m) | mean rel. err | fitted slope vs `tr(PΣP)/m²` | R² |
 |---|---|---|---|
-| Representative Line 1 (1067, 12.4) | **1.4%** | 0.769 vs 0.763 | **0.998** |
-| Representative Line 2 (752, 6.4) | **0.8%** | 1.379 vs 1.375 | **0.9996** |
-| Representative Line 3 (1117, 3.0) | 2.4% | 6.66 vs 7.82 | 0.995 |
+| HS-578T (1067, 12.4) | **1.4%** | 0.769 vs 0.763 | **0.998** |
+| AN3-CA (752, 6.4) | **0.8%** | 1.379 vs 1.375 | **0.9996** |
+| HEC-1-A (1117, 3.0) | 2.4% | 6.66 vs 7.82 | 0.995 |
 
 `realized² ∝ (1/n − 1/N)` is linear-through-origin with **R² > 0.99**, and the fitted slope matches the
 anisotropic `tr(PΣP)/m²` to **<1% for strong signatures** (the weaker m≈3 group deviates ~15% at small
@@ -301,36 +301,36 @@ Provided as-is; validate `sigma^2` on your own platform before planning a screen
 
 ## II. Dataset Inventory & Scale Audit
 
-*Scale ledger of two large-scale, independent, multi-line reference perturbation atlases used purely for empirical validation. **GLOBAL** rows are dataset-level (published/metadata); **CAPTURED** rows are computed from the cached arrays of the companion calibration pipeline. Per-well cell-count distributions are reported for CAPTURED data only, since global per-well counts are not in either atlas's metadata. Cell-line identities are anonymized to Representative Lines 1-5 (five established cancer lines common to both atlases; identities retained in the committed fixtures).*
+*Scale ledger of two large-scale, independent, multi-line reference perturbation atlases used purely for empirical validation. **GLOBAL** rows are dataset-level (published/metadata); **CAPTURED** rows are computed from the cached arrays of the companion calibration pipeline. Per-well cell-count distributions are reported for CAPTURED data only, since global per-well counts are not in either atlas's metadata. Cell lines are reported by their real identifiers HS-578T, AN3-CA, HEC-1-A, BT-474 and C-33 A (the five established cancer lines common to both atlases).*
 
 ### A. Global inventory
 
 | Reference atlas | Total cells (global) | Unique perturbagens | Unique cell lines | Wells (line × condition) |
 |---|---:|---:|---:|---:|
-| **Atlas A (Tahoe-100M)** | ~100,000,000 | 379 | 50 | ~56,850 |
-| **Atlas B (EmeraldBay)** | ~1,831,756 | 27 molecules (93 conditions) | 52 | 4,992 |
+| **Tahoe-100M** | ~100,000,000 | 379 | 50 | ~56,850 |
+| **EmeraldBay** | ~1,831,756 | 27 molecules (93 conditions) | 52 | 4,992 |
 
 ### B. Per-well cell-count distribution (CAPTURED data only)
 
 | Atlas (captured scope) | Wells | Cells | Min | Median | Mean | Max |
 |---|---:|---:|---:|---:|---:|---:|
-| Atlas A — 5 dose-matched plates | 20,000 | 33,450,029 | 1 | 1,192 | 1,673 | 23,043 |
-| Atlas B — 5 representative lines | 430 | 141,720 | 11 | 310 | 330 | 1,978 |
+| Tahoe-100M — 5 dose-matched plates | 20,000 | 33,450,029 | 1 | 1,192 | 1,673 | 23,043 |
+| EmeraldBay — five cell lines (HS-578T, AN3-CA, HEC-1-A, BT-474, C-33 A) | 430 | 141,720 | 11 | 310 | 330 | 1,978 |
 
-*Atlas A captured median **1,192** cells/well sits far below the median quota n★≈23,934 required at θ=0.1 rad — i.e. most wells are under-sampled at tight tolerance (see `docs/SCALE_AUDIT.md`). Atlas A conditions are essentially unreplicated (R=1 for 96% of drug-line conditions, max R=3), so pooling replicate wells does not change this gating — only ~0.08% of conditions cross UNDER->OVER when pooled (docs/SCALE_AUDIT.md sec 5).*
+*Tahoe-100M captured median **1,192** cells/well sits far below the median quota n★≈23,934 required at θ=0.1 rad — i.e. most wells are under-sampled at tight tolerance (see `docs/SCALE_AUDIT.md`). Tahoe-100M conditions are essentially unreplicated (R=1 for 96% of drug-line conditions, max R=3), so pooling replicate wells does not change this gating — only ~0.08% of conditions cross UNDER->OVER when pooled (docs/SCALE_AUDIT.md sec 5).*
 
 ### C. Cell-line cross-tabulation — vehicle vs active perturbations (CAPTURED)
 
 | Cell line | Atlas | Vehicle wells | Vehicle cells | Active wells | Active cells | Total cells |
 |---|---|---:|---:|---:|---:|---:|
-| Representative Line 1 | Atlas A | 5 | 12,414 | 395 | 592,831 | 605,245 |
-| Representative Line 2 | Atlas A | 5 | 4,665 | 395 | 205,950 | 210,615 |
-| Representative Line 3 | Atlas A | 5 | 15,032 | 395 | 808,138 | 823,170 |
-| Representative Line 4 | Atlas A | 5 | 10,018 | 395 | 431,939 | 441,957 |
-| Representative Line 5 | Atlas A | 5 | 11,593 | 395 | 530,215 | 541,808 |
-| Representative Line 1 | Atlas B | 2 | 2,584 | 84 | 30,688 | 33,272 |
-| Representative Line 2 | Atlas B | 2 | 1,544 | 84 | 15,558 | 17,102 |
-| Representative Line 3 | Atlas B | 2 | 2,296 | 84 | 33,122 | 35,418 |
-| Representative Line 4 | Atlas B | 2 | 2,439 | 84 | 36,837 | 39,276 |
-| Representative Line 5 | Atlas B | 2 | 1,010 | 84 | 15,642 | 16,652 |
+| HS-578T | Tahoe-100M | 5 | 12,414 | 395 | 592,831 | 605,245 |
+| AN3-CA | Tahoe-100M | 5 | 4,665 | 395 | 205,950 | 210,615 |
+| HEC-1-A | Tahoe-100M | 5 | 15,032 | 395 | 808,138 | 823,170 |
+| BT-474 | Tahoe-100M | 5 | 10,018 | 395 | 431,939 | 441,957 |
+| C-33 A | Tahoe-100M | 5 | 11,593 | 395 | 530,215 | 541,808 |
+| HS-578T | EmeraldBay | 2 | 2,584 | 84 | 30,688 | 33,272 |
+| AN3-CA | EmeraldBay | 2 | 1,544 | 84 | 15,558 | 17,102 |
+| HEC-1-A | EmeraldBay | 2 | 2,296 | 84 | 33,122 | 35,418 |
+| BT-474 | EmeraldBay | 2 | 2,439 | 84 | 36,837 | 39,276 |
+| C-33 A | EmeraldBay | 2 | 1,010 | 84 | 15,642 | 16,652 |
 

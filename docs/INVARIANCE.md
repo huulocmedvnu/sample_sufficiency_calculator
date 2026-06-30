@@ -13,7 +13,7 @@ which depends on the cell-cloud shape the centroid discards and obeys a differen
 
 ## Result (R = 300 downsampling replicates; both wells downsampled to the same depth n_d = 67)
 
-| metric | **OVER: DMSO_T0 × Representative Line 1** (m = 12.41) | **UNDER: GDC-6036 × Representative Line 3** (m = 0.40) |
+| metric | **OVER: DMSO_T0 × HS-578T** (m = 12.41) | **UNDER: GDC-6036 × HEC-1-A** (m = 0.40) |
 |---|---|---|
 | N₀ cells / well | 1,067 | 1,518 |
 | n★ (cells/arm) | **67** (OVER, 16× spare) | **65,066** (UNDER, 43× short) |
@@ -42,7 +42,7 @@ magnitude alone.
 - **The OVER exemplar is a reference population (DMSO_T0), not a drug.** In EmeraldBay's representative-line subset *no
   real drug is cleanly over-sampled* — Paclitaxel itself is under-sampled there (N₀ ≈ 107 cells/representative-line,
   m = 3.3, n★ = 942). The invariance is a geometric property of any high-magnitude, well-sampled centroid.
-- **The UNDER exemplar (GDC-6036, a KRAS-G12C inhibitor) is a "ghost" with biological cause:** Representative Line 3
+- **The UNDER exemplar (GDC-6036, a KRAS-G12C inhibitor) is a "ghost" with biological cause:** HEC-1-A
   carries **KRAS G12D**, not G12C, so on-target activity is not expected — m = 0.40, n★ = 65,066. A
   targeted agent against the wrong genotype is exactly the case the calculator flags as un-resolvable.
 - **Resveratrol is absent from EmeraldBay** (its 27-drug panel is colorectal/RAS/HER2); the UNDER drug is
