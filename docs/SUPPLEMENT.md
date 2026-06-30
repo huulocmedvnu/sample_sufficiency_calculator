@@ -20,6 +20,7 @@ calibrator lives in the companion data repository.
 | [`docs/MANUSCRIPT_DEEPSEEK.md`](MANUSCRIPT_DEEPSEEK.md) | Agent-team manuscript (DeepSeek writers + Claude audit) | Independent machine-drafted scaffold; cross-check against `MANUSCRIPT_DRAFT.md` |
 | [`docs/manuscript.md`](manuscript.md) | **Compilable** manuscript (unified `$…$` math, pure-ASCII prose) | `pandoc docs/manuscript.md -o manuscript.pdf --pdf-engine=xelatex`; regenerate via `scripts/normalize_manuscript.py` |
 | [`../agents/`](../agents/) | Manuscript agent team (`team.py`, `ds_client.py`) | Reproducible fact-gated drafting pipeline; see `agents/README.md` |
+| [`docs/DEVLOG.md`](DEVLOG.md) | Manuscript development log | Full build history + pipeline + rebuild commands (`../manuscript.pdf`, `../manuscript.docx`) |
 | [`docs/REFERENCES.md`](REFERENCES.md) | Verified bibliography (34 refs) thematic ledger | Crossref-verified citations; `scripts/verify_references.py` re-checks all 32 DOIs |
 | [`../references.bib`](../references.bib) | Canonical BibTeX (34 entries) | Cited as pandoc `[@key]`; rendered by citeproc + `csl/vancouver.csl` (Vancouver, BiB style) |
 | [`docs/SCALE_AUDIT.md`](SCALE_AUDIT.md) | n★ is per-arm; project-budget ledger; Methods definition | Methods: "Cell Quota per Perturbation" def. + scale-budgeting |
