@@ -317,7 +317,7 @@ Provided as-is; validate `sigma^2` on your own platform before planning a screen
 | Atlas A — 5 dose-matched plates | 20,000 | 33,450,029 | 1 | 1,192 | 1,673 | 23,043 |
 | Atlas B — 5 representative lines | 430 | 141,720 | 11 | 310 | 330 | 1,978 |
 
-*Atlas A captured median **1,192** cells/well sits far below the median quota n★≈23,934 required at θ=0.1 rad — i.e. most wells are under-sampled at tight tolerance (see `docs/SCALE_AUDIT.md`).*
+*Atlas A captured median **1,192** cells/well sits far below the median quota n★≈23,934 required at θ=0.1 rad — i.e. most wells are under-sampled at tight tolerance (see `docs/SCALE_AUDIT.md`). Atlas A conditions are essentially unreplicated (R=1 for 96% of drug-line conditions, max R=3), so pooling replicate wells does not change this gating — only ~0.08% of conditions cross UNDER->OVER when pooled (docs/SCALE_AUDIT.md sec 5).*
 
 ### C. Cell-line cross-tabulation — vehicle vs active perturbations (CAPTURED)
 

@@ -175,3 +175,52 @@ of per-well centroids (after referencing); Σ_cell from the within-well residual
 but only after within-batch vehicle referencing removes the additive plate/batch offset; otherwise the
 governing unit becomes two-dimensional, (cells n ≥ n★) **and** (replicate batches R ≥ R★), because cell
 count and replicate count suppress orthogonal variance components.
+
+---
+
+## 5. Empirical pooled-condition re-gating: does replication rescue these atlases? (audit answer)
+
+§4 establishes that n★ is a **per-condition** quota reachable by pooling replicate wells. A natural
+hypothesis is that under-sampled single wells are rescued once replicates are pooled
+(n_pooled = R·n_well). **We tested this directly on the data; in these two atlases it is false**, because
+the conditions are essentially **unreplicated**.
+
+**Replication structure (measured).** In the captured Tahoe atlas (18,950 drug×line conditions),
+**R = 1 for 96.0%** of conditions, R = 2 for 3.7%, R ≥ 3 for 0.3% (max R = 3): a given (drug, dose) is run
+in a single pooled sample. Pooled cells/condition (median **1,190**) are therefore indistinguishable from
+single-well (median 1,189). EmeraldBay mirrors this — one pooled sample per (drug, dose, line), median
+**306** cells; no independent same-dose replicate wells exist in the data.
+
+**Re-gate (per-condition magnitude and cells, θ★ = 0.1 rad).** Over 14,600 Tahoe conditions with a
+measured magnitude:
+
+| Gating model | OVER-sampled (n ≥ n★) |
+|---|---:|
+| Single-well (n_well) | 2.4% |
+| **Pooled across replicates (n_pooled)** | **2.5%** |
+| Conditions rescued UNDER → OVER by pooling | **12 / 14,600 = 0.08%** |
+
+The taxonomy is **unchanged**: the median condition needs n★ ≈ 24 k cells but holds ≈ 1.2 k, a ~20×
+deficit that R ≤ 3 replicates of equal size cannot close. **Replication does not rescue under-sampled
+conditions here — not because the pooling logic is wrong (§4), but because the data architecture supplies
+≈ one sample per drug–dose.** (And where R > 1, the cross-plate batch term of §4 further caps the gain
+unless wells are vehicle-referenced within batch.)
+
+**Case-study profiles under the pooled (= per-condition, R = 1) model, resolved across all 50 lines:**
+
+| Model perturbation (profile) | median m | median n★ | lines OVER-sampled |
+|---|---:|---:|---:|
+| Homoharringtonine (high-magnitude/cytotoxic) | 14.0 | 380 | **32 / 50** |
+| Idarubicin (high-magnitude; borderline) | 9.6 | 814 | 22 / 50 |
+| Dinaciclib (moderate signal) | 5.6 | 2,368 | 0 / 50 |
+| Resveratrol (moderate-signal modulator) | 2.8 | 9,916 | 2 / 50 |
+| Ribociclib (weak/sub-threshold "ghost") | 0.7 | 165,164 | 0 / 50 |
+
+This **confirms** the single-well profiles (high-magnitude agents over-sampled in most lines; moderate and
+weak agents under-sampled in nearly all), and shows the regime is **line-dependent** (a drug can be
+saturated in its high-response lines yet under-sampled in the rest). **Bottom line: the pooled-condition
+unit is the mathematically correct one (§4), but in Tahoe and EmeraldBay it coincides with the
+single-condition unit, so the project-level conclusion stands — ≈ 2.5% of conditions are safely saturated
+at a 5.7° tolerance; replication as actually practised in these atlases rescues < 0.1%.** A screen
+*designed* with R replicate batches and within-batch referencing would benefit (n★ is per-condition); a
+single-sample-per-condition atlas does not.

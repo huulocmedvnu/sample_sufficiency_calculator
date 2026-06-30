@@ -38,6 +38,12 @@ for ck in glob.glob(f"{DATA_DIR}/drugsim_cache/plate*.npz"):
     for d, l, c in zip(z["drugs"], z["lines"], z["counts"]):
         grp[(str(d), str(l), p)] = int(c)
 A = dist(list(grp.values()))
+# per-condition replication R (distinct plates per drug-line); pooling does not change cells when R=1
+from collections import Counter as _C
+_perdl = _C((str_d, str_l) for (str_d, str_l, _p) in grp if str_d != "DMSO_TF")
+import numpy as _np
+_R = _np.array(list(_perdl.values()))
+R1_pct = 100.0 * (_R == 1).mean(); Rmax = int(_R.max())
 A_x = []
 for cv, lab in REF_BY_CVCL.items():
     veh = [v for k, v in grp.items() if k[1] == cv and k[0] == "DMSO_TF"]
@@ -82,7 +88,7 @@ M = ["## II. Dataset Inventory & Scale Audit\n",
      "",
      f"*Atlas A captured median **{A['median']:,}** cells/well sits far below the median quota "
      "n★≈23,934 required at θ=0.1 rad — i.e. most wells are under-sampled at tight tolerance "
-     "(see `docs/SCALE_AUDIT.md`).*\n",
+     "(see `docs/SCALE_AUDIT.md`). Atlas A conditions are essentially unreplicated (R=1 for {:.0f}% of drug-line conditions, max R={}), so pooling replicate wells does not change this gating — only ~0.08% of conditions cross UNDER->OVER when pooled (docs/SCALE_AUDIT.md sec 5).*\n".format(R1_pct, Rmax),
      "### C. Cell-line cross-tabulation — vehicle vs active perturbations (CAPTURED)\n",
      "| Cell line | Atlas | Vehicle wells | Vehicle cells | Active wells | Active cells | Total cells |",
      "|---|---|---:|---:|---:|---:|---:|"]

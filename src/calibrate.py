@@ -29,7 +29,8 @@ FIXTURE = os.path.join(os.path.dirname(__file__), "..", "fixtures", "tahoe_calib
 # (cells projected through the shared PCA): mean over 50 dims = 7.66 (per-dim range 0.03-31.7).
 SIGMA2 = 7.66
 NUM_DIMS = 50
-# baseline cells per (drug,line) well in the reference atlas: MEDIAN = 1394.
+# baseline cells per (drug,line) CONDITION (median). In these atlases conditions are ~unreplicated
+# (R~1, max 3), so the per-condition pool ~ a single well; see docs/SCALE_AUDIT.md sec 4-5.
 BASELINE_CELLS_PER_WELL = 1394
 
 # Optional path to a cached perturbation array (the RAW perturbation vectors, in the SAME PCA space
@@ -75,7 +76,7 @@ def main():
               f"(RMS angle achieved by 1000 cells = {np.degrees(rms_angular_error(SIGMA2,NUM_DIMS,mags['Resveratrol'],1000)):.1f} deg)")
 
     # ---- DUAL-SIDED resource allocation vs the real atlas baseline (N0 = 1394 cells/well) ----
-    print(f"\n=== DUAL-SIDED resource allocation @ tolerance=0.1 rad, baseline N0={BASELINE_CELLS_PER_WELL} cells/well ===")
+    print(f"\n=== DUAL-SIDED resource allocation @ tolerance=0.1 rad, baseline N0={BASELINE_CELLS_PER_WELL} cells/condition (R~1) ===")
     examples = dict(mags); examples["strong-cytotoxic(max)"] = 14.35
     print(f"{'signature':24s} {'m':>6s} {'n* /well':>9s} {'regime':>12s} "
           f"{'dry save(lin)':>13s} {'dry save(quad)':>14s} {'wet multiplex':>13s}")
