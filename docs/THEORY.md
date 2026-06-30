@@ -121,25 +121,31 @@ $$d_{\text{eff}}:=\frac{\big(\operatorname{tr}\,PSP\big)^2}{\operatorname{tr}\bi
 which is $\ll d-1$ when a few noise axes dominate — the angle "sees" far fewer effective dimensions
 than $d$, and the quota is correspondingly smaller than a naive $d$-scaling suggests.
 
-**Proposition 1 (confidence quota, Hanson–Wright).** There is an absolute $c>0$ such that for $t>0$,
-$\Pr\!\big(\lVert Pe\rVert^2-\operatorname{tr}(PSP)\ge t\big)\le
-\exp\!\big(-c\min\{t^2/\lVert PSP\rVert_F^2,\;t/\lVert PSP\rVert_{\mathrm{op}}\}\big).$
-Hence, to guarantee $\Pr(\theta>\theta_\star)\le\delta$ it suffices that
+**Proposition 1 (confidence quota, Laurent–Massart 2000).** For $\lVert Pe\rVert^2=\sum_i\nu_i z_i^2$
+with $z_i\stackrel{iid}\sim\mathcal N(0,1)$ and weights $\nu_i\ge0$ (the eigenvalues of $PSP$), the
+Laurent–Massart tail (their Lemma 1) holds with **explicit constants**:
 
-$$m^2\theta_\star^2\;\ge\;\operatorname{tr}(PSP)
-  +\sqrt{\tfrac{2}{c}\,\lVert PSP\rVert_F^2\,\log\tfrac1\delta}
-  +\tfrac{2}{c}\,\lVert PSP\rVert_{\mathrm{op}}\log\tfrac1\delta.$$
+$$\Pr\!\Big(\lVert Pe\rVert^2\ \ge\ \operatorname{tr}(PSP)
+   +2\,\lVert PSP\rVert_F\sqrt{L}+2\,\lVert PSP\rVert_{\mathrm{op}}L\Big)\le e^{-L},
+   \qquad L=\log\tfrac1\delta,$$
 
-Because $S=2\Sigma/n$ makes every term $\propto 1/n$, this inverts to a closed-form confidence quota
+since $\sum_i\nu_i=\operatorname{tr}(PSP)$, $\lVert\nu\rVert_2=\lVert PSP\rVert_F$,
+$\lVert\nu\rVert_\infty=\lVert PSP\rVert_{\mathrm{op}}$. To guarantee $\Pr(\theta>\theta_\star)\le\delta$
+it therefore suffices (using $\theta\approx\lVert Pe\rVert/m$ in the valid regime) that
+$m^2\theta_\star^2\ge\operatorname{tr}(PSP)+2\lVert PSP\rVert_F\sqrt L+2\lVert PSP\rVert_{\mathrm{op}}L$.
+Because $S=2\Sigma/n$ makes every term $\propto1/n$, this inverts to a **closed-form confidence quota**
 
 $$n^\star_\delta
   =\frac{2}{m^2\theta_\star^2}\Big[\operatorname{tr}(P\Sigma P)
-  +\sqrt{\tfrac{2}{c}\,\lVert P\Sigma P\rVert_F^2\log\tfrac1\delta}
-  +\tfrac{2}{c}\,\lVert P\Sigma P\rVert_{\mathrm{op}}\log\tfrac1\delta\Big]
+  +2\lVert P\Sigma P\rVert_F\sqrt{\log\tfrac1\delta}
+  +2\lVert P\Sigma P\rVert_{\mathrm{op}}\log\tfrac1\delta\Big]
   \;=\;n^\star_{\text{aniso}}\cdot\Big(1+O\big(\sqrt{\log(1/\delta)/d_{\text{eff}}}\big)\Big).\tag{5}$$
 
 So the tail-controlled quota is the mean quota inflated by a factor governed by $d_{\text{eff}}$ and
-$\log(1/\delta)$ — it is *not* a different scaling law, just a multiplicative safety margin.
+$\log(1/\delta)$ — *not* a different scaling law, just a multiplicative safety margin. (The constants
+are exact and conservative; the residual $\theta\approx\lVert Pe\rVert/m$ approximation is $O(\rho^{-1})$
+and negligible in the regime of Section 5. Empirical coverage is verified by Monte Carlo in
+`tests/verify_theory.py` / the test suite.)
 
 ---
 

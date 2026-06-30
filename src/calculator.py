@@ -88,7 +88,7 @@ def rms_angular_error(single_cell_variance: float, num_dimensions: int,
 
 
 def calculate_cell_quota_anisotropic(covariance, perturbation_vector, tolerance=0.01,
-                                     large_control_pool=False, confidence=None, hw_constant=2.0):
+                                     large_control_pool=False, confidence=None):
     """ANISOTROPIC cell quota (peer-review form) — no isotropic simplification. See docs/THEORY.md.
 
     Implements  n* = 2 * tr(P Sigma P) / (m^2 * tolerance^2),  P = I - u u^T,  u = v/||v||,
@@ -109,7 +109,7 @@ def calculate_cell_quota_anisotropic(covariance, perturbation_vector, tolerance=
         True -> shared/huge DMSO pool (control arm noiseless, factor 1). False -> equal arms (factor 2).
     confidence : float or None
         If set to delta in (0,1), also return a tail-controlled quota guaranteeing P(theta>tol)<=delta
-        via a Hanson-Wright bound (generalized chi-square). `hw_constant` is the absolute constant.
+        via the Laurent-Massart (2000) tail for a weighted sum of chi-squares (exact constants 2, 2).
 
     Returns
     -------
@@ -147,11 +147,14 @@ def calculate_cell_quota_anisotropic(covariance, perturbation_vector, tolerance=
     if confidence is not None:
         if not (0.0 < confidence < 1.0):
             raise ValueError("confidence (delta) must be in (0,1)")
-        fro = math.sqrt(tr_sq)
-        op = float(np.linalg.eigvalsh(M)[-1])
+        # Laurent-Massart (2000), Lemma 1: for X = sum_i nu_i z_i^2 (z_i iid N(0,1), nu_i>=0),
+        #   P( X >= sum nu_i + 2 ||nu||_2 sqrt(L) + 2 ||nu||_inf L ) <= exp(-L).
+        # Here nu_i are the eigenvalues of P S P; ||nu||_2 = ||PSP||_F, ||nu||_inf = ||PSP||_op.
+        # With S = (arm)Sigma/n every term scales as 1/n, giving a closed-form quota.
+        fro = math.sqrt(tr_sq)                     # ||M||_F  (M = P Sigma P)
+        op = float(np.linalg.eigvalsh(M)[-1])      # ||M||_op (largest eigenvalue)
         L = math.log(1.0 / confidence)
-        n_conf = arm * (tr + math.sqrt(hw_constant * L) * fro + hw_constant * L * op) \
-            / (m ** 2 * tolerance ** 2)
+        n_conf = arm * (tr + 2.0 * math.sqrt(L) * fro + 2.0 * L * op) / (m ** 2 * tolerance ** 2)
         out["required_cells_per_arm_confident"] = n_conf
         out["confidence"] = confidence
     return out

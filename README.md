@@ -1,5 +1,7 @@
 # Dual-Sided Sample-Sufficiency Calculator for Single-Cell Perturbation Screens
 
+[![CI](https://github.com/huulocmedvnu/sample_sufficiency_calculator/actions/workflows/ci.yml/badge.svg)](https://github.com/huulocmedvnu/sample_sufficiency_calculator/actions/workflows/ci.yml)
+
 A small, dependency-light calculator built on **one information-saturation threshold `n*`** (the cells
 needed to resolve a drug's perturbation *direction* to an angular tolerance), read across **two
 ledgers**:
@@ -230,24 +232,39 @@ sample_sufficiency_calculator/
 ├── fixtures/
 │   └── tahoe_calibration.json   # per-PC variances + example drug vectors (self-contained demo)
 ├── tests/
-│   └── verify_theory.py         # SymPy Jacobian proof + Monte-Carlo E[theta^2] check (asserts)
+│   ├── verify_theory.py         # standalone SymPy Jacobian proof + Monte-Carlo harness
+│   └── test_calculator.py       # pytest suite (units + symbolic + Monte-Carlo + tail coverage)
+├── .github/workflows/ci.yml     # GitHub Actions: pytest on py3.10/3.11/3.12 + harness
+├── conftest.py                  # puts src/ and tests/ on sys.path for pytest
+├── pytest.ini                   # pytest config
+├── requirements-dev.txt         # numpy, sympy, pytest
 ├── README.md
 └── .gitignore
 ```
 
-## Verification (`tests/verify_theory.py`)
+## Verification & CI
 
-A self-contained, dual-layer check of the proof — run `python tests/verify_theory.py` (needs `sympy`):
+```bash
+pip install -r requirements-dev.txt
+pytest                       # full suite (12 tests)
+python tests/verify_theory.py   # standalone formal+empirical harness
+```
+
+The proof is checked three ways (all asserted; run on every push via GitHub Actions over Python
+3.10/3.11/3.12 — see `.github/workflows/ci.yml`):
 
 1. **Symbolic (SymPy).** Auto-differentiates `g(x)=x/‖x‖` and asserts the Jacobian equals the analytical
    `(1/m)(I − uuᵀ)` — residual simplifies to the zero matrix (+ numeric cross-check at a concrete `v`).
-2. **Empirical (Monte Carlo).** Samples 50,000 noise draws `e ~ N(0, 2Σ/n)` with an anisotropic Σ
-   (exponentially decaying spectrum in a random basis), measures the **exact** angle
-   `arccos(⟨v,v̂⟩/(‖v‖‖v̂‖))`, and asserts the empirical `E[θ²]` matches `2 tr(PΣP)/(n m²)` to **<1%**.
-3. **Implementation.** Asserts `src/calculator.py` returns the analytical `n*` exactly.
+2. **Empirical (Monte Carlo).** 50,000 noise draws `e ~ N(0, 2Σ/n)` with an anisotropic Σ (decaying
+   spectrum in a random basis); the **exact** angle `arccos(⟨v,v̂⟩/(‖v‖‖v̂‖))` matches the closed form
+   `2 tr(PΣP)/(n m²)` to **<1%** (last run: 0.13%).
+2b. **Tail coverage.** Running the Laurent–Massart confidence quota `n*_δ`, the empirical
+   `P(θ>θ*)` stays `≤ δ` (e.g. 0.34% ≤ 10%).
+3. **Implementation.** `src/calculator.py` returns the analytical `n*` exactly (0.0000%).
 
-Last run (d=50, n=50k, seed=0): symbolic residual = 0; MC relative error **0.13%**; implementation
-match **0.0000%**. All layers PASS.
+Unit tests additionally pin the scaling laws (`1/m²`, `σ²`, `1/θ²`), the anisotropic→isotropic
+reduction, the perpendicular-only property (variance along the signal is inert), the dual-allocation
+regimes, and input validation.
 
 ## License / status
 
