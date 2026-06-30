@@ -179,6 +179,28 @@ empirically corroborated on independent data.
 **Distillation / CI.** Results are stored in `fixtures/emeraldbay_calibration.json` and asserted by
 `tests/test_emeraldbay_integration.py` (network-free); figure `outputs/emeraldbay_heldout_validation.png`.
 
+**Experimental unit & replication structure (pooled-condition re-gating).** n★ is a quota *per unique
+perturbation condition* (the treated arm — the total cells aggregated into the condition's centroid),
+**not** per physical well (formal treatment, including the batch-variance decomposition, in
+`docs/SCALE_AUDIT.md` §4). A condition may in principle reach n★ by pooling cells across replicate wells,
+which raises the question of whether single-well under-sampling is rescued once replicates are pooled. We
+tested this directly on both reference atlases, and **in these data it is not**, because the conditions
+are essentially **unreplicated**: in Atlas A, **R = 1 for 96%** of (perturbagen × line) conditions
+(maximum R = 3), and Atlas B contributes a single pooled sample per (perturbagen × dose) condition
+(median ≈ 306 cells). Pooled cells per condition (Atlas A median 1,190) are therefore indistinguishable
+from single-well counts. Re-gating the 14,600 Atlas-A conditions that carry a measured magnitude (θ★ = 0.1
+rad) moves the over-sampled fraction from **2.4% (single-well) to 2.5% (pooled)** — only **12/14,600 =
+0.08%** of conditions cross UNDER → OVER. The median condition requires n★ ≈ 24,000 cells but holds ≈
+1,200 (a ~20× deficit that R ≤ 3 equal replicates cannot close), and the line-resolved Model-Perturbation
+profiles are unchanged (high-magnitude agents over-sampled in most lines; moderate/weak agents
+under-sampled in nearly all). **Conclusion:** the pooled-condition unit is the mathematically correct one,
+but in these single-sample-per-condition atlases it *coincides* with the single-condition unit, so the
+project-level conclusion stands — **≈ 2.5% of conditions are safely saturated at a 5.7° tolerance, and
+replication as actually practised rescues < 0.1%.** A screen *designed* with replicate batches and
+within-batch (co-plated vehicle) referencing would benefit from pooling — n★ being per-condition — but a
+single-sample-per-condition atlas does not, and cross-plate replicate pooling without referencing is
+further capped by the batch-variance floor of `SCALE_AUDIT.md` §4.
+
 ---
 
 ## 5. TRANSLATIONAL & RESOURCE-ALLOCATION IMPACT
