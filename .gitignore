@@ -17,3 +17,6 @@ data/
 agents/out/
 *.env
 deepseek.env
+
+# Built manuscript PDF (reproducible via pandoc)
+*.pdf
