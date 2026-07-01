@@ -92,6 +92,14 @@ scripts/verify_references.py` (32/32 DOIs).
     (pandoc + tectonic, 14 pp) and `manuscript.docx`; verified the Lean text renders with no
     code-as-math leak. No factual correction was needed — the manuscript never carried the §5 formula.
 
+11. **Introduction rewrite (motivation, symbol-free).** Replaced the Introduction's formalism-heavy
+    prose with a four-paragraph narrative — (1) single-cell screens and MoA-by-direction, (2) angular
+    error as the binding constraint of a direction-based screen, (3) why isotropic power calculations
+    fail on strongly anisotropic single-cell noise, (4) the closed-form anisotropic quota as a
+    budget-optimized triage instrument. Removed all explicit math (\(\hat\mu\), \(\hat v\),
+    \(\mathbb R^d\), \(\arccos\), \(P=I-uu^\top\), \(\theta_\star\)); the formalism now lives only in
+    Methods. Regenerated `manuscript.md`, rebuilt PDF + DOCX.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
