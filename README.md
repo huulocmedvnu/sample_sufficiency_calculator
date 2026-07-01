@@ -149,7 +149,7 @@ The formula is a theorem (verified symbolically + by Monte Carlo), so a second d
 *more* true — but it **can** test whether the CLT/Gaussian-centroid *assumptions* hold on real,
 independent single cells, and whether the calibration transfers. We did this on **tahoebio/EmeraldBay**
 (a separate 1.8 M-cell, 5-day atlas sharing the 5 representative cell lines), re-estimating σ² and m from
-EmeraldBay's *own* cells (within-condition σ² ≈ 2.1, vs Tahoe's marginal 2.406 — re-estimation is
+EmeraldBay's *own* cells (within-condition σ² ≈ 0.96 in its own PCA(50), vs Tahoe's marginal 2.406 — re-estimation is
 necessary, confirming σ² is the platform-specific input).
 
 **Held-out angular-error curves** (realized RMS angle from n subsampled cells vs the closed form
@@ -157,19 +157,19 @@ necessary, confirming σ² is the platform-specific input).
 
 | group (N, m) | mean rel. err | fitted slope vs `tr(PΣP)/m²` | R² |
 |---|---|---|---|
-| HS-578T (1067, 12.4) | **1.4%** | 0.769 vs 0.763 | **0.998** |
-| AN3-CA (752, 6.4) | **0.8%** | 1.379 vs 1.375 | **0.9996** |
-| HEC-1-A (1117, 3.0) | 2.4% | 6.66 vs 7.82 | 0.995 |
+| DMSO_T0 × HS-578T (1067, m=6.46) | **0.6%** | 0.789 vs 0.787 | **0.9999** |
+| DMSO_T0 × HEC-1-A (435, m=3.63) | 1.2% | 1.819 vs 1.854 | 0.9990 |
+| DMSO_T0 × BT-474 (461, m=3.56) | 1.2% | 1.561 vs 1.623 | 0.9998 |
+| Encorafenib × HEC-1-A (1117, m=1.78, drug) | 2.9% | 9.67 vs 11.17 (low-SNR) | 0.9965 |
 
 `realized² ∝ (1/n − 1/N)` is linear-through-origin with **R² > 0.99**, and the fitted slope matches the
 anisotropic `tr(PΣP)/m²` to **<1% for strong signatures** (the weaker m≈3 group deviates ~15% at small
 n — the expected breakdown of the first-order law at lower SNR, §5 of `THEORY.md`). **Regime gating:** of
-101 wells, the 15 predicted OVER-sampled all met the tolerance when downsampled to n* (**100%**).
+132 groups (>=100 cells), the 10 predicted OVER-sampled all met the tolerance when downsampled to n* (**100%**).
 
 This is distilled into `fixtures/emeraldbay_calibration.json` and asserted by
 `tests/test_emeraldbay_integration.py` (runs in CI, no network). The streaming calibrator that produced
-it is the companion calibration pipeline (one-time 58 GB job; figure
-`emeraldbay_heldout_validation.png`).
+it is `scripts/emeraldbay_recompute/` (one-time streaming job over 57.7 GB / 116 shards).
 
 ## The dual-sided framework: one threshold, two ledgers
 

@@ -115,6 +115,19 @@ scripts/verify_references.py` (32/32 DOIs).
     PDF/DOCX), README; scaffold docs (`CASE_STUDIES`, `SCALE_AUDIT`, `TECHNICAL_BLUEPRINT`,
     `MANUSCRIPT_DRAFT`) carry a superseded-numbers banner and defer to `fixtures/tahoe_*.csv`.
 
+13. **From-raw EmeraldBay recompute (independent validation).** Reprocessed the second atlas
+    (tahoebio/EmeraldBay, 1.83M cells, 116 shards, 57.7 GB) from the raw counts with the same recipe
+    (`scripts/emeraldbay_recompute/`, parallel-prefetch stream), fitting its **own** HVG(2000)+PCA(50)
+    embedding and retaining the 141,720 cells of the five shared lines for the held-out test. The
+    within-condition σ² ≈ 0.963 (own embedding). **Held-out angular-error curves** (subsample n cells,
+    realized RMS angle vs the closed form θ²(n)=tr(PΣP)/m²·(1/n−1/N)): all four (condition×line) groups
+    give R² > 0.996; the strong DMSO_T0×HS-578T (m=6.46) matches the predicted slope to 0.2%, while the
+    weak Encorafenib×HEC-1-A drug group (m=1.78) shows the expected ~13% low-SNR slope deficit.
+    Regime gating at θ=0.20: 10/132 groups predicted OVER, **100% met tolerance** when downsampled to
+    n★. Regenerated `fixtures/emeraldbay_calibration.json`; the integration test passes on it. Updated
+    SUPPLEMENT, manuscript §2.3 + Methods, README. The formula is a theorem (Lean/§10), so the
+    independent atlas tests the CLT/Gaussian-centroid *assumptions*, which hold to <1.2% on real cells.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one

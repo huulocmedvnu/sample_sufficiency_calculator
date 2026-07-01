@@ -58,21 +58,23 @@ Tail-controlled: `n★_δ = (2/m²θ★²)[tr(PΣP) + 2‖PΣP‖_F√L + 2‖P�
 | Depth-fixed resolution | θ(N₀) = **0.427 / m** rad (at median N₀) | derived |
 | **Study-design layout** | **100,648,790 cells** (95,624,334 pass `full`, 5.0% filtered); **1,344 wells = 14 plates × 96**; cells/well median 71,092 (pre) / 67,212 (post) | `obs_metadata`; `tahoe_layout_summary.json` |
 | Plate QC variation | plate3 11.63% filter loss (operationalizes "excl3") vs 3–5% typical | `per_plate` in `tahoe_layout_summary.json` |
-| **EmeraldBay** within-condition σ² | ≈ 2.12 | `calibrate_emeraldbay.py` (≠ marginal 2.41; see caveats) |
-| EmeraldBay cells streamed (5 shared cell lines) | 142,883 (of 58 GB / 116 shards) | companion pipeline |
-| EmeraldBay wells gated | 101; predicted OVER = 15 → 100% met tol | gating, θ★ = 0.20 rad |
+| **EmeraldBay** within-condition σ² | **≈ 0.963** | `scripts/emeraldbay_recompute/` (own PCA(50); ≠ marginal Tahoe 2.406; see caveats) |
+| EmeraldBay cells streamed (5 shared cell lines) | 141,720 (of 1.83M; 57.7 GB / 116 shards) | `scripts/emeraldbay_recompute/` |
+| EmeraldBay groups gated | 132 (≥100 cells); predicted OVER = 10 → 100% met tol | gating, θ★ = 0.20 rad |
 | Symbolic Jacobian residual | zero matrix; max float diff 2.8×10⁻¹⁷ | `verify_theory.py` L1 |
 | Monte-Carlo check | K=50,000; seed=0; rel. err 0.13%; ρ²=3.82×10⁵; d_eff=12.2 | `verify_theory.py` L2 |
 | Laurent–Massart tail coverage | empirical Pr(θ>θ★) = 0.34% ≤ δ = 10% | `test_calculator.py` |
 | Test suite | 13 tests pass (12 unit + EmeraldBay integration) | CI |
 
-**Held-out angular-error curves (EmeraldBay, prediction θ²(n)=tr(PΣP)/m²·(1/n−1/N)):**
+**Held-out angular-error curves (EmeraldBay, from-raw recompute `scripts/emeraldbay_recompute/`;
+prediction θ²(n)=tr(PΣP)/m²·(1/n−1/N); own PCA(50), within-condition σ²=0.963):**
 
 | Group (actual identity) | N | m | mean rel. err | slope vs tr(PΣP)/m² | R² |
 |---|---:|---:|---:|---:|---:|
-| DMSO_T0 × HS-578T | 1067 | 12.41 | 1.4% | 0.769 vs 0.763 | 0.9979 |
-| DMSO_T0 × AN3-CA | 752 | 6.39 | 0.8% | 1.379 vs 1.375 | 0.9996 |
-| Encorafenib × HEC-1-A | 1117 | 3.02 | 2.4% | 6.66 vs 7.82 | 0.9954 |
+| DMSO_T0 × HS-578T | 1067 | 6.46 | 0.6% | 0.789 vs 0.787 | 0.9999 |
+| DMSO_T0 × HEC-1-A | 435 | 3.63 | 1.2% | 1.819 vs 1.854 | 0.9990 |
+| DMSO_T0 × BT-474 | 461 | 3.56 | 1.2% | 1.561 vs 1.623 | 0.9998 |
+| Encorafenib × HEC-1-A (drug) | 1117 | 1.78 | 2.9% | 9.67 vs 11.17 (low-SNR) | 0.9965 |
 
 **Case-study spectrum (Tahoe; n★ = 23,577/m², per-drug median m and OVER out of 150 conditions):**
 Panobinostat m=4.24 OVER in 73/150; Homoharringtonine m=5.88 OVER in 72/150; Harringtonine m=3.67 OVER
@@ -86,7 +88,7 @@ NCI-H460 rises from n★=222 (0.05 µM) to n★=98 (5 µM). Full tables → [`CA
 
 ## 3. Honesty ledger (consolidated — reviewers will probe these)
 
-1. **Variance-definition mismatch.** EmeraldBay σ²≈2.1 is *within-condition*; Tahoe σ²≈2.41 is *marginal* —
+1. **Variance-definition mismatch.** EmeraldBay σ²≈0.96 is *within-condition* (own PCA); Tahoe σ²≈2.41 is *marginal* —
    not a clean platform head-to-head. Both establish σ² as a platform/pipeline-specific plug-in.
 2. **DMSO_T0 group identity.** The two high-m validation groups are time-zero reference populations, not
    drug effects; only Encorafenib×HEC-1-A is a drug. The held-out test validates geometry, not biology.

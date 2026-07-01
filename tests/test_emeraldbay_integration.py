@@ -1,7 +1,7 @@
 """Integration test: external validation of the anisotropic theory on the INDEPENDENT EmeraldBay atlas.
 
-Loads the committed `fixtures/emeraldbay_calibration.json` (produced offline by
-the companion calibration pipeline streaming the 58 GB atlas) and asserts that the held-out
+Loads the committed `fixtures/emeraldbay_calibration.json` (produced by
+scripts/emeraldbay_recompute/ streaming the 57.7 GB atlas) and asserts that the held-out
 angular-error curves and the regime-gating accuracy meet the theory's predictions. CI-safe: no
 network, no large data — it re-checks the distilled validation result. Skips if the fixture is absent.
 """
