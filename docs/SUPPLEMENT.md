@@ -60,7 +60,7 @@ Tail-controlled: `n★_δ = (2/m²θ★²)[tr(PΣP) + 2‖PΣP‖_F√L + 2‖P�
 | Plate QC variation | plate3 11.63% filter loss (operationalizes "excl3") vs 3–5% typical | `per_plate` in `tahoe_layout_summary.json` |
 | **EmeraldBay** within-condition σ² | **≈ 0.963** (full atlas, 52 lines, 1.83M cells; 5-shared-line slice = 0.896) | `scripts/emeraldbay_recompute/` (own PCA(50); ≠ marginal Tahoe 2.406) |
 | EmeraldBay cells streamed (5 shared cell lines) | 141,720 (of 1.83M; 57.7 GB / 116 shards) | `scripts/emeraldbay_recompute/` |
-| EmeraldBay groups gated | 132 (**5 shared lines**, ≥100 cells); predicted OVER = 10 → 100% met tol | gating, θ★ = 0.20 rad |
+| EmeraldBay gating (full atlas) | **3,971 groups, 52 lines** (≥100 cells): 217 OVER (5.5%), 94.5% UNDER; downsample-verified 10/10 → 100% on the 5 shared lines | gating, θ★ = 0.20 rad |
 | Symbolic Jacobian residual | zero matrix; max float diff 2.8×10⁻¹⁷ | `verify_theory.py` L1 |
 | Monte-Carlo check | K=50,000; seed=0; rel. err 0.13%; ρ²=3.82×10⁵; d_eff=12.2 | `verify_theory.py` L2 |
 | Laurent–Massart tail coverage | empirical Pr(θ>θ★) = 0.34% ≤ δ = 10% | `test_calculator.py` |

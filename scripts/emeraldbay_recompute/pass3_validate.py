@@ -125,7 +125,27 @@ for l in np.unique(cline):
             if np.sqrt(th2.mean()) <= THETA_GATE * 1.05:
                 met += 1
 gate_acc = round(met / n_over, 4) if n_over else 1.0
-print(f"[gating] groups>=100 cells: {groups}; predicted OVER: {n_over}; met tol: {met} -> acc {gate_acc}")
+print(f"[gating:shared5] groups>=100: {groups}; predicted OVER: {n_over}; met tol: {met} -> acc {gate_acc}")
+
+# --- FULL-ATLAS gating classification (all 52 lines) from the per-condition moments ---
+# (diagonal within-group covariance ell_k = <x^2> - <x>^2; tr(PSP) = sum_k (1 - u_k^2) ell_k)
+cent = sums / counts[:, None]
+ell = np.maximum(sumsq / counts[:, None] - cent**2, 0.0)
+pb_line = np.array([k.rsplit("|", 1)[1] for k in pb["cond_keys"].astype(str)])
+line_base = {l: sums[pb_line == l].sum(0) / counts[pb_line == l].sum() for l in np.unique(pb_line)}
+n_groups_all = n_over_all = 0
+for i in range(len(counts)):
+    if counts[i] < 100:
+        continue
+    n_groups_all += 1
+    v = cent[i] - line_base[pb_line[i]]; m = np.linalg.norm(v)
+    if m <= 0:
+        continue
+    u = v / m; trPSP = float(((1 - u**2) * ell[i]).sum())
+    if counts[i] >= 2 * trPSP / (m**2 * THETA_GATE**2):
+        n_over_all += 1
+pct_over_all = round(100 * n_over_all / n_groups_all, 1)
+print(f"[gating:full-atlas] 52 lines; groups>=100: {n_groups_all}; OVER: {n_over_all} ({pct_over_all}%)")
 
 fix = dict(
     description="EmeraldBay external calibration (from-raw recompute; scripts/emeraldbay_recompute/): "
@@ -133,6 +153,11 @@ fix = dict(
                 "of THEORY.md). Baseline = per-line mean; magnitudes are 5-day survivor norms.",
     num_dimensions=d, per_component_variance=[round(float(x), 5) for x in per_pc],
     sigma2_mean=round(sigma2_within, 4), heldout_curves=heldout,
-    gating_tolerance=THETA_GATE, gating_over_accuracy=gate_acc)
+    gating_tolerance=THETA_GATE,
+    gating_scope="full atlas: 52 cell lines, condition-line groups with >=100 cells",
+    gating_n_groups=int(n_groups_all), gating_n_over=int(n_over_all), gating_pct_over=pct_over_all,
+    gating_over_accuracy=gate_acc,
+    gating_accuracy_scope="downsample-and-measure verified on the 5 shared lines "
+                          f"({n_over} predicted OVER, {met} met tolerance)")
 json.dump(fix, open(REPO_FIX, "w"), indent=1)
 print(f"[pass3-eb] sigma^2(within)={sigma2_within:.4f}; wrote {REPO_FIX}")

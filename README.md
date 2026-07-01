@@ -165,7 +165,7 @@ The **held-out validation and gating are restricted to the 5 lines shared with T
 `realized² ∝ (1/n − 1/N)` is linear-through-origin with **R² > 0.99**, and the fitted slope matches the
 anisotropic `tr(PΣP)/m²` to **<1% for strong signatures** (the weaker m≈3 group deviates ~15% at small
 n — the expected breakdown of the first-order law at lower SNR, §5 of `THEORY.md`). **Regime gating:** of
-132 groups (5 shared lines, >=100 cells), the 10 predicted OVER-sampled all met the tolerance when downsampled to n* (**100%**).
+3,971 (condition x line) groups across all 52 lines, 217 (5.5%) are predicted OVER-sampled; the downsample-and-measure check (per-cell coords retained for the 5 shared lines) confirms 10/10 predicted-OVER groups meet the tolerance at n* (**100%**).
 
 This is distilled into `fixtures/emeraldbay_calibration.json` and asserted by
 `tests/test_emeraldbay_integration.py` (runs in CI, no network). The streaming calibrator that produced
