@@ -47,16 +47,18 @@ Tail-controlled: `n★_δ = (2/m²θ★²)[tr(PΣP) + 2‖PΣP‖_F√L + 2‖P�
 
 | Symbol / quantity | Value | Source |
 |---|---|---|
-| Embedding dimension d | 50 | shared PCA |
-| **Tahoe** marginal σ² | 7.66 | `tahoe_calibration.json`, `calibrate.py` |
-| **Tahoe** baseline N₀ | 1,394 cells/well (median) | reference atlas, 15,200 groups |
+| Embedding dimension d | 50 | shared PCA(50) |
+| **Tahoe** per-cell σ² | **2.406** | fresh recompute; `tahoe_calibration.json`, `scripts/tahoe_recompute/` |
+| **Tahoe** baseline N₀ | **1,296 cells / (drug×dose×line) condition** (median, post-filter) | `obs_metadata`; `tahoe_condition_counts.csv` |
 | Standard tolerance θ★ | 0.1 rad (5.73°) | case studies / resource demo |
-| Tahoe quota law @ standard config | n★ = 75,068 / m² | derived |
-| Over/under boundary | m = 7.34 (n★ = N₀) | derived |
-| **n★ distribution** (292 drugs, θ=0.1) | median 23,934; only 2% over-sampled; 64% need 10k–50k; 17% ghost >50k | `SCALE_AUDIT.md` |
-| 100×3×2 screen budget | flat 39.2M vs adaptive(cap10k) 5.7M vs θ=0.2 3.8M cells | `SCALE_AUDIT.md` |
-| Depth-fixed resolution | θ(N₀) = 0.734 / m rad | derived |
-| **EmeraldBay** within-condition σ² | ≈ 2.12 | `calibrate_emeraldbay.py` (≠ marginal 7.66; see caveats) |
+| Tahoe quota law @ standard config | **n★ = 23,577 / m²** | derived |
+| Over/under boundary | **m = 4.27** (n★ = N₀ at median depth) | derived |
+| **Regime split** (379 drugs × 3 doses × 50 lines = 56,827 conditions, θ=0.1) | **2.5% OVER · 89.3% UNDER · 8.2% Ghost** (97.5% under-or-ghost); median n★ 14,570, median m 1.27 | `tahoe_per_cell_line.csv`, `SCALE_AUDIT.md` |
+| **Per-drug spectrum** (of 150 conditions/drug) | 132/379 drugs OVER in 0 conditions; strongest Panobinostat 73/150, Homoharringtonine 72/150 | `tahoe_per_drug.csv` |
+| Depth-fixed resolution | θ(N₀) = **0.427 / m** rad (at median N₀) | derived |
+| **Study-design layout** | **100,648,790 cells** (95,624,334 pass `full`, 5.0% filtered); **1,344 wells = 14 plates × 96**; cells/well median 71,092 (pre) / 67,212 (post) | `obs_metadata`; `tahoe_layout_summary.json` |
+| Plate QC variation | plate3 11.63% filter loss (operationalizes "excl3") vs 3–5% typical | `per_plate` in `tahoe_layout_summary.json` |
+| **EmeraldBay** within-condition σ² | ≈ 2.12 | `calibrate_emeraldbay.py` (≠ marginal 2.41; see caveats) |
 | EmeraldBay cells streamed (5 shared cell lines) | 142,883 (of 58 GB / 116 shards) | companion pipeline |
 | EmeraldBay wells gated | 101; predicted OVER = 15 → 100% met tol | gating, θ★ = 0.20 rad |
 | Symbolic Jacobian residual | zero matrix; max float diff 2.8×10⁻¹⁷ | `verify_theory.py` L1 |
@@ -72,15 +74,19 @@ Tail-controlled: `n★_δ = (2/m²θ★²)[tr(PΣP) + 2‖PΣP‖_F√L + 2‖P�
 | DMSO_T0 × AN3-CA | 752 | 6.39 | 0.8% | 1.379 vs 1.375 | 0.9996 |
 | Encorafenib × HEC-1-A | 1117 | 3.02 | 2.4% | 6.66 vs 7.82 | 0.9954 |
 
-**Case-study spectrum (Tahoe; n★ = 75,068/m²):** Homoharringtonine m=14.4 n★=365 OVER (3.8× / 74%·93%);
-Idarubicin m=10.6 n★=664 OVER (2.1× / 52%·77%); Dinaciclib m=6.5 n★=1,760 UNDER; Resveratrol m=3.0
-n★=8,518 UNDER; Ribociclib m=0.84 n★=107,547 UNDER (ghost). Full table → [`CASE_STUDIES.md`](CASE_STUDIES.md).
+**Case-study spectrum (Tahoe; n★ = 23,577/m², per-drug median m and OVER out of 150 conditions):**
+Panobinostat m=4.24 OVER in 73/150; Homoharringtonine m=5.88 OVER in 72/150; Harringtonine m=3.67 OVER
+in 64/150; Palbociclib m=1.41 UNDER in 150/150; Crizotinib m=0.99 Ghost in 28/150 (OVER in 0). The unit
+is the **(drug × dose × line) condition**, modulated by BOTH dose and line: homoharringtonine at 5 µM
+reaches m=15.5 (n★=98, OVER) in NCI-H460 but only m=3.1 (n★=2,390, UNDER) in NCI-H661; the same drug in
+NCI-H460 rises from n★=222 (0.05 µM) to n★=98 (5 µM). Full tables → [`CASE_STUDIES.md`](CASE_STUDIES.md),
+`tahoe_per_drug.csv`, `tahoe_per_dose.csv`, `tahoe_quota_per_condition.csv`.
 
 ---
 
 ## 3. Honesty ledger (consolidated — reviewers will probe these)
 
-1. **Variance-definition mismatch.** EmeraldBay σ²≈2.1 is *within-condition*; Tahoe 7.66 is *marginal* —
+1. **Variance-definition mismatch.** EmeraldBay σ²≈2.1 is *within-condition*; Tahoe σ²≈2.41 is *marginal* —
    not a clean platform head-to-head. Both establish σ² as a platform/pipeline-specific plug-in.
 2. **DMSO_T0 group identity.** The two high-m validation groups are time-zero reference populations, not
    drug effects; only Encorafenib×HEC-1-A is a drug. The held-out test validates geometry, not biology.

@@ -1,3 +1,8 @@
+> **NOTE (2026-07-01): numbers superseded.** This document predates the from-raw, dose-resolved
+> Tahoe-100M recompute (`scripts/tahoe_recompute/`). Core constants (sigma^2=2.406, n*=23,577/m^2,
+> N0=1,296) have been swapped in, but detailed per-drug tables here reflect the earlier calibration.
+> The authoritative numbers are in `fixtures/tahoe_*.csv`, `docs/SUPPLEMENT.md`, and the manuscript.
+
 # Technical Blueprint & Data Supplement
 ### Anisotropic Sample-Sufficiency for Single-Cell Perturbation-Direction Screens
 **Status:** frozen source-of-truth for manuscript drafting (target: *Nature Methods* / *Bioinformatics*).
@@ -20,9 +25,9 @@ have been corrected throughout this document. **Use the corrected values.**
    centroid baseline. Only `Encorafenib × HEC-1-A` is an actual drug perturbation. The held-out test
    validates the *angular-error geometry*; it is agnostic to biological interpretation. Do **not**
    describe HS-578T/AN3-CA as "strong drug effects".
-3. **σ² = 2.1 (EmeraldBay) and σ² = 7.66 (Tahoe) are different variance definitions and are NOT a clean
+3. **σ² = 2.1 (EmeraldBay) and σ² = 2.406 (Tahoe) are different variance definitions and are NOT a clean
    head-to-head.** EmeraldBay's 2.1 is the *within-condition residual* variance; the Tahoe calculator
-   default 7.66 is a *marginal* per-cell variance (includes between-condition/between-line structure).
+   default 2.406 is a *marginal* per-cell variance (includes between-condition/between-line structure).
    Both support the claim "σ² is a platform/pipeline-specific plug-in requiring re-estimation," but a
    like-for-like within-condition Tahoe σ² was **not** computed. State this caveat; do not assert the
    gap is purely platform-driven.
@@ -149,7 +154,7 @@ MOSAIC) shares the 5 representative cell lines and the token/expression schema.
 baseline is the **per-line mean** (no DMSO at matched timepoint; a `DMSO_T0` population exists and forms
 a high-magnitude reference group). The **within-condition** residual per-PC variance was **σ² ≈ 2.12**
 (mean over 50 PCs). *Auditor caveat (item 3): this within-condition value is not directly comparable to
-the Tahoe calculator default 7.66, which is marginal; both nonetheless establish σ² as a
+the Tahoe calculator default 2.406, which is marginal; both nonetheless establish σ² as a
 platform/pipeline-specific plug-in requiring re-estimation.*
 
 **Held-out angular-error subsampling curves.** For a target group of N cells, the truth direction is
@@ -224,7 +229,7 @@ is **74% (linear) / 93% (quadratic)** reduction.
 
 **Population-scale framing (correction of a common misconception).** The small n★ values of strong
 cytotoxics are *not* representative: across the 292-drug Tahoe panel at θ★ = 0.1 rad the **median n★ is
-23,934 cells/arm** (only 2% over-sampled; 64% need 10 k–50 k; 17% > 50 k). At a tight MoA tolerance the
+14,570 cells/arm** (only 2% over-sampled; 64% need 10 k–50 k; 17% > 50 k). At a tight MoA tolerance the
 *typical* well is **under-sampled** — atlases are large by aggregating many conditions, not because any
 single condition is cheap. n★ is strictly **per-arm/per-condition**: the global atlas size enters no term
 of the variance S = Σ_t/n_t + Σ_c/n_c, only the per-well sum Σ_w n★_w sets project budget (see
@@ -248,7 +253,7 @@ pipeline (the within-condition residual variance, not the marginal).
   `calculate_optimal_resource_allocation`). Verification: `tests/verify_theory.py`,
   `tests/test_calculator.py`, `tests/test_emeraldbay_integration.py`; CI `.github/workflows/ci.yml`.
 - External calibrator: the companion calibration pipeline → `fixtures/emeraldbay_calibration.json`.
-- Constants of record: d = 50; Tahoe marginal σ² = 7.66, N₀ = 1394; EmeraldBay within-condition
+- Constants of record: d = 50; Tahoe marginal σ² = 2.406, N₀ = 1394; EmeraldBay within-condition
   σ² ≈ 2.12, 142,883 cells, 101 gated wells, θ★ = 0.20 rad; Monte-Carlo K = 50,000, seed = 0,
   relative error 0.13%; symbolic residual 2.8×10⁻¹⁷.
 - **Honesty ledger for reviewers:** (i) σ² values use different variance definitions across atlases

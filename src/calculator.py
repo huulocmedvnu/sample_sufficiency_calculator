@@ -169,7 +169,7 @@ def calculate_optimal_resource_allocation(single_cell_variance: float,
                                           num_dimensions: int,
                                           perturbation_magnitude: float,
                                           tolerance: float = 0.01,
-                                          baseline_cells_per_well: float = 1394.0,
+                                          baseline_cells_per_well: float = 1296.0,
                                           complexity: str = "linear") -> dict:
     """Dual-sided sample-sufficiency: one info-saturation threshold n*, read two ways.
 
@@ -195,9 +195,10 @@ def calculate_optimal_resource_allocation(single_cell_variance: float,
     ----------
     single_cell_variance, num_dimensions, perturbation_magnitude, tolerance
         As in `calculate_experimental_cell_quota`.
-    baseline_cells_per_well : float, default 1394
-        Cells currently acquired per well (the over/under-sampling reference). Default = the Tahoe-100M
-        a reference-atlas median; override with your platform's number.
+    baseline_cells_per_well : float, default 1296
+        Cells currently acquired per condition/arm (the over/under-sampling reference). Default = the
+        median cells per (drug x dose x cell-line) condition from the fresh Tahoe-100M recompute
+        (post-filter; see scripts/tahoe_recompute/); override with your platform's number.
     complexity : str, default 'linear'
         Cost model for the dry-lab op: 'linear'/'ram'/'pca' (p=1), 'quadratic'/'pairwise' (p=2),
         or 'nlogn' (N log N).
@@ -240,8 +241,8 @@ def calculate_optimal_resource_allocation(single_cell_variance: float,
 
 
 if __name__ == "__main__":
-    # quick self-check with the calibrated Tahoe-100M constant (see calibrate.py / README)
-    for m, lab in [(2.97, "Resveratrol (strong)"), (1.33, "weak signature")]:
+    # quick self-check with the fresh Tahoe-100M recompute constant sigma^2=2.406 (see calibrate.py / README)
+    for m, lab in [(5.10, "Homoharringtonine (strong)"), (1.22, "median signature")]:
         for theta in (0.05, 0.1, 0.2):
-            n = calculate_experimental_cell_quota(7.66, 50, m, theta)
-            print(f"{lab:22s} m={m:.2f} theta={theta} rad -> n*={n:,.0f} cells/arm")
+            n = calculate_experimental_cell_quota(2.406, 50, m, theta)
+            print(f"{lab:26s} m={m:.2f} theta={theta} rad -> n*={n:,.0f} cells/arm")

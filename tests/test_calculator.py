@@ -17,25 +17,25 @@ from calculator import (
 
 # ---------------------------------------------------------------- isotropic core
 def test_isotropic_closed_form():
-    d, s2, m, th = 50, 7.66, 3.0, 0.1
+    d, s2, m, th = 50, 2.406, 3.0, 0.1
     assert quota(s2, d, m, th) == pytest.approx(2 * (d - 1) * s2 / (m ** 2 * th ** 2))
 
 
 def test_scaling_laws():
-    base = quota(7.66, 50, 3.0, 0.1)
-    assert quota(7.66, 50, 6.0, 0.1) == pytest.approx(base / 4)     # n* ~ 1/m^2
-    assert quota(15.32, 50, 3.0, 0.1) == pytest.approx(base * 2)    # n* ~ sigma^2
-    assert quota(7.66, 50, 3.0, 0.2) == pytest.approx(base / 4)     # n* ~ 1/theta^2
+    base = quota(2.406, 50, 3.0, 0.1)
+    assert quota(2.406, 50, 6.0, 0.1) == pytest.approx(base / 4)     # n* ~ 1/m^2
+    assert quota(4.812, 50, 3.0, 0.1) == pytest.approx(base * 2)    # n* ~ sigma^2
+    assert quota(2.406, 50, 3.0, 0.2) == pytest.approx(base / 4)     # n* ~ 1/theta^2
 
 
 def test_rms_angular_error_is_inverse():
-    n = quota(7.66, 50, 3.0, 0.1)
-    assert rms_angular_error(7.66, 50, 3.0, n) == pytest.approx(0.1, rel=1e-9)
+    n = quota(2.406, 50, 3.0, 0.1)
+    assert rms_angular_error(2.406, 50, 3.0, n) == pytest.approx(0.1, rel=1e-9)
 
 
 # ---------------------------------------------------------------- anisotropic
 def test_anisotropic_reduces_to_isotropic():
-    d, s2, m, th = 50, 7.66, 3.0, 0.1
+    d, s2, m, th = 50, 2.406, 3.0, 0.1
     v = np.zeros(d); v[0] = m
     r = aquota(s2 * np.ones(d), v, th)
     assert r["required_cells_per_arm"] == pytest.approx(quota(s2, d, m, th))
@@ -66,15 +66,15 @@ def test_effective_dimensions_bounds():
 
 # ---------------------------------------------------------------- dual-sided allocation
 def test_resource_allocation_under_sampled():
-    weak = alloc(7.66, 50, 1.33, 0.1, baseline_cells_per_well=1394)
+    weak = alloc(2.406, 50, 1.22, 0.1, baseline_cells_per_well=1296)
     assert weak["dry_lab_compute_reduction_ratio"] == 0.0
     assert weak["wet_lab_multiplex_gain"] == pytest.approx(1.0)
     assert "UNDER" in weak["regime"]
 
 
 def test_resource_allocation_over_sampled():
-    strong = alloc(7.66, 50, 14.35, 0.1, baseline_cells_per_well=1394, complexity="quadratic")
-    lin = alloc(7.66, 50, 14.35, 0.1, baseline_cells_per_well=1394, complexity="linear")
+    strong = alloc(2.406, 50, 12.07, 0.1, baseline_cells_per_well=1296, complexity="quadratic")
+    lin = alloc(2.406, 50, 12.07, 0.1, baseline_cells_per_well=1296, complexity="linear")
     assert 0.0 < lin["dry_lab_compute_reduction_ratio"] < 1.0
     # quadratic-cost ops save at least as much as linear
     assert strong["dry_lab_compute_reduction_ratio"] >= lin["dry_lab_compute_reduction_ratio"]
@@ -85,9 +85,9 @@ def test_input_validation():
     with pytest.raises(ValueError):
         quota(-1.0, 50, 3.0, 0.1)
     with pytest.raises(ValueError):
-        quota(7.66, 1, 3.0, 0.1)
+        quota(2.406, 1, 3.0, 0.1)
     with pytest.raises(ValueError):
-        quota(7.66, 50, 0.0, 0.1)
+        quota(2.406, 50, 0.0, 0.1)
     with pytest.raises(ValueError):
         aquota(np.ones(5), np.zeros(5), 0.1)            # zero perturbation vector
     with pytest.raises(ValueError):

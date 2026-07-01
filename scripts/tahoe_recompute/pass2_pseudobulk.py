@@ -47,7 +47,9 @@ if os.path.exists(CKPT):
 
 
 def process_shard(path):
-    t = pq.read_table(path, columns=["genes", "expressions", "drug", "cell_line_id"])
+    # key on (sample x cell_line): `sample` uniquely identifies drug x dose x plate, so this
+    # resolves the true (drug x dose x plate x line) unit (pooled to drug x dose x line in Pass 3).
+    t = pq.read_table(path, columns=["genes", "expressions", "sample", "cell_line_id"])
     g = t.column("genes"); e = t.column("expressions")
     # flatten list-arrays: values + offsets
     gv = g.combine_chunks(); ev = e.combine_chunks()
@@ -66,9 +68,9 @@ def process_shard(path):
     keep = hidx >= 0
     cidH = cid[keep]; hjdx = hidx[keep]
     normv = np.log1p(val[keep] * factor[cidH])
-    # per-cell condition labels
-    drug = np.asarray(t.column("drug").to_pylist()); line = np.asarray(t.column("cell_line_id").to_pylist())
-    cond = np.char.add(np.char.add(drug.astype(str), "|"), line.astype(str))
+    # per-cell condition labels: sample|cell_line  (sample = drug x dose x plate)
+    samp = np.asarray(t.column("sample").to_pylist()); line = np.asarray(t.column("cell_line_id").to_pylist())
+    cond = np.char.add(np.char.add(samp.astype(str), "|"), line.astype(str))
     uconds, cinv = np.unique(cond, return_inverse=True)       # cinv: per-cell local cond id
     k = len(uconds)
     cond_of_entry = cinv[cidH]

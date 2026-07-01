@@ -1,0 +1,31 @@
+{
+  "sigma2": 2.4058,
+  "d": 50,
+  "theta": 0.1,
+  "nstar_const": 23576.6,
+  "nstar_formula": "n* = 23577/m^2",
+  "unit": "(drug x dose x cell_line) with plate-matched DMSO control",
+  "over_under_boundary_m": 4.265,
+  "ghost_boundary_m": 0.687,
+  "depth_fixed_coeff": 0.427,
+  "depth_fixed_resolution": "theta(N0) = 0.427/m rad at median N0=1296",
+  "median_nstar": 14570,
+  "median_m": 1.272,
+  "median_N0": 1296,
+  "pct_OVER": 2.5,
+  "pct_UNDER": 89.3,
+  "pct_Ghost": 8.2,
+  "pct_under_or_ghost": 97.5,
+  "n_conditions": 56827,
+  "n_drugs": 379,
+  "n_doses": 3,
+  "n_lines": 50,
+  "drugs_over_in_0_conditions": 132,
+  "drugs_over_in_ge100": 0,
+  "screen_budget_100x3x2": {
+    "flat_p90": 45631.48424340916,
+    "flat_M": 27.4,
+    "adaptive_cap10k_M": 4.9,
+    "theta02_cap10k_M": 2.7
+  }
+}

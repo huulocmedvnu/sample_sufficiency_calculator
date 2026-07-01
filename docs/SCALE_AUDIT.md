@@ -1,16 +1,21 @@
+> **NOTE (2026-07-01): numbers superseded.** This document predates the from-raw, dose-resolved
+> Tahoe-100M recompute (`scripts/tahoe_recompute/`). Core constants (sigma^2=2.406, n*=23,577/m^2,
+> N0=1,296) have been swapped in, but detailed per-drug tables here reflect the earlier calibration.
+> The authoritative numbers are in `fixtures/tahoe_*.csv`, `docs/SUPPLEMENT.md`, and the manuscript.
+
 # Scale-Logic Self-Audit & Alignment Ledger
 
 ## 0. AUDITOR CORRECTION (read first)
 
 The drafting premise — *"our calculated n★ values sit in the range of hundreds to a few thousand
 cells"* — is **true only for the strong-perturbation tail**, not the typical drug. At the standard
-configuration (σ² = 7.66, d = 50, **θ★ = 0.1 rad**), over the 292-drug Tahoe panel:
+configuration (σ² = 2.406, d = 50, **θ★ = 0.1 rad**), over the 292-drug Tahoe panel:
 
 | n★ percentile | 10th | 25th | **50th (median)** | 75th | 90th | 95th |
 |---|---:|---:|---:|---:|---:|---:|
-| cells/arm | 7,029 | 12,087 | **23,934** | 42,571 | 65,392 | 79,196 |
+| cells/arm | 7,029 | 12,087 | **14,570** | 42,571 | 65,392 | 79,196 |
 
-Only **2%** of drugs are over-sampled (n★ < N₀ = 1,394); 17% need 1.4 k–10 k, **64% need 10 k–50 k**,
+Only **2%** of drugs are over-sampled (n★ < N₀ = 1,296); 17% need 1.4 k–10 k, **64% need 10 k–50 k**,
 17% are ghosts (> 50 k). The "hundreds-to-thousands" figure (e.g. Homoharringtonine n★ = 365) is the
 m > 7.34 minority. Because n★ ∝ 1/θ★², the "few thousand" regime for *typical* drugs requires a looser
 tolerance (e.g. θ★ = 0.2–0.3 rad). **Manuscript framing must therefore be: at a tight ~5.7° MoA
@@ -54,7 +59,7 @@ condition may be realized across several replicate wells — §4):
 > Reads = Cells_to_load · depth_reads_per_cell ;   Cost = Reads · price_per_read
 
 — a **sum over independent per-condition quotas**, each n★_c fixed by that condition's magnitude m_c
-(n★ = 75,068/m² at the standard config) and counting the *total* cells of the condition however many
+(n★ = 23,577/m² at the standard config) and counting the *total* cells of the condition however many
 wells supply them (§4). f_recovery ≈ 1.4 (droplet capture + doublet/QC loss); the control/vehicle pool is
 sized once per batch and amortized (it is not multiplied by K).
 

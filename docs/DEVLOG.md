@@ -100,12 +100,27 @@ scripts/verify_references.py` (32/32 DOIs).
     \(\mathbb R^d\), \(\arccos\), \(P=I-uu^\top\), \(\theta_\star\)); the formalism now lives only in
     Methods. Regenerated `manuscript.md`, rebuilt PDF + DOCX.
 
+12. **From-raw, dose-resolved Tahoe-100M recompute.** Discarded the old cached calibration and
+    reanalysed from the raw 100,648,790-cell dataset (`scripts/tahoe_recompute/`, following the theislab
+    vevo_100m recipe: `normalize_total(1e4)`→`log1p`→HVG(2000)→PCA(50)), streamed over all 3,388
+    expression shards (337 GB) with a resumable, parallel-prefetch pipeline. **Caught and fixed a
+    dose-pooling error** mid-way: the first pass keyed pseudobulk on (drug×line), silently averaging
+    over the ~3 doses per drug and summing their cells; re-streamed keyed on (sample×line) and pooled to
+    the correct **(drug × dose × line)** unit with plate-matched DMSO controls. New constants:
+    **σ²=2.406** (was 7.66), **n★=23,577/m²** (was 75,068), **N₀=1,296** cells/condition (was 1,394);
+    panel **56,827 conditions** with **2.5% OVER / 89.3% UNDER / 8.2% Ghost** at θ=0.1. Also derived the
+    study-design layout from `obs_metadata` (1,344 wells = 14 plates × 96; 5.0% QC-filtered; plate3
+    11.6% loss). Propagated repo-wide: `calculator.py`/`calibrate.py`/tests, `fixtures/tahoe_*`,
+    `SUPPLEMENT.md`, the manuscript (§2.4 rewritten to the drug×dose×line spectrum; Tables 2–4; rebuilt
+    PDF/DOCX), README; scaffold docs (`CASE_STUDIES`, `SCALE_AUDIT`, `TECHNICAL_BLUEPRINT`,
+    `MANUSCRIPT_DRAFT`) carry a superseded-numbers banner and defer to `fixtures/tahoe_*.csv`.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
   group (Encorafenib × HEC-1-A) is a drug — the held-out test validates geometry, not biology.
-- EmeraldBay σ² ≈ 2.12 (within-condition) and Tahoe-100M σ² = 7.66 (marginal) are not a clean platform
-  head-to-head; both only establish σ² as a plug-in.
+- EmeraldBay σ² ≈ 2.12 (within-condition) and Tahoe-100M σ² = 2.406 (marginal, fresh recompute) are not
+  a clean platform head-to-head; both only establish σ² as a plug-in.
 - Gating tolerance in the EmeraldBay experiment is 0.20 rad (not the standard 0.1).
 - Resource figures are Tahoe-100M-derived; compute gains are polynomial, never exponential.
 - Author lists beyond the third name are abbreviated and should be expanded before submission.

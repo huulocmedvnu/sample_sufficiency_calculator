@@ -1,112 +1,112 @@
 #!/usr/bin/env python
-"""Pass 3 of the Tahoe-100M recompute: turn the per-(drug x line) pseudobulk centroids (Pass 2) into
-perturbation magnitudes, cell quotas n*, and the per-cell-line UNDER / Ghost / OVER breakdown.
+"""Pass 3 (dose-resolved) — turn per-(sample x line) pseudobulk centroids into per-(drug x dose x line)
+cell quotas and the OVER / UNDER / Ghost spectrum.
 
-  centroid(cond)  = sum(cond) / count(cond)                       # HVG log-CP10K space (2000-d)
-  coord(cond)     = (centroid - pca_mean) @ PCsᵀ                  # 50-d PCA embedding (Pass 1 basis)
-  v(drug,line)    = coord(drug,line) - coord(DMSO_TF, line)       # perturbation vector vs matched vehicle
-  m               = ||v||
-  n*(drug,line)   = 2 (d-1) sigma^2 / (m^2 theta^2)               # isotropic cell quota, theta=0.1 rad
+The perturbation CONDITION is (drug x dose x cell_line). `sample` identifies drug x dose x plate; we
+pool plate-replicates of the same drug+dose and subtract the PLATE-MATCHED DMSO_TF vehicle (per plate
+x line), so the effect vector is batch-referenced within plate.
 
-Classification per condition (baseline N0 = actual cells acquired for that condition):
-  OVER   : n* <  N0                 (already saturated; downsampling safe)
-  UNDER  : N0 <= n* <= GHOST        (needs more cells)
-  Ghost  : n* >  GHOST (=50,000)    (too faint to orient at routine depth)
+  coord(sample,line) = (centroid - pca_mean) @ PCsᵀ                       # 50-d PCA (Pass 1 basis)
+  v(drug,dose,line)  = Σ_p c_p·coord(sample_p,line)/Σc_p  −  Σ_p c_p·coord(DMSO@plate_p,line)/Σc_p
+  m = ||v||,  n* = 2(d-1)σ²/(m²θ²) = 23,577/m²  (θ=0.1),  N0 = Σ_p c_p (cells for that condition)
+  OVER n*<N0 ; UNDER N0<=n*<=50k ; Ghost n*>50k
 
-Aggregated per cell line over all real drugs -> the "cell-line-specific under-sampling" table.
-Outputs $OUT/quota_per_condition.csv, $OUT/per_cell_line.csv, $OUT/summary.json (+ printed tables).
+Outputs $OUT/{quota_per_condition,per_cell_line,per_drug,per_dose}.csv, summary.json.
 """
-import os, json, numpy as np, pandas as pd
-import pyarrow.parquet as pq
+import os, json, ast, numpy as np, pandas as pd, pyarrow.parquet as pq
 
-OUT = os.environ.get("OUT", "/mnt/hdd2/loc-tran/tahoe_work/out")
+OUT = os.environ.get("OUT", "/mnt/hdd2/loc-tran/tahoe_work/out_dose")
 META = "/mnt/hdd2/loc-tran/tahoe_work/meta/metadata"
-THETA = float(os.environ.get("THETA", "0.1"))
-GHOST = float(os.environ.get("GHOST", "50000"))
+THETA = float(os.environ.get("THETA", "0.1")); GHOST = float(os.environ.get("GHOST", "50000"))
 CTRL = "DMSO_TF"
 
 b = np.load(os.path.join(OUT, "basis.npz"))
-comps = b["components"].astype(np.float64)          # (50, 2000)
-pca_mean = b["pca_mean"].astype(np.float64)         # (2000,)
-sigma2 = float(b["sigma2"]); d = int(b["n_comps"])
+comps = b["components"].astype(np.float64); pca_mean = b["pca_mean"].astype(np.float64)
+sig = float(b["sigma2"]); d = int(b["n_comps"]); const = 2 * (d - 1) * sig / THETA**2
+
 pb = np.load(os.path.join(OUT, "pseudobulk.npz"), allow_pickle=True)
-keys = [str(k) for k in pb["cond_keys"]]
-sums = pb["sums"].astype(np.float64); counts = pb["counts"].astype(np.float64)
+keys = [str(k) for k in pb["cond_keys"]]; sums = pb["sums"].astype(np.float64); counts = pb["counts"].astype(np.float64)
+coords = (sums / counts[:, None] - pca_mean) @ comps.T          # (n_keys, 50)
 
-centroids = sums / counts[:, None]
-coords = (centroids - pca_mean) @ comps.T           # (n_cond, 50)
-info = {k: (coords[i], counts[i]) for i, k in enumerate(keys)}
-
-# CVCL -> cell_name
+# sample -> (drug, dose, plate) and CVCL -> cell_name
+sm = pq.read_table(f"{META}/sample_metadata.parquet").to_pandas()
+def parse_dose(s):
+    try: return float(ast.literal_eval(s)[0][1])
+    except Exception: return np.nan
+sm["dose"] = sm.drugname_drugconc.map(parse_dose)
+S2meta = {r.sample: (r.drug, r.dose, r.plate) for r in sm.itertuples()}
 clm = pq.read_table(f"{META}/cell_line_metadata.parquet").to_pandas()
 cvcl2name = dict(clm.drop_duplicates("Cell_ID_Cellosaur").set_index("Cell_ID_Cellosaur")["cell_name"])
 
-# authoritative N0 = post-filter cells per (drug, cell_line) from obs_metadata (Pass 0).
-# Prefer the committed fixture (the locked reference vector); fall back to the run output.
-_REPO = os.path.join(os.path.dirname(__file__), "..", "..")
-_cc_fixture = os.path.join(_REPO, "fixtures", "tahoe_condition_counts.csv")
-_cc_path = _cc_fixture if os.path.exists(_cc_fixture) else os.path.join(OUT, "condition_counts.csv")
-cc = pd.read_csv(_cc_path)
-N0map = {(str(r.drug), str(r.cell_line)): float(r.cells_post) for r in cc.itertuples()}
-print(f"[pass3] N0 reference: {_cc_path} ({len(N0map)} conditions)")
-
-const = 2.0 * (d - 1) * sigma2 / THETA**2           # n* = const / m^2
-rows = []
-for k in keys:
-    drug, line = k.rsplit("|", 1)
+# index coords by (sample,line); collect DMSO per (plate,line) and treatment per (drug,dose,line)
+dmso = {}                                     # (plate, line) -> coord
+cond = {}                                     # (drug, dose, line) -> list[(coord, count, plate)]
+for i, k in enumerate(keys):
+    samp, line = k.rsplit("|", 1)
+    meta = S2meta.get(samp)
+    if meta is None:
+        continue
+    drug, dose, plate = meta
     if drug == CTRL:
+        dmso[(plate, line)] = coords[i]
+    else:
+        cond.setdefault((drug, dose, line), []).append((coords[i], counts[i], plate))
+
+rows = []
+for (drug, dose, line), items in cond.items():
+    tot = sum(c for _, c, _ in items)
+    if tot <= 0:
         continue
-    ck = f"{CTRL}|{line}"
-    if ck not in info:
+    treat = sum(c * co for co, c, _ in items) / tot
+    parts = [c * dmso[(p, line)] for co, c, p in items if (p, line) in dmso]
+    if len(parts) != len(items):                # require plate-matched control for every part
         continue
-    v = info[k][0] - info[ck][0]
-    m = float(np.linalg.norm(v))
+    ctrl = sum(parts) / tot
+    m = float(np.linalg.norm(treat - ctrl))
     if m <= 0:
         continue
     nstar = const / m**2
-    N0 = N0map.get((drug, line), float(info[k][1]))   # authoritative obs_metadata count; fallback = stream tally
-    reg = "OVER" if nstar < N0 else ("Ghost" if nstar > GHOST else "UNDER")
-    rows.append(dict(drug=drug, cvcl=line, cell_line=cvcl2name.get(line, line),
-                     m=m, n_star=nstar, N0=N0, regime=reg))
+    reg = "OVER" if nstar < tot else ("Ghost" if nstar > GHOST else "UNDER")
+    rows.append(dict(drug=drug, dose_uM=dose, cvcl=line, cell_line=cvcl2name.get(line, line),
+                     m=m, n_star=nstar, N0=tot, regime=reg))
 df = pd.DataFrame(rows)
 df.to_csv(os.path.join(OUT, "quota_per_condition.csv"), index=False)
 
-# ---- per cell line ----
-def frac(s, r): return 100.0 * (s == r).mean()
-pl = []
-for cl, g in df.groupby("cell_line"):
-    n = len(g)
-    pl.append(dict(cell_line=cl, n_drugs=n,
-                   pct_OVER=frac(g.regime, "OVER"), pct_UNDER=frac(g.regime, "UNDER"),
-                   pct_Ghost=frac(g.regime, "Ghost"),
-                   pct_under_or_ghost=100.0 * g.regime.isin(["UNDER", "Ghost"]).mean(),
-                   median_m=g.m.median(), median_nstar=g.n_star.median()))
-pl = pd.DataFrame(pl).sort_values("pct_under_or_ghost", ascending=False)
-pl.to_csv(os.path.join(OUT, "per_cell_line.csv"), index=False)
 
-# ---- overall + case studies ----
-overall = dict(
-    n_conditions=int(len(df)), n_drugs=int(df.drug.nunique()), n_lines=int(df.cell_line.nunique()),
-    sigma2=sigma2, d=d, theta=THETA, nstar_const=const,
-    pct_OVER=float(frac(df.regime, "OVER")), pct_UNDER=float(frac(df.regime, "UNDER")),
-    pct_Ghost=float(frac(df.regime, "Ghost")),
-    median_nstar=float(df.n_star.median()), median_m=float(df.m.median()),
-    median_N0=float(df.N0.median()),
-)
-# per-drug across lines (transpose view): lines OVER-sampled out of the lines present
-case = []
+def frac(s, r): return 100.0 * (s == r).mean()
+def spectrum(g):
+    return dict(n=len(g), pct_OVER=round(frac(g.regime, "OVER"), 1), pct_UNDER=round(frac(g.regime, "UNDER"), 1),
+                pct_Ghost=round(frac(g.regime, "Ghost"), 1),
+                pct_under_or_ghost=round(100 * g.regime.isin(["UNDER", "Ghost"]).mean(), 1),
+                median_m=round(g.m.median(), 2), median_nstar=int(g.n_star.median()))
+
+per_line = pd.DataFrame([{**{"cell_line": cl}, **spectrum(g)} for cl, g in df.groupby("cell_line")]
+                        ).sort_values("pct_under_or_ghost", ascending=False)
+per_line.to_csv(os.path.join(OUT, "per_cell_line.csv"), index=False)
+per_dose = pd.DataFrame([{**{"dose_uM": dz}, **spectrum(g)} for dz, g in df.groupby("dose_uM")]).sort_values("dose_uM")
+per_dose.to_csv(os.path.join(OUT, "per_dose.csv"), index=False)
+# per drug: pooled over doses+lines
+pd_rows = []
 for drug, g in df.groupby("drug"):
-    case.append(dict(drug=drug, median_m=g.m.median(), median_nstar=g.n_star.median(),
-                     n_lines=len(g), lines_OVER=int((g.regime == "OVER").sum())))
-case = pd.DataFrame(case).sort_values("median_m", ascending=False)
-case.to_csv(os.path.join(OUT, "per_drug.csv"), index=False)
+    pd_rows.append(dict(drug=drug, median_m=round(g.m.median(), 2), median_nstar=int(g.n_star.median()),
+                        n_conditions=len(g), OVER=int((g.regime == "OVER").sum()),
+                        UNDER=int((g.regime == "UNDER").sum()), Ghost=int((g.regime == "Ghost").sum())))
+per_drug = pd.DataFrame(pd_rows).sort_values("OVER", ascending=False)
+per_drug.to_csv(os.path.join(OUT, "per_drug.csv"), index=False)
+
+overall = dict(n_conditions=int(len(df)), n_drugs=int(df.drug.nunique()),
+               n_doses=int(df.dose_uM.nunique()), n_lines=int(df.cell_line.nunique()),
+               sigma2=sig, d=d, theta=THETA, nstar_const=round(const, 1),
+               **{k: v for k, v in spectrum(df).items()}, median_N0=int(df.N0.median()))
 json.dump(overall, open(os.path.join(OUT, "summary.json"), "w"), indent=2)
 
-pd.set_option("display.width", 200); pd.set_option("display.max_rows", 60)
-print("=== OVERALL (theta=%.2f rad, d=%d, sigma^2=%.3f, n*=%.0f/m^2) ===" % (THETA, d, sigma2, const))
+pd.set_option("display.width", 200)
+print("=== OVERALL (drug x dose x line; theta=%.2f, sigma^2=%.3f, n*=%.0f/m^2) ===" % (THETA, sig, const))
 print(json.dumps(overall, indent=2))
-print("\n=== PER CELL LINE (%% of %d drugs) — sorted by under+ghost ===" % df.drug.nunique())
-print(pl.round(1).to_string(index=False))
-print("\n=== CASE-STUDY DRUGS (by magnitude) ===")
-print(case.assign(median_m=case.median_m.round(2), median_nstar=case.median_nstar.round(0)).head(12).to_string(index=False))
-print("\n[wrote] quota_per_condition.csv, per_cell_line.csv, per_drug.csv, summary.json in", OUT)
+print("\n=== PER DOSE ===\n", per_dose.to_string(index=False))
+print("\n=== PER CELL LINE (worst 8 / best 4) ===")
+print(pd.concat([per_line.head(8), per_line.tail(4)]).to_string(index=False))
+print("\n=== PER DRUG (strongest 6 / weakest 4) ===")
+print(pd.concat([per_drug.head(6), per_drug.tail(4)]).to_string(index=False))
+print(f"\ndrugs OVER in 0 conditions: {(per_drug.OVER==0).sum()}/{len(per_drug)}")
+print("[wrote]", OUT)
