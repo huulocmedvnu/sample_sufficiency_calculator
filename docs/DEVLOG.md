@@ -80,6 +80,18 @@ scripts/verify_references.py` (32/32 DOIs).
    only. The probabilistic core (E[θ²], tail) stays empirical (`verify_theory.py`). See
    `docs/THEORY.md` §10 and `lean/README.md`.
 
+10. **Manuscript: Lean verification + rebuild.** Propagated the Lean formalization into the manuscript
+    source (`MANUSCRIPT_DEEPSEEK.md`): Abstract and Key Points note the deterministic core is
+    machine-checked in Lean 4/Mathlib; Methods "Verification and CI" gained a formal-proof bullet; and
+    Results "Three-way verification" → **"Four-way verification"** with a new mode 4 (Lemma 1, the
+    trace identity, iso/diagonal reductions; `no sorry`, standard axioms only) plus a scope note that
+    the probabilistic E[θ²]/tail results stay empirical. Extended `scripts/normalize_manuscript.py`
+    `CODE_RE` so Lean code tokens (`sorry`, `#print axioms`, `propext`, `Classical.choice`,
+    `Quot.sound`, `.lean`, `Mathlib`) stay monospace instead of being turned into `$…$` math (which
+    also avoided `#` breaking LaTeX). Regenerated `manuscript.md` and rebuilt `manuscript.pdf`
+    (pandoc + tectonic, 14 pp) and `manuscript.docx`; verified the Lean text renders with no
+    code-as-math leak. No factual correction was needed — the manuscript never carried the §5 formula.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
