@@ -1,0 +1,125 @@
+{
+  "total_cells_prefilter": 100648790,
+  "pass_filter_counts": {
+    "full": 95624334,
+    "minimal": 5024456
+  },
+  "pct_prefilter_excess": 4.99,
+  "n_wells": 1344,
+  "n_plates": 14,
+  "wells_per_plate": 96,
+  "n_drugs": 380,
+  "n_cell_lines": 50,
+  "n_conditions": 19000,
+  "cells_per_well_prefilter": {
+    "min": 58,
+    "median": 71092,
+    "mean": 74887.5,
+    "max": 215364,
+    "total": 100648790,
+    "n": 1344
+  },
+  "cells_per_well_postfilter": {
+    "min": 51,
+    "median": 67212,
+    "mean": 71149.1,
+    "max": 209642,
+    "total": 95624334,
+    "n": 1344
+  },
+  "cells_per_condition_postfilter": {
+    "min": 10,
+    "median": 4257,
+    "mean": 5032.9,
+    "max": 139224,
+    "total": 95624334,
+    "n": 19000
+  },
+  "per_plate": {
+    "plate1": {
+      "wells": 96,
+      "cells_pre": 5481420,
+      "cells_post": 5299930,
+      "pct_filtered": 3.31
+    },
+    "plate10": {
+      "wells": 96,
+      "cells_pre": 8044908,
+      "cells_post": 7731986,
+      "pct_filtered": 3.89
+    },
+    "plate11": {
+      "wells": 96,
+      "cells_pre": 7435869,
+      "cells_post": 7062820,
+      "pct_filtered": 5.02
+    },
+    "plate12": {
+      "wells": 96,
+      "cells_pre": 10487057,
+      "cells_post": 10188591,
+      "pct_filtered": 2.85
+    },
+    "plate13": {
+      "wells": 96,
+      "cells_pre": 8501658,
+      "cells_post": 8106500,
+      "pct_filtered": 4.65
+    },
+    "plate14": {
+      "wells": 96,
+      "cells_pre": 6518806,
+      "cells_post": 6201077,
+      "pct_filtered": 4.87
+    },
+    "plate2": {
+      "wells": 96,
+      "cells_pre": 8064658,
+      "cells_post": 7687184,
+      "pct_filtered": 4.68
+    },
+    "plate3": {
+      "wells": 96,
+      "cells_pre": 4705402,
+      "cells_post": 4158278,
+      "pct_filtered": 11.63
+    },
+    "plate4": {
+      "wells": 96,
+      "cells_pre": 7004356,
+      "cells_post": 6679884,
+      "pct_filtered": 4.63
+    },
+    "plate5": {
+      "wells": 96,
+      "cells_pre": 6419498,
+      "cells_post": 5908471,
+      "pct_filtered": 7.96
+    },
+    "plate6": {
+      "wells": 96,
+      "cells_pre": 7545393,
+      "cells_post": 7285856,
+      "pct_filtered": 3.44
+    },
+    "plate7": {
+      "wells": 96,
+      "cells_pre": 5692117,
+      "cells_post": 5227768,
+      "pct_filtered": 8.16
+    },
+    "plate8": {
+      "wells": 96,
+      "cells_pre": 8880979,
+      "cells_post": 8516367,
+      "pct_filtered": 4.11
+    },
+    "plate9": {
+      "wells": 96,
+      "cells_pre": 5866669,
+      "cells_post": 5569622,
+      "pct_filtered": 5.06
+    }
+  },
+  "_provenance": "Computed from tahoebio/Tahoe-100M metadata/obs_metadata.parquet (100,648,790 rows) by scripts/tahoe_recompute/pass0_layout.py"
+}
