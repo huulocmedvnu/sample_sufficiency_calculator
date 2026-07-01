@@ -1,26 +1,23 @@
-> **NOTE (2026-07-01): numbers superseded.** This document predates the from-raw, dose-resolved
-> Tahoe-100M recompute (`scripts/tahoe_recompute/`). Core constants (sigma^2=2.406, n*=23,577/m^2,
-> N0=1,296) have been swapped in, but detailed per-drug tables here reflect the earlier calibration.
-> The authoritative numbers are in `fixtures/tahoe_*.csv`, `docs/SUPPLEMENT.md`, and the manuscript.
-
 # Scale-Logic Self-Audit & Alignment Ledger
 
 ## 0. AUDITOR CORRECTION (read first)
 
 The drafting premise — *"our calculated n★ values sit in the range of hundreds to a few thousand
-cells"* — is **true only for the strong-perturbation tail**, not the typical drug. At the standard
-configuration (σ² = 2.406, d = 50, **θ★ = 0.1 rad**), over the 292-drug Tahoe panel:
+cells"* — is **true only for the strong-perturbation tail**, not the typical condition. At the standard
+configuration (σ² = 2.406, d = 50, **θ★ = 0.1 rad**), over the 56,827-condition panel (379 drugs ×
+3 doses × 50 lines):
 
 | n★ percentile | 10th | 25th | **50th (median)** | 75th | 90th | 95th |
 |---|---:|---:|---:|---:|---:|---:|
-| cells/arm | 7,029 | 12,087 | **14,570** | 42,571 | 65,392 | 79,196 |
+| cells/arm | 2,857 | 6,489 | **14,571** | 27,656 | 45,631 | 60,888 |
 
-Only **2%** of drugs are over-sampled (n★ < N₀ = 1,296); 17% need 1.4 k–10 k, **64% need 10 k–50 k**,
-17% are ghosts (> 50 k). The "hundreds-to-thousands" figure (e.g. Homoharringtonine n★ = 365) is the
-m > 7.34 minority. Because n★ ∝ 1/θ★², the "few thousand" regime for *typical* drugs requires a looser
-tolerance (e.g. θ★ = 0.2–0.3 rad). **Manuscript framing must therefore be: at a tight ~5.7° MoA
-tolerance most atlas wells are *under*-sampled — the atlas is large by aggregating many wells, not
-because any single well is cheap.**
+Only **2.5%** of conditions are over-sampled (n★ < N₀ = 1,296); 3.6% are < 1.4 k, 33% need 1.4 k–10 k,
+**55% need 10 k–50 k**, and 8.2% are ghosts (> 50 k). The "hundreds-of-cells" regime (e.g.
+homoharringtonine at 5 µM in NCI-H460, n★ = 98) is the high-magnitude / high-dose / responsive-line
+minority (m > 4.27). Because n★ ∝ 1/θ★², the "few thousand" regime for *typical* conditions requires a
+looser tolerance (e.g. θ★ = 0.2–0.3 rad). **Manuscript framing must therefore be: at a tight ~5.7° MoA
+tolerance the great majority (97.5%) of (drug × dose × line) conditions are *under*-sampled — the atlas
+is large by aggregating many conditions, not because any single one is cheap.**
 
 ---
 
@@ -63,20 +60,20 @@ condition may be realized across several replicate wells — §4):
 wells supply them (§4). f_recovery ≈ 1.4 (droplet capture + doublet/QC loss); the control/vehicle pool is
 sized once per batch and amortized (it is not multiplied by K).
 
-**Worked example — 100 drugs × 3 doses × 2 lines = 600 treated wells** (drugs sampled from the real
-Tahoe magnitude distribution; per-drug n★ median 24,858, IQR [14,527–46,190]):
+**Worked example — 100 drugs × 3 doses × 2 lines = 600 treated conditions** (conditions sampled from the
+real Tahoe magnitude distribution; per-drug median n★ 15,062, IQR [9,777–21,534]):
 
 | Budgeting policy | treated cells | notes |
 |---|---:|---|
-| **A. Flat at 90th-pctile n★ = 65,392** | **39.2 M** | uniform over-loading; reviewer-naïve; wasteful |
-| **B. Magnitude-adaptive, cap 10,000/well** | **5.7 M** | 85/100 drugs hit the cap → resolved at coarser-than-0.1-rad θ |
-| **B′. Adaptive, cap 20,000/well** | **10.1 M** | 59/100 capped |
-| **C. Adaptive + relaxed θ★ = 0.2 rad, cap 10 k** | **3.8 M** | n★ ÷ 4; most drugs now within cap |
+| **A. Flat at 90th-pctile n★ = 45,631** | **27.4 M** | uniform over-loading; reviewer-naïve; wasteful |
+| **B. Magnitude-adaptive, cap 10,000/condition** | **4.9 M** | 280/379 drugs hit the cap → resolved at coarser-than-0.1-rad θ |
+| **B′. Adaptive, cap 20,000/condition** | **7.8 M** | fewer capped |
+| **C. Adaptive + relaxed θ★ = 0.2 rad, cap 10 k** | **2.7 M** | n★ ÷ 4; most conditions now within cap |
 
-Add f_recovery (×1.4) and a control pool (~10 k cells/batch): Policy B ≈ **8.0 M cells to load**, which at
-~20 k reads/cell is ~1.6×10¹¹ reads. **This is how "small" per-condition numbers compose into a
+Add f_recovery (×1.4) and a control pool (~10 k cells/batch): Policy B ≈ **6.9 M cells to load**, which at
+~20 k reads/cell is ~1.4×10¹¹ reads. **This is how "small" per-condition numbers compose into a
 multi-million-cell project: the magnitude is driven not by any single quota but by (i) the number of
-conditions K and (ii) the long tail of weak drugs whose individual n★ is large.**
+conditions K and (ii) the long tail of weak conditions whose individual n★ is large.**
 
 **The calculator's translational role** is therefore *not* to make screens cheap but to make the budget
 **rational and explicit**: (1) magnitude-adaptive allocation replaces flat loading (Policy A → B saves
@@ -190,36 +187,34 @@ hypothesis is that under-sampled single wells are rescued once replicates are po
 (n_pooled = R·n_well). **We tested this directly on the data; in these two atlases it is false**, because
 the conditions are essentially **unreplicated**.
 
-**Replication structure (measured).** In the captured Tahoe atlas (18,950 drug×line conditions),
-**R = 1 for 96.0%** of conditions, R = 2 for 3.7%, R ≥ 3 for 0.3% (max R = 3): a given (drug, dose) is run
-in a single pooled sample. Pooled cells/condition (median **1,190**) are therefore indistinguishable from
-single-well (median 1,189). EmeraldBay mirrors this — one pooled sample per (drug, dose, line), median
-**306** cells; no independent same-dose replicate wells exist in the data.
+**Replication structure (measured).** In the full Tahoe atlas (56,827 drug×dose×line conditions),
+each drug is screened at ~3 doses, but a given (drug, dose) occupies **a single plate for 86.3%** of
+combinations, two plates for 13.4%, and ≥ 3 for 0.4%: same-dose replicate plates are largely absent.
+Median cells per (drug × dose × line) condition is **1,296** (post-filter). EmeraldBay mirrors this —
+one pooled sample per (drug, dose, line); no independent same-dose replicate wells exist in the data.
 
-**Re-gate (per-condition magnitude and cells, θ★ = 0.1 rad).** Over 14,600 Tahoe conditions with a
-measured magnitude:
+**Re-gate (per-condition magnitude and cells, θ★ = 0.1 rad).** Over the 56,827 Tahoe conditions:
 
 | Gating model | OVER-sampled (n ≥ n★) |
 |---|---:|
-| Single-well (n_well) | 2.4% |
-| **Pooled across replicates (n_pooled)** | **2.5%** |
-| Conditions rescued UNDER → OVER by pooling | **12 / 14,600 = 0.08%** |
+| Per (drug × dose × line) condition | **2.5%** |
+| Under-sampled or Ghost | **97.5%** |
 
-The taxonomy is **unchanged**: the median condition needs n★ ≈ 24 k cells but holds ≈ 1.2 k, a ~20×
-deficit that R ≤ 3 replicates of equal size cannot close. **Replication does not rescue under-sampled
+The taxonomy is stark: the median condition needs n★ ≈ 14.6 k cells but holds ≈ 1.3 k, an **~11×
+deficit** that the sparse replicate plates cannot close. **Replication does not rescue under-sampled
 conditions here — not because the pooling logic is wrong (§4), but because the data architecture supplies
-≈ one sample per drug–dose.** (And where R > 1, the cross-plate batch term of §4 further caps the gain
-unless wells are vehicle-referenced within batch.)
+≈ one plate per drug–dose.** Dose, by contrast, is a real lever (the over-sampled fraction rises from
+1.8% at 0.05 µM to 3.9% at 5 µM), but it does not move the bulk of the panel out of under-sampling.
 
-**Case-study profiles under the pooled (= per-condition, R = 1) model, resolved across all 50 lines:**
+**Case-study profiles resolved across all 150 conditions per drug (3 doses × 50 lines):**
 
-| Model perturbation (profile) | median m | median n★ | lines OVER-sampled |
+| Drug (profile) | median m | median n★ | conditions OVER-sampled |
 |---|---:|---:|---:|
-| Homoharringtonine (high-magnitude/cytotoxic) | 14.0 | 380 | **32 / 50** |
-| Idarubicin (high-magnitude; borderline) | 9.6 | 814 | 22 / 50 |
-| Dinaciclib (moderate signal) | 5.6 | 2,368 | 0 / 50 |
-| Resveratrol (moderate-signal modulator) | 2.8 | 9,916 | 2 / 50 |
-| Ribociclib (weak/sub-threshold "ghost") | 0.7 | 165,164 | 0 / 50 |
+| Panobinostat (HDAC) | 4.24 | 1,314 | **73 / 150** |
+| Homoharringtonine (protein synthesis) | 5.88 | 682 | 72 / 150 |
+| Idarubicin (anthracycline; TOP2A) | 2.93 | 2,745 | 45 / 150 |
+| Palbociclib (CDK4/6) | 1.41 | 11,778 | 0 / 150 |
+| Crizotinib (ALK/MET; ghost tail) | 0.99 | 24,222 | 0 / 150 (28 ghost) |
 
 This **confirms** the single-well profiles (high-magnitude agents over-sampled in most lines; moderate and
 weak agents under-sampled in nearly all), and shows the regime is **line-dependent** (a drug can be

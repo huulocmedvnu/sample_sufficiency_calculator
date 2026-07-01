@@ -1,8 +1,3 @@
-> **NOTE (2026-07-01): numbers superseded.** This document predates the from-raw, dose-resolved
-> Tahoe-100M recompute (`scripts/tahoe_recompute/`). Core constants (sigma^2=2.406, n*=23,577/m^2,
-> N0=1,296) have been swapped in, but detailed per-drug tables here reflect the earlier calibration.
-> The authoritative numbers are in `fixtures/tahoe_*.csv`, `docs/SUPPLEMENT.md`, and the manuscript.
-
 # Technical Blueprint & Data Supplement
 ### Anisotropic Sample-Sufficiency for Single-Cell Perturbation-Direction Screens
 **Status:** frozen source-of-truth for manuscript drafting (target: *Nature Methods* / *Bioinformatics*).
@@ -38,8 +33,8 @@ have been corrected throughout this document. **Use the corrected values.**
    θ²(n) = tr(PΣP)/m² · (1/n − 1/N), factor 1 (the per-line-mean baseline is a near-noiseless large
    pool), **not** the equal-arms factor-2 planning formula. Both are correct; they describe different
    experimental designs. Keep them distinct.
-6. **The resource-allocation figures (3.8× multiplex; 74%/93% compute reduction) are from the Tahoe
-   calibration (N₀ = 1394 cells/well, θ = 0.1 rad), not EmeraldBay.** Attribute them to Tahoe.
+6. **The resource-allocation figures (~60× multiplex; 98%/>99% compute reduction) are from the Tahoe
+   calibration (N₀ = 1,296 cells/well, θ = 0.1 rad), not EmeraldBay.** Attribute them to Tahoe.
 
 ---
 
@@ -190,18 +185,18 @@ perturbation condition* (the treated arm — the total cells aggregated into the
 `docs/SCALE_AUDIT.md` §4). A condition may in principle reach n★ by pooling cells across replicate wells,
 which raises the question of whether single-well under-sampling is rescued once replicates are pooled. We
 tested this directly on both reference atlases, and **in these data it is not**, because the conditions
-are essentially **unreplicated**: in Tahoe-100M, **R = 1 for 96%** of (perturbagen × line) conditions
-(maximum R = 3), and EmeraldBay contributes a single pooled sample per (perturbagen × dose) condition
-(median ≈ 306 cells). Pooled cells per condition (Tahoe-100M median 1,190) are therefore indistinguishable
-from single-well counts. Re-gating the 14,600 Atlas-A conditions that carry a measured magnitude (θ★ = 0.1
-rad) moves the over-sampled fraction from **2.4% (single-well) to 2.5% (pooled)** — only **12/14,600 =
-0.08%** of conditions cross UNDER → OVER. The median condition requires n★ ≈ 24,000 cells but holds ≈
-1,200 (a ~20× deficit that R ≤ 3 equal replicates cannot close), and the line-resolved Model-Perturbation
+are essentially **unreplicated**: in Tahoe-100M a given (drug × dose)
+occupies **a single plate for 86.3%** of combinations (two for 13.4%, ≥3 for 0.4%), and EmeraldBay
+contributes a single pooled sample per (perturbagen × dose) condition (median ≈ 306 cells). Same-dose
+replicate plates are largely absent. Over the 56,827 (drug × dose × line) conditions (θ★ = 0.1 rad) only
+**2.5% are over-sampled** (97.5% under-sampled or ghost). The median condition requires n★ ≈ 14,570 cells
+but holds ≈ 1,296 (an ~11× deficit that the sparse replicate plates cannot close), and the line-resolved Model-Perturbation
 profiles are unchanged (high-magnitude agents over-sampled in most lines; moderate/weak agents
 under-sampled in nearly all). **Conclusion:** the pooled-condition unit is the mathematically correct one,
 but in these single-sample-per-condition atlases it *coincides* with the single-condition unit, so the
-project-level conclusion stands — **≈ 2.5% of conditions are safely saturated at a 5.7° tolerance, and
-replication as actually practised rescues < 0.1%.** A screen *designed* with replicate batches and
+project-level conclusion stands — **≈ 2.5% of conditions are safely saturated at a 5.7° tolerance**; dose
+is a real lever (over-sampled fraction 1.8%→3.9% across 0.05→5 µM) but does not move the bulk out of
+under-sampling. A screen *designed* with replicate batches and
 within-batch (co-plated vehicle) referencing would benefit from pooling — n★ being per-condition — but a
 single-sample-per-condition atlas does not, and cross-plate replicate pooling without referencing is
 further capped by the batch-variance floor of `SCALE_AUDIT.md` §4.
@@ -215,8 +210,8 @@ A single saturation threshold n★ governs two budgets.
 **Wet-lab (sequencing economics).** Past n★, angular error improves only as 1/√n (diminishing returns);
 n★ is the knee. With a fixed per-lane read budget, a well acquired at N₀ > n★ wastes (N₀ − n★) reads;
 the surplus permits multiplexing N₀/n★ additional conditions (e.g., via cell hashing). **On the Tahoe
-calibration (N₀ = 1394 cells/well, θ = 0.1 rad)** a maximal-magnitude cytotoxic (m ≈ 14.3) reaches
-n★ ≈ 365, a **3.8× multiplexing gain**; weak/moderate signatures (m ≈ 1.3–3) are *under*-sampled
+calibration (θ = 0.1 rad)** homoharringtonine at 5 µM in the responsive NCI-H460 line (N₀ = 6,060) reaches
+n★ ≈ 98, a **~60× multiplexing gain**; weak/moderate signatures (m ≲ 2) are *under*-sampled
 (n★ > N₀), i.e. their cells are not redundant — the calculator reports the regime per drug rather than
 assuming redundancy.
 
@@ -224,12 +219,12 @@ assuming redundancy.
 to n★ preserves its perturbation direction (and hence the drug-drug similarity graph) to θ★ by
 construction. The compute saved is **polynomial in N**, not exponential:
 linear (RAM, storage, PCA-fit): 1 − n★/N₀; quadratic (cell-cell pairwise / kernels / k-NN):
-1 − (n★/N₀)²; near-linear (neighbour graphs ~ N log N). On the Tahoe over-sampled cytotoxic example this
-is **74% (linear) / 93% (quadratic)** reduction.
+1 − (n★/N₀)²; near-linear (neighbour graphs ~ N log N). On this over-sampled cytotoxic example this
+is **98% (linear) / >99% (quadratic)** reduction.
 
 **Population-scale framing (correction of a common misconception).** The small n★ values of strong
-cytotoxics are *not* representative: across the 292-drug Tahoe panel at θ★ = 0.1 rad the **median n★ is
-14,570 cells/arm** (only 2% over-sampled; 64% need 10 k–50 k; 17% > 50 k). At a tight MoA tolerance the
+cytotoxics are *not* representative: across the 56,827-condition Tahoe panel (379 drugs × 3 doses × 50 lines) at θ★ = 0.1 rad the **median n★
+is 14,570 cells/arm** (only 2.5% over-sampled; 55% need 10 k–50 k; 8.2% > 50 k). At a tight MoA tolerance the
 *typical* well is **under-sampled** — atlases are large by aggregating many conditions, not because any
 single condition is cheap. n★ is strictly **per-arm/per-condition**: the global atlas size enters no term
 of the variance S = Σ_t/n_t + Σ_c/n_c, only the per-well sum Σ_w n★_w sets project budget (see
@@ -253,7 +248,7 @@ pipeline (the within-condition residual variance, not the marginal).
   `calculate_optimal_resource_allocation`). Verification: `tests/verify_theory.py`,
   `tests/test_calculator.py`, `tests/test_emeraldbay_integration.py`; CI `.github/workflows/ci.yml`.
 - External calibrator: the companion calibration pipeline → `fixtures/emeraldbay_calibration.json`.
-- Constants of record: d = 50; Tahoe marginal σ² = 2.406, N₀ = 1394; EmeraldBay within-condition
+- Constants of record: d = 50; Tahoe marginal σ² = 2.406, N₀ = 1,296; EmeraldBay within-condition
   σ² ≈ 2.12, 142,883 cells, 101 gated wells, θ★ = 0.20 rad; Monte-Carlo K = 50,000, seed = 0,
   relative error 0.13%; symbolic residual 2.8×10⁻¹⁷.
 - **Honesty ledger for reviewers:** (i) σ² values use different variance definitions across atlases

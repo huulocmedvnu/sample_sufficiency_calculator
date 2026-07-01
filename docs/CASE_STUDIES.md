@@ -1,66 +1,73 @@
-> **NOTE (2026-07-01): numbers superseded.** This document predates the from-raw, dose-resolved
-> Tahoe-100M recompute (`scripts/tahoe_recompute/`). Core constants (sigma^2=2.406, n*=23,577/m^2,
-> N0=1,296) have been swapped in, but detailed per-drug tables here reflect the earlier calibration.
-> The authoritative numbers are in `fixtures/tahoe_*.csv`, `docs/SUPPLEMENT.md`, and the manuscript.
-
 # Empirical Case Studies — Sample-Sufficiency Spectrum (frozen source-of-truth)
 
-**Configuration (Tahoe-100M calibration):** σ² = 2.406, d = 50, θ★ = 0.1 rad (5.73°), N₀ = 1,296
-cells/well, equal arms. Governing law **n★ = 2(d−1)σ²/(m²θ★²) = 23,577 / m²**; over/under boundary at
-**m = 4.27**; depth-fixed angular resolution **θ(N₀) = 0.427 / m rad**. Magnitudes m are raw
-perturbation-vector norms (mean per-line ‖v‖) in the plate3-excluded PCA space — the space σ²=2.406 was
-estimated in. All values machine-derived from the reference perturbation array via
-`src/calculator.py::calculate_optimal_resource_allocation`.
+**Configuration (Tahoe-100M, from-raw recompute; `scripts/tahoe_recompute/`).** σ² = 2.406, d = 50,
+θ★ = 0.1 rad (5.73°), equal arms. Governing law **n★ = 2(d−1)σ²/(m²θ★²) = 23,577 / m²**; over/under
+boundary (at the median depth N₀ = 1,296) **m = 4.27**; depth-fixed angular resolution **θ(N₀) =
+0.427 / m rad**. The unit is the **(drug × dose × cell-line) condition**: magnitudes m are the
+plate-matched (treated − DMSO) perturbation-vector norms ‖v‖ in the shared PCA(50) space where σ²
+was estimated. All values machine-derived; full tables in `fixtures/tahoe_*.csv`.
 
-| # | Drug (MoA / target) | m | n★ (cells/arm) | Regime | Wet-lab | Dry-lab (lin / quad) | Resolution @ N₀ | Action |
-|---|---|---:|---:|---|---|---|---:|---|
-| 1 | Homoharringtonine (protein-synthesis inhibitor) | 14.35 | 365 | OVER | 3.8× multiplex | 74% / 93% | 2.9° | Downsample ~3.8×; reallocate reads |
-| 2 | Idarubicin (anthracycline; TOP2A) | 10.63 | 664 | OVER | 2.1× multiplex | 52% / 77% | 4.0° | Downsample ~2.1× |
-| 3 | Dinaciclib (pan-CDK; CDK1/2/5/9) | 6.53 | 1,760 | UNDER (1.3×) | — | 0% / 0% | 6.4° | Tips in at θ=6.4° or +26% depth |
-| 4 | Resveratrol (moderate-signal modulator) | 2.97 | 8,518 | UNDER (6.1×) | — | 0% / 0% | 14.2° | Downsampling forbidden; ~6× deeper required |
-| 5 | Ribociclib (CDK4/6 inhibitor) | 0.84 | 107,547 | UNDER (77×) | — | 0% / 0% | 50.3° | Blind: MoA unresolvable at standard depth |
+## Per-drug spectrum (median across 150 conditions = 3 doses × 50 lines)
 
-*Resveratrol is used purely as a moderate-magnitude exemplar (m ≈ 3); its metadata `moa-fine` is*
-*"unclear" and no mechanistic claim is made.*
+| Drug (MoA / target) | median m | median n★ (cells/arm) | OVER | UNDER | Ghost |
+|---|---:|---:|---:|---:|---:|
+| Panobinostat (HDAC) | 4.24 | 1,314 | 73 | 77 | 0 |
+| Homoharringtonine (protein synthesis) | 5.88 | 682 | 72 | 78 | 0 |
+| Harringtonine (protein synthesis) | 3.67 | 1,753 | 64 | 86 | 0 |
+| Idarubicin (anthracycline; TOP2A) | 2.93 | 2,745 | 45 | 105 | 0 |
+| Trametinib (MEK) | 2.29 | 4,498 | 45 | 104 | 1 |
+| Palbociclib (CDK4/6) | 1.41 | 11,778 | 0 | 150 | 0 |
+| 4EGI-1 (eIF4E) | 1.34 | 13,202 | 0 | 149 | 1 |
+| Crizotinib (ALK/MET) | 0.99 | 24,222 | 0 | 122 | 28 |
 
-**Tolerance that tips an UNDER well into sufficiency at N₀=1,296:** Dinaciclib 6.4°, Resveratrol 14.2°,
-Ribociclib 50.3° (θ_suff = θ★·√(n★/N₀)).
+No compound is over-sampled in a majority of its 150 conditions; **132 of 379 drugs (35%) are
+over-sampled in no condition at all**. Full per-drug counts → `fixtures/tahoe_per_drug.csv`.
+
+## Two levers beyond drug identity — worked conditions
+
+**Dose** (homoharringtonine in the responsive NCI-H460 line): raising concentration enlarges m and
+lowers the quota.
+
+| condition | m | n★ | N₀ | regime | dry save (lin / quad) | multiplex |
+|---|---:|---:|---:|:--:|:--:|:--:|
+| Homoharringtonine 0.05 µM × NCI-H460 | 10.3 | 222 | 2,904 | OVER | 92% / 99% | 13.1× |
+| Homoharringtonine 0.5 µM × NCI-H460 | 14.5 | 112 | 2,114 | OVER | 95% / 100% | 18.9× |
+| Homoharringtonine 5 µM × NCI-H460 | 15.5 | 98 | 6,060 | OVER | 98% / 100% | 61.8× |
+
+**Cell line** (same drug & dose, different background): homoharringtonine at 5 µM reaches m = 15.5
+(n★ = 98, OVER) in NCI-H460 but only m = 3.1 (n★ = 2,390, UNDER) in NCI-H661.
 
 ## Analysis
 
-Across the spectrum the quota is governed entirely by squared transcriptional potency, n★ = 23,577/m²,
-so a compound's perturbation magnitude alone fixes its sampling regime, with the over/under boundary
-falling sharply at m ≈ 7.34. High-magnitude cytotoxics that displace cells far off baseline — the
-protein-synthesis inhibitor Homoharringtonine (m = 14.4) and the anthracycline Idarubicin (m = 10.6) —
-saturate their directional estimate in only 365–664 cells, leaving the standard 1,296-cell well 2–4×
-over-provisioned and licensing 52–93% downstream compute reduction or 2–4× multiplexing via cell hashing.
-As potency falls, n★ rises quadratically (a halving of m quadruples the requirement), and at fixed depth
-the achievable angular resolution degrades linearly as θ = 0.427/m: the moderate modulator Resveratrol
-(m = 3.0) is resolvable only to 14° at standard depth and strictly requires ~6× deeper sequencing —
-downsampling is mathematically prohibited — while the CDK4/6 inhibitor Ribociclib (m = 0.84), despite
-being a clinically pivotal targeted agent, carries a faint transcriptional footprint that renders it a
-"ghost signature": its 1,296-cell direction estimate bears a ~50° error indistinguishable from a random
-axis, and clearing it to 0.1 rad would demand ~108,000 cells per arm. Critically, magnitude is not
-predicted by nominal mechanism — the pan-CDK/CDK9 inhibitor Dinaciclib (m = 6.5) and the CDK4/6 inhibitor
-Ribociclib (m = 0.8) share a CDK-inhibitor annotation yet occupy opposite extremes of the spectrum —
-establishing that sample sufficiency must be calibrated per-compound from its empirical perturbation
-magnitude, never inferred from drug-class labels.
+Across the spectrum the quota is governed by squared transcriptional potency, n★ = 23,577/m², so a
+condition's perturbation magnitude fixes its sampling regime, with the over/under boundary at m ≈ 4.27
+(at the median depth). High-magnitude cytotoxics that displace cells far off baseline — protein-synthesis
+inhibitors (homoharringtonine, harringtonine) and the HDAC inhibitor panobinostat — saturate their
+directional estimate in a few hundred cells and are over-sampled in roughly half of their conditions,
+leaving those wells over-provisioned and licensing large downstream-compute reductions or multiplexing
+via cell hashing. As potency falls, n★ rises quadratically (halving m quadruples the requirement), and
+at fixed depth the achievable resolution degrades linearly as θ = 0.427/m: weak targeted agents such as
+palbociclib (CDK4/6, median m = 1.41) and crizotinib (ALK/MET, median m = 0.99) carry faint
+transcriptional footprints — palbociclib is under-sampled in all 150 of its conditions, and crizotinib
+is a "ghost" (n★ > 50,000) in 28. Critically, magnitude is not predicted by nominal mechanism: targeted
+kinase inhibitors sit at the weak end while broad cytotoxics dominate the strong end, so sample
+sufficiency must be calibrated per condition from the empirical perturbation magnitude — and jointly by
+dose and cell line — never inferred from drug-class labels.
 
 ## Population context (do not over-read the strong tail)
 
-These five profiles are **illustrative tiers spanning the spectrum, not a typical sample**. Across the
-full 292-drug Tahoe panel at the same configuration, the **median n★ is 14,570 cells** (IQR
-12,087–42,571); only **2%** of drugs are over-sampled (n★ < N₀ = 1,296), 64% require 10 k–50 k, and 17%
-are ghosts (> 50 k). At a tight ~5.7° tolerance the *typical* perturbation is therefore **under-sampled**;
-the over-sampled cases (Homoharringtonine, Idarubicin) are the m > 7.34 minority. See
-[`SCALE_AUDIT.md`](SCALE_AUDIT.md) for the distribution and the project-budget ledger.
+The rows above are **illustrative tiers, not a typical sample**. Across the full 56,827-condition panel
+(379 drugs × 3 doses × 50 lines) at the same configuration, the **median n★ is 14,570 cells** (IQR
+6,489–27,656); only **2.5%** of conditions are over-sampled (n★ < N₀), 55% require 10 k–50 k, and 8.2%
+are ghosts (> 50 k) — **97.5% under-sampled or worse**. At a tight ~5.7° tolerance the *typical*
+condition is therefore **under-sampled**; the over-sampled cases are the high-magnitude / high-dose /
+responsive-line minority. See [`SCALE_AUDIT.md`](SCALE_AUDIT.md) for the distribution and project budget.
 
-## Provenance / caveats (auditor)
+## Provenance / caveats
 
-- All m and n★ are machine-pulled from the reference perturbation array through the shipped calculator; no placeholders.
-- **Paclitaxel is unavailable** in this array (plate3-excluded batch-clean build); the extreme-cytotoxic
-  exemplar is **Homoharringtonine**, not Paclitaxel.
-- m are **24 h survivor transcriptional** magnitudes (not viability), specific to this platform/timepoint/
-  embedding.
-- Resveratrol is a moderate-magnitude exemplar only (m ≈ 3); no mechanistic/MoA claim is attached to it.
-  finding. Keep the distinction in the manuscript.
+- All m and n★ are machine-computed from the raw Tahoe-100M counts through the streaming pipeline
+  (`scripts/tahoe_recompute/`) and the shipped calculator; no placeholders.
+- Magnitudes are 24 h survivor transcriptional norms (not viability), specific to this
+  platform/timepoint/embedding; the plate-matched DMSO_TF vehicle is the control.
+- The condition unit is (drug × dose × cell line); pooling doses inflates N₀ and averages magnitudes and
+  is avoided here.
