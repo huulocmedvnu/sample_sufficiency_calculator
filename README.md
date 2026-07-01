@@ -149,10 +149,10 @@ The formula is a theorem (verified symbolically + by Monte Carlo), so a second d
 *more* true — but it **can** test whether the CLT/Gaussian-centroid *assumptions* hold on real,
 independent single cells, and whether the calibration transfers. We did this on **tahoebio/EmeraldBay**
 (a separate 1.8 M-cell, 5-day atlas sharing the 5 representative cell lines), re-estimating σ² and m from
-EmeraldBay's *own* cells (within-condition σ² ≈ 0.96 in its own PCA(50), vs Tahoe's marginal 2.406 — re-estimation is
+EmeraldBay's *own* cells: the embedding and within-condition σ² ≈ 0.96 are computed over the **full atlas** (52 lines, 1.83M cells), vs Tahoe's marginal 2.406 — re-estimation is
 necessary, confirming σ² is the platform-specific input).
 
-**Held-out angular-error curves** (realized RMS angle from n subsampled cells vs the closed form
+The **held-out validation and gating are restricted to the 5 lines shared with Tahoe** (141,720 cells; 5-line σ²=0.90). **Held-out angular-error curves** (realized RMS angle from n subsampled cells vs the closed form
 `θ²(n)=tr(PΣP)/m²·(1/n−1/N)`, finite-population-corrected):
 
 | group (N, m) | mean rel. err | fitted slope vs `tr(PΣP)/m²` | R² |
@@ -165,7 +165,7 @@ necessary, confirming σ² is the platform-specific input).
 `realized² ∝ (1/n − 1/N)` is linear-through-origin with **R² > 0.99**, and the fitted slope matches the
 anisotropic `tr(PΣP)/m²` to **<1% for strong signatures** (the weaker m≈3 group deviates ~15% at small
 n — the expected breakdown of the first-order law at lower SNR, §5 of `THEORY.md`). **Regime gating:** of
-132 groups (>=100 cells), the 10 predicted OVER-sampled all met the tolerance when downsampled to n* (**100%**).
+132 groups (5 shared lines, >=100 cells), the 10 predicted OVER-sampled all met the tolerance when downsampled to n* (**100%**).
 
 This is distilled into `fixtures/emeraldbay_calibration.json` and asserted by
 `tests/test_emeraldbay_integration.py` (runs in CI, no network). The streaming calibrator that produced

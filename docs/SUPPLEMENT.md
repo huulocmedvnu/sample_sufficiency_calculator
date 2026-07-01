@@ -58,16 +58,17 @@ Tail-controlled: `n★_δ = (2/m²θ★²)[tr(PΣP) + 2‖PΣP‖_F√L + 2‖P�
 | Depth-fixed resolution | θ(N₀) = **0.427 / m** rad (at median N₀) | derived |
 | **Study-design layout** | **100,648,790 cells** (95,624,334 pass `full`, 5.0% filtered); **1,344 wells = 14 plates × 96**; cells/well median 71,092 (pre) / 67,212 (post) | `obs_metadata`; `tahoe_layout_summary.json` |
 | Plate QC variation | plate3 11.63% filter loss (operationalizes "excl3") vs 3–5% typical | `per_plate` in `tahoe_layout_summary.json` |
-| **EmeraldBay** within-condition σ² | **≈ 0.963** | `scripts/emeraldbay_recompute/` (own PCA(50); ≠ marginal Tahoe 2.406; see caveats) |
+| **EmeraldBay** within-condition σ² | **≈ 0.963** (full atlas, 52 lines, 1.83M cells; 5-shared-line slice = 0.896) | `scripts/emeraldbay_recompute/` (own PCA(50); ≠ marginal Tahoe 2.406) |
 | EmeraldBay cells streamed (5 shared cell lines) | 141,720 (of 1.83M; 57.7 GB / 116 shards) | `scripts/emeraldbay_recompute/` |
-| EmeraldBay groups gated | 132 (≥100 cells); predicted OVER = 10 → 100% met tol | gating, θ★ = 0.20 rad |
+| EmeraldBay groups gated | 132 (**5 shared lines**, ≥100 cells); predicted OVER = 10 → 100% met tol | gating, θ★ = 0.20 rad |
 | Symbolic Jacobian residual | zero matrix; max float diff 2.8×10⁻¹⁷ | `verify_theory.py` L1 |
 | Monte-Carlo check | K=50,000; seed=0; rel. err 0.13%; ρ²=3.82×10⁵; d_eff=12.2 | `verify_theory.py` L2 |
 | Laurent–Massart tail coverage | empirical Pr(θ>θ★) = 0.34% ≤ δ = 10% | `test_calculator.py` |
 | Test suite | 13 tests pass (12 unit + EmeraldBay integration) | CI |
 
 **Held-out angular-error curves (EmeraldBay, from-raw recompute `scripts/emeraldbay_recompute/`;
-prediction θ²(n)=tr(PΣP)/m²·(1/n−1/N); own PCA(50), within-condition σ²=0.963):**
+prediction θ²(n)=tr(PΣP)/m²·(1/n−1/N); embedding + σ² fit on the FULL atlas (52 lines); the four
+validation groups and the 132 gated groups are restricted to the 5 lines shared with Tahoe-100M):**
 
 | Group (actual identity) | N | m | mean rel. err | slope vs tr(PΣP)/m² | R² |
 |---|---:|---:|---:|---:|---:|
@@ -88,7 +89,7 @@ NCI-H460 rises from n★=222 (0.05 µM) to n★=98 (5 µM). Full tables → [`CA
 
 ## 3. Honesty ledger (consolidated — reviewers will probe these)
 
-1. **Variance-definition mismatch.** EmeraldBay σ²≈0.96 is *within-condition* (own PCA); Tahoe σ²≈2.41 is *marginal* —
+1. **Variance-definition mismatch.** EmeraldBay σ²≈0.96 is *within-condition* over the full atlas (52 lines; the 5-shared-line validation slice = 0.90); Tahoe σ²≈2.41 is *marginal* —
    not a clean platform head-to-head. Both establish σ² as a platform/pipeline-specific plug-in.
 2. **DMSO_T0 group identity.** The two high-m validation groups are time-zero reference populations, not
    drug effects; only Encorafenib×HEC-1-A is a drug. The held-out test validates geometry, not biology.

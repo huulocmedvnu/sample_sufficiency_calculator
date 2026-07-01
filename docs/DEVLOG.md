@@ -117,9 +117,10 @@ scripts/verify_references.py` (32/32 DOIs).
 
 13. **From-raw EmeraldBay recompute (independent validation).** Reprocessed the second atlas
     (tahoebio/EmeraldBay, 1.83M cells, 116 shards, 57.7 GB) from the raw counts with the same recipe
-    (`scripts/emeraldbay_recompute/`, parallel-prefetch stream), fitting its **own** HVG(2000)+PCA(50)
-    embedding and retaining the 141,720 cells of the five shared lines for the held-out test. The
-    within-condition σ² ≈ 0.963 (own embedding). **Held-out angular-error curves** (subsample n cells,
+    (`scripts/emeraldbay_recompute/`, parallel-prefetch stream). **Scope (exact):** the HVG(2000)+PCA(50)
+    embedding and the within-condition σ² ≈ 0.963 are computed over the **full atlas** (all 52 lines,
+    1,831,648 cells, 4,912 condition-line groups); the held-out validation and the 132 gated groups are
+    **restricted to the 5 lines shared with Tahoe** (141,720 cells; 5-line σ² = 0.896). **Held-out angular-error curves** (subsample n cells,
     realized RMS angle vs the closed form θ²(n)=tr(PΣP)/m²·(1/n−1/N)): all four (condition×line) groups
     give R² > 0.996; the strong DMSO_T0×HS-578T (m=6.46) matches the predicted slope to 0.2%, while the
     weak Encorafenib×HEC-1-A drug group (m=1.78) shows the expected ~13% low-SNR slope deficit.

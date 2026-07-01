@@ -1,5 +1,5 @@
 {
- "description": "EmeraldBay external calibration (from-raw recompute; scripts/emeraldbay_recompute/): within-condition per-PC variance + held-out angular-error curves (independent validation of THEORY.md). Baseline = per-line mean; magnitudes are 5-day survivor norms.",
+ "description": "EmeraldBay external calibration (from-raw recompute; scripts/emeraldbay_recompute/): embedding + within-condition sigma^2 computed over the FULL atlas (52 lines, 1.83M cells); the held-out angular-error curves and regime gating are restricted to the 5 lines shared with Tahoe-100M (141,720 cells). Baseline = per-line mean; magnitudes are 5-day survivor norms.",
  "num_dimensions": 50,
  "per_component_variance": [
   3.11876,
@@ -285,5 +285,8 @@
   }
  },
  "gating_tolerance": 0.2,
- "gating_over_accuracy": 1.0
+ "gating_over_accuracy": 1.0,
+ "sigma2_scope": "full atlas: 52 cell lines, 1,831,648 cells, 4,912 condition-line groups",
+ "sigma2_shared5": 0.8965,
+ "validation_scope": "5 cell lines shared with Tahoe-100M (HS-578T, AN3-CA, HEC-1-A, BT-474, C-33 A), 141,720 cells"
 }
