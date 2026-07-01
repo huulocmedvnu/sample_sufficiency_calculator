@@ -316,6 +316,13 @@ Provided as-is; validate `sigma^2` on your own platform before planning a screen
 
 ## II. Dataset Inventory & Scale Audit
 
+> **Data representation.** Tahoe-100M provides the **full raw gene-expression count matrix**; it is
+> not limited to a reduced representation. The **`d = 50` PCA embedding** used throughout this tool is
+> a *downstream representation* we compute from that raw data for the geometric power-analysis
+> framework (direction estimation lives in PCA space, where `σ²` and the perturbation magnitudes `m`
+> are measured). The mathematics and quotas are stated in that fixed embedding, but the underlying
+> atlas is the full-resolution raw expression data.
+
 *Scale ledger of two large-scale, independent, multi-line reference perturbation atlases used purely for empirical validation. **GLOBAL** rows are dataset-level (published/metadata); **CAPTURED** rows are computed from the cached arrays of the companion calibration pipeline. Per-well cell-count distributions are reported for CAPTURED data only, since global per-well counts are not in either atlas's metadata. Cell lines are reported by their real identifiers HS-578T, AN3-CA, HEC-1-A, BT-474 and C-33 A (the five established cancer lines common to both atlases).*
 
 ### A. Global inventory
