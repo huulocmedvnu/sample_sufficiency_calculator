@@ -149,21 +149,47 @@ and negligible in the regime of Section 5. Empirical coverage is verified by Mon
 
 ---
 
-## 5. Regime of validity and the second-order bias
+## 5. Regime of validity and the second-order term
 
-The Delta expansion is exact to leading order; the correction comes from the fluctuating lever arm.
-From $\tan\theta=\lVert Pe\rVert/(m+u^\top e)$,
+The Delta expansion is exact to leading order; the correction has **two** sources of the *same* order
+— the fluctuating lever arm **and** the gap between the tangent and the arc. The geometry is exact:
+decomposing $e=(u^\top e)\,u+Pe$ gives $\hat v=(m+u^\top e)\,u+Pe$, so
 
-$$\mathbb E[\theta^2]=\frac{1}{m^2}\,\mathbb E\!\left[\frac{\lVert Pe\rVert^2}{(1+u^\top e/m)^2}\right]
-  =\frac{\operatorname{tr}(PSP)}{m^2}\Big(1+\frac{3}{m^2}\big(u^\top S u
-  +2\,\tfrac{u^\top S P S u}{\operatorname{tr}(PSP)}\big)+\dots\Big),$$
+$$\theta=\arctan\frac{\lVert Pe\rVert}{m+u^\top e}=\arctan\frac{r}{1+s},
+  \qquad r:=\frac{\lVert Pe\rVert}{m},\quad s:=\frac{u^\top e}{m},$$
 
-using Isserlis' theorem (the $O(e^3)$ cross term vanishes by symmetry). The relative correction is
-$O\big(u^\top S u/m^2\big)=O(\rho^{-2})$. **Validity:** the formula holds when the along-signal SNR
-$\rho^2=m^2/(u^\top S u)\gg1$, i.e. when $n\gg u^\top\Sigma u/m^2$ (per arm). At the quota itself this is
-automatically satisfied whenever $\theta_\star\ll1$, since $\theta_\star^2=\operatorname{tr}(PSP)/m^2
-\ge u^\top SPS u/\dots$ — concretely, $\rho^{-2}\approx\theta_\star^2\cdot(u^\top\Sigma u)/\operatorname{tr}(P\Sigma P)$,
-which is small for tight tolerances. Outside this regime (very weak signals, $\rho\lesssim1$) the
+with $r,s=O(\rho^{-1})$. Using $\arctan t=t-\tfrac13 t^3+O(t^5)$ (so $\theta^2=\tan^2\theta-\tfrac23\tan^4\theta+\dots$)
+and $z:=\tfrac{r}{1+s}=r(1-s+s^2-\dots)$,
+
+$$\theta^2=z^2-\tfrac23 z^4+O(\rho^{-6})
+   =\underbrace{r^2\big(1-2s+3s^2\big)}_{\text{lever-arm }=\tan^2\theta}
+     \;-\;\underbrace{\tfrac23\,r^4}_{\text{arc}<\text{tangent}}\;+\;O(\rho^{-6}).$$
+
+Taking expectations over $e\sim\mathcal N(0,S)$ — the odd term $\mathbb E[r^2 s]=0$ vanishes by
+symmetry, and Isserlis' theorem gives
+$\mathbb E[\lVert Pe\rVert^2(u^\top e)^2]=\operatorname{tr}(PSP)\,u^\top S u+2\,u^\top S P S u$ and
+$\mathbb E[\lVert Pe\rVert^4]=\operatorname{tr}(PSP)^2+2\operatorname{tr}\!\big((PSP)^2\big)$ —
+
+$$\boxed{\;\mathbb E[\theta^2]=\frac{\operatorname{tr}(PSP)}{m^2}
+   \left(1+\frac{1}{m^2}\!\left[\,3\,u^\top S u
+   +\frac{6\,u^\top S P S u}{\operatorname{tr}(PSP)}
+   -\tfrac23\operatorname{tr}(PSP)
+   -\frac{4\operatorname{tr}\!\big((PSP)^2\big)}{3\operatorname{tr}(PSP)}\right]
+   +O(\rho^{-4})\right)\;}\tag{6}$$
+
+The first two bracket terms are the lever-arm correction — they alone are the expansion of
+$\mathbb E[\tan^2\theta]$ — and the last two are the arc-vs-tangent correction $-\tfrac23\mathbb
+E[\lVert Pe\rVert^4]/(m^2\operatorname{tr}(PSP))$. **Both must be kept:** retaining only the lever-arm
+group (i.e. equating $\mathbb E[\theta^2]$ with $\mathbb E[\tan^2\theta]$) *over*-predicts the angle at
+this order. Monte-Carlo coverage in `tests/verify_theory.py` pins (6) to $<0.1\%$, versus $\sim\!3\%$
+for the lever-arm-only form on the same draw.
+
+**Relative correction is $O(\rho^{-2})$.** Every bracket term is $O(\text{noise}/m^2)=O(\rho^{-2})$ with
+$\rho^2:=m^2/(u^\top S u)$ the along-signal SNR, so $\mathbb E[\theta^2]=\operatorname{tr}(PSP)/m^2\cdot
+\big(1+O(\rho^{-2})\big)$ regardless of which second-order coefficient one uses — the leading-order
+quota of §3 is unaffected. **Validity:** that quota holds when $\rho^2\gg1$, i.e. $n\gg u^\top\Sigma
+u/m^2$ (per arm); at the quota itself $\rho^{-2}\approx\theta_\star^2\,(u^\top\Sigma u)/\operatorname{tr}
+(P\Sigma P)$, small for tight tolerances. Outside this regime (very weak signals, $\rho\lesssim1$) the
 angle is near-uniform on the sphere and no finite quota "clears" the noise — the correct report is
 "undetectable at this depth," not a number.
 
@@ -236,3 +262,27 @@ $u$ and magnitude $m$, a tolerance $\theta_\star$ (or detection power), and opti
 $\delta$. The isotropic `σ²` of v1 is the degenerate case $\ell_k\equiv\sigma^2$. Empirical magnitude
 of the correction on the Tahoe-100M atlas is reported in `src/calibrate.py` (anisotropic vs isotropic
 quota per drug).
+
+---
+
+## 10. Formal verification (Lean 4 / Mathlib)
+
+The **deterministic** backbone of this derivation is machine-checked in Lean 4 against Mathlib
+(pinned to `v4.31.0`), in [`../lean/`](../lean) — no `sorry`, and every headline theorem depends only
+on the three standard Mathlib axioms (`propext`, `Classical.choice`, `Quot.sound`, confirmed via
+`#print axioms`). The Lean names map to this document as:
+
+| Result here | Lean theorem (`SampleSufficiency.…`) |
+|---|---|
+| Lemma 1: $Dg(v)=\tfrac1m P$ (only $\perp$ noise rotates $\hat u$; $Pu=0$) | `hasFDerivAt_normalize`, `hasFDerivAt_normalize_apply_self` |
+| $D\lVert\cdot\rVert(v)=\lVert v\rVert^{-1}\langle v,\cdot\rangle$ | `hasFDerivAt_norm'` |
+| Key trace identity $\operatorname{tr}(P\Sigma P)=\operatorname{tr}\Sigma-u^\top\Sigma u$ (§2–3) | `trace_proj_conj` |
+| Isotropic reduction $\to\sigma^2(d-1)$ (§3) | `trace_proj_iso` |
+| PCA/diagonal form $\to\sum_k(1-u_k^2)\ell_k$ (§7, §9) | `trace_proj_diag` |
+| $P$ symmetric idempotent, $Pu=0$, $\operatorname{tr}P=d-1$ (§1) | `proj_transpose`, `proj_mul_self`, `proj_mulVec_self`, `trace_proj` |
+
+The **probabilistic** results — $\mathbb E[\theta^2]=\operatorname{tr}(PSP)/m^2$ (Isserlis/Delta,
+§2), the §5 second-order term, and the Laurent–Massart tail (§4) — are **not** in Lean (they require
+Gaussian-quadratic-form machinery Mathlib does not package) and are instead verified empirically by
+symbolic differentiation + Monte-Carlo in [`../tests/verify_theory.py`](../tests/verify_theory.py).
+See [`../lean/README.md`](../lean/README.md) to build (`lake exe cache get && lake build`).

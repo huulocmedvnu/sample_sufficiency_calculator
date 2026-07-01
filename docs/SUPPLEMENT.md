@@ -13,6 +13,7 @@ calibrator lives in the companion data repository.
 | Artifact | Role | Use it for |
 |---|---|---|
 | [`docs/THEORY.md`](THEORY.md) | Full anisotropic proof | Methods: derivation, distribution, tail bound, validity regime, plug-in estimation |
+| [`../lean/`](../lean/) | Lean 4 / Mathlib formalization | Machine-checked deterministic core: Lemma 1 Jacobian + `tr(PΣP)=trΣ−uᵀΣu` + iso/diagonal reductions (no `sorry`, standard axioms; see `lean/README.md`, THEORY §10) |
 | [`docs/TECHNICAL_BLUEPRINT.md`](TECHNICAL_BLUEPRINT.md) | Audited 5-section blueprint (+ §0 corrections) | Master draft scaffold; the **authoritative** narrative + Auditor's corrections |
 | [`docs/CASE_STUDIES.md`](CASE_STUDIES.md) | 5 real-drug sufficiency spectrum | Results: empirical case studies table + analysis paragraph |
 | [`docs/INVARIANCE.md`](INVARIANCE.md) | Downsampling-invariance demo (OVER vs UNDER) | Results: "Downstream Functional Invariance" subsection |

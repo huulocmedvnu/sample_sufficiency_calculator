@@ -139,9 +139,70 @@ def monte_carlo_verification(d: int = 50, n: int = 50_000, K: int = 50_000,
         print("(repo calculator not importable — skipping implementation cross-check)\n")
 
 
+# ====================================================================================
+# LAYER 4 — SECOND-ORDER TERM (THEORY.md §5, eq. 6): arc-vs-tangent must be kept
+# ====================================================================================
+def second_order_verification(d: int = 6, m: float = 4.0, denom: float = 50.0,
+                              K: int = 6_000_000, seed: int = 0) -> None:
+    """Verify the §5 second-order expansion of E[theta^2] (eq. 6) and show that the
+    lever-arm-only form (= the expansion of E[tan^2 theta]) over-predicts at this order.
+
+        E[theta^2] = tr(PSP)/m^2 * (1 + (1/m^2)[ 3 uSu + 6 uSPSu/tr(PSP)
+                                                  - (2/3) tr(PSP) - (4/3) tr((PSP)^2)/tr(PSP) ])
+    The last two bracket terms are the arc-vs-tangent correction theta^2 = tan^2 - (2/3) tan^4 + ...
+    """
+    print("=" * 78)
+    print("LAYER 4 — second-order term  E[theta^2]  (THEORY.md §5, eq. 6)")
+    print("=" * 78)
+    rng = np.random.default_rng(seed)
+    # anisotropic SPD Sigma (random basis), unit direction u, magnitude-m signal v
+    A = rng.standard_normal((d, d))
+    Sigma = A @ A.T
+    u = rng.standard_normal(d); u /= np.linalg.norm(u)
+    v = m * u
+    P = np.eye(d) - np.outer(u, u)
+    S = Sigma / denom                                   # sampling covariance of v_hat
+
+    trPSP = float(np.trace(P @ S @ P))
+    uSu = float(u @ S @ u)
+    uSPSu = float(u @ S @ P @ S @ u)
+    trPSP2 = float(np.trace(P @ S @ P @ S))             # tr((PSP)^2)  (P idempotent)
+    lead = trPSP / m ** 2
+    # lever-arm only  == expansion of E[tan^2 theta]  (the pre-fix THEORY.md formula)
+    lever_only = lead * (1.0 + (3.0 / m ** 2) * (uSu + 2.0 * uSPSu / trPSP))
+    # full eq. (6): add the arc-vs-tangent term  -(2/3) E||Pe||^4 / m^4
+    corrected = (lead
+                 + (1.0 / m ** 4) * (3.0 * (trPSP * uSu + 2.0 * uSPSu))
+                 - (2.0 / 3.0) * (trPSP ** 2 + 2.0 * trPSP2) / m ** 4)
+
+    L = np.linalg.cholesky(S)
+    e = rng.standard_normal((K, d)) @ L.T
+    v_hat = v + e
+    cos = (v_hat @ v) / (m * np.linalg.norm(v_hat, axis=1))
+    theta = np.arccos(np.clip(cos, -1.0, 1.0))
+    emp = float(np.mean(theta ** 2))
+    se = float(np.std(theta ** 2, ddof=1) / np.sqrt(K)) / emp
+
+    re_lead = abs(emp - lead) / emp
+    re_lever = abs(emp - lever_only) / emp
+    re_corr = abs(emp - corrected) / emp
+    rms_deg = np.degrees(np.sqrt(emp))
+    print(f"d={d}, m={m}, S=Sigma/{denom:.0f}, K={K:,}, RMS angle ~ {rms_deg:.2f} deg "
+          f"(MC rel. std-error {se*100:.3f}%)")
+    print(f"  MC      E[theta^2] = {emp:.6e}")
+    print(f"  leading order      -> rel err {re_lead*100:6.3f}%")
+    print(f"  lever-arm only (E[tan^2]) -> rel err {re_lever*100:6.3f}%   (pre-fix §5 form)")
+    print(f"  eq.(6) corrected   -> rel err {re_corr*100:6.3f}%")
+    assert re_corr < 0.5e-2, f"eq.(6) mismatch: {re_corr*100:.3f}% (> 0.5%)"
+    assert re_lever > 1.5e-2, "expected lever-arm-only form to be materially worse (sanity check)"
+    assert re_corr < re_lead < re_lever, "ordering: corrected < leading < lever-only expected"
+    print(">>> LAYER 4 PASSED: arc-vs-tangent term is required; eq.(6) matches MC to <0.5%.\n")
+
+
 def main():
     symbolic_jacobian_verification(d=3)
     monte_carlo_verification(d=50, n=50_000, K=50_000, m=3.0, seed=0, tol=0.01)
+    second_order_verification(d=6, m=4.0, denom=50.0, K=6_000_000, seed=0)
     print("=" * 78)
     print("ALL VERIFICATION LAYERS PASSED.")
     print("=" * 78)

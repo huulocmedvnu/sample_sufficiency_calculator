@@ -288,11 +288,26 @@ The proof is checked three ways (all asserted; run on every push via GitHub Acti
    `2 tr(PΣP)/(n m²)` to **<1%** (last run: 0.13%).
 2b. **Tail coverage.** Running the Laurent–Massart confidence quota `n*_δ`, the empirical
    `P(θ>θ*)` stays `≤ δ` (e.g. 0.34% ≤ 10%).
+2c. **Second-order term (`verify_theory.py` Layer 4).** The §5 expansion of `E[θ²]` (including the
+   arc-vs-tangent correction) matches the exact geometric angle to **<0.1%**, and the older
+   lever-arm-only form (`= E[tan²θ]`) is shown to be materially worse — asserted so it can't regress.
 3. **Implementation.** `src/calculator.py` returns the analytical `n*` exactly (0.0000%).
 
 Unit tests additionally pin the scaling laws (`1/m²`, `σ²`, `1/θ²`), the anisotropic→isotropic
 reduction, the perpendicular-only property (variance along the signal is inert), the dual-allocation
 regimes, and input validation.
+
+### Formal verification in Lean 4 / Mathlib (`lean/`)
+
+The **deterministic** backbone is additionally machine-checked in Lean 4 against Mathlib (`v4.31.0`),
+with **no `sorry`** and only the three standard axioms (`#print axioms`): Lemma 1 (the normalization
+Jacobian `Dg(v)=(1/m)P`), the key trace identity `tr(PΣP)=trΣ−uᵀΣu`, and its isotropic (`→σ²(d−1)`)
+and PCA/diagonal (`→Σ_k(1−u_k²)ℓ_k`) reductions. The probabilistic results (E[θ²], the tail) remain
+empirical (above). See [`lean/README.md`](lean/README.md) and `docs/THEORY.md` §10.
+
+```bash
+cd lean && lake exe cache get && lake build   # checks all Lean proofs (seconds, given the cache)
+```
 
 ## License / status
 

@@ -67,6 +67,19 @@ scripts/verify_references.py` (32/32 DOIs).
    folding its unique points (Gaussian-centroid assumption; additive vs multiplicative/rotational batch)
    into the list — now 10 numbered items.
 
+9. **Proof revision + Lean formalization.** Audited the main derivation (`docs/THEORY.md`). Found and
+   fixed a real error in the §5 second-order expansion: the boxed formula was the expansion of
+   $\mathbb E[\tan^2\theta]$, not $\mathbb E[\theta^2]$ — it dropped the arc-vs-tangent term
+   $-\tfrac23\,\mathbb E\lVert Pe\rVert^4/(m^2\operatorname{tr}(PSP))$, which enters at the *same*
+   second order. As written it made the prediction *worse* than leading order (Monte-Carlo: leading
+   +0.9%, §5-as-written +3.4% — it matched $\mathbb E[\tan^2\theta]$ to 0.07% — corrected eq. (6)
+   +0.06%). The leading-order law, the quota, and the $O(\rho^{-2})$ validity conclusion are all
+   unaffected. Locked the fix in `tests/verify_theory.py` (new Layer 4). Then formally verified the
+   **deterministic core** in Lean 4 / Mathlib (`lean/`): Lemma 1 (`Dg(v)=(1/m)P`), the key trace
+   identity `tr(PΣP)=trΣ−uᵀΣu`, and its isotropic/diagonal reductions — no `sorry`, standard axioms
+   only. The probabilistic core (E[θ²], tail) stays empirical (`verify_theory.py`). See
+   `docs/THEORY.md` §10 and `lean/README.md`.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one

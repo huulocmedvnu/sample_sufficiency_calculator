@@ -31,3 +31,15 @@ jobs:
 
       - name: Run standalone verification harness
         run: python tests/verify_theory.py
+
+  lean:
+    name: Lean 4 / Mathlib formal core
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build & check Lean proofs (downloads Mathlib cache, no full compile)
+        uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: "lean"
+          build-args: "--wfail"
