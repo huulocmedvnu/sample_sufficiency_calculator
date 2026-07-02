@@ -67,8 +67,8 @@ def main():
               f"{100*lin['dry_lab_compute_reduction_ratio']:>8.0f}% "
               f"{100*quad['dry_lab_compute_reduction_ratio']:>9.0f}% {mult:>10s}")
     print(f"\nHonest read: across the full 379-drug x 3-dose x 50-line panel, at 0.1 rad only "
-          f"{CONST['pct_OVER']:.0f}% of conditions are OVER-sampled; "
-          f"{CONST['pct_under_or_ghost']:.0f}% are UNDER-sampled or Ghost (n*>50k). "
+          f"{CONST['pct_OVER']:.1f}% of conditions are OVER-sampled; "
+          f"{CONST['pct_under_or_ghost']:.1f}% are UNDER-sampled or Ghost (n*>50k). "
           f"{CONST['drugs_over_in_0_conditions']}/{CONST['n_drugs']} drugs are resolvable in ZERO conditions at "
           f"this depth. Downsampling savings are polynomial, never exponential.")
     anisotropic_demo(mags)

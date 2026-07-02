@@ -308,6 +308,18 @@ scripts/verify_references.py` (32/32 DOIs).
     PDF (18 pp) / DOCX. With this, the empirical validation is atlas-wide on both sides — classification,
     direct curves, and gating verification all span the full atlas, not any cell-line subset.
 
+28. **Reconciled `calibrate.py` with the authoritative recompute.** Running the demo surfaced a real
+    inconsistency: its stored example vectors in `fixtures/tahoe_calibration.json` gave homoharringtonine
+    5 µM × NCI-H460 **m=14.88 / n★=106**, but the authoritative `tahoe_quota_per_condition.csv` (and
+    CASE_STUDIES, and the manuscript) say **m=15.53 / n★=98** — the demo vectors were partly stale
+    (looked dose-pooled). Regenerated all three example vectors (Homoharringtonine/Panobinostat/Trametinib)
+    directly from the dose-resolved `out_dose` pseudobulk with the exact `pass3_quota` computation
+    (plate-matched DMSO_TF baseline); magnitudes now match the CSV to 4 dp (15.5333 / 9.9671 / 4.3947).
+    Also fixed the honest-read print rounding (`.0f`→`.1f`) so it reports **2.5% OVER / 97.5% under-or-
+    ghost** instead of 2% / 98%. `calibrate.py` now agrees end-to-end with the CSV, CASE_STUDIES, the
+    manuscript, and the refreshed README; the 13-test suite still passes. (The earlier README edit that
+    replaced 14.9→15.5 was in the right direction; this fixes the fixture it should have matched.)
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
