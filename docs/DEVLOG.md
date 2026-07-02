@@ -294,6 +294,20 @@ scripts/verify_references.py` (32/32 DOIs).
     of Record. Audit: no manuscript number/table/citation changed (217 and 10 both already present).
     Rebuilt PDF (18 pp) / DOCX.
 
+27. **Full-atlas gating verification for Tahoe (the primary-atlas counterpart of phase 26).** Tahoe had
+    the full-atlas *classification* (Phase B spectrum) and the full-atlas direct *curves* (Phase C), but no
+    empirical downsample-and-measure *gating* check like EmeraldBay's 217/217. `pass4c_gating.py` supplies
+    it from the 20 GB per-cell memmap: classify every (sample×line) condition at θ★=0.1 (per-line-mean
+    baseline), and for each predicted OVER, downsample to n★ and check the realized RMS angle ≤ 1.05·θ★.
+    Result: **5,503/5,503 (100 %)** of predicted-OVER conditions met the tolerance, across all 44 lines in
+    which any over-sampled condition occurs — the EmeraldBay result reproduced at ~25× scale. Added one
+    sentence to Phase C's population-scale paragraph, explicitly flagging that the per-line-mean baseline
+    means these 5,503 are **not** the DMSO-referenced 2.5% OVER of Phase B (avoids a spurious
+    contradiction). Fixture `tahoe_direct_curves_full.json` gains a `gating` block; SUPPLEMENT Constants of
+    Record updated. Audit: only new number is 5,503; no existing number/table/citation changed. Rebuilt
+    PDF (18 pp) / DOCX. With this, the empirical validation is atlas-wide on both sides — classification,
+    direct curves, and gating verification all span the full atlas, not any cell-line subset.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one

@@ -730556,5 +730556,15 @@
    "line": "CVCL_1666",
    "drug": "Minodronic acid"
   }
- ]
+ ],
+ "gating": {
+  "theta_star": 0.1,
+  "baseline": "per-line mean",
+  "scope": "full atlas, all 44 lines",
+  "min_cells": 400,
+  "n_predicted_over": 5503,
+  "n_met_tolerance": 5503,
+  "accuracy": 1.0,
+  "criterion": "realized RMS angle <= 1.05*theta_star when downsampled to n*"
+ }
 }

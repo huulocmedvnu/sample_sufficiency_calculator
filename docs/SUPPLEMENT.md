@@ -62,6 +62,7 @@ Tail-controlled: `n★_δ = (2/m²θ★²)[tr(PΣP) + 2‖PΣP‖_F√L + 2‖P�
 | **EmeraldBay** within-condition σ² | **≈ 0.963** (full atlas, 52 lines, 1.83M cells; 5-shared-line slice = 0.896) | `scripts/emeraldbay_recompute/` (own PCA(50); ≠ marginal Tahoe 2.406) |
 | EmeraldBay cells streamed (5 shared cell lines) | 141,720 (of 1.83M; 57.7 GB / 116 shards) | `scripts/emeraldbay_recompute/` |
 | EmeraldBay gating (full atlas) | **3,971 groups, 52 lines** (≥100 cells): 217 OVER (5.5%), 94.5% UNDER; downsample-verified **217/217 → 100% over all 52 lines** (`pass5_gating_full.py`) | gating, θ★ = 0.20 rad |
+| Tahoe gating (full atlas, direct) | downsample-verified **5,503/5,503 → 100%** of predicted-OVER conditions over all 44 lines with any OVER condition (per-line-mean baseline; `pass4c_gating.py`) | θ★ = 0.1 rad; ≠ DMSO-referenced 2.5% spectrum |
 | Symbolic Jacobian residual | zero matrix; max float diff 2.8×10⁻¹⁷ | `verify_theory.py` L1 |
 | Monte-Carlo check | K=50,000; seed=0; rel. err 0.13%; ρ²=3.82×10⁵; d_eff=12.2 | `verify_theory.py` L2 |
 | Laurent–Massart tail coverage | empirical Pr(θ>θ★) = 0.34% ≤ δ = 10% | `test_calculator.py` |
