@@ -205,6 +205,20 @@ scripts/verify_references.py` (32/32 DOIs).
     50 refs rendered) / DOCX; audit confirmed zero numeric or table drift (edits are additive citations +
     clauses). Banner reference line updated 34→50.
 
+21. **§2.3 validation methodology made explicit + a sampling-scheme fix.** Added a "Subsampling protocol
+    (exact)" paragraph to Results §2.3 spelling out (i) the ground-truth direction
+    \(u=(\hat\mu_N-\bar\mu_{\text{line}})/\lVert\cdot\rVert\) built from all \(N\) condition cells against
+    the per-line-mean reference (distinct from the DMSO reference of §2.4), (ii) the angular error
+    \(\theta=\arccos(\hat u_n^\top u)\) as the arccosine of the cosine similarity (clipped), RMS over
+    \(R=300\), and (iii) the finite-population handling — without-replacement subsampling makes
+    \(\operatorname{Var}(\hat\mu_n-\hat\mu_N)=\Sigma(1/n-1/N)\), the fit passes through the origin at
+    \(n=N\), and the grid caps at \(n\le N/2\) to avoid the degenerate boundary. Prompted by this
+    transparency pass, **corrected the Tahoe stage-B curve script** (`pass4b_curves.py`) from
+    with-replacement (a bootstrap, variance \(\Sigma/n\), no \(-1/N\)) to without-replacement, matching
+    EmeraldBay and the FPC prediction; the fix ships with the falsification bundle but the running
+    orchestrator already reads the corrected script. Rebuilt PDF (17 pp) / DOCX; tables and all data
+    numbers unchanged.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
