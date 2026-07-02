@@ -254,6 +254,24 @@ scripts/verify_references.py` (32/32 DOIs).
     constructive throughout ("evolving the standard, not criticizing the past"). Audit: all 50 [@cite]
     keys and the full number set preserved, tables unchanged. Rebuilt PDF (17 pp) / DOCX.
 
+24. **Full-atlas falsification of the angular-error law (both atlases, from raw).** Executed the
+    parameter-free predicted-vs-realized slope test at full scale. **Tahoe-100M:** re-streamed all 3,388
+    shards from HuggingFace (337 GB), projected all **95,624,334** cells through the same PCA(50) basis to
+    a 20 GB disk memmap, and ran without-replacement subsample curves on **56,195** of 67,018 (sample×line)
+    conditions — the first direct subsample-and-measure test on the primary atlas (previously only the
+    derived spectrum had been applied to it). **EmeraldBay:** re-projected the full **1,831,648**-cell /
+    52-line atlas and tested 1,064 groups. Results: (1) **σ² confirmed on every cell** — Tahoe marginal
+    σ²=2.4158 vs 2.406 (14-shard fit 2.4058), EmeraldBay within-condition 0.9745 vs 0.963, both within
+    rounding; the calibration fit on ~0.4% of data holds on the whole atlas. (2) **In-regime (ρ²≥3) the
+    parameter-free slope matches** — Tahoe median ratio 0.942 (1,790 conditions, R²=0.999), EmeraldBay
+    0.981 (33 groups, R²=0.999). (3) **The predicted ρ⁻² breakdown is reproduced** (Spearman 0.57 Tahoe,
+    0.79 EmeraldBay); whole-population ratios (0.68, 0.37) are the expected low-SNR tail, consistent with
+    the "most conditions under-sampled/ghost" finding. (4) Two-independent-halves √2 test 1.352 (EmeraldBay,
+    642 groups). Writeup `docs/FALSIFICATION.md`; scripts `scripts/*/pass4*.py` (+ `pass2b_project_all.py`);
+    fixtures `emeraldbay_falsification{,_full}.json`, `tahoe_direct_curves_full.json`; figures under
+    `outputs/`. A with-replacement bug in the Tahoe stage-B script was corrected to without-replacement
+    (matching the FPC prediction) before the run. Superseded prototype `pass4_direct_curves.py` removed.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
