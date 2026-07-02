@@ -152,8 +152,8 @@ independent single cells, and whether the calibration transfers. We did this on 
 EmeraldBay's *own* cells: the embedding and within-condition σ² ≈ 0.96 are computed over the **full atlas** (52 lines, 1.83M cells), vs Tahoe's marginal 2.406 — re-estimation is
 necessary, confirming σ² is the platform-specific input).
 
-The **held-out validation and gating are restricted to the 5 lines shared with Tahoe** (141,720 cells; 5-line σ²=0.90). **Held-out angular-error curves** (realized RMS angle from n subsampled cells vs the closed form
-`θ²(n)=tr(PΣP)/m²·(1/n−1/N)`, finite-population-corrected):
+Per-cell coordinates were retained for the **full 52-line atlas**, so the gating verification and the full-population falsification (below) span the whole atlas; the four illustrative **held-out angular-error curves** here use the 5 lines shared with Tahoe (141,720 cells; 5-line σ²=0.90) for direct cross-comparison. They compare the realized RMS angle from n subsampled cells to the closed form
+`θ²(n)=tr(PΣP)/m²·(1/n−1/N)` (finite-population-corrected):
 
 | group (N, m) | mean rel. err | fitted slope vs `tr(PΣP)/m²` | R² |
 |---|---|---|---|
@@ -164,12 +164,28 @@ The **held-out validation and gating are restricted to the 5 lines shared with T
 
 `realized² ∝ (1/n − 1/N)` is linear-through-origin with **R² > 0.99**, and the fitted slope matches the
 anisotropic `tr(PΣP)/m²` to **<1% for strong signatures** (the weaker m≈3 group deviates ~15% at small
-n — the expected breakdown of the first-order law at lower SNR, §5 of `THEORY.md`). **Regime gating:** of
-3,971 (condition x line) groups across all 52 lines, 217 (5.5%) are predicted OVER-sampled; the downsample-and-measure check (per-cell coords retained for the 5 shared lines) confirms 10/10 predicted-OVER groups meet the tolerance at n* (**100%**).
+n — the expected breakdown of the first-order law at lower SNR, §5 of `THEORY.md`). **Regime gating
+(full atlas):** of 3,971 (condition × line) groups across all 52 lines, 217 (5.5%) are predicted
+OVER-sampled, and the downsample-and-measure check now covers **every one — 217/217 (100%)** meet the
+tolerance at n* when downsampled (`pass5_gating_full.py`).
 
 This is distilled into `fixtures/emeraldbay_calibration.json` and asserted by
 `tests/test_emeraldbay_integration.py` (runs in CI, no network). The streaming calibrator that produced
 it is `scripts/emeraldbay_recompute/` (one-time streaming job over 57.7 GB / 116 shards).
+
+### Full-atlas falsification — both atlases, from raw (`docs/FALSIFICATION.md`)
+
+Beyond the four illustrative curves, the **parameter-free** slope test was run across the *entire*
+population of both atlases. All **95,624,334 Tahoe cells** were re-streamed from raw and **56,195**
+conditions tested; the full 52-line EmeraldBay atlas gave **1,064** groups. In the theory's validity
+regime (`ρ²≥3`) the a-priori slope `tr(PΣP)/m²` matches the realized fitted slope to a median ratio of
+**0.94** (1,790 Tahoe conditions) and **0.98** (33 EmeraldBay groups), each at **R²≈0.999** with no
+fitted parameter; outside it the deficit grows monotonically with `1/ρ²`, exactly as the second-order
+theory predicts. The same re-projection reconfirms the noise constants on *every* cell — Tahoe marginal
+**σ²=2.4158** (all 95.6M cells) vs the 2.406 calibration, EmeraldBay within-condition **σ²=0.9745** vs
+0.963 (constants fit on ≤1% subsamples, holding to within 0.4%/1.2%). And the OVER/UNDER gating decision
+holds on the primary atlas too: **5,503/5,503** predicted-OVER Tahoe conditions met the tolerance at n*
+(per-line-mean baseline, θ=0.1; `pass4c_gating.py`).
 
 ## The dual-sided framework: one threshold, two ledgers
 
