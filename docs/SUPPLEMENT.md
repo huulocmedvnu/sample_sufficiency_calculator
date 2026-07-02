@@ -95,12 +95,14 @@ NCI-H460 rises from n★=222 (0.05 µM) to n★=98 (5 µM). Full tables → [`CA
 
 1. **Variance-definition mismatch.** EmeraldBay σ²≈0.96 is *within-condition* over the full atlas (52 lines; the 5-shared-line validation slice = 0.90); Tahoe σ²≈2.41 is *marginal* —
    not a clean platform head-to-head. Both establish σ² as a platform/pipeline-specific plug-in.
-2. **DMSO_T0 group identity.** The two high-m validation groups are time-zero reference populations, not
-   drug effects; only Encorafenib×HEC-1-A is a drug. The held-out test validates geometry, not biology.
-3. **Low-SNR breakdown is expected, not hidden.** Encorafenib (m=3.0) shows a ~15% slope deficit at small
+2. **DMSO_T0 group identity.** Three of the four validation groups are DMSO_T0 time-zero reference
+   populations (HS-578T, HEC-1-A, BT-474), not drug effects; only Encorafenib×HEC-1-A is a drug. The
+   held-out test validates geometry, not biology.
+3. **Low-SNR breakdown is expected, not hidden.** Encorafenib (m=1.78) shows a ~13% slope deficit at small
    n — the first-order Delta breakdown when ρ²=m²/(uᵀSu) is not ≫1 (THEORY §5).
 4. **Gating tolerance = 0.20 rad** in the EmeraldBay experiment (not 0.1).
-5. **Resource figures (3.8×, 74%/93%) are Tahoe-derived** (N₀=1394, θ=0.1), not EmeraldBay.
+5. **Resource figures (~60× multiplex, 98%/>99% compute) are Tahoe-derived** (over-sampled exemplar
+   homoharringtonine 5 µM × NCI-H460, N₀=6,060, θ=0.1), not EmeraldBay.
 6. **Paclitaxel unavailable** in the batch-clean array (plate3-excluded) → Homoharringtonine is the
    cytotoxic exemplar. Magnitudes are 24 h survivor transcriptional norms (not viability).
 7. **Scope limit.** n★ governs centroid/direction (pseudobulk) only — **not** cell-level UMAP local

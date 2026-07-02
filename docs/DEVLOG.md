@@ -183,6 +183,15 @@ scripts/verify_references.py` (32/32 DOIs).
     caveat. Verified: no stale token remains, all current values present and matching. (These docs are
     not part of the pandoc build; no PDF rebuild needed.)
 
+19. **Reconciled the stale honesty-ledger lines in `SUPPLEMENT.md` (Constants of Record).** The main
+    constants table was already current, but three prose items in the §3 honesty ledger predated the
+    dose-resolved recompute: item 2 said "two high-m validation groups" (now three DMSO_T0 groups:
+    HS-578T, HEC-1-A, BT-474; drug = Encorafenib); item 3 gave Encorafenib m=3.0 / ~15% deficit (now
+    m=1.78 / ~13%); item 5 gave resource figures "3.8×, 74%/93%, N₀=1394" (now ~60× multiplex, 98%/>99%
+    compute, over-sampled exemplar homoharringtonine 5 µM × NCI-H460, N₀=6,060). All sourced from the
+    current constants; verified no stale token remains and the exemplar N₀=6,060 matches CASE_STUDIES and
+    TECHNICAL_BLUEPRINT.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
