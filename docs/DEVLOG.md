@@ -238,6 +238,22 @@ scripts/verify_references.py` (32/32 DOIs).
     table-row values identical (multisets equal), and no data number lost or added (only §2.2/2.3/2.6
     section labels dropped, replaced by Phase A–D). Rebuilt PDF (16 pp, 50 refs) / DOCX; 0 flagged chars.
 
+23. **Discussion rewritten as a scholarly dialogue.** Replaced the inward-looking, manual-like opening
+    with four framing paragraphs that position the work in the field: (i) *A design rule, not a detector* —
+    what the quota is and its three-stage use; (ii) *Detection versus direction* — a constructive contrast
+    with scPower [@schmid2021scpower], bulk replicate planning [@schurch2016replicates], and Hotelling
+    detection [@hotelling1931], arguing that existing tools collapse or invert the covariance to solve
+    *detection* power (Mahalanobis \(v^\top\Sigma^{-1}v\), rewarding low-noise directions) whereas the
+    directional problem is governed by \(\operatorname{tr}(P\Sigma P)\) and *hurt* by perpendicular noise —
+    hence an anisotropic quota is not just conservative but wrong-signed for some conditions under
+    isotropic assumptions; (iii) *A design standard* — the single-cell counterpart of bulk power analysis,
+    with Lean-checked core; (iv) *The ghost regime in perspective* — reframing the 97.5% under-sampled/
+    ghost audit through the reproducibility lens (raw cell count has masked directional resolution; the
+    tool shifts the question from "how many cells?" to "is the mechanism resolvable?"). Technical
+    paragraphs (scope, plug-in, dual-use, budget) and the Limitations honesty-ledger kept verbatim; tone
+    constructive throughout ("evolving the standard, not criticizing the past"). Audit: all 50 [@cite]
+    keys and the full number set preserved, tables unchanged. Rebuilt PDF (17 pp) / DOCX.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
