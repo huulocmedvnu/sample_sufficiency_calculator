@@ -219,6 +219,25 @@ scripts/verify_references.py` (32/32 DOIs).
     orchestrator already reads the corrected script. Rebuilt PDF (17 pp) / DOCX; tables and all data
     numbers unchanged.
 
+22. **Editorial restructure for a broad bioinformatics/genomics audience.** Reorganized the manuscript
+    per four editorial directions while keeping every constant intact. (1) **Introduction** rewritten as a
+    biology-first onboarding: what single-cell perturbation screens are and why they matter → the standard
+    workflow (treat → embed → aggregate to pseudobulk centroids → read direction for MoA) → the unanswered
+    question "how many cells to trust the direction?" → the anisotropic quota as the answer. (2)
+    **Methods total consolidation**: moved all procedure out of Results/Appendix — the exact subsampling
+    protocol (all-N reference, without-replacement, FPC (1/n−1/N)), the preprocessing pipeline
+    (log1p/HVG2000/PCA50), full dataset layouts, and the 13-test CI + Lean scope now live in Methods; the
+    standalone Results §2.2 "four-way verification" was folded into the Methods verification subsection (no
+    unique number lost — its figures already appeared there). (3) **Results retold as a linear arc** —
+    Phase A (the theory + geometric insight), Phase B (the Tahoe audit / sample-sufficiency spectrum),
+    Phase C (EmeraldBay out-of-distribution falsification), Phase D (utility: downsampling-invariance +
+    adaptive budgeting). Tables renumbered by new order (1 per-drug, 2 by-dose, 3 EmeraldBay, 4 invariance,
+    5 budget) with all in-text refs updated. (4) **Tone** softened around the math (e.g. tangent-space
+    projector → "filter out the noise aligned with the effect vector, which only changes its length").
+    **Integrity:** automated set-difference audit confirms all 50 distinct [@cite] keys preserved, all
+    table-row values identical (multisets equal), and no data number lost or added (only §2.2/2.3/2.6
+    section labels dropped, replaced by Phase A–D). Rebuilt PDF (16 pp, 50 refs) / DOCX; 0 flagged chars.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
