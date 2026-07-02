@@ -272,6 +272,16 @@ scripts/verify_references.py` (32/32 DOIs).
     `outputs/`. A with-replacement bug in the Tahoe stage-B script was corrected to without-replacement
     (matching the FPC prediction) before the run. Superseded prototype `pass4_direct_curves.py` removed.
 
+25. **Manuscript Phase C: added the full-atlas population-scale confirmation.** Folded the phase-24
+    falsification results into Results Phase C as a "Population-scale confirmation on both atlases"
+    paragraph + a 4th honesty caveat: the parameter-free slope test run across the full populations (all
+    95,624,334 Tahoe cells / 56,195 conditions; full 52-line EmeraldBay / 1,064 groups), in-regime
+    (ρ²≥3) median ratio 0.94 (1,790 Tahoe) and 0.98 (33 EmeraldBay) at R²≈0.999, the ρ⁻² breakdown
+    (Spearman 0.57/0.79), and the σ² reconfirmation on every cell (marginal 2.4158 vs 2.406; within-
+    condition 0.9745 vs 0.963). All added numbers sourced from `fixtures/tahoe_direct_curves_full.json`
+    and `fixtures/emeraldbay_falsification_full.json` and cross-checked; audit confirms no existing number,
+    table, or citation changed. Rebuilt PDF (18 pp) / DOCX.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
