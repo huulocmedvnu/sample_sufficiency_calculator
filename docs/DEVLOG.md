@@ -320,6 +320,22 @@ scripts/verify_references.py` (32/32 DOIs).
     manuscript, and the refreshed README; the 13-test suite still passes. (The earlier README edit that
     replaced 14.9→15.5 was in the right direction; this fixes the fixture it should have matched.)
 
+29. **Mathematical-rigor audit of the problem statement (Methods + Results Phase A).** Fixed two
+    conceptual ambiguities a computational-biology reviewer would flag, both verified against the source
+    pipeline first. (1) **Matrix-vs-vector notation.** (A1)–(A3) now state the raw inputs are matrices
+    \(X_t\in\mathbb{R}^{n_t\times d}\), \(X_c\in\mathbb{R}^{n_c\times d}\) (rows = individual \(d\)-vector
+    cells); since \(n_t\neq n_c\) they cannot be subtracted, so we collapse the cell dimension to
+    centroids and subtract the \(d\)-vectors, with the explicit estimator equation
+    \(\hat v=\hat\mu_t-\hat\mu_c\), \(\hat\mu_t=\tfrac1{n_t}\sum x_i^t\), \(\hat\mu_c=\tfrac1{n_c}\sum x_j^c\).
+    (2) **PCA→pseudobulk ordering.** Added a "Pipeline topology" paragraph: global embedding first (PCA on
+    the pooled single-cell matrix), then cell-level covariance \(\Sigma\in\mathbb{R}^{50\times50}\) from
+    individual embedded cells, then *late* pseudobulk as a downstream coordinate average within the
+    embedding — explicitly *not* an upstream gene-count aggregation before PCA (which would collapse
+    \(\Sigma\to0\) and destroy \(\operatorname{tr}(P\Sigma P)\)). Verified against `pass1_basis.py`
+    (PCA on `vstack` of pooled cells), the per-cell `np.cov(C.T)`/within-condition residual σ², and the
+    linear projected-mean centroid (`(sums/counts−pca_mean)@compsᵀ`). Notation propagated into Phase A.
+    Audit: no number/table/citation changed. Clean compile, PDF (18 pp) / DOCX.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
