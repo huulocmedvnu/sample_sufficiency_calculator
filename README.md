@@ -130,13 +130,14 @@ direction. This **contains the isotropic formula** as the case `Σ = σ²I` (ver
 **tail-controlled quota** guaranteeing `P(θ>θ*) ≤ δ` (not just the mean).
 
 **Honest empirical finding (Tahoe-100M):** on this atlas the anisotropic *mean-quota* correction is
-**small** — drug directions carry little variance along themselves, so they are not aligned with the
-dominant cell-cycle/lineage PCs, and with d=50 no single axis can move the trace much. The full-atlas
-falsification (below) puts the in-regime realized/predicted slope ratio at **0.94–0.98**, i.e. a
-few-percent correction. The anisotropic machinery's real value here is the rigorous **tail-controlled
-quota** `n*_δ` and the effective noise dimension `d_eff ≪ d−1`. On data where perturbations *do* align
-with high-variance axes the correction is large — the ratio formula in §8 of `THEORY.md` says exactly
-when.
+**small — aniso/iso ratio ≈ 0.93–0.96** (drug directions carry little variance along themselves, so they
+are not aligned with the dominant cell-cycle/lineage PCs, and with d=50 no single axis can move the trace
+much); the full-atlas falsification (below) puts the in-regime realized/predicted slope ratio in the same
+band (**0.94–0.98**). The anisotropic machinery's real value here is (i) the effective noise dimension
+**`d_eff ≈ 29 ≪ 49`** and (ii) the rigorous **tail-controlled quota** — 95%-confident homoharringtonine
+`n*=208` vs mean `92` cells/arm, a **~2.3× safety factor** (all from `python src/calibrate.py`). On data
+where perturbations *do* align with high-variance axes the correction is large — the ratio formula in §8
+of `THEORY.md` says exactly when.
 
 ## External validation on an independent atlas (EmeraldBay)
 
@@ -221,12 +222,14 @@ not by this angular threshold, and **can be distorted** by downsampling. Use `n*
 embedding. Global PCA eigenvalue spectra converge with sampling error (random-matrix theory), so they
 are preserved *approximately*, not exactly.
 
-### Calibration reality check (Tahoe-100M, θ=0.1 rad)
+### Calibration reality check (Tahoe-100M, θ=0.1 rad, N0=1,296 cells/condition — reproduces `python src/calibrate.py`)
 
-| signature | m | n*/arm | N0 | regime | dry save (lin / quad) | wet multiplex |
-|---|---:|---:|---:|:--:|:--:|:--:|
-| Homoharringtonine 5 µM × NCI-H460 | 15.5 | 98 | 6,060 | OVER | **98% / 100%** | **61.8×** |
-| median condition (panel-wide) | 1.27 | 14,570 | 1,296 | **UNDER** | 0% / 0% | — |
+| signature (5 µM, NCI-H460) | m | n*/arm | regime | dry save (lin / quad) | wet multiplex |
+|---|---:|---:|:--:|:--:|:--:|
+| Homoharringtonine | 15.53 | 98 | OVER | **92% / 99%** | **13.3×** |
+| Panobinostat | 9.97 | 237 | OVER | 82% / 97% | 5.5× |
+| Trametinib | 4.39 | 1,221 | OVER | 6% / 11% | 1.1× |
+| median condition (panel-wide) | 1.27 | 14,570 | **UNDER** | 0% / 0% | — |
 
 **Honest finding:** at a tight tolerance the atlas is *under-sampled* for **97.5%** of (drug×dose×line)
 conditions (those cells are **not** redundant); only strong perturbers in responsive lines at high dose
