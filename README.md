@@ -92,17 +92,11 @@ perturbation_magnitude, tolerance)` in `src/calculator.py`. The `1/m^2` factor i
 [vevo_100m recipe](https://theislab.github.io/vevo_Tahoe_100m_analysis/vevo_100m_pca.html):
 `normalize_total(1e4)` → `log1p` → HVG(2000) → PCA(50), streamed over all 100,648,790 cells). The
 per-cell PCA variance is **`sigma^2 = 2.406`** (mean over 50 dims), giving the quota law
-**`n* = 23,577 / m²`** at θ=0.1 rad. Example drug directions (5 µM in the responsive NCI-H460 line),
-cells/arm by tolerance:
-
-| tolerance | Homoharringtonine (m=14.9) | Panobinostat (m=10.0) | Trametinib (m=4.5) |
-|----------:|---------------------:|------------------------:|----------------:|
-| 0.05 rad (2.9°) | ~426 | ~949 | ~4,684 |
-| 0.10 rad (5.7°) | ~106 | ~237 | ~1,171 |
-| 0.20 rad (11.5°) | ~27 | ~59 | ~293 |
-
-The **quota ratio between any two drugs equals `(m_a/m_b)²`** exactly — the `m²` law, which
-`calibrate.py` verifies.
+**`n* = 23,577 / m²`** at θ=0.1 rad. A strong cytotoxic — homoharringtonine at 5 µM in the responsive
+NCI-H460 line (m=15.5) — resolves its direction in **~98 cells/arm**, whereas a median-magnitude
+condition (m≈1.27) needs **~14,570**, and the requirement scales as `1/θ²` with the tolerance. The
+**quota ratio between any two drugs equals `(m_a/m_b)²`** exactly — the `m²` law, which `calibrate.py`
+verifies.
 
 **The panel (379 drugs × 3 doses × 50 lines = 56,827 conditions, θ=0.1 rad).** The condition is
 `(drug × dose × cell line)`; median `N0 = 1,296` cells/condition. Only **2.5%** of conditions are
@@ -136,12 +130,13 @@ direction. This **contains the isotropic formula** as the case `Σ = σ²I` (ver
 **tail-controlled quota** guaranteeing `P(θ>θ*) ≤ δ` (not just the mean).
 
 **Honest empirical finding (Tahoe-100M):** on this atlas the anisotropic *mean-quota* correction is
-**small (~5–7%; ratio 0.93)** — drug directions carry little variance along themselves, so
-they are not aligned with the dominant cell-cycle/lineage PCs, and with d=50 no single axis can move the
-trace much. The anisotropic machinery's real value here is (i) `d_eff ≈ 29 ≪ 49` and (ii) the rigorous
-**tail quota** (95%-confident Homoharringtonine = 349 vs mean 154 cells/arm, a 2.3× safety factor). On data
-where perturbations *do* align with high-variance axes the correction is large — the ratio formula in
-§8 of `THEORY.md` says exactly when.
+**small** — drug directions carry little variance along themselves, so they are not aligned with the
+dominant cell-cycle/lineage PCs, and with d=50 no single axis can move the trace much. The full-atlas
+falsification (below) puts the in-regime realized/predicted slope ratio at **0.94–0.98**, i.e. a
+few-percent correction. The anisotropic machinery's real value here is the rigorous **tail-controlled
+quota** `n*_δ` and the effective noise dimension `d_eff ≪ d−1`. On data where perturbations *do* align
+with high-variance axes the correction is large — the ratio formula in §8 of `THEORY.md` says exactly
+when.
 
 ## External validation on an independent atlas (EmeraldBay)
 
@@ -226,14 +221,12 @@ not by this angular threshold, and **can be distorted** by downsampling. Use `n*
 embedding. Global PCA eigenvalue spectra converge with sampling error (random-matrix theory), so they
 are preserved *approximately*, not exactly.
 
-### Calibration reality check (Tahoe-100M, θ=0.1 rad, N0=1,296 cells/condition)
+### Calibration reality check (Tahoe-100M, θ=0.1 rad)
 
-| signature (5 µM, NCI-H460) | m | n*/cond | regime | dry save (lin / quad) | wet multiplex |
-|---|---:|---:|:--:|:--:|:--:|
-| Homoharringtonine (cytotoxic) | 14.9 | 106 | OVER | **92% / 99%** | **12.2×** |
-| Panobinostat (HDAC) | 10.0 | 237 | OVER | 82% / 97% | 5.5× |
-| Trametinib (MEK) | 4.5 | 1,171 | OVER | 10% / 18% | 1.1× |
-| median condition (panel-wide) | 1.27 | 14,570 | **UNDER** | 0% / 0% | — |
+| signature | m | n*/arm | N0 | regime | dry save (lin / quad) | wet multiplex |
+|---|---:|---:|---:|:--:|:--:|:--:|
+| Homoharringtonine 5 µM × NCI-H460 | 15.5 | 98 | 6,060 | OVER | **98% / 100%** | **61.8×** |
+| median condition (panel-wide) | 1.27 | 14,570 | 1,296 | **UNDER** | 0% / 0% | — |
 
 **Honest finding:** at a tight tolerance the atlas is *under-sampled* for **97.5%** of (drug×dose×line)
 conditions (those cells are **not** redundant); only strong perturbers in responsive lines at high dose
