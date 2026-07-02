@@ -155,6 +155,19 @@ scripts/verify_references.py` (32/32 DOIs).
     σ²(d−1), the Tahoe number 23,577/m², a worked table by signal strength, and an honest scope section.
     Hand-written (no citations); built with `pandoc --pdf-engine=tectonic` (5 pp).
 
+17. **Readability rewrite of the manuscript (all sections).** Reworded every section of
+    `docs/MANUSCRIPT_DEEPSEEK.md` for clarity while keeping the formal Briefings-in-Bioinformatics
+    register: crisper finding-first topic sentences in Results, and each Methods derivation step now
+    opens with the plain-language idea (e.g. "only noise perpendicular to the signal can rotate the
+    direction") before the formal expression, mirroring the new `THEORY_PRIMER.md`. **Content was frozen:**
+    an automated audit confirmed the 39 body `[@cite]` keys are identical, every table *value* is
+    byte-identical (only U+2011→ASCII hyphens changed, which the normalizer does anyway), and no numeric
+    result was altered. **One stale figure fixed:** §2.3 honesty-caveat 1 read "the two groups with m=12.4
+    and m=6.4 are DMSO_T0" — contradicting Table 1, the Limitations, and the Constants of Record; corrected
+    to the three DMSO_T0 reference groups at m=6.46/3.63/3.56 (drug = Encorafenib, m=1.78). Also unified
+    "1,296"→"1{,}296" and de-duplicated one redundant 5-line name listing. Regenerated `docs/manuscript.md`
+    (0 flagged chars, math parity even) and rebuilt PDF (16 pp) / DOCX; banner audit-ledger updated.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
