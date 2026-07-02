@@ -4,9 +4,11 @@
 θ★ = 0.1 rad (5.73°), equal arms. The governing law is **n★ = 2(d−1)σ²/(m²θ★²) = 23,577 / m²**. At the
 median depth N₀ = 1,296 the over/under boundary falls at **m = 4.27**, and the depth-fixed angular
 resolution is **θ(N₀) = 0.427 / m rad**. The unit of analysis is the **(drug × dose × cell-line)
-condition**: each magnitude m is the plate-matched (treated − DMSO) perturbation-vector norm ‖v‖ in the
-shared PCA(50) space where σ² was estimated. All values are machine-derived; full tables are in
-`fixtures/tahoe_*.csv`.
+condition**: each magnitude m is the length ‖v̂‖ of the perturbation vector v̂ = μ̂_t − μ̂_c, the
+difference of the treated and plate-matched-DMSO **centroids** (pseudobulk mean *vectors*, each a
+coordinate average of that arm's cells) in the shared PCA(50) space where σ² was estimated. The two arms
+usually have different cell counts, so this is a subtraction of two d-vectors, never of the raw
+cell-by-gene matrices. All values are machine-derived; full tables are in `fixtures/tahoe_*.csv`.
 
 ## Per-drug spectrum (median across 150 conditions = 3 doses × 50 lines)
 
@@ -79,6 +81,11 @@ minority. See [`SCALE_AUDIT.md`](SCALE_AUDIT.md) for the full distribution and t
 
 - All m and n★ are machine-computed from the raw Tahoe-100M counts through the streaming pipeline
   (`scripts/tahoe_recompute/`) and the shipped calculator; no placeholders.
+- Pipeline order (important): the PCA(50) embedding is fitted once on individual cells pooled across the
+  atlas; σ² is the cell-to-cell scatter measured from single cells *in that space*; the centroids μ̂ are
+  then formed **downstream** as a coordinate average of embedded cells — a within-embedding average, not
+  a gene-count aggregation *before* PCA (which would leave one point per condition, zero out σ², and
+  destroy the anisotropic trace tr(PΣP) the quota is built on).
 - Magnitudes are 24 h survivor transcriptional norms (not viability), specific to this
   platform/timepoint/embedding; the plate-matched DMSO_TF vehicle is the control.
 - The condition unit is (drug × dose × cell line); pooling doses inflates N₀ and averages magnitudes, and
