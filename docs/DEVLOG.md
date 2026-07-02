@@ -336,6 +336,24 @@ scripts/verify_references.py` (32/32 DOIs).
     linear projected-mean centroid (`(sums/counts−pca_mean)@compsᵀ`). Notation propagated into Phase A.
     Audit: no number/table/citation changed. Clean compile, PDF (18 pp) / DOCX.
 
+30. **Reviewer-facing revision: logic flags, style, biologist-friendliness.** A three-part pass, all
+    prose/structure (no result number changed; audit confirms 50 [@cite] keys and the 5 data tables
+    unchanged). **Logic:** (i) added a "Marginal-versus-within-condition variance" caveat with a
+    `TODO(author)` — the theory calls for the within-condition residual variance but the headline Tahoe
+    calibration uses the marginal σ²=2.406 (a *conservative* over-estimate), flagged for recompute/bias-
+    quantification before submission (23,577 unchanged for now); (ii) softened the abstract's n★_δ claim
+    from "controls Pr(θ>θ★)≤δ" to "approximate (1−δ) guarantee, exact as ρ→∞"; (iii) abstract now says the
+    validation confirms measurement *geometry* (3/4 groups are DMSO_T0 vehicle populations, not drugs);
+    (iv) new Discussion "Validity regime" paragraph elevating the ρ²≥3 first-order-breakdown caveat;
+    (v) abstract clarifies Lean checks only the deterministic core. **Style:** abstract trimmed to ~265
+    words; removed self-praising/literary language ("breakthrough", "principled answer", "four movements",
+    "tell its story", "cashes out", "the crux"); defined "condition" and MOSAIC at first use; verified
+    equation rendering (μ̂ hats/subscripts clean). **Biologist-friendly:** added a symbol glossary table
+    and a "Quickstart (worked number)" box to Methods; marked the Laurent–Massart/Hanson–Wright derivation
+    "For the mathematically inclined"; glossed "tangent space" as "the directions u can rotate into";
+    inserted three figure placeholders with suggested captions (F1 geometry, F2 n★ histogram, F3 EmeraldBay
+    θ²(n) curve). Rebuilt PDF (19 pp) / DOCX.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
