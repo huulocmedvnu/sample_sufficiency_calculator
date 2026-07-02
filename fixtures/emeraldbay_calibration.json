@@ -290,5 +290,5 @@
  "gating_n_over": 217,
  "gating_pct_over": 5.5,
  "gating_over_accuracy": 1.0,
- "gating_accuracy_scope": "downsample-and-measure verified on the 5 shared lines (10 predicted OVER, 10 met tolerance)"
+ "gating_accuracy_scope": "downsample-and-measure verified over the FULL atlas (all 52 lines): 217 predicted OVER, 217 met tolerance"
 }

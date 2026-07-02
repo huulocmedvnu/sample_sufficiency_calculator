@@ -282,6 +282,18 @@ scripts/verify_references.py` (32/32 DOIs).
     and `fixtures/emeraldbay_falsification_full.json` and cross-checked; audit confirms no existing number,
     table, or citation changed. Rebuilt PDF (18 pp) / DOCX.
 
+26. **Full-atlas gating verification (all 52 EmeraldBay lines).** The gating *classification* was already
+    atlas-wide, but the downsample-and-measure *check* had been limited to the 5 Tahoe-shared lines (10
+    groups) because only their per-cell coordinates were retained. With `pass2b`'s full re-projection
+    (`all_cells.npz`, 52 lines, 1,831,648 cells) available, `pass5_gating_full.py` reruns the check over
+    the whole atlas: it reproduces the published classification exactly (3,971 groups ≥100 cells, **217
+    predicted OVER**) and verifies **217/217 (100%)** meet ≤1.05·θ★ when downsampled to n★ — no longer a
+    subset. Removed the "restricted to five shared lines" / "10-group subset" language from the manuscript
+    (Datasets + Phase C gating paragraph); the five shared lines now serve only the four showcased curves
+    (Table 3) and Tahoe cross-comparison. Updated `fixtures/emeraldbay_calibration.json` and the Constants
+    of Record. Audit: no manuscript number/table/citation changed (217 and 10 both already present).
+    Rebuilt PDF (18 pp) / DOCX.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
