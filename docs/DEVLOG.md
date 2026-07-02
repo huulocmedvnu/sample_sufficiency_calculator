@@ -131,6 +131,30 @@ scripts/verify_references.py` (32/32 DOIs).
 
 14. **Applied-value analyses (Results §2.7).** Tested whether acting on n★ improves real outputs, from committed data (`scripts/applications/`). (i) Reliability audit: at θ★=0.1 only 2.5% of conditions and 2.1% of similarity-graph k-NN edges are resolved (18.5/17.7% at 0.2; 39.0/36.1% at 0.3) — most pairwise MoA calls rest on under-powered directions. (ii) Cost: a 600-condition screen needs 27.4M cells under uniform-safe loading vs 4.9M quota-guided (5.6×, ~$6.7M @ $0.30/cell). (iii) Honest null: budget-matched adaptive ≈ flat for graph recovery in this under-sampled regime (Jaccard within 0.005) — the value is triage and avoiding over-provisioning, not reallocation. Note: fine-grained MoA labels are NOT recoverable from single-condition directions here (full-depth k-NN ≈ chance), so no such claim is made. Fixtures `tahoe_applications.json`, `tahoe_moa_recovery.json`.
 
+15. **Theory review + two corrections (independent re-derivation).** Re-derived the probabilistic core
+    from scratch, independently of the Lean proof (which only certifies the *deterministic* algebra), and
+    re-ran `tests/verify_theory.py` (all layers pass; Monte-Carlo E[θ²] to 0.13%, eq.(6) to 0.05%). The
+    headline results are correct, but two statements were fixed. **(i) Confidence-quota caveat.** Added an
+    explicit note (THEORY.md §4; manuscript Methods) that Laurent–Massart rigorously bounds the
+    perpendicular-noise energy ‖Pe‖², and only becomes a statement about the angle via the first-order
+    step θ≈‖Pe‖/m; the exact geometry tanθ=‖Pe‖/(m+uᵀe) also depends on the along-signal fluctuation in the
+    denominator, so n★_δ is an *approximate* (1−δ) guarantee (exact as ρ→∞), conservative in practice
+    (empirical coverage 0.34% vs nominal 10%). **(ii) Plug-in robustness claim was wrong.** The old text
+    said the trace functional is "1-Lipschitz ⟹ direction error enters at second order" — a non-sequitur.
+    Verified numerically that tr(PΣP) is *first-order* sensitive to direction error (δtr(PΣP)=−2δuᵀΣu+…,
+    nonzero unless u is a Σ-eigenvector); what is second order is the *bias*, because the pilot direction
+    is unbiased to first order and the mean-zero first-order term averages out. Reworded in THEORY.md §7 +
+    manuscript Methods. Also relabelled the §5 second-order relative correction O(ρ⁻²)→O(θ★²) (the
+    arc-vs-tangent term dominates the lever-arm term by ~d_eff). Rebuilt manuscript PDF/DOCX.
+
+16. **Plain-math primer (`docs/THEORY_PRIMER.md` → `theory_primer.pdf`).** Wrote a self-contained
+    companion that derives the same headline quota n★=2 tr(PΣP)/(m²θ★²) using only basic matrix algebra
+    (transpose, trace, projection, eigenvalues) and one integral (E[z²]=1 for a standard normal). Path:
+    triangle (only sideways noise tilts a direction, θ≈ℓ⊥/m) → projection P=I−uuᵀ picks out the sideways
+    part → E[eᵀPe]=tr(PS) by averaging term-by-term → solve for n. Includes the isotropic reduction
+    σ²(d−1), the Tahoe number 23,577/m², a worked table by signal strength, and an honest scope section.
+    Hand-written (no citations); built with `pandoc --pdf-engine=tectonic` (5 pp).
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one

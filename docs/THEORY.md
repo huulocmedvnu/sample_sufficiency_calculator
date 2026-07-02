@@ -147,6 +147,22 @@ are exact and conservative; the residual $\theta\approx\lVert Pe\rVert/m$ approx
 and negligible in the regime of Section 5. Empirical coverage is verified by Monte Carlo in
 `tests/verify_theory.py` / the test suite.)
 
+**Caveat — the confidence quota is a *first-order* guarantee, not a strict bound on the true angle.**
+The Laurent–Massart inequality rigorously controls the perpendicular-noise energy $\lVert Pe\rVert^2$.
+It becomes a statement about the *angle* $\theta$ only through the first-order identification
+$\theta\approx\lVert Pe\rVert/m$. The exact geometry (§5) is
+$\tan\theta=\lVert Pe\rVert/(m+u^\top e)$, so the true angle also depends on the along-signal
+fluctuation $u^\top e$ in the **denominator**: a draw with $u^\top e<0$ shrinks the lever arm and
+inflates $\theta$ beyond what $\lVert Pe\rVert$ alone predicts. Proposition 1 does not account for this
+term. Consequently $n^\star_\delta$ is an *approximate* $(1-\delta)$ guarantee on $\theta$, exact only
+in the limit $\rho\to\infty$; it is **not** a certified finite-sample bound on the geometric angle at
+finite SNR. In practice the net effect is conservative — the Laurent–Massart constants are loose enough
+that they dominate the neglected denominator term, and Monte-Carlo coverage at $\delta=10\%$ comes out
+at $\approx0.34\%$ (far inside the nominal level; see `tests/verify_theory.py`). The direction of the
+approximation is therefore safe for sample-size *planning*, but the quantity that is rigorously bounded
+is $\lVert Pe\rVert^2$, not $\theta$, and no claim of exact coverage on $\theta$ should be read into
+$n^\star_\delta$.
+
 ---
 
 ## 5. Regime of validity and the second-order term
@@ -184,14 +200,19 @@ group (i.e. equating $\mathbb E[\theta^2]$ with $\mathbb E[\tan^2\theta]$) *over
 this order. Monte-Carlo coverage in `tests/verify_theory.py` pins (6) to $<0.1\%$, versus $\sim\!3\%$
 for the lever-arm-only form on the same draw.
 
-**Relative correction is $O(\rho^{-2})$.** Every bracket term is $O(\text{noise}/m^2)=O(\rho^{-2})$ with
-$\rho^2:=m^2/(u^\top S u)$ the along-signal SNR, so $\mathbb E[\theta^2]=\operatorname{tr}(PSP)/m^2\cdot
-\big(1+O(\rho^{-2})\big)$ regardless of which second-order coefficient one uses — the leading-order
-quota of §3 is unaffected. **Validity:** that quota holds when $\rho^2\gg1$, i.e. $n\gg u^\top\Sigma
-u/m^2$ (per arm); at the quota itself $\rho^{-2}\approx\theta_\star^2\,(u^\top\Sigma u)/\operatorname{tr}
-(P\Sigma P)$, small for tight tolerances. Outside this regime (very weak signals, $\rho\lesssim1$) the
-angle is near-uniform on the sphere and no finite quota "clears" the noise — the correct report is
-"undetectable at this depth," not a number.
+**Relative correction is $O(\theta_\star^2)$.** The two bracket groups have *different* leading orders.
+The lever-arm terms ($3u^\top Su$, $6u^\top SPSu/\operatorname{tr}(PSP)$) are $O(u^\top Su/m^2)=
+O(\rho^{-2})$ with $\rho^2:=m^2/(u^\top S u)$ the along-signal SNR. The arc-vs-tangent terms
+($-\tfrac23\operatorname{tr}(PSP)$, $-\tfrac43\operatorname{tr}((PSP)^2)/\operatorname{tr}(PSP)$), once
+divided by $m^2$, are $O(\operatorname{tr}(PSP)/m^2)=O(\mathbb E[\theta^2])$ — larger than the lever-arm
+piece by a factor $\sim d_{\text{eff}}$, and hence the dominant correction. Combined, $\mathbb E[\theta^2]
+=\operatorname{tr}(PSP)/m^2\cdot\big(1+O(\theta_\star^2)\big)$ at the quota (where $\mathbb E[\theta^2]=
+\theta_\star^2$), so the correction is controlled by the *tolerance*, not by $\rho$ alone: at
+$\theta_\star=0.1$ rad it is $<1\%$. **Validity:** the leading-order quota of §3 holds when the RMS
+angle is small ($\theta_\star\ll1$), which also forces $\rho^2\gg1$ (at the quota $\rho^{-2}\approx
+\theta_\star^2\,(u^\top\Sigma u)/\operatorname{tr}(P\Sigma P)\le\theta_\star^2$). Outside this regime
+(very weak signals, $\rho\lesssim1$) the angle is near-uniform on the sphere and no finite quota
+"clears" the noise — the correct report is "undetectable at this depth," not a number.
 
 ---
 
@@ -219,9 +240,15 @@ estimates residual heterogeneity, not total variance) and $\hat u=\hat v/\lVert\
 pilot. Then $\hat n^\star=2\operatorname{tr}(\hat P\hat\Sigma\hat P)/(\hat m^2\theta_\star^2)$.
 
 - **Consistency.** $\hat\Sigma\to\Sigma$, $\hat u\to u$; the plug-in is consistent with leading error
-  $O(\sqrt{d/n_{\text{pilot}}})$ from $\hat\Sigma$ and $O(\theta_{\text{pilot}})$ from $\hat u$
-  (the trace functional is 1-Lipschitz in $\hat u$ to first order, so direction error enters at second
-  order — a convenient robustness).
+  $O(\sqrt{d/n_{\text{pilot}}})$ from $\hat\Sigma$ and $O(\theta_{\text{pilot}})$ from $\hat u$.
+  The trace functional is first-order **sensitive** to direction error — $\delta\operatorname{tr}
+  (P\Sigma P)=-2\,\delta u^\top\!\Sigma u+O(\lVert\delta u\rVert^2)$, which vanishes only when $u$ is
+  an eigenvector of $\Sigma$ — so an individual pilot's direction error propagates into the quota at
+  first order, giving a standard error $O(\theta_{\text{pilot}})$. What *is* second order is the
+  **bias**: because $\hat u$ is unbiased to first order ($\mathbb E[\delta u]\approx0$), the mean-zero
+  first-order term averages out and $\mathbb E[\hat n^\star]-n^\star=O(\theta_{\text{pilot}}^2)$. The
+  quota is therefore low-bias but not first-order-insensitive to pilot direction error; tightening
+  $\hat u$ (more pilot cells) reduces the $O(\theta_{\text{pilot}})$ run-to-run scatter.
 - **High dimension.** When $d\not\ll n_{\text{pilot}}$, regularize $\hat\Sigma$ (Ledoit–Wolf shrinkage)
   before taking the trace, or — most cheaply and exactly in a PCA basis — use the per-component
   variances as the diagonal of $\hat\Sigma$ (PCA decorrelates, so $\hat\Sigma\approx\operatorname{diag}
