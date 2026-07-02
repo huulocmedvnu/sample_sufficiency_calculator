@@ -33,18 +33,22 @@ $\theta_\star$. Every symbol is defined below.
 ## 1. The setup
 
 A drug screen compares **treated** cells to **control** (vehicle) cells. Each cell is a point in
-$d$-dimensional space (here $d = 50$ coordinates from PCA of the expression profile). Write a treated
-cell as $x^t \in \mathbb{R}^d$ and a control cell as $x^c$.
+$d$-dimensional space (here $d = 50$ coordinates; where they come from is spelled out at the end of this
+section). Write a treated cell as $x^t \in \mathbb{R}^d$ and a control cell as $x^c$.
 
-We summarise each group by its **centroid** (the average cell):
+Stacking the cells row by row, the two groups are really two **matrices**, $X_t \in \mathbb{R}^{n_t\times d}$
+and $X_c \in \mathbb{R}^{n_c\times d}$. The two groups almost never have the same number of cells
+($n_t \neq n_c$), so you **cannot subtract the matrices**. Instead you first collapse each group to a
+single point — its **centroid** (the average cell, a vector in $\mathbb{R}^d$):
 
 $$
-\hat\mu_t = \frac{1}{n}\sum_{i=1}^{n} x^t_i,
+\hat\mu_t = \frac{1}{n_t}\sum_{i=1}^{n_t} x^t_i,
 \qquad
-\hat\mu_c = \frac{1}{n}\sum_{i=1}^{n} x^c_i .
+\hat\mu_c = \frac{1}{n_c}\sum_{j=1}^{n_c} x^c_j ,
 $$
 
-The **perturbation vector** is the shift from control to treated,
+and only then subtract the two $d$-vectors. The **perturbation vector** is that shift from control to
+treated,
 
 $$
 \hat v = \hat\mu_t - \hat\mu_c ,
@@ -61,6 +65,14 @@ way, i.e. when their **directions** $u$ agree. The length $m$ is a side issue. S
 pin down is the *direction*, and the thing that can go wrong is that our measured direction $\hat u =
 \hat v / \lVert\hat v\rVert$ is **tilted** away from the true $u$ by some angle $\theta$. We want enough
 cells that this tilt stays below a tolerance $\theta_\star$.
+
+**Where the coordinates come from — and why the order matters.** The $d = 50$ coordinates are a shared
+"map" (a PCA space) fitted once on *individual* cells pooled across the whole atlas. The steps then run
+in a fixed order: the per-cell scatter $\Sigma$ (Section 2) is measured from single cells *on that map*,
+and only *afterwards* is each group averaged into its centroid. This order is essential — if you averaged
+the raw gene counts *before* building the map, each group would collapse to one point with no scatter,
+$\Sigma$ would be zero, and every formula below would fall apart. (From here on we take equal arms,
+$n_t = n_c = n$, to keep the algebra light; unequal arms change nothing essential.)
 
 ---
 
