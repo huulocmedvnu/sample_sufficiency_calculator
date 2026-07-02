@@ -32,6 +32,7 @@ calibrator lives in the companion data repository.
 | [`../tests/test_emeraldbay_integration.py`](../tests/test_emeraldbay_integration.py) | Gated external-validation test | Asserts the EmeraldBay result (CI-safe) |
 | [`../fixtures/tahoe_calibration.json`](../fixtures/tahoe_calibration.json) | Tahoe ℓ_k + drug vectors | Self-contained calibration demo |
 | [`../fixtures/emeraldbay_calibration.json`](../fixtures/emeraldbay_calibration.json) | EmeraldBay held-out curves + gating | §4 external-validation numbers |
+| [`../scripts/applications/`](../scripts/applications/) | Applied analyses (reliability audit, cost, adaptive-vs-flat) | Results §2.7; `tahoe_applications.json`, `tahoe_moa_recovery.json` |
 | [`../.github/workflows/ci.yml`](../.github/workflows/ci.yml) | CI (py3.10/3.11/3.12) | Continuous verification of all asserts |
 | [`../README.md`](../README.md) | Overview + usage | Quick start; abstract-level summary |
 
@@ -65,6 +66,9 @@ Tail-controlled: `n★_δ = (2/m²θ★²)[tr(PΣP) + 2‖PΣP‖_F√L + 2‖P�
 | Monte-Carlo check | K=50,000; seed=0; rel. err 0.13%; ρ²=3.82×10⁵; d_eff=12.2 | `verify_theory.py` L2 |
 | Laurent–Massart tail coverage | empirical Pr(θ>θ★) = 0.34% ≤ δ = 10% | `test_calculator.py` |
 | Test suite | 13 tests pass (12 unit + EmeraldBay integration) | CI |
+| **Application: reliability audit** | conditions resolved 2.5% / 18.5% / 39.0% at θ★=0.1/0.2/0.3 rad; similarity-graph edges with both endpoints resolved 2.1% / 17.7% / 36.1% | `tahoe_applications.json`, `scripts/applications/` |
+| **Application: cost** (600-condition screen) | uniform-safe 27.4M cells (~$8.2M) vs quota-guided 4.9M (~$1.5M) → 5.6×, ~$6.7M saved @ $0.30/cell; 2.5% over-sampled, median multiplex 1.5× | `tahoe_applications.json` |
+| **Application: adaptive vs flat** | budget-matched — indistinguishable in this under-sampled regime (k-NN graph Jaccard within 0.005) | `tahoe_moa_recovery.json` |
 
 **Held-out angular-error curves (EmeraldBay, from-raw recompute `scripts/emeraldbay_recompute/`;
 prediction θ²(n)=tr(PΣP)/m²·(1/n−1/N); embedding + σ² fit on the FULL atlas (52 lines); the four

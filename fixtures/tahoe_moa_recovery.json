@@ -1,0 +1,100 @@
+{
+ "analysis": "Budget-matched recovery of similarity graph and per-condition direction",
+ "dose_uM": 5.0,
+ "n_conditions": 4000,
+ "k_nn": 10,
+ "theta": 0.1,
+ "moa_fine_full_depth_acc": 0.062,
+ "moa_majority_baseline": 0.142,
+ "graph_jaccard_target": 0.5,
+ "flat_cells_to_graph_target": 6271421,
+ "adaptive_cells_to_graph_target": 6271421,
+ "graph_cell_savings_factor": 1.0,
+ "within_tol_target": 0.5,
+ "flat_cells_to_tol_target": null,
+ "adaptive_cells_to_tol_target": null,
+ "within_tol_cell_savings_factor": null,
+ "curve": [
+  {
+   "cap": 50,
+   "budget_cells": 200000,
+   "cells_per_cond_flat": 50.0,
+   "flat_within_tol": 0.0,
+   "adaptive_within_tol": 0.0,
+   "flat_graph_jaccard": 0.0689,
+   "adaptive_graph_jaccard": 0.0688
+  },
+  {
+   "cap": 100,
+   "budget_cells": 400000,
+   "cells_per_cond_flat": 100.0,
+   "flat_within_tol": 0.0001,
+   "adaptive_within_tol": 0.0001,
+   "flat_graph_jaccard": 0.1357,
+   "adaptive_graph_jaccard": 0.1347
+  },
+  {
+   "cap": 200,
+   "budget_cells": 799892,
+   "cells_per_cond_flat": 200.0,
+   "flat_within_tol": 0.0011,
+   "adaptive_within_tol": 0.0009,
+   "flat_graph_jaccard": 0.2325,
+   "adaptive_graph_jaccard": 0.232
+  },
+  {
+   "cap": 400,
+   "budget_cells": 1598075,
+   "cells_per_cond_flat": 399.5,
+   "flat_within_tol": 0.0058,
+   "adaptive_within_tol": 0.0048,
+   "flat_graph_jaccard": 0.3503,
+   "adaptive_graph_jaccard": 0.3511
+  },
+  {
+   "cap": 800,
+   "budget_cells": 3179727,
+   "cells_per_cond_flat": 794.9,
+   "flat_within_tol": 0.0216,
+   "adaptive_within_tol": 0.0169,
+   "flat_graph_jaccard": 0.4717,
+   "adaptive_graph_jaccard": 0.472
+  },
+  {
+   "cap": 1600,
+   "budget_cells": 6271421,
+   "cells_per_cond_flat": 1567.9,
+   "flat_within_tol": 0.0545,
+   "adaptive_within_tol": 0.0408,
+   "flat_graph_jaccard": 0.5818,
+   "adaptive_graph_jaccard": 0.5851
+  },
+  {
+   "cap": 3200,
+   "budget_cells": 12139114,
+   "cells_per_cond_flat": 3034.8,
+   "flat_within_tol": 0.1289,
+   "adaptive_within_tol": 0.0997,
+   "flat_graph_jaccard": 0.6741,
+   "adaptive_graph_jaccard": 0.6777
+  },
+  {
+   "cap": 6400,
+   "budget_cells": 22346861,
+   "cells_per_cond_flat": 5586.7,
+   "flat_within_tol": 0.2644,
+   "adaptive_within_tol": 0.2085,
+   "flat_graph_jaccard": 0.7451,
+   "adaptive_graph_jaccard": 0.7492
+  },
+  {
+   "cap": 12800,
+   "budget_cells": 37542615,
+   "cells_per_cond_flat": 9385.7,
+   "flat_within_tol": 0.4277,
+   "adaptive_within_tol": 0.3496,
+   "flat_graph_jaccard": 0.7926,
+   "adaptive_graph_jaccard": 0.797
+  }
+ ]
+}

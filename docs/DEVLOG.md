@@ -129,6 +129,8 @@ scripts/verify_references.py` (32/32 DOIs).
     SUPPLEMENT, manuscript §2.3 + Methods, README. The formula is a theorem (Lean/§10), so the
     independent atlas tests the CLT/Gaussian-centroid *assumptions*, which hold to <1.2% on real cells.
 
+14. **Applied-value analyses (Results §2.7).** Tested whether acting on n★ improves real outputs, from committed data (`scripts/applications/`). (i) Reliability audit: at θ★=0.1 only 2.5% of conditions and 2.1% of similarity-graph k-NN edges are resolved (18.5/17.7% at 0.2; 39.0/36.1% at 0.3) — most pairwise MoA calls rest on under-powered directions. (ii) Cost: a 600-condition screen needs 27.4M cells under uniform-safe loading vs 4.9M quota-guided (5.6×, ~$6.7M @ $0.30/cell). (iii) Honest null: budget-matched adaptive ≈ flat for graph recovery in this under-sampled regime (Jaccard within 0.005) — the value is triage and avoiding over-provisioning, not reallocation. Note: fine-grained MoA labels are NOT recoverable from single-condition directions here (full-depth k-NN ≈ chance), so no such claim is made. Fixtures `tahoe_applications.json`, `tahoe_moa_recovery.json`.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one

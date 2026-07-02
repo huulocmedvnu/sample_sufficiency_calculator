@@ -1,0 +1,31 @@
+{
+ "reliability_audit": {
+  "0.1": {
+   "pct_resolved": 2.51,
+   "pct_graph_edges_both_resolved": 2.11,
+   "pct_conditions_resolved_5uM": 4.19
+  },
+  "0.2": {
+   "pct_resolved": 18.49,
+   "pct_graph_edges_both_resolved": 17.69,
+   "pct_conditions_resolved_5uM": 23.76
+  },
+  "0.3": {
+   "pct_resolved": 39.0,
+   "pct_graph_edges_both_resolved": 36.05,
+   "pct_conditions_resolved_5uM": 43.89
+  }
+ },
+ "cost": {
+  "cost_per_cell_usd": 0.3,
+  "screen": "100 drugs x 3 doses x 2 lines = 600 conditions",
+  "flat_p90_cells": 27378890,
+  "flat_p90_cost_usd": 8213667,
+  "adaptive_cap10k_cells": 4888471,
+  "adaptive_cap10k_cost_usd": 1466542,
+  "cell_savings_factor": 5.6,
+  "dollars_saved": 6747126,
+  "pct_conditions_over_sampled": 2.51,
+  "median_multiplex_gain_over": 1.5
+ }
+}
