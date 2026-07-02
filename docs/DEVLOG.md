@@ -168,6 +168,21 @@ scripts/verify_references.py` (32/32 DOIs).
     "1,296"→"1{,}296" and de-duplicated one redundant 5-line name listing. Regenerated `docs/manuscript.md`
     (0 flagged chars, math parity even) and rebuilt PDF (16 pp) / DOCX; banner audit-ledger updated.
 
+18. **Readability treatment of the scaffold docs (`CASE_STUDIES.md`, `TECHNICAL_BLUEPRINT.md`).** Same
+    pass as phase 17, applied to the two supplement docs. **CASE_STUDIES** was already at dose resolution,
+    so it got prose-only clarity edits (broke the single-block Analysis into strong/weak-end paragraphs;
+    finding-first topic sentences); an automated audit confirmed every table value and number unchanged.
+    **TECHNICAL_BLUEPRINT was a pre-recompute scaffold** — its numbers were stale throughout (EmeraldBay
+    σ²=2.12, validation table m=12.41/6.39/3.02 with the wrong 3-group set, 142,883 cells, "101 wells",
+    "39 M/5.7 M/85-100 drugs", compliance ≤1.15·θ★). At the user's direction these were **reconciled to
+    the Constants of Record**, every value sourced from `SUPPLEMENT.md` + fixtures: EmeraldBay σ²≈0.963
+    (0.896 5-line); the validation table rebuilt to the current four groups (HS-578T 6.46, HEC-1-A 3.63,
+    BT-474 3.56, Encorafenib 1.78) with the manuscript's slopes/R²; 141,720 cells; 3,971 gated groups
+    (217 OVER, 10/10 downsample-verified on the 5 shared lines); ≤1.05·θ★; budget 27.4 M→4.9 M (5.6×);
+    §0 auditor items, §4, §5, and appendix all updated. Also added the §4 THEORY-consistent tail-bound
+    caveat. Verified: no stale token remains, all current values present and matching. (These docs are
+    not part of the pandoc build; no PDF rebuild needed.)
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one

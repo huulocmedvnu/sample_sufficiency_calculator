@@ -1,40 +1,41 @@
 # Technical Blueprint & Data Supplement
 ### Anisotropic Sample-Sufficiency for Single-Cell Perturbation-Direction Screens
-**Status:** frozen source-of-truth for manuscript drafting (target: *Nature Methods* / *Bioinformatics*).
+**Status:** frozen source-of-truth for manuscript drafting, reconciled to the dose-resolved from-raw
+recompute (the Constants of Record in `docs/SUPPLEMENT.md`).
 **Provenance:** repository `sample_sufficiency_calculator` (proof `docs/THEORY.md`, code `src/calculator.py`,
-tests `tests/`), external calibrator the companion calibration pipeline. All numbers below are
-machine-generated; do not paraphrase the figures.
+tests `tests/`), external calibrator `scripts/emeraldbay_recompute/`. All numbers below are
+machine-generated and traced to `fixtures/`; do not paraphrase the figures.
 
 ---
 
 ## 0. MATHEMATICAL AUDITOR'S CORRECTIONS (read before drafting)
 
-The following six items in the drafting brief were inaccurate relative to the executed code/results and
+Six points in the original drafting brief were inaccurate relative to the executed code and results, and
 have been corrected throughout this document. **Use the corrected values.**
 
 1. **Regime-gating tolerance is θ★ = 0.20 rad, not 0.1 rad.** The gating experiment
-   (`calibrate_emeraldbay.py`) was run at θ★ = 0.20 rad; compliance was defined as realized RMS angle at
-   n★ ≤ 1.15·θ★. The "0.1 rad" in the brief is incorrect.
-2. **The two high-magnitude validation groups are `DMSO_T0 × HS-578T` and `DMSO_T0 × AN3-CA`, not "drug
-   effects".** These are the time-zero (DMSO_T0) reference population's displacement from the per-line
-   centroid baseline. Only `Encorafenib × HEC-1-A` is an actual drug perturbation. The held-out test
-   validates the *angular-error geometry*; it is agnostic to biological interpretation. Do **not**
-   describe HS-578T/AN3-CA as "strong drug effects".
-3. **σ² = 2.1 (EmeraldBay) and σ² = 2.406 (Tahoe) are different variance definitions and are NOT a clean
-   head-to-head.** EmeraldBay's 2.1 is the *within-condition residual* variance; the Tahoe calculator
-   default 2.406 is a *marginal* per-cell variance (includes between-condition/between-line structure).
-   Both support the claim "σ² is a platform/pipeline-specific plug-in requiring re-estimation," but a
-   like-for-like within-condition Tahoe σ² was **not** computed. State this caveat; do not assert the
-   gap is purely platform-driven.
-4. **The tail bound implemented is Laurent–Massart (2000), not generic Hanson–Wright.** Laurent–Massart
-   is the specialization to a weighted sum of χ² (our exact case) and yields explicit constants (2, 2);
+   (`scripts/emeraldbay_recompute/`) was run at θ★ = 0.20 rad, and compliance was defined as a realized
+   RMS angle at n★ of ≤ 1.05·θ★. The "0.1 rad" in the brief is incorrect.
+2. **Three of the four held-out validation groups are `DMSO_T0` reference populations, not drug effects.**
+   They are the time-zero (DMSO_T0) population's displacement from the per-line centroid baseline, for
+   HS-578T (m = 6.46), HEC-1-A (m = 3.63), and BT-474 (m = 3.56). Only `Encorafenib × HEC-1-A` (m = 1.78)
+   is an actual drug perturbation. The held-out test validates the *angular-error geometry*; it is
+   agnostic to biological interpretation. Do **not** describe the DMSO_T0 groups as "strong drug effects".
+3. **The two σ² values use different variance definitions and are NOT a clean head-to-head.** EmeraldBay's
+   σ² ≈ 0.963 is a *within-condition residual* variance (full atlas, 52 lines; 0.896 on the 5-shared-line
+   slice); the Tahoe calculator default σ² = 2.406 is a *marginal* per-cell variance (it includes
+   between-condition and between-line structure). Both support the claim that σ² is a
+   platform/pipeline-specific plug-in requiring re-estimation, but a like-for-like within-condition Tahoe
+   σ² was **not** computed. State this caveat; do not assert the gap is purely platform-driven.
+4. **The implemented tail bound is Laurent–Massart (2000), not generic Hanson–Wright.** Laurent–Massart is
+   the specialization to a weighted sum of χ² (our exact case) and yields explicit constants (2, 2);
    Hanson–Wright is the general quadratic-form parent inequality. Cite Laurent–Massart for n★_δ.
 5. **The validation prediction used the large-control-pool form with a finite-population correction:**
    θ²(n) = tr(PΣP)/m² · (1/n − 1/N), factor 1 (the per-line-mean baseline is a near-noiseless large
-   pool), **not** the equal-arms factor-2 planning formula. Both are correct; they describe different
+   pool)---**not** the equal-arms factor-2 planning formula. Both are correct; they describe different
    experimental designs. Keep them distinct.
-6. **The resource-allocation figures (~60× multiplex; 98%/>99% compute reduction) are from the Tahoe
-   calibration (N₀ = 1,296 cells/well, θ = 0.1 rad), not EmeraldBay.** Attribute them to Tahoe.
+6. **The resource-allocation figures (~60× multiplex; 98%/>99% compute reduction) come from the Tahoe
+   calibration** (N₀ = 1,296 cells/well, θ = 0.1 rad), not EmeraldBay. Attribute them to Tahoe.
 
 ---
 
@@ -42,61 +43,63 @@ have been corrected throughout this document. **Use the corrected values.**
 
 **The screening matrix.** A single-cell perturbation screen yields a sparse count matrix
 **X ∈ ℝ^{N×G}** (N cells, G ≈ 2×10⁴ genes). After normalization (`normalize_total`→`log1p`), selection
-of highly variable genes, and z-scaling, the data are projected into a shared **d-dimensional principal-
-component space** (here d = 50). Each experimental condition (a *well*: a drug × cell-line × dose) is
-summarized by the **pseudobulk centroid** μ = (1/n)∑ᵢ xᵢ ∈ ℝ^d, the sample mean of its n cells in PCA
-space.
+of highly variable genes, and z-scaling, the data are projected into a shared **d-dimensional
+principal-component space** (here d = 50). Each experimental condition (a *well*: a drug × cell-line ×
+dose) is summarized by its **pseudobulk centroid** μ = (1/n)∑ᵢ xᵢ ∈ ℝ^d, the sample mean of its n cells
+in PCA space.
 
 **The perturbation vector.** For a treated condition and its reference, define
 **v = μ_treated − μ_control ∈ ℝ^d**, with **magnitude m = ‖v‖** (a potency/effect-size scalar) and
-**unit direction u = v/m ∈ 𝕊^{d−1}** (the mechanistic axis). In MoA / drug-similarity analyses the
-scientific quantity is the *direction* u (cosine geometry); m is a nuisance.
+**unit direction u = v/m ∈ 𝕊^{d−1}** (the mechanistic axis). In MoA and drug-similarity analyses the
+scientific quantity is the *direction* u (cosine geometry); the magnitude m is a nuisance.
 
-**The angular error as the resolution metric.** v is never observed; only the finite-sample estimate
-v̂ = μ̂_treated − μ̂_control. The **angular error θ = arccos(û·u)** between the estimated and true
-direction is the fundamental resolution limit for declaring two perturbations co-directional (same MoA).
-"How many cells are enough?" is therefore the question: *how large must n be so that the RMS angular
-error of v̂ falls below a tolerance θ★?* This document derives, verifies, and externally validates the
-closed-form answer.
+**The angular error as the resolution metric.** The true v is never observed---only the finite-sample
+estimate v̂ = μ̂_treated − μ̂_control. The **angular error θ = arccos(û·u)** between the estimated and true
+direction is the fundamental limit on declaring two perturbations co-directional (same MoA). "How many
+cells are enough?" is therefore the question: *how large must n be so that the RMS angular error of v̂
+falls below a tolerance θ★?* This document derives, verifies, and externally validates the closed-form
+answer.
 
 ---
 
 ## 2. FORMAL MATHEMATICAL PROOF (the skeleton)
 
-**Sampling law.** Treated/control cells are i.i.d. with per-cell covariances Σ_t, Σ_c; by the
-multivariate CLT and independence,
+**Sampling law.** Treated and control cells are i.i.d. with per-cell covariances Σ_t, Σ_c. Because each
+centroid is an average, its scatter shrinks with the cell count; by the multivariate CLT and independence,
 
 > v̂ ~ 𝒩(v, S),  S = Σ_t/n_t + Σ_c/n_c.   (S = O(1/n); write e = v̂ − v ~ 𝒩(0, S).)
 
 **Tangent-space projector.** Let **P = I − uuᵀ** (symmetric, idempotent, rank d−1), the orthogonal
-projector onto the tangent space of the unit sphere at u. By construction **P u = 0**.
+projector onto the tangent space of the unit sphere at u. By construction **P u = 0**: it keeps only the
+part of a vector perpendicular to u.
 
-**First-order Delta method on g(x) = x/‖x‖.** The Jacobian is
-Dg(x) = ‖x‖⁻¹(I − x̂x̂ᵀ); evaluated at x = v this is **Dg(v) = (1/m) P**. The radial direction u lies in
-ker Dg(v): perturbations of v̂ *along* u do not rotate the direction. Hence to first order
-û − u ≈ (1/m) P e, and
+**First-order Delta method on g(x) = x/‖x‖.** The geometric idea is that noise along the signal only
+lengthens v̂ and cannot rotate it. Formally, the Jacobian is Dg(x) = ‖x‖⁻¹(I − x̂x̂ᵀ); at x = v this is
+**Dg(v) = (1/m) P**. The radial direction u lies in ker Dg(v), so to first order û − u ≈ (1/m) P e, and
 
 > Cov(û − u) = (1/m²) P S P.
 
 **Why P u = 0 makes variance along the signal inert.** Because the Jacobian annihilates the radial
-component (Dg(v)·u = 0), only the perpendicular noise P e contributes to the direction error. The
-mean-squared angular error is the trace of the tangent-space covariance:
+component (Dg(v)·u = 0), only the perpendicular noise P e reaches the direction estimate. The
+mean-squared angular error is therefore the trace of the tangent-space covariance:
 
 > **E[θ²] = tr(P S P) / m² = (tr S − uᵀ S u) / m² + O(ρ⁻⁴),  ρ² = m²/(uᵀ S u).**
 
 The term uᵀSu is the noise variance *along* the signal; it is subtracted out. Sample sufficiency depends
 **only on the perpendicular noise** tr(PSP). (Isserlis' theorem gives the relative second-order
-correction O(ρ⁻²); the result holds in the high-SNR regime ρ ≫ 1.)
+correction; the result holds in the high-SNR regime ρ ≫ 1.)
 
 **Closed-form anisotropic cell quota.** Setting E[θ²] = θ★² and S = 2Σ/n for equal arms (Σ_t ≈ Σ_c ≈ Σ):
 
 > **n★ = 2 · tr(P Σ P) / (m² · θ★²) = 2 · Σ_k (1 − u_k²) ℓ_k / (m² θ★²)**  (PCA basis, ℓ_k = per-PC variance).
 
-Special cases: a large/shared control pool (n_c → ∞) replaces the factor 2 with 1; Σ = σ²I recovers the
-isotropic n★ = 2σ²(d−1)/(m²θ★²). Effective noise dimension d_eff = (tr PSP)²/tr((PSP)²) ≤ d−1.
+Two special cases anchor the formula: a large or shared control pool (n_c → ∞) replaces the factor 2 with
+1, and isotropic noise Σ = σ²I recovers n★ = 2σ²(d−1)/(m²θ★²). The effective noise dimension is
+d_eff = (tr PSP)²/tr((PSP)²) ≤ d−1.
 
-**Tail-controlled (risk-managed) quota — Laurent–Massart (2000).** ‖Pe‖² = Σ_i ν_i z_i² is a weighted
-χ² (ν_i = eigenvalues of PSP, z_i iid 𝒩(0,1)). Laurent–Massart's bound with **exact constants**,
+**Tail-controlled (risk-managed) quota — Laurent–Massart (2000).** The mean quota controls the average
+error; to bound the *chance* of a large error, note that ‖Pe‖² = Σ_i ν_i z_i² is a weighted χ² (ν_i the
+eigenvalues of PSP, z_i iid 𝒩(0,1)). Laurent–Massart's bound with **exact constants**,
 
 > Pr( ‖Pe‖² ≥ tr(PSP) + 2‖PSP‖_F √L + 2‖PSP‖_op L ) ≤ e^{−L},  L = log(1/δ),
 
@@ -107,23 +110,26 @@ inverts (every term ∝ 1/n) to a confidence quota guaranteeing Pr(θ > θ★) �
 
 This is a multiplicative safety margin, not a different scaling law. *(Hanson–Wright is the general
 quadratic-form inequality from which the weighted-χ² specialization descends; we implement the tighter
-Laurent–Massart form.)*
+Laurent–Massart form.)* One caveat: the bound rigorously controls ‖Pe‖², and reaches the angle only
+through the first-order step θ ≈ ‖Pe‖/m; it is therefore an approximate (1−δ) guarantee on θ, exact as
+ρ → ∞ (see `docs/THEORY.md` §4). In practice it is conservative---empirical coverage is 0.34% against a
+nominal 10%.
 
 ---
 
 ## 3. INTERNAL & STANDALONE VERIFICATION SUMMARY (`tests/verify_theory.py`)
 
-Three asserted layers; run in CI on Python 3.10/3.11/3.12.
+Three asserted layers, run in CI on Python 3.10/3.11/3.12.
 
 **Layer 1 — Symbolic (SymPy).** g(x)=x/‖x‖ is auto-differentiated and compared to the analytical
-(1/m)(I − uuᵀ). The symbolic residual **simplifies to the zero matrix**; numeric cross-check at a
+(1/m)(I − uuᵀ). The symbolic residual **simplifies to the zero matrix**, and a numeric cross-check at a
 concrete vector v = (3, −1, 2) gives **max |autodiff − analytical| = 2.8×10⁻¹⁷** (machine precision).
 Conclusion: the Jacobian Dg(v) = (1/m)P is exact.
 
 **Layer 2 — Empirical (Monte Carlo).** d = 50; n = 50,000 cells/arm; K = 50,000 i.i.d. noise draws
 e ~ 𝒩(0, 2Σ/n); Σ anisotropic (eigenvalues ∝ 0.85^k in a random orthonormal basis, tr Σ = 50);
-deterministic seed = 0. The exact geometric angle arccos(⟨v,v̂⟩/(‖v‖‖v̂‖)) is measured.
-Analytical E[θ²] = 2.196×10⁻⁴ vs Monte-Carlo 2.193×10⁻⁴ → **relative error 0.13%** (Monte-Carlo
+deterministic seed = 0. The exact geometric angle arccos(⟨v,v̂⟩/(‖v‖‖v̂‖)) is measured. Analytical
+E[θ²] = 2.196×10⁻⁴ against Monte-Carlo 2.193×10⁻⁴ gives a **relative error of 0.13%** (Monte-Carlo
 std-error 0.18%). Validity diagnostics: along-signal SNR ρ² = 3.82×10⁵; effective noise dof d_eff = 12.2;
 RMS angle ≈ 0.85°.
 
@@ -139,67 +145,72 @@ input validation, and Laurent–Massart tail coverage — empirical Pr(θ>θ★)
 
 ## 4. EXTERNAL VALIDATION ON AN INDEPENDENT ATLAS (tahoebio/EmeraldBay)
 
-**Rationale.** The quota is a theorem; an independent atlas cannot re-prove it but can test whether the
-CLT/Gaussian-centroid *assumptions* hold on real, out-of-distribution single cells and whether the
+**Rationale.** The quota is a theorem; an independent atlas cannot re-prove it, but it can test whether
+the CLT/Gaussian-centroid *assumptions* hold on real, out-of-distribution single cells and whether the
 plug-in calibration transfers. EmeraldBay (1.8×10⁶ cells; **5-day** culture vs Tahoe's 24 h; pooled
-MOSAIC) shares the 5 representative cell lines and the token/expression schema.
+MOSAIC) shares five representative cell lines and the token/expression schema with Tahoe-100M.
 
-**Procedure (`calibrate_emeraldbay.py`).** All 116 shards (≈58 GB) were streamed and discarded, retaining
-**142,883 cells** of the 5 shared lines; EmeraldBay's *own* HVG(2000)+PCA(50) embedding was fit. The
-baseline is the **per-line mean** (no DMSO at matched timepoint; a `DMSO_T0` population exists and forms
-a high-magnitude reference group). The **within-condition** residual per-PC variance was **σ² ≈ 2.12**
-(mean over 50 PCs). *Auditor caveat (item 3): this within-condition value is not directly comparable to
-the Tahoe calculator default 2.406, which is marginal; both nonetheless establish σ² as a
-platform/pipeline-specific plug-in requiring re-estimation.*
+**Procedure (`scripts/emeraldbay_recompute/`).** All 116 shards (≈ 57.7 GB; 1,831,648 cells across 52
+lines) were streamed. EmeraldBay's *own* HVG(2000)+PCA(50) embedding and its **within-condition** residual
+per-PC variance were fit over the **full atlas**, giving **σ² ≈ 0.963** (mean over 50 PCs). Per-cell
+coordinates were then retained for the **141,720 cells of the 5 shared lines** (5-line within-condition
+σ² = 0.896), on which the held-out validation and downsample checks are run. The baseline is the
+**per-line mean** (no DMSO at a matched timepoint; a `DMSO_T0` population exists and forms the
+high-magnitude reference groups). *Auditor caveat (item 3): σ² ≈ 0.963 is a within-condition value and is
+not directly comparable to the Tahoe calculator default 2.406, which is marginal; both nonetheless
+establish σ² as a platform/pipeline-specific plug-in requiring re-estimation.*
 
-**Held-out angular-error subsampling curves.** For a target group of N cells, the truth direction is
-taken from all N; for a grid of n, cells are subsampled without replacement (R = 300 reps) and the
-realized RMS angle to truth is measured. The prediction is the **finite-population-corrected, large-pool**
-form θ²(n) = tr(PΣP)/m² · (1/n − 1/N) (item 5). A linear regression of realized θ² on (1/n − 1/N) tests
-linearity-through-origin (slope should equal tr(PΣP)/m²).
+**Held-out angular-error subsampling curves.** For a target group of N cells, the truth direction is taken
+from all N; for a grid of n, cells are subsampled without replacement (R = 300 reps) and the realized RMS
+angle to truth is measured. The prediction is the **finite-population-corrected, large-pool** form
+θ²(n) = tr(PΣP)/m² · (1/n − 1/N) (item 5). A linear regression of realized θ² on (1/n − 1/N) tests
+linearity-through-origin, with slope equal to tr(PΣP)/m².
 
 | Validation group (actual identity) | N | m | mean rel. err | fitted slope | expected slope tr(PΣP)/m² | intercept | R² |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| DMSO_T0 × HS-578T (high magnitude) | 1067 | 12.41 | 1.4% | 0.7692 | 0.7628 | −4.8×10⁻⁵ | 0.9979 |
-| DMSO_T0 × AN3-CA (moderate-high) | 752 | 6.39 | 0.8% | 1.3791 | 1.3753 | −2.6×10⁻⁴ | 0.9996 |
-| Encorafenib × HEC-1-A (drug; low SNR) | 1117 | 3.02 | 2.4% | 6.6596 | 7.8217 | 6.8×10⁻³ | 0.9954 |
+| DMSO_T0 × HS-578T (reference population) | 1067 | 6.46 | 0.6% | 0.7888 | 0.7870 | 0.0 | 0.9999 |
+| DMSO_T0 × HEC-1-A (reference population) | 435 | 3.63 | 1.2% | 1.8186 | 1.8544 | 0.0 | 0.9990 |
+| DMSO_T0 × BT-474 (reference population) | 461 | 3.56 | 1.2% | 1.5615 | 1.6231 | 0.0 | 0.9998 |
+| Encorafenib × HEC-1-A (drug; low SNR) | 1117 | 1.78 | 2.9% | 9.6683 | 11.1699 | 0.0 | 0.9965 |
 
-The realized curve matches the closed form to **0.8–2.4% mean relative error**, with
-realized² ∝ (1/n − 1/N) **linear-through-origin (R² > 0.99, intercept ≈ 0)** in all three cases. For the
-two high-magnitude groups the fitted slope matches the anisotropic tr(PΣP)/m² to **< 1%**; the genuine
-low-magnitude drug group (Encorafenib, m = 3.0) shows a **~15% slope deficit concentrated at small n**
-(8.3% point error at n = 20), the **expected second-order Taylor / finite-SNR breakdown** of the
-first-order Delta method (THEORY §5), since validity requires ρ² = m²/(uᵀSu) ≫ 1.
+The realized curve matches the closed form to **0.6–2.9% mean relative error**, with
+realized θ² ∝ (1/n − 1/N) **linear-through-origin (R² > 0.996, intercept ≈ 0)** in all four cases. For the
+strongest group (HS-578T, m = 6.46) the fitted slope matches the anisotropic tr(PΣP)/m² to **0.2%**, and
+the two moderate DMSO_T0 groups to within 2–4%. The genuine low-magnitude drug group (Encorafenib,
+m = 1.78) shows a **~13% slope deficit concentrated at small n**---the **expected second-order Taylor /
+finite-SNR breakdown** of the first-order Delta method (THEORY §5), since validity requires
+ρ² = m²/(uᵀSu) ≫ 1.
 
-**Regime-gating accuracy.** With θ★ = **0.20 rad** (item 1), each of 101 wells was classified OVER- vs
-UNDER-sampled (OVER ⇔ N₀ ≥ n★). Of the **15 wells predicted OVER-sampled, 100%** achieved realized RMS
-angle ≤ 1.15·θ★ when downsampled to n★ (downsample-and-measure). The gating prediction is therefore
-empirically corroborated on independent data.
+**Regime-gating accuracy.** With θ★ = **0.20 rad** (item 1), each of **3,971 (condition × line) groups
+across all 52 cell lines** (≥ 100 cells) was classified OVER- vs UNDER-sampled (OVER ⇔ N₀ ≥ n★): **217
+(5.5%) are predicted OVER-sampled**. The downsample-and-measure check requires per-cell coordinates,
+retained for the 5 shared lines: of the **10 predicted-OVER groups in that subset, 100%** achieved a
+realized RMS angle ≤ 1.05·θ★ when downsampled to n★. The gating prediction is therefore empirically
+corroborated on independent data.
 
 **Distillation / CI.** Results are stored in `fixtures/emeraldbay_calibration.json` and asserted by
 `tests/test_emeraldbay_integration.py` (network-free); figure `outputs/emeraldbay_heldout_validation.png`.
 
 **Experimental unit & replication structure (pooled-condition re-gating).** n★ is a quota *per unique
-perturbation condition* (the treated arm — the total cells aggregated into the condition's centroid),
+perturbation condition* (the treated arm---the total cells aggregated into the condition's centroid),
 **not** per physical well (formal treatment, including the batch-variance decomposition, in
-`docs/SCALE_AUDIT.md` §4). A condition may in principle reach n★ by pooling cells across replicate wells,
-which raises the question of whether single-well under-sampling is rescued once replicates are pooled. We
-tested this directly on both reference atlases, and **in these data it is not**, because the conditions
-are essentially **unreplicated**: in Tahoe-100M a given (drug × dose)
-occupies **a single plate for 86.3%** of combinations (two for 13.4%, ≥3 for 0.4%), and EmeraldBay
-contributes a single pooled sample per (perturbagen × dose) condition (median ≈ 306 cells). Same-dose
-replicate plates are largely absent. Over the 56,827 (drug × dose × line) conditions (θ★ = 0.1 rad) only
-**2.5% are over-sampled** (97.5% under-sampled or ghost). The median condition requires n★ ≈ 14,570 cells
-but holds ≈ 1,296 (an ~11× deficit that the sparse replicate plates cannot close), and the line-resolved Model-Perturbation
-profiles are unchanged (high-magnitude agents over-sampled in most lines; moderate/weak agents
-under-sampled in nearly all). **Conclusion:** the pooled-condition unit is the mathematically correct one,
-but in these single-sample-per-condition atlases it *coincides* with the single-condition unit, so the
-project-level conclusion stands — **≈ 2.5% of conditions are safely saturated at a 5.7° tolerance**; dose
-is a real lever (over-sampled fraction 1.8%→3.9% across 0.05→5 µM) but does not move the bulk out of
-under-sampling. A screen *designed* with replicate batches and
-within-batch (co-plated vehicle) referencing would benefit from pooling — n★ being per-condition — but a
-single-sample-per-condition atlas does not, and cross-plate replicate pooling without referencing is
-further capped by the batch-variance floor of `SCALE_AUDIT.md` §4.
+`docs/SCALE_AUDIT.md` §4). A condition could in principle reach n★ by pooling cells across replicate
+wells, which raises the question of whether single-well under-sampling is rescued once replicates are
+pooled. We tested this directly on both reference atlases, and **in these data it is not**, because the
+conditions are essentially **unreplicated**: in Tahoe-100M a given (drug × dose) occupies **a single plate
+for 86.3%** of combinations (two for 13.4%, ≥ 3 for 0.4%), and EmeraldBay contributes a single pooled
+sample per (perturbagen × dose) condition. Same-dose replicate plates are largely absent. Over the 56,827
+(drug × dose × line) conditions (θ★ = 0.1 rad) only **2.5% are over-sampled** (97.5% under-sampled or
+ghost). The median condition requires n★ ≈ 14,570 cells but holds ≈ 1,296 (an ~11× deficit that the sparse
+replicate plates cannot close), and the line-resolved profiles are unchanged (high-magnitude agents
+over-sampled in most lines; moderate and weak agents under-sampled in nearly all). **Conclusion:** the
+pooled-condition unit is the mathematically correct one, but in these single-sample-per-condition atlases
+it *coincides* with the single-condition unit, so the project-level conclusion stands---**≈ 2.5% of
+conditions are safely saturated at a 5.7° tolerance**. Dose is a real lever (the over-sampled fraction
+rises 1.8% → 3.9% across 0.05 → 5 µM) but does not move the bulk of the panel out of under-sampling. A
+screen *designed* with replicate batches and within-batch (co-plated vehicle) referencing would benefit
+from pooling---n★ being per-condition---but a single-sample-per-condition atlas does not, and cross-plate
+replicate pooling without referencing is further capped by the batch-variance floor of `SCALE_AUDIT.md` §4.
 
 ---
 
@@ -207,37 +218,39 @@ further capped by the batch-variance floor of `SCALE_AUDIT.md` §4.
 
 A single saturation threshold n★ governs two budgets.
 
-**Wet-lab (sequencing economics).** Past n★, angular error improves only as 1/√n (diminishing returns);
-n★ is the knee. With a fixed per-lane read budget, a well acquired at N₀ > n★ wastes (N₀ − n★) reads;
-the surplus permits multiplexing N₀/n★ additional conditions (e.g., via cell hashing). **On the Tahoe
-calibration (θ = 0.1 rad)** homoharringtonine at 5 µM in the responsive NCI-H460 line (N₀ = 6,060) reaches
-n★ ≈ 98, a **~60× multiplexing gain**; weak/moderate signatures (m ≲ 2) are *under*-sampled
-(n★ > N₀), i.e. their cells are not redundant — the calculator reports the regime per drug rather than
-assuming redundancy.
+**Wet-lab (sequencing economics).** Past n★, angular error improves only as 1/√n (diminishing returns),
+so n★ is the knee of the curve. With a fixed per-lane read budget, a well acquired at N₀ > n★ wastes
+(N₀ − n★) reads, and the surplus permits multiplexing N₀/n★ additional conditions (e.g. via cell hashing).
+**On the Tahoe calibration (θ = 0.1 rad)** homoharringtonine at 5 µM in the responsive NCI-H460 line
+(N₀ = 6,060) reaches n★ ≈ 98---a **~60× multiplexing gain**. Weak and moderate signatures (m ≲ 2) are
+instead *under*-sampled (n★ > N₀); their cells are not redundant, and the calculator reports the regime
+per drug rather than assuming redundancy.
 
 **Dry-lab (compute economics).** For **centroid/pseudobulk** analyses, downsampling an over-acquired well
 to n★ preserves its perturbation direction (and hence the drug-drug similarity graph) to θ★ by
-construction. The compute saved is **polynomial in N**, not exponential:
-linear (RAM, storage, PCA-fit): 1 − n★/N₀; quadratic (cell-cell pairwise / kernels / k-NN):
-1 − (n★/N₀)²; near-linear (neighbour graphs ~ N log N). On this over-sampled cytotoxic example this
-is **98% (linear) / >99% (quadratic)** reduction.
+construction. The compute saved is **polynomial in N**, not exponential: linear tasks (RAM, storage,
+PCA-fit) shrink by 1 − n★/N₀; quadratic tasks (cell-cell pairwise, kernels, k-NN) by 1 − (n★/N₀)²;
+neighbour graphs scale as ~ N log N. On the over-sampled cytotoxic example above this is
+**98% (linear) / >99% (quadratic)** reduction.
 
 **Population-scale framing (correction of a common misconception).** The small n★ values of strong
-cytotoxics are *not* representative: across the 56,827-condition Tahoe panel (379 drugs × 3 doses × 50 lines) at θ★ = 0.1 rad the **median n★
-is 14,570 cells/arm** (only 2.5% over-sampled; 55% need 10 k–50 k; 8.2% > 50 k). At a tight MoA tolerance the
-*typical* well is **under-sampled** — atlases are large by aggregating many conditions, not because any
-single condition is cheap. n★ is strictly **per-arm/per-condition**: the global atlas size enters no term
-of the variance S = Σ_t/n_t + Σ_c/n_c, only the per-well sum Σ_w n★_w sets project budget (see
-`SCALE_AUDIT.md`). A 100-drug × 3-dose × 2-line screen costs ≈ 39 M cells under flat loading vs ≈ 5.7 M
-under magnitude-adaptive allocation with a 10 k/well cap (85/100 drugs then capped below 0.1 rad).
+cytotoxics are *not* representative. Across the 56,827-condition Tahoe panel (379 drugs × 3 doses × 50
+lines) at θ★ = 0.1 rad the **median n★ is 14,570 cells/arm** (only 2.5% over-sampled; 55% need 10 k–50 k;
+8.2% > 50 k). At a tight MoA tolerance the *typical* well is **under-sampled**---atlases are large by
+aggregating many conditions, not because any single condition is cheap. n★ is strictly
+**per-arm/per-condition**: the global atlas size enters no term of the variance S = Σ_t/n_t + Σ_c/n_c;
+only the per-condition sum Σ_c n★_c sets the project budget (see `SCALE_AUDIT.md`). A 100-drug × 3-dose ×
+2-line screen costs ≈ 27.4 M cells under flat 90th-percentile loading versus ≈ 4.9 M under
+magnitude-adaptive allocation with a 10 k/well cap---a 5.6× reduction, with the ghost conditions flagged
+rather than silently under-powered.
 
 **Scope limitations (must be stated in the manuscript).** n★ certifies **centroid/direction** information
-only. It does **not** guarantee preservation of **cell-resolution** structure — per-cell UMAP local
-neighbourhoods, **rare-population / cell-type detection**, or trajectory branch points — which are
-governed by local density, not by this angular threshold, and can be distorted by downsampling. Global
-PCA eigenvalue spectra are preserved only *approximately* (random-matrix sampling error). Compute
-speed-ups are polynomial; no operation here is exponential in N. σ² must be re-estimated per platform/
-pipeline (the within-condition residual variance, not the marginal).
+only. It does **not** guarantee preservation of **cell-resolution** structure---per-cell UMAP local
+neighbourhoods, **rare-population / cell-type detection**, or trajectory branch points---which are
+governed by local density, not by this angular threshold, and can be distorted by downsampling. Global PCA
+eigenvalue spectra are preserved only *approximately* (random-matrix sampling error). Compute speed-ups
+are polynomial; no operation here is exponential in N. σ² must be re-estimated per platform and pipeline
+(the within-condition residual variance, not the marginal).
 
 ---
 
@@ -247,12 +260,13 @@ pipeline (the within-condition residual variance, not the marginal).
   (`calculate_cell_quota_anisotropic`, `calculate_experimental_cell_quota`,
   `calculate_optimal_resource_allocation`). Verification: `tests/verify_theory.py`,
   `tests/test_calculator.py`, `tests/test_emeraldbay_integration.py`; CI `.github/workflows/ci.yml`.
-- External calibrator: the companion calibration pipeline → `fixtures/emeraldbay_calibration.json`.
+- External calibrator: `scripts/emeraldbay_recompute/` → `fixtures/emeraldbay_calibration.json`.
 - Constants of record: d = 50; Tahoe marginal σ² = 2.406, N₀ = 1,296; EmeraldBay within-condition
-  σ² ≈ 2.12, 142,883 cells, 101 gated wells, θ★ = 0.20 rad; Monte-Carlo K = 50,000, seed = 0,
-  relative error 0.13%; symbolic residual 2.8×10⁻¹⁷.
-- **Honesty ledger for reviewers:** (i) σ² values use different variance definitions across atlases
-  (item 3); (ii) the two high-m validation groups are DMSO_T0 reference populations, not drug effects
-  (item 2); (iii) the low-SNR group exhibits the predicted first-order breakdown (not hidden); (iv)
-  resource-allocation figures are Tahoe-derived (item 6); (v) cell-level topology preservation is
-  explicitly out of scope.
+  σ² ≈ 0.963 (full atlas; 0.896 on the 5-shared-line slice), 141,720 cells streamed for the 5 shared
+  lines, 3,971 gated (condition × line) groups across 52 lines, θ★ = 0.20 rad; Monte-Carlo K = 50,000,
+  seed = 0, relative error 0.13%; symbolic residual 2.8×10⁻¹⁷.
+- **Honesty ledger for reviewers:** (i) the σ² values use different variance definitions across atlases
+  (item 3); (ii) three of the four validation groups are DMSO_T0 reference populations, not drug effects,
+  and only Encorafenib × HEC-1-A is a drug (item 2); (iii) the low-SNR group exhibits the predicted
+  first-order breakdown (not hidden); (iv) resource-allocation figures are Tahoe-derived (item 6); (v)
+  cell-level topology preservation is explicitly out of scope.
