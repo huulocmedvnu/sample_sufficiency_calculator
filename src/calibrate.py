@@ -7,9 +7,10 @@ committed fixtures carry the per-cell PCA variance sigma^2, the per-component va
 Sigma diagonal), and example per-drug perturbation vectors (in the NCI-H460 line).
 
 Calibrated constants (fixtures/tahoe_constants.json):
-    sigma^2 = 2.406   d = 50   ->   n* = 23,577 / m^2   (theta = 0.1 rad)
-Median across 56,827 (drug x dose x line) conditions: m ~ 1.27, n* ~ 14,570 cells/arm; N0 ~ 1,296 cells
-per condition -> 97.5% of conditions are UNDER-sampled or Ghost at 0.1 rad.
+    sigma^2 = 0.9567 (within-condition residual; headline)   d = 50   ->   n* = 9,376 / m^2   (theta = 0.1 rad)
+    (the marginal per-cell variance 2.406 -> n* = 23,577 / m^2 is retained only as a conservative bound.)
+Median across 56,827 (drug x dose x line) conditions: m ~ 1.27, n* ~ 5,794 cells/arm; N0 ~ 1,296 cells
+per condition -> 89.4% of conditions are UNDER-sampled or Ghost at 0.1 rad.
 
 Run:  python src/calibrate.py
 """
@@ -24,10 +25,13 @@ FIX = os.path.join(os.path.dirname(__file__), "..", "fixtures")
 CAL = json.load(open(os.path.join(FIX, "tahoe_calibration.json")))
 CONST = json.load(open(os.path.join(FIX, "tahoe_constants.json")))
 
-SIGMA2 = float(CAL["sigma2_mean"])            # 2.406 (fresh recompute)
+SIGMA2_MARGINAL = float(CAL["sigma2_mean"])   # 2.406 marginal (conservative bound only)
+SIGMA2 = float(CAL["sigma2_mean_within_condition"])  # 0.9567 within-condition residual (headline)
 NUM_DIMS = int(CAL["num_dimensions"])         # 50
 BASELINE = float(CONST["median_N0"])          # 1296 median cells per (drug x dose x line) condition (post-filter)
-ELL = np.array(CAL["per_component_variance"])  # anisotropic Sigma diagonal (per-PC residual variance)
+# anisotropic Sigma diagonal: rescale the marginal per-PC diagonal to the within-condition scale
+# (the switch preserves Sigma's SHAPE and only its trace changes, so aniso/iso ratios are unaffected)
+ELL = np.array(CAL["per_component_variance"]) * (SIGMA2 / SIGMA2_MARGINAL)
 VECS = {k: np.array(v) for k, v in CAL["example_perturbation_vectors"].items()}  # drug vectors (NCI-H460)
 
 

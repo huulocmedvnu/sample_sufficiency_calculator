@@ -21,12 +21,13 @@ have been corrected throughout this document. **Use the corrected values.**
    HS-578T (m = 6.46), HEC-1-A (m = 3.63), and BT-474 (m = 3.56). Only `Encorafenib × HEC-1-A` (m = 1.78)
    is an actual drug perturbation. The held-out test validates the *angular-error geometry*; it is
    agnostic to biological interpretation. Do **not** describe the DMSO_T0 groups as "strong drug effects".
-3. **The two σ² values use different variance definitions and are NOT a clean head-to-head.** EmeraldBay's
+3. **The σ² values are a like-for-like within-condition comparison.** EmeraldBay's
    σ² ≈ 0.963 is a *within-condition residual* variance (full atlas, 52 lines; 0.896 on the 5-shared-line
-   slice); the Tahoe calculator default σ² = 2.406 is a *marginal* per-cell variance (it includes
-   between-condition and between-line structure). Both support the claim that σ² is a
-   platform/pipeline-specific plug-in requiring re-estimation, but a like-for-like within-condition Tahoe
-   σ² was **not** computed. State this caveat; do not assert the gap is purely platform-driven.
+   slice); the Tahoe headline σ² = 0.9567 is the matching *within-condition residual* per-cell variance.
+   The two agree to ~1% — a like-for-like cross-platform match. The Tahoe *marginal* per-cell variance
+   σ² = 2.406 (which additionally includes between-condition and between-line structure) is retained only
+   as a **conservative upper bound / cross-check**, never as the headline. All support the claim that σ² is
+   a platform/pipeline-specific plug-in requiring re-estimation.
 4. **The implemented tail bound is Laurent–Massart (2000), not generic Hanson–Wright.** Laurent–Massart is
    the specialization to a weighted sum of χ² (our exact case) and yields explicit constants (2, 2);
    Hanson–Wright is the general quadratic-form parent inequality. Cite Laurent–Massart for n★_δ.
@@ -34,7 +35,7 @@ have been corrected throughout this document. **Use the corrected values.**
    θ²(n) = tr(PΣP)/m² · (1/n − 1/N), factor 1 (the per-line-mean baseline is a near-noiseless large
    pool)---**not** the equal-arms factor-2 planning formula. Both are correct; they describe different
    experimental designs. Keep them distinct.
-6. **The resource-allocation figures (~60× multiplex; 98%/>99% compute reduction) come from the Tahoe
+6. **The resource-allocation figures (~156× multiplex; 99%/~100% compute reduction) come from the Tahoe
    calibration** (N₀ = 1,296 cells/well, θ = 0.1 rad), not EmeraldBay. Attribute them to Tahoe.
 
 ---
@@ -156,9 +157,10 @@ per-PC variance were fit over the **full atlas**, giving **σ² ≈ 0.963** (mea
 coordinates were then retained for the **141,720 cells of the 5 shared lines** (5-line within-condition
 σ² = 0.896), on which the held-out validation and downsample checks are run. The baseline is the
 **per-line mean** (no DMSO at a matched timepoint; a `DMSO_T0` population exists and forms the
-high-magnitude reference groups). *Auditor caveat (item 3): σ² ≈ 0.963 is a within-condition value and is
-not directly comparable to the Tahoe calculator default 2.406, which is marginal; both nonetheless
-establish σ² as a platform/pipeline-specific plug-in requiring re-estimation.*
+high-magnitude reference groups). *Note (item 3): σ² ≈ 0.963 is a within-condition value and matches the
+Tahoe within-condition headline σ² = 0.9567 to ~1% — a like-for-like cross-platform agreement (the
+marginal Tahoe σ² = 2.406 is a conservative bound only); both establish σ² as a platform/pipeline-specific
+plug-in requiring re-estimation.*
 
 **Held-out angular-error subsampling curves.** For a target group of N cells, the truth direction is taken
 from all N; for a grid of n, cells are subsampled without replacement (R = 300 reps) and the realized RMS
@@ -200,14 +202,14 @@ pooled. We tested this directly on both reference atlases, and **in these data i
 conditions are essentially **unreplicated**: in Tahoe-100M a given (drug × dose) occupies **a single plate
 for 86.3%** of combinations (two for 13.4%, ≥ 3 for 0.4%), and EmeraldBay contributes a single pooled
 sample per (perturbagen × dose) condition. Same-dose replicate plates are largely absent. Over the 56,827
-(drug × dose × line) conditions (θ★ = 0.1 rad) only **2.5% are over-sampled** (97.5% under-sampled or
-ghost). The median condition requires n★ ≈ 14,570 cells but holds ≈ 1,296 (an ~11× deficit that the sparse
+(drug × dose × line) conditions (θ★ = 0.1 rad) only **10.6% are over-sampled** (89.4% under-sampled or
+ghost). The median condition requires n★ ≈ 5,794 cells but holds ≈ 1,296 (an ~4.5× deficit that the sparse
 replicate plates cannot close), and the line-resolved profiles are unchanged (high-magnitude agents
 over-sampled in most lines; moderate and weak agents under-sampled in nearly all). **Conclusion:** the
 pooled-condition unit is the mathematically correct one, but in these single-sample-per-condition atlases
-it *coincides* with the single-condition unit, so the project-level conclusion stands---**≈ 2.5% of
+it *coincides* with the single-condition unit, so the project-level conclusion stands---**≈ 10.6% of
 conditions are safely saturated at a 5.7° tolerance**. Dose is a real lever (the over-sampled fraction
-rises 1.8% → 3.9% across 0.05 → 5 µM) but does not move the bulk of the panel out of under-sampling. A
+rises 8.8% → 14.2% across 0.05 → 5 µM) but does not move the bulk of the panel out of under-sampling. A
 screen *designed* with replicate batches and within-batch (co-plated vehicle) referencing would benefit
 from pooling---n★ being per-condition---but a single-sample-per-condition atlas does not, and cross-plate
 replicate pooling without referencing is further capped by the batch-variance floor of `SCALE_AUDIT.md` §4.
@@ -222,7 +224,7 @@ A single saturation threshold n★ governs two budgets.
 so n★ is the knee of the curve. With a fixed per-lane read budget, a well acquired at N₀ > n★ wastes
 (N₀ − n★) reads, and the surplus permits multiplexing N₀/n★ additional conditions (e.g. via cell hashing).
 **On the Tahoe calibration (θ = 0.1 rad)** homoharringtonine at 5 µM in the responsive NCI-H460 line
-(N₀ = 6,060) reaches n★ ≈ 98---a **~60× multiplexing gain**. Weak and moderate signatures (m ≲ 2) are
+(N₀ = 6,060) reaches n★ ≈ 39---a **~156× multiplexing gain**. Weak and moderate signatures (m ≲ 2) are
 instead *under*-sampled (n★ > N₀); their cells are not redundant, and the calculator reports the regime
 per drug rather than assuming redundancy.
 
@@ -231,17 +233,17 @@ to n★ preserves its perturbation direction (and hence the drug-drug similarity
 construction. The compute saved is **polynomial in N**, not exponential: linear tasks (RAM, storage,
 PCA-fit) shrink by 1 − n★/N₀; quadratic tasks (cell-cell pairwise, kernels, k-NN) by 1 − (n★/N₀)²;
 neighbour graphs scale as ~ N log N. On the over-sampled cytotoxic example above this is
-**98% (linear) / >99% (quadratic)** reduction.
+**99% (linear) / ~100% (quadratic)** reduction.
 
 **Population-scale framing (correction of a common misconception).** The small n★ values of strong
 cytotoxics are *not* representative. Across the 56,827-condition Tahoe panel (379 drugs × 3 doses × 50
-lines) at θ★ = 0.1 rad the **median n★ is 14,570 cells/arm** (only 2.5% over-sampled; 55% need 10 k–50 k;
-8.2% > 50 k). At a tight MoA tolerance the *typical* well is **under-sampled**---atlases are large by
+lines) at θ★ = 0.1 rad the **median n★ is 5,794 cells/arm** (only 10.6% over-sampled; 28% need 10 k–50 k;
+0.4% > 50 k). At a tight MoA tolerance the *typical* well is **under-sampled**---atlases are large by
 aggregating many conditions, not because any single condition is cheap. n★ is strictly
 **per-arm/per-condition**: the global atlas size enters no term of the variance S = Σ_t/n_t + Σ_c/n_c;
 only the per-condition sum Σ_c n★_c sets the project budget (see `SCALE_AUDIT.md`). A 100-drug × 3-dose ×
-2-line screen costs ≈ 27.4 M cells under flat 90th-percentile loading versus ≈ 4.9 M under
-magnitude-adaptive allocation with a 10 k/well cap---a 5.6× reduction, with the ghost conditions flagged
+2-line screen costs ≈ 10.9 M cells under flat 90th-percentile loading versus ≈ 3.5 M under
+magnitude-adaptive allocation with a 10 k/well cap---a 3.1× reduction, with the ghost conditions flagged
 rather than silently under-powered.
 
 **Scope limitations (must be stated in the manuscript).** n★ certifies **centroid/direction** information
@@ -261,12 +263,14 @@ are polynomial; no operation here is exponential in N. σ² must be re-estimated
   `calculate_optimal_resource_allocation`). Verification: `tests/verify_theory.py`,
   `tests/test_calculator.py`, `tests/test_emeraldbay_integration.py`; CI `.github/workflows/ci.yml`.
 - External calibrator: `scripts/emeraldbay_recompute/` → `fixtures/emeraldbay_calibration.json`.
-- Constants of record: d = 50; Tahoe marginal σ² = 2.406, N₀ = 1,296; EmeraldBay within-condition
+- Constants of record: d = 50; Tahoe within-condition σ² = 0.9567 (headline; marginal 2.406 retained as a
+  conservative bound), N₀ = 1,296; EmeraldBay within-condition
   σ² ≈ 0.963 (full atlas; 0.896 on the 5-shared-line slice), 141,720 cells streamed for the 5 shared
   lines, 3,971 gated (condition × line) groups across 52 lines, θ★ = 0.20 rad; Monte-Carlo K = 50,000,
   seed = 0, relative error 0.13%; symbolic residual 2.8×10⁻¹⁷.
-- **Honesty ledger for reviewers:** (i) the σ² values use different variance definitions across atlases
-  (item 3); (ii) three of the four validation groups are DMSO_T0 reference populations, not drug effects,
+- **Honesty ledger for reviewers:** (i) the headline compares like-for-like within-condition σ² across
+  atlases (EmeraldBay 0.963 vs Tahoe 0.9567); the marginal Tahoe σ² = 2.406 is retained only as a
+  conservative bound (item 3); (ii) three of the four validation groups are DMSO_T0 reference populations, not drug effects,
   and only Encorafenib × HEC-1-A is a drug (item 2); (iii) the low-SNR group exhibits the predicted
   first-order breakdown (not hidden); (iv) resource-allocation figures are Tahoe-derived (item 6); (v)
   cell-level topology preservation is explicitly out of scope.

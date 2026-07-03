@@ -1,9 +1,11 @@
 # Empirical Case Studies — Sample-Sufficiency Spectrum (frozen source-of-truth)
 
-**Configuration (Tahoe-100M, from-raw recompute; `scripts/tahoe_recompute/`).** σ² = 2.406, d = 50,
-θ★ = 0.1 rad (5.73°), equal arms. The governing law is **n★ = 2(d−1)σ²/(m²θ★²) = 23,577 / m²**. At the
-median depth N₀ = 1,296 the over/under boundary falls at **m = 4.27**, and the depth-fixed angular
-resolution is **θ(N₀) = 0.427 / m rad**. The unit of analysis is the **(drug × dose × cell-line)
+**Configuration (Tahoe-100M, from-raw recompute; `scripts/tahoe_recompute/`).** σ² = 0.9567
+(within-condition residual variance — the theory-preferred headline), d = 50,
+θ★ = 0.1 rad (5.73°), equal arms. The governing law is **n★ = 2(d−1)σ²/(m²θ★²) = 9,376 / m²**. At the
+median depth N₀ = 1,296 the over/under boundary falls at **m = 2.69**, and the depth-fixed angular
+resolution is **θ(N₀) = 0.269 / m rad**. (The marginal per-cell variance σ² = 2.406 — pooling scatter
+across conditions — yields a ~2.5× larger, more conservative quota, retained only as a cross-check.) The unit of analysis is the **(drug × dose × cell-line)
 condition**: each magnitude m is the length ‖v̂‖ of the perturbation vector v̂ = μ̂_t − μ̂_c, the
 difference of the treated and plate-matched-DMSO **centroids** (pseudobulk mean *vectors*, each a
 coordinate average of that arm's cells) in the shared PCA(50) space where σ² was estimated. The two arms
@@ -14,17 +16,17 @@ cell-by-gene matrices. All values are machine-derived; full tables are in `fixtu
 
 | Drug (MoA / target) | median m | median n★ (cells/arm) | OVER | UNDER | Ghost |
 |---|---:|---:|---:|---:|---:|
-| Panobinostat (HDAC) | 4.24 | 1,314 | 73 | 77 | 0 |
-| Homoharringtonine (protein synthesis) | 5.88 | 682 | 72 | 78 | 0 |
-| Harringtonine (protein synthesis) | 3.67 | 1,753 | 64 | 86 | 0 |
-| Idarubicin (anthracycline; TOP2A) | 2.93 | 2,745 | 45 | 105 | 0 |
-| Trametinib (MEK) | 2.29 | 4,498 | 45 | 104 | 1 |
-| Palbociclib (CDK4/6) | 1.41 | 11,778 | 0 | 150 | 0 |
-| 4EGI-1 (eIF4E) | 1.34 | 13,202 | 0 | 149 | 1 |
-| Crizotinib (ALK/MET) | 0.99 | 24,222 | 0 | 122 | 28 |
+| Panobinostat (HDAC) | 4.24 | 523 | 120 | 30 | 0 |
+| Homoharringtonine (protein synthesis) | 5.88 | 271 | 100 | 50 | 0 |
+| Harringtonine (protein synthesis) | 3.67 | 697 | 78 | 72 | 0 |
+| Idarubicin (anthracycline; TOP2A) | 2.93 | 1,091 | 70 | 80 | 0 |
+| Trametinib (MEK) | 2.29 | 1,789 | 86 | 64 | 0 |
+| Palbociclib (CDK4/6) | 1.41 | 4,684 | 4 | 146 | 0 |
+| 4EGI-1 (eIF4E) | 1.34 | 5,250 | 4 | 146 | 0 |
+| Crizotinib (ALK/MET) | 0.99 | 9,632 | 1 | 146 | 3 |
 
-Even the strongest compounds are over-sampled in only about half of their 150 conditions, and no compound
-is over-sampled in a majority of them. At the other extreme, **132 of 379 drugs (35%) are over-sampled in
+The strongest compounds are now over-sampled in a majority of their 150 conditions — panobinostat in 120
+and homoharringtonine in 100 — while at the other extreme only **28 of 379 drugs (7%) are over-sampled in
 no condition at all**. Full per-drug counts are in `fixtures/tahoe_per_drug.csv`.
 
 ## Two levers beyond drug identity — worked conditions
@@ -37,31 +39,31 @@ lowers the quota.
 
 | condition | m | n★ | N₀ | regime | dry save (lin / quad) | multiplex |
 |---|---:|---:|---:|:--:|:--:|:--:|
-| Homoharringtonine 0.05 µM × NCI-H460 | 10.3 | 222 | 2,904 | OVER | 92% / 99% | 13.1× |
-| Homoharringtonine 0.5 µM × NCI-H460 | 14.5 | 112 | 2,114 | OVER | 95% / 100% | 18.9× |
-| Homoharringtonine 5 µM × NCI-H460 | 15.5 | 98 | 6,060 | OVER | 98% / 100% | 61.8× |
+| Homoharringtonine 0.05 µM × NCI-H460 | 10.3 | 88 | 2,904 | OVER | 97% / 100% | 33.0× |
+| Homoharringtonine 0.5 µM × NCI-H460 | 14.5 | 44 | 2,114 | OVER | 98% / 100% | 48.0× |
+| Homoharringtonine 5 µM × NCI-H460 | 15.5 | 39 | 6,060 | OVER | 99% / 100% | 155.4× |
 
 **Cell line** (same drug and dose, different background): homoharringtonine at 5 µM reaches m = 15.5
-(n★ = 98, OVER) in NCI-H460 but only m = 3.1 (n★ = 2,390, UNDER) in NCI-H661 — the same treatment flips
+(n★ = 39, OVER) in NCI-H460 but only m = 3.1 (n★ = 951, UNDER) in NCI-H661 — the same treatment flips
 regime with the background.
 
 ## Analysis
 
-The quota is governed by squared transcriptional potency, n★ = 23,577/m², so a condition's perturbation
-magnitude alone fixes its sampling regime, with the over/under boundary at m ≈ 4.27 (at the median depth).
+The quota is governed by squared transcriptional potency, n★ = 9,376/m², so a condition's perturbation
+magnitude alone fixes its sampling regime, with the over/under boundary at m ≈ 2.69 (at the median depth).
 The consequences run in two directions.
 
 At the strong end, high-magnitude cytotoxics displace cells far off baseline — the protein-synthesis
 inhibitors (homoharringtonine, harringtonine) and the HDAC inhibitor panobinostat. These saturate their
-directional estimate in a few hundred cells and are over-sampled in roughly half of their conditions,
+directional estimate in a few hundred cells and are over-sampled in the majority of their conditions,
 which leaves those wells over-provisioned and licenses large downstream-compute reductions or multiplexing
 via cell hashing.
 
 At the weak end, n★ rises quadratically as potency falls — halving m quadruples the requirement — and at
-fixed depth the achievable resolution degrades linearly as θ = 0.427/m. Weak targeted agents such as
+fixed depth the achievable resolution degrades linearly as θ = 0.269/m. Weak targeted agents such as
 palbociclib (CDK4/6, median m = 1.41) and crizotinib (ALK/MET, median m = 0.99) carry faint
-transcriptional footprints: palbociclib is under-sampled in all 150 of its conditions, and crizotinib is a
-"ghost" (n★ > 50,000) in 28.
+transcriptional footprints: palbociclib is under-sampled in 146 of its 150 conditions, and crizotinib is a
+"ghost" (n★ > 50,000) in only 3.
 
 The practical lesson is that magnitude is not predicted by nominal mechanism: targeted kinase inhibitors
 sit at the weak end while broad cytotoxics dominate the strong end. Sample sufficiency must therefore be
@@ -71,9 +73,9 @@ never inferred from drug-class labels.
 ## Population context (do not over-read the strong tail)
 
 The rows above are **illustrative tiers, not a typical sample**. Across the full 56,827-condition panel
-(379 drugs × 3 doses × 50 lines) at the same configuration, the **median n★ is 14,570 cells** (IQR
-6,489–27,656); only **2.5%** of conditions are over-sampled (n★ < N₀), 55% require 10 k–50 k, and 8.2% are
-ghosts (> 50 k) — **97.5% under-sampled or worse**. At a tight ~5.7° tolerance the *typical* condition is
+(379 drugs × 3 doses × 50 lines) at the same configuration, the **median n★ is 5,794 cells** (IQR
+2,581–10,998); **10.6%** of conditions are over-sampled (n★ < N₀), 28% require 10 k–50 k, and 0.4% are
+ghosts (> 50 k) — **89.4% under-sampled or worse**. At a tight ~5.7° tolerance the *typical* condition is
 therefore **under-sampled**; the over-sampled cases are the high-magnitude / high-dose / responsive-line
 minority. See [`SCALE_AUDIT.md`](SCALE_AUDIT.md) for the full distribution and the project budget.
 
@@ -82,7 +84,9 @@ minority. See [`SCALE_AUDIT.md`](SCALE_AUDIT.md) for the full distribution and t
 - All m and n★ are machine-computed from the raw Tahoe-100M counts through the streaming pipeline
   (`scripts/tahoe_recompute/`) and the shipped calculator; no placeholders.
 - Pipeline order (important): the PCA(50) embedding is fitted once on individual cells pooled across the
-  atlas; σ² is the cell-to-cell scatter measured from single cells *in that space*; the centroids μ̂ are
+  atlas; σ² is the within-condition cell-to-cell scatter measured from single cells *in that space*
+  (residual variance after centering each condition on its own centroid; the marginal cross-condition
+  scatter, 2.406, is the conservative bound); the centroids μ̂ are
   then formed **downstream** as a coordinate average of embedded cells — a within-embedding average, not
   a gene-count aggregation *before* PCA (which would leave one point per condition, zero out σ², and
   destroy the anisotropic trace tr(PΣP) the quota is built on).

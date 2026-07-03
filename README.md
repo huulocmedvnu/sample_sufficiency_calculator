@@ -77,7 +77,7 @@ perturbation_magnitude, tolerance)` in `src/calculator.py`. The `1/m^2` factor i
 **Approximation caveats (read before quoting a number):**
 1. *Isotropic variance.* The exact form uses `tr(P Sigma P)` for the specific `v`; when `v` aligns
    with high-variance directions the true `n*` departs from the isotropic estimate (here per-PC
-   variance ranges 0.91–14.0, mean 2.406).
+   variance ranges 0.91–14.0, marginal mean 2.406).
 2. `tolerance` is an **RMS angular SD in radians**. Sub-degree tolerances on noisy single-cell data
    demand very large `n` — e.g. `tolerance=0.01` (~0.57°) needs ~10^5–10^6 cells/arm. Realistic
    values are typically **0.05–0.2 rad (≈3–11°)**.
@@ -91,17 +91,21 @@ perturbation_magnitude, tolerance)` in `src/calculator.py`. The `1/m^2` factor i
 `src/calibrate.py` reads the **fresh recompute** (`scripts/tahoe_recompute/`, following the theislab
 [vevo_100m recipe](https://theislab.github.io/vevo_Tahoe_100m_analysis/vevo_100m_pca.html):
 `normalize_total(1e4)` → `log1p` → HVG(2000) → PCA(50), streamed over all 100,648,790 cells). The
-per-cell PCA variance is **`sigma^2 = 2.406`** (mean over 50 dims), giving the quota law
-**`n* = 23,577 / m²`** at θ=0.1 rad. A strong cytotoxic — homoharringtonine at 5 µM in the responsive
-NCI-H460 line (m=15.5) — resolves its direction in **~98 cells/arm**, whereas a median-magnitude
-condition (m≈1.27) needs **~14,570**, and the requirement scales as `1/θ²` with the tolerance. The
-**quota ratio between any two drugs equals `(m_a/m_b)²`** exactly — the `m²` law, which `calibrate.py`
-verifies.
+theory-preferred **within-condition** per-cell PCA variance — the residual noise *within* a fixed
+condition, which is what actually limits direction estimation — is **`sigma^2 = 0.9567`** (mean over
+50 dims), giving the headline quota law **`n* = 9,376 / m²`** at θ=0.1 rad. (The **marginal** per-cell
+variance **`sigma^2 = 2.406`**, which mixes all conditions together, is retained only as a
+**conservative bound**: `n* = 23,577 / m²`.) A strong cytotoxic — homoharringtonine at 5 µM in the
+responsive NCI-H460 line (m=15.5) — resolves its direction in **~39 cells/arm**, whereas a
+median-magnitude condition (m≈1.27) needs **~5,794**, and the requirement scales as `1/θ²` with the
+tolerance. The **quota ratio between any two drugs equals `(m_a/m_b)²`** exactly — the `m²` law, which
+`calibrate.py` verifies.
 
 **The panel (379 drugs × 3 doses × 50 lines = 56,827 conditions, θ=0.1 rad).** The condition is
-`(drug × dose × cell line)`; median `N0 = 1,296` cells/condition. Only **2.5%** of conditions are
-over-sampled, **89.3%** are under-sampled, and **8.2%** are "ghosts" (`n* > 50,000`) — **97.5%
-under-sampled or worse**; **132 of 379 drugs are resolvable in no condition** at standard depth. Full
+`(drug × dose × cell line)`; median `N0 = 1,296` cells/condition. At the within-condition headline,
+**10.6%** of conditions are over-sampled, **89.0%** are under-sampled, and **0.4%** are "ghosts"
+(`n* > 50,000`) — **89.4% under-sampled or worse**; **28 of 379 drugs are resolvable in no condition**
+at standard depth. Full
 per-condition / per-drug / per-dose / per-line tables are committed under `fixtures/tahoe_*.csv`.
 
 > **Provenance.** All numbers are recomputed from the raw Tahoe-100M counts (`scripts/tahoe_recompute/`,
@@ -129,13 +133,13 @@ direction. This **contains the isotropic formula** as the case `Σ = σ²I` (ver
 **effective noise dimension** `d_eff = tr(PΣP)²/tr((PΣP)²)` and, with `confidence=δ`, a Hanson–Wright
 **tail-controlled quota** guaranteeing `P(θ>θ*) ≤ δ` (not just the mean).
 
-**Honest empirical finding (Tahoe-100M):** on this atlas the anisotropic *mean-quota* correction is
+**Honest empirical finding (Tahoe-100M within-condition covariance):** on this atlas the anisotropic *mean-quota* correction is
 **small — aniso/iso ratio ≈ 0.93–0.96** (drug directions carry little variance along themselves, so they
 are not aligned with the dominant cell-cycle/lineage PCs, and with d=50 no single axis can move the trace
 much); the full-atlas falsification (below) puts the in-regime realized/predicted slope ratio in the same
 band (**0.94–0.98**). The anisotropic machinery's real value here is (i) the effective noise dimension
 **`d_eff ≈ 29 ≪ 49`** and (ii) the rigorous **tail-controlled quota** — 95%-confident homoharringtonine
-`n*=208` vs mean `92` cells/arm, a **~2.3× safety factor** (all from `python src/calibrate.py`). On data
+`n*=83` vs mean `37` cells/arm, a **~2.3× safety factor** (all from `python src/calibrate.py`). On data
 where perturbations *do* align with high-variance axes the correction is large — the ratio formula in §8
 of `THEORY.md` says exactly when.
 
@@ -145,8 +149,8 @@ The formula is a theorem (verified symbolically + by Monte Carlo), so a second d
 *more* true — but it **can** test whether the CLT/Gaussian-centroid *assumptions* hold on real,
 independent single cells, and whether the calibration transfers. We did this on **tahoebio/EmeraldBay**
 (a separate 1.8 M-cell, 5-day atlas sharing the 5 representative cell lines), re-estimating σ² and m from
-EmeraldBay's *own* cells: the embedding and within-condition σ² ≈ 0.96 are computed over the **full atlas** (52 lines, 1.83M cells), vs Tahoe's marginal 2.406 — re-estimation is
-necessary, confirming σ² is the platform-specific input).
+EmeraldBay's *own* cells: the embedding and within-condition σ² ≈ 0.96 are computed over the **full atlas** (52 lines, 1.83M cells) — a like-for-like match to Tahoe's own **within-condition σ² ≈ 0.9567** (Tahoe's marginal 2.406 is only a conservative bound), a like-for-like cross-platform match; re-estimation is still
+necessary in general, confirming σ² is the platform-specific input).
 
 Per-cell coordinates were retained for the **full 52-line atlas**, so the gating verification and the full-population falsification (below) span the whole atlas; the four illustrative **held-out angular-error curves** here use the 5 lines shared with Tahoe (141,720 cells; 5-line σ²=0.90) for direct cross-comparison. They compare the realized RMS angle from n subsampled cells to the closed form
 `θ²(n)=tr(PΣP)/m²·(1/n−1/N)` (finite-population-corrected):
@@ -178,7 +182,7 @@ regime (`ρ²≥3`) the a-priori slope `tr(PΣP)/m²` matches the realized fitte
 **0.94** (1,790 Tahoe conditions) and **0.98** (33 EmeraldBay groups), each at **R²≈0.999** with no
 fitted parameter; outside it the deficit grows monotonically with `1/ρ²`, exactly as the second-order
 theory predicts. The same re-projection reconfirms the noise constants on *every* cell — Tahoe marginal
-**σ²=2.4158** (all 95.6M cells) vs the 2.406 calibration, EmeraldBay within-condition **σ²=0.9745** vs
+(conservative-bound) **σ²=2.4158** (all 95.6M cells) vs the 2.406 marginal calibration, EmeraldBay within-condition **σ²=0.9745** vs
 0.963 (constants fit on ≤1% subsamples, holding to within 0.4%/1.2%). And the OVER/UNDER gating decision
 holds on the primary atlas too: **5,503/5,503** predicted-OVER Tahoe conditions met the tolerance at n*
 (per-line-mean baseline, θ=0.1; `pass4c_gating.py`).
@@ -226,12 +230,12 @@ are preserved *approximately*, not exactly.
 
 | signature (5 µM, NCI-H460) | m | n*/arm | regime | dry save (lin / quad) | wet multiplex |
 |---|---:|---:|:--:|:--:|:--:|
-| Homoharringtonine | 15.53 | 98 | OVER | **92% / 99%** | **13.3×** |
-| Panobinostat | 9.97 | 237 | OVER | 82% / 97% | 5.5× |
-| Trametinib | 4.39 | 1,221 | OVER | 6% / 11% | 1.1× |
-| median condition (panel-wide) | 1.27 | 14,570 | **UNDER** | 0% / 0% | — |
+| Homoharringtonine | 15.53 | 39 | OVER | **97% / 99.9%** | **33.4×** |
+| Panobinostat | 9.97 | 94 | OVER | 93% / 99% | 13.7× |
+| Trametinib | 4.39 | 485 | OVER | 63% / 86% | 2.7× |
+| median condition (panel-wide) | 1.27 | 5,795 | **UNDER** | 0% / 0% | — |
 
-**Honest finding:** at a tight tolerance the atlas is *under-sampled* for **97.5%** of (drug×dose×line)
+**Honest finding:** at a tight tolerance the atlas is *under-sampled* for **89.4%** of (drug×dose×line)
 conditions (those cells are **not** redundant); only strong perturbers in responsive lines at high dose
 are over-sampled enough to downsample. The calculator tells you exactly which regime each condition is
 in (`regime` field). Full per-condition data → `fixtures/tahoe_quota_per_condition.csv`.
@@ -240,7 +244,8 @@ in (`regime` field). Full per-condition data → `fixtures/tahoe_quota_per_condi
 
 1. **Estimate `sigma^2` once** for your platform/pipeline: run a pilot (any condition), embed the
    same way you will analyze (HVG → PCA `d`), take the mean per-dim variance of the per-cell PCA
-   coordinates. (For the Tahoe HVG/PCA(50) pipeline this is ~2.406.)
+   coordinates *within* a single condition. (For the Tahoe HVG/PCA(50) pipeline this within-condition
+   value is ~0.9567; the marginal per-cell σ²≈2.406, mixing conditions, is a conservative bound.)
 2. **Estimate the smallest effect size `m` you must resolve** — the perturbation magnitude (PCA-space
    `||treated − control centroid||`) of your *weakest drug of interest* from a pilot or a prior atlas.
 3. **Pick a tolerance** — the angular precision you need to call two drugs "same direction" (0.1 rad
@@ -258,9 +263,9 @@ python src/calculator.py                # self-check
 
 ```python
 from src.calculator import calculate_experimental_cell_quota
-n = calculate_experimental_cell_quota(single_cell_variance=2.406, num_dimensions=50,
+n = calculate_experimental_cell_quota(single_cell_variance=0.9567, num_dimensions=50,
                                       perturbation_magnitude=2.97, tolerance=0.1)
-# -> ~8518 cells per arm
+# -> ~1063 cells per arm
 ```
 
 ## Layout
@@ -357,7 +362,7 @@ Provided as-is; validate `sigma^2` on your own platform before planning a screen
 | Tahoe-100M — 5 dose-matched plates | 20,000 | 33,450,029 | 1 | 1,192 | 1,673 | 23,043 |
 | EmeraldBay — five cell lines (HS-578T, AN3-CA, HEC-1-A, BT-474, C-33 A) | 430 | 141,720 | 11 | 310 | 330 | 1,978 |
 
-*Tahoe-100M captured median **1,192** cells/well sits far below the median quota n★≈14,570 required at θ=0.1 rad — i.e. most wells are under-sampled at tight tolerance (see `docs/SCALE_AUDIT.md`). Tahoe-100M conditions are essentially unreplicated (R=1 for 96% of drug-line conditions, max R=3), so pooling replicate wells does not change this gating — only ~0.08% of conditions cross UNDER->OVER when pooled (docs/SCALE_AUDIT.md sec 5).*
+*Tahoe-100M captured median **1,192** cells/well sits far below the median quota n★≈5,794 required at θ=0.1 rad — i.e. most wells are under-sampled at tight tolerance (see `docs/SCALE_AUDIT.md`). Tahoe-100M conditions are essentially unreplicated (R=1 for 96% of drug-line conditions, max R=3), so pooling replicate wells does not change this gating — only ~0.08% of conditions cross UNDER->OVER when pooled (docs/SCALE_AUDIT.md sec 5).*
 
 ### C. Cell-line cross-tabulation — vehicle vs active perturbations (CAPTURED)
 

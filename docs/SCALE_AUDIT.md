@@ -4,19 +4,19 @@
 
 The drafting premise — *"our calculated n★ values sit in the range of hundreds to a few thousand
 cells"* — is **true only for the strong-perturbation tail**, not the typical condition. At the standard
-configuration (σ² = 2.406, d = 50, **θ★ = 0.1 rad**), over the 56,827-condition panel (379 drugs ×
+configuration (σ² = 0.9567 within-condition [headline], d = 50, **θ★ = 0.1 rad**; the marginal σ² = 2.406 is retained only as a conservative bound), over the 56,827-condition panel (379 drugs ×
 3 doses × 50 lines):
 
 | n★ percentile | 10th | 25th | **50th (median)** | 75th | 90th | 95th |
 |---|---:|---:|---:|---:|---:|---:|
-| cells/arm | 2,857 | 6,489 | **14,571** | 27,656 | 45,631 | 60,888 |
+| cells/arm | 1,136 | 2,581 | **5,794** | 10,998 | 18,146 | 24,214 |
 
-Only **2.5%** of conditions are over-sampled (n★ < N₀ = 1,296); 3.6% are < 1.4 k, 33% need 1.4 k–10 k,
-**55% need 10 k–50 k**, and 8.2% are ghosts (> 50 k). The "hundreds-of-cells" regime (e.g.
-homoharringtonine at 5 µM in NCI-H460, n★ = 98) is the high-magnitude / high-dose / responsive-line
-minority (m > 4.27). Because n★ ∝ 1/θ★², the "few thousand" regime for *typical* conditions requires a
+Only **10.6%** of conditions are over-sampled (n★ < N₀ = 1,296); ~13% are < 1.4 k, ~58% need 1.4 k–10 k,
+**28% need 10 k–50 k**, and just 0.4% are ghosts (> 50 k). The "hundreds-of-cells" regime (e.g.
+homoharringtonine at 5 µM in NCI-H460, n★ = 39) is the high-magnitude / high-dose / responsive-line
+minority (m > 2.69). Because n★ ∝ 1/θ★², the "few thousand" regime for *typical* conditions requires a
 looser tolerance (e.g. θ★ = 0.2–0.3 rad). **Manuscript framing must therefore be: at a tight ~5.7° MoA
-tolerance the great majority (97.5%) of (drug × dose × line) conditions are *under*-sampled — the atlas
+tolerance the majority (89.4%) of (drug × dose × line) conditions are *under*-sampled — the atlas
 is large by aggregating many conditions, not because any single one is cheap.**
 
 ---
@@ -56,28 +56,28 @@ condition may be realized across several replicate wells — §4):
 > Reads = Cells_to_load · depth_reads_per_cell ;   Cost = Reads · price_per_read
 
 — a **sum over independent per-condition quotas**, each n★_c fixed by that condition's magnitude m_c
-(n★ = 23,577/m² at the standard config) and counting the *total* cells of the condition however many
+(n★ = 9,376/m² at the standard config) and counting the *total* cells of the condition however many
 wells supply them (§4). f_recovery ≈ 1.4 (droplet capture + doublet/QC loss); the control/vehicle pool is
 sized once per batch and amortized (it is not multiplied by K).
 
 **Worked example — 100 drugs × 3 doses × 2 lines = 600 treated conditions** (conditions sampled from the
-real Tahoe magnitude distribution; per-drug median n★ 15,062, IQR [9,777–21,534]):
+real Tahoe magnitude distribution; per-drug median n★ 5,990, IQR [3,888–8,564]):
 
 | Budgeting policy | treated cells | notes |
 |---|---:|---|
-| **A. Flat at 90th-pctile n★ = 45,631** | **27.4 M** | uniform over-loading; reviewer-naïve; wasteful |
-| **B. Magnitude-adaptive, cap 10,000/condition** | **4.9 M** | 280/379 drugs hit the cap → resolved at coarser-than-0.1-rad θ |
-| **B′. Adaptive, cap 20,000/condition** | **7.8 M** | fewer capped |
-| **C. Adaptive + relaxed θ★ = 0.2 rad, cap 10 k** | **2.7 M** | n★ ÷ 4; most conditions now within cap |
+| **A. Flat at 90th-pctile n★ = 18,146** | **10.9 M** | uniform over-loading; reviewer-naïve; wasteful |
+| **B. Magnitude-adaptive, cap 10,000/condition** | **3.5 M** | 54/379 drugs hit the cap → resolved at coarser-than-0.1-rad θ |
+| **B′. Adaptive, cap 20,000/condition** | **4.5 M** | fewer capped |
+| **C. Adaptive + relaxed θ★ = 0.2 rad, cap 10 k** | **1.2 M** | n★ ÷ 4; most conditions now within cap |
 
-Add f_recovery (×1.4) and a control pool (~10 k cells/batch): Policy B ≈ **6.9 M cells to load**, which at
-~20 k reads/cell is ~1.4×10¹¹ reads. **This is how "small" per-condition numbers compose into a
+Add f_recovery (×1.4) and a control pool (~10 k cells/batch): Policy B ≈ **4.9 M cells to load**, which at
+~20 k reads/cell is ~1.0×10¹¹ reads. **This is how "small" per-condition numbers compose into a
 multi-million-cell project: the magnitude is driven not by any single quota but by (i) the number of
 conditions K and (ii) the long tail of weak conditions whose individual n★ is large.**
 
 **The calculator's translational role** is therefore *not* to make screens cheap but to make the budget
 **rational and explicit**: (1) magnitude-adaptive allocation replaces flat loading (Policy A → B saves
-~7×); (2) per-drug **triage** — drugs whose n★ exceeds the per-well cap are flagged *unresolvable at the
+~3.1×); (2) per-drug **triage** — drugs whose n★ exceeds the per-well cap are flagged *unresolvable at the
 chosen θ★* (ghosts) rather than silently under-powered; (3) an explicit **tolerance/depth trade** (Policy
 B → C: relaxing θ★ from 5.7° to 11.5° quarters every quota).
 
@@ -197,30 +197,30 @@ one pooled sample per (drug, dose, line); no independent same-dose replicate wel
 
 | Gating model | OVER-sampled (n ≥ n★) |
 |---|---:|
-| Per (drug × dose × line) condition | **2.5%** |
-| Under-sampled or Ghost | **97.5%** |
+| Per (drug × dose × line) condition | **10.6%** |
+| Under-sampled or Ghost | **89.4%** |
 
-The taxonomy is stark: the median condition needs n★ ≈ 14.6 k cells but holds ≈ 1.3 k, an **~11×
+The taxonomy is stark: the median condition needs n★ ≈ 5.8 k cells but holds ≈ 1.3 k, an **~4.5×
 deficit** that the sparse replicate plates cannot close. **Replication does not rescue under-sampled
 conditions here — not because the pooling logic is wrong (§4), but because the data architecture supplies
 ≈ one plate per drug–dose.** Dose, by contrast, is a real lever (the over-sampled fraction rises from
-1.8% at 0.05 µM to 3.9% at 5 µM), but it does not move the bulk of the panel out of under-sampling.
+8.8% at 0.05 µM to 14.2% at 5 µM), but it does not move the bulk of the panel out of under-sampling.
 
 **Case-study profiles resolved across all 150 conditions per drug (3 doses × 50 lines):**
 
 | Drug (profile) | median m | median n★ | conditions OVER-sampled |
 |---|---:|---:|---:|
-| Panobinostat (HDAC) | 4.24 | 1,314 | **73 / 150** |
-| Homoharringtonine (protein synthesis) | 5.88 | 682 | 72 / 150 |
-| Idarubicin (anthracycline; TOP2A) | 2.93 | 2,745 | 45 / 150 |
-| Palbociclib (CDK4/6) | 1.41 | 11,778 | 0 / 150 |
-| Crizotinib (ALK/MET; ghost tail) | 0.99 | 24,222 | 0 / 150 (28 ghost) |
+| Panobinostat (HDAC) | 4.24 | 523 | **120 / 150** |
+| Homoharringtonine (protein synthesis) | 5.88 | 271 | 100 / 150 |
+| Idarubicin (anthracycline; TOP2A) | 2.93 | 1,091 | 70 / 150 |
+| Palbociclib (CDK4/6) | 1.41 | 4,684 | 4 / 150 |
+| Crizotinib (ALK/MET; ghost tail) | 0.99 | 9,632 | 1 / 150 (3 ghost) |
 
 This **confirms** the single-well profiles (high-magnitude agents over-sampled in most lines; moderate and
 weak agents under-sampled in nearly all), and shows the regime is **line-dependent** (a drug can be
 saturated in its high-response lines yet under-sampled in the rest). **Bottom line: the pooled-condition
 unit is the mathematically correct one (§4), but in Tahoe and EmeraldBay it coincides with the
-single-condition unit, so the project-level conclusion stands — ≈ 2.5% of conditions are safely saturated
+single-condition unit, so the project-level conclusion stands — ≈ 10.6% of conditions are safely saturated
 at a 5.7° tolerance; replication as actually practised in these atlases rescues < 0.1%.** A screen
 *designed* with R replicate batches and within-batch referencing would benefit (n★ is per-condition); a
 single-sample-per-condition atlas does not.

@@ -370,12 +370,31 @@ scripts/verify_references.py` (32/32 DOIs).
     placeholders to realize, the marginal-vs-within-condition σ² decision, figure legends, author-list
     expansion, banner removal at finalization). Working tree clean; all pushed to origin/master.
 
+33. **Switched fully to within-condition variance and regenerated all tables.** Per the author's decision,
+    the headline calibration is now the theory-preferred within-condition residual σ² = **0.9567**
+    (n★ = **9,376/m²**), and the marginal σ² = 2.406 (n★ = 23,577/m²) is retained everywhere only as a
+    labelled *conservative bound*. `pass6_within_recalibrate.py` rescaled every Tahoe n★ by 0.3976 (m and
+    N₀ are σ²-independent) and regenerated `tahoe_quota_per_condition.csv`, `tahoe_per_drug.csv`,
+    `tahoe_per_dose.csv`, `tahoe_per_cell_line.csv`, `tahoe_constants.json`; `reliability_and_cost.py`
+    (SIGMA2=0.9567) regenerated `tahoe_applications.json`. New spectrum **10.6% OVER / 89.0% UNDER /
+    0.4% Ghost** (median n★ 5,794, boundary m 2.69); per-drug now shows majorities over-sampled
+    (Panobinostat 120/150, Homoharringtonine 100/150) and only 28/379 drugs over-sampled in no condition;
+    budget for the 600-condition screen 10.9M→3.5M cells (~$3.27M→$1.06M, 3.1×); reliability 10.6/42.4/67.1
+    resolved, edges 10.0/39.2/65.0; dual-use exemplar homoharringtonine 5µM×NCI-H460 n★=39 (~156× multiplex).
+    Propagated through the manuscript, SUPPLEMENT (Constants of Record + honesty ledger), README,
+    CASE_STUDIES, HANDOFF, TECHNICAL_BLUEPRINT, THEORY_PRIMER, FALSIFICATION, SCALE_AUDIT, and the
+    calibration fixture (annotated). **EmeraldBay results unchanged** (held-out curves, gating 217/217,
+    slope-test ratios) — they use EmeraldBay's own Σ; the variance-comparison caveat is reframed from
+    "not comparable" to a like-for-like within-condition match (0.9567 vs 0.963, ~1%). Audit: no citation
+    keys or validation results changed. Rebuilt PDF / DOCX.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
   group (Encorafenib × HEC-1-A) is a drug — the held-out test validates geometry, not biology.
-- EmeraldBay σ² ≈ 2.12 (within-condition) and Tahoe-100M σ² = 2.406 (marginal, fresh recompute) are not
-  a clean platform head-to-head; both only establish σ² as a plug-in.
+- The headline uses the within-condition residual σ² on both atlases (Tahoe 0.9567 ≈ EmeraldBay 0.963,
+  a like-for-like match to ~1%); the marginal Tahoe σ² = 2.406 is kept only as a labelled conservative
+  bound and is not directly comparable to a within-condition estimate. Both establish σ² as a plug-in.
 - Gating tolerance in the EmeraldBay experiment is 0.20 rad (not the standard 0.1).
 - Resource figures are Tahoe-100M-derived; compute gains are polynomial, never exponential.
 - Author lists beyond the third name are abbreviated and should be expanded before submission.

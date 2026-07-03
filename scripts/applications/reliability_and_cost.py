@@ -43,7 +43,9 @@ for i, k in enumerate(keys):
     if drug == "DMSO_TF": continue
     cs[(drug, dose, line)] = cs.get((drug, dose, line), 0) + sums[i]; cc[(drug, dose, line)] = cc.get((drug, dose, line), 0) + counts[i]
 bp = {l: (ls[l] / lc[l] - pca_mean) @ comps.T for l in ls}
-sig = float(b["sigma2"]); d = int(b["n_comps"]); const = 2 * (d - 1) * sig / 0.01
+# Headline is the within-condition residual variance (0.9567); basis.npz b["sigma2"] is the marginal
+# 2.406, retained only as a conservative bound. Override with SIGMA2 env to reproduce either.
+sig = float(os.environ.get("SIGMA2", 0.9567)); d = int(b["n_comps"]); const = 2 * (d - 1) * sig / 0.01
 rows = []
 for (drug, dose, line), s_ in cs.items():
     if abs(dose - 5.0) > 1e-9: continue

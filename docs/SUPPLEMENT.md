@@ -49,27 +49,27 @@ Tail-controlled: `n★_δ = (2/m²θ★²)[tr(PΣP) + 2‖PΣP‖_F√L + 2‖P�
 | Symbol / quantity | Value | Source |
 |---|---|---|
 | Embedding dimension d | 50 | shared PCA(50) |
-| **Tahoe** per-cell σ² | **2.406** | fresh recompute; `tahoe_calibration.json`, `scripts/tahoe_recompute/` |
+| **Tahoe** within-condition σ² (headline) | **0.9567** (residual after removing each condition's mean; the noise that enters a centroid) over all 95,624,334 cells | fresh recompute; `tahoe_within_sigma.json`, `pass5_within_sigma.py` |
 | **Tahoe** baseline N₀ | **1,296 cells / (drug×dose×line) condition** (median, post-filter) | `obs_metadata`; `tahoe_condition_counts.csv` |
 | Standard tolerance θ★ | 0.1 rad (5.73°) | case studies / resource demo |
-| Tahoe quota law @ standard config | **n★ = 23,577 / m²** | derived |
-| Over/under boundary | **m = 4.27** (n★ = N₀ at median depth) | derived |
-| **Regime split** (379 drugs × 3 doses × 50 lines = 56,827 conditions, θ=0.1) | **2.5% OVER · 89.3% UNDER · 8.2% Ghost** (97.5% under-or-ghost); median n★ 14,570, median m 1.27 | `tahoe_per_cell_line.csv`, `SCALE_AUDIT.md` |
-| Within-condition σ² (refinement; theory's plug-in) | **σ²=0.9567** over all 95,624,334 cells (≈ EmeraldBay 0.963; marginal 2.406 is a conservative proxy) → n★=9,376/m²; spectrum **10.6% OVER · 89.0% UNDER · 0.4% Ghost**, median n★ 5,794, boundary m 2.69 | `tahoe_within_sigma.json`, `pass5_within_sigma.py` |
-| **Per-drug spectrum** (of 150 conditions/drug) | 132/379 drugs OVER in 0 conditions; strongest Panobinostat 73/150, Homoharringtonine 72/150 | `tahoe_per_drug.csv` |
-| Depth-fixed resolution | θ(N₀) = **0.427 / m** rad (at median N₀) | derived |
+| Tahoe quota law @ standard config | **n★ = 9,376 / m²** | derived |
+| Over/under boundary | **m = 2.69** (n★ = N₀ at median depth) | derived |
+| **Regime split** (379 drugs × 3 doses × 50 lines = 56,827 conditions, θ=0.1) | **10.6% OVER · 89.0% UNDER · 0.4% Ghost** (89.4% under-or-ghost); median n★ 5,794, median m 1.27 | `tahoe_per_cell_line.csv`, `SCALE_AUDIT.md` |
+| Marginal σ² (conservative bound) | **σ²=2.406** (all cells; additionally absorbs between-condition/line structure) → n★=23,577/m²; spectrum **2.5% OVER · 89.3% UNDER · 8.2% Ghost**, median n★ 14,570, boundary m 4.27 | `tahoe_calibration.json`, `scripts/tahoe_recompute/` |
+| **Per-drug spectrum** (of 150 conditions/drug) | 28/379 drugs OVER in 0 conditions; strongest Panobinostat 120/150, Homoharringtonine 100/150 | `tahoe_per_drug.csv` |
+| Depth-fixed resolution | θ(N₀) = **0.269 / m** rad (at median N₀) | derived |
 | **Study-design layout** | **100,648,790 cells** (95,624,334 pass `full`, 5.0% filtered); **1,344 wells = 14 plates × 96**; cells/well median 71,092 (pre) / 67,212 (post) | `obs_metadata`; `tahoe_layout_summary.json` |
 | Plate QC variation | plate3 11.63% filter loss (operationalizes "excl3") vs 3–5% typical | `per_plate` in `tahoe_layout_summary.json` |
-| **EmeraldBay** within-condition σ² | **≈ 0.963** (full atlas, 52 lines, 1.83M cells; 5-shared-line slice = 0.896) | `scripts/emeraldbay_recompute/` (own PCA(50); ≠ marginal Tahoe 2.406) |
+| **EmeraldBay** within-condition σ² | **≈ 0.963** (full atlas, 52 lines, 1.83M cells; 5-shared-line slice = 0.896) | `scripts/emeraldbay_recompute/` (own PCA(50); ≈ Tahoe within-condition 0.9567) |
 | EmeraldBay cells streamed (5 shared cell lines) | 141,720 (of 1.83M; 57.7 GB / 116 shards) | `scripts/emeraldbay_recompute/` |
 | EmeraldBay gating (full atlas) | **3,971 groups, 52 lines** (≥100 cells): 217 OVER (5.5%), 94.5% UNDER; downsample-verified **217/217 → 100% over all 52 lines** (`pass5_gating_full.py`) | gating, θ★ = 0.20 rad |
-| Tahoe gating (full atlas, direct) | downsample-verified **5,503/5,503 → 100%** of predicted-OVER conditions over all 44 lines with any OVER condition (per-line-mean baseline; `pass4c_gating.py`) | θ★ = 0.1 rad; ≠ DMSO-referenced 2.5% spectrum |
+| Tahoe gating (full atlas, direct) | downsample-verified **5,503/5,503 → 100%** of predicted-OVER conditions over all 44 lines with any OVER condition (per-line-mean baseline; `pass4c_gating.py`) | θ★ = 0.1 rad; ≠ DMSO-referenced 10.6% spectrum |
 | Symbolic Jacobian residual | zero matrix; max float diff 2.8×10⁻¹⁷ | `verify_theory.py` L1 |
 | Monte-Carlo check | K=50,000; seed=0; rel. err 0.13%; ρ²=3.82×10⁵; d_eff=12.2 | `verify_theory.py` L2 |
 | Laurent–Massart tail coverage | empirical Pr(θ>θ★) = 0.34% ≤ δ = 10% | `test_calculator.py` |
 | Test suite | 13 tests pass (12 unit + EmeraldBay integration) | CI |
-| **Application: reliability audit** | conditions resolved 2.5% / 18.5% / 39.0% at θ★=0.1/0.2/0.3 rad; similarity-graph edges with both endpoints resolved 2.1% / 17.7% / 36.1% | `tahoe_applications.json`, `scripts/applications/` |
-| **Application: cost** (600-condition screen) | uniform-safe 27.4M cells (~$8.2M) vs quota-guided 4.9M (~$1.5M) → 5.6×, ~$6.7M saved @ $0.30/cell; 2.5% over-sampled, median multiplex 1.5× | `tahoe_applications.json` |
+| **Application: reliability audit** | conditions resolved 10.6% / 42.4% / 67.1% at θ★=0.1/0.2/0.3 rad; similarity-graph edges with both endpoints resolved 10.0% / 39.2% / 65.0% | `tahoe_applications.json`, `scripts/applications/` |
+| **Application: cost** (600-condition screen) | uniform-safe 10.9M cells (~$3.27M) vs quota-guided 3.5M (~$1.06M) → 3.1×, ~$2.21M saved @ $0.30/cell; 10.6% over-sampled, median multiplex 1.6× | `tahoe_applications.json` |
 | **Application: adaptive vs flat** | budget-matched — indistinguishable in this under-sampled regime (k-NN graph Jaccard within 0.005) | `tahoe_moa_recovery.json` |
 
 **Held-out angular-error curves (EmeraldBay, from-raw recompute `scripts/emeraldbay_recompute/`;
@@ -83,27 +83,26 @@ validation groups and the 132 gated groups are restricted to the 5 lines shared 
 | DMSO_T0 × BT-474 | 461 | 3.56 | 1.2% | 1.561 vs 1.623 | 0.9998 |
 | Encorafenib × HEC-1-A (drug) | 1117 | 1.78 | 2.9% | 9.67 vs 11.17 (low-SNR) | 0.9965 |
 
-**Case-study spectrum (Tahoe; n★ = 23,577/m², per-drug median m and OVER out of 150 conditions):**
-Panobinostat m=4.24 OVER in 73/150; Homoharringtonine m=5.88 OVER in 72/150; Harringtonine m=3.67 OVER
-in 64/150; Palbociclib m=1.41 UNDER in 150/150; Crizotinib m=0.99 Ghost in 28/150 (OVER in 0). The unit
+**Case-study spectrum (Tahoe; n★ = 9,376/m², per-drug median m and OVER out of 150 conditions):**
+Panobinostat m=4.24 OVER in 120/150; Homoharringtonine m=5.88 OVER in 100/150; Harringtonine m=3.67 OVER
+in 78/150; Palbociclib m=1.41 UNDER in 146/150 (OVER 4); Crizotinib m=0.99 Ghost in 3/150 (OVER 1). The unit
 is the **(drug × dose × line) condition**, modulated by BOTH dose and line: homoharringtonine at 5 µM
-reaches m=15.5 (n★=98, OVER) in NCI-H460 but only m=3.1 (n★=2,390, UNDER) in NCI-H661; the same drug in
-NCI-H460 rises from n★=222 (0.05 µM) to n★=98 (5 µM). Full tables → [`CASE_STUDIES.md`](CASE_STUDIES.md),
+reaches m=15.5 (n★=39, OVER) in NCI-H460 but only m=3.1 (n★=951, UNDER) in NCI-H661; the same drug in
+NCI-H460 rises from n★=88 (0.05 µM) to n★=39 (5 µM). Full tables → [`CASE_STUDIES.md`](CASE_STUDIES.md),
 `tahoe_per_drug.csv`, `tahoe_per_dose.csv`, `tahoe_quota_per_condition.csv`.
 
 ---
 
 ## 3. Honesty ledger (consolidated — reviewers will probe these)
 
-1. **Variance-definition mismatch.** EmeraldBay σ²≈0.96 is *within-condition* over the full atlas (52 lines; the 5-shared-line validation slice = 0.90); Tahoe σ²≈2.41 is *marginal* —
-   not a clean platform head-to-head. Both establish σ² as a platform/pipeline-specific plug-in.
+1. **Variance definition.** The headline now uses the *within-condition* residual σ² on both atlases — Tahoe 0.9567 and EmeraldBay ≈0.963 (5-shared-line validation slice = 0.90) — a like-for-like match to ~1%. The coarser *marginal* Tahoe value (2.41, all cells) is retained only as a conservative bound; it is not directly comparable to a within-condition estimate. Both establish σ² as a platform/pipeline-specific plug-in.
 2. **DMSO_T0 group identity.** Three of the four validation groups are DMSO_T0 time-zero reference
    populations (HS-578T, HEC-1-A, BT-474), not drug effects; only Encorafenib×HEC-1-A is a drug. The
    held-out test validates geometry, not biology.
 3. **Low-SNR breakdown is expected, not hidden.** Encorafenib (m=1.78) shows a ~13% slope deficit at small
    n — the first-order Delta breakdown when ρ²=m²/(uᵀSu) is not ≫1 (THEORY §5).
 4. **Gating tolerance = 0.20 rad** in the EmeraldBay experiment (not 0.1).
-5. **Resource figures (~60× multiplex, 98%/>99% compute) are Tahoe-derived** (over-sampled exemplar
+5. **Resource figures (~156× multiplex, 99%/~100% compute) are Tahoe-derived** (over-sampled exemplar
    homoharringtonine 5 µM × NCI-H460, N₀=6,060, θ=0.1), not EmeraldBay.
 6. **Paclitaxel unavailable** in the batch-clean array (plate3-excluded) → Homoharringtonine is the
    cytotoxic exemplar. Magnitudes are 24 h survivor transcriptional norms (not viability).

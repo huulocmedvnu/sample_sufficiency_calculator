@@ -36,15 +36,20 @@ the magnitude spectrum in the main text.
 ## Result 1 — the σ² calibration holds across every cell
 
 The manuscript's noise constants were fit on small subsamples (Tahoe: a 14-shard, ~0.4% subset). Projecting
-*all* cells through the same basis confirms they are representative:
+*all* cells through the same basis confirms they are representative. The headline quota uses the Tahoe
+**within-condition** residual variance σ² = 0.9567; the **marginal** per-cell variance σ² = 2.406 is
+retained only as a conservative bound. The full-atlas re-stream re-measures the *marginal* quantity, so it
+validates that conservative bound directly:
 
-| atlas | quantity | full-atlas value | manuscript | Δ |
+| atlas | quantity | full-atlas value | calibration | Δ |
 |:--|:--|--:|--:|--:|
-| Tahoe-100M | marginal σ² (mean over 50 PCs, all 95.6 M cells) | **2.4158** | 2.406 | +0.4 % |
+| Tahoe-100M | marginal σ² — conservative bound (mean over 50 PCs, all 95.6 M cells) | **2.4158** | 2.406 | +0.4 % |
 | EmeraldBay | within-condition σ² (all 1.83 M cells, 52 lines) | **0.9745** | 0.963 | +1.2 % |
 
-Both land within rounding of the headline values; the calibration fit on a fraction of a percent of the
-data reproduces on the whole atlas.
+Both land within rounding of the calibrated values; the calibration fit on a fraction of a percent of the
+data reproduces on the whole atlas. Note that EmeraldBay's full-atlas within-condition σ² ≈ 0.9745 is a
+like-for-like match to the Tahoe within-condition headline σ² = 0.9567 — the two platforms agree on the
+quantity that actually sets the quota.
 
 ## Result 2 — the parameter-free law is confirmed in-regime, on both atlases
 

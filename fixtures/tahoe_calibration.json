@@ -1,7 +1,9 @@
 {
- "description": "Tahoe-100M dose-resolved recompute (theislab recipe; unit=drug x dose x line, plate-matched DMSO_TF). per-PC variances + example vectors (5uM in NCI-H460), regenerated from out_dose pseudobulk to match quota_per_condition.csv.",
+ "description": "Tahoe-100M dose-resolved recompute (theislab recipe; unit=drug x dose x line, plate-matched DMSO_TF). per-PC variances + example vectors (5uM in NCI-H460), regenerated from out_dose pseudobulk to match quota_per_condition.csv. NOTE: sigma2_mean below is the MARGINAL per-cell variance, now retained only as a conservative bound; the headline calibration uses the within-condition residual variance sigma2=0.9567 (see tahoe_within_sigma.json), giving n*=9,376/m^2.",
  "num_dimensions": 50,
  "sigma2_mean": 2.4058,
+ "sigma2_mean_within_condition": 0.9567,
+ "headline_note": "headline n*=9,376/m^2 uses within-condition sigma2=0.9567; sigma2_mean (marginal 2.4058) -> n*=23,577/m^2 is the conservative bound",
  "per_component_variance": [
   13.996482,
   9.489288,

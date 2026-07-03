@@ -276,25 +276,28 @@ zero eigenvalue (the $u$ direction) and $d-1$ eigenvalues equal to one.
 
 ## 8. Putting in real numbers
 
-The Tahoe-100M atlas gives a per-coordinate noise of $\sigma^2 = 2.406$ in the $d=50$ PCA space. At the
-standard tolerance $\theta_\star = 0.1$ radian (about $5.7^\circ$),
+The Tahoe-100M atlas gives a within-condition per-coordinate noise of $\sigma^2 = 0.9567$ in the $d=50$
+PCA space. (The *marginal* per-cell variance $\sigma^2 = 2.406$, which also folds in between-condition and
+between-line structure, serves only as a conservative upper bound / cross-check.) At the standard
+tolerance $\theta_\star = 0.1$ radian (about $5.7^\circ$),
 
 $$
-n^\star = \frac{2\,(50-1)\,(2.406)}{m^2\,(0.1)^2}
-= \frac{235.8}{0.01\,m^2}
-\approx \frac{23{,}577}{m^2}\ \text{cells per arm}.
+n^\star = \frac{2\,(50-1)\,(0.9567)}{m^2\,(0.1)^2}
+= \frac{93.76}{0.01\,m^2}
+\approx \frac{9{,}376}{m^2}\ \text{cells per arm}.
 $$
 
 So the whole design question collapses to the drug's signal strength $m$:
 
-| signal strength $m$ | cells needed per arm $n^\star \approx 23{,}577/m^2$ |
+| signal strength $m$ | cells needed per arm $n^\star \approx 9{,}376/m^2$ |
 |:--|:--|
-| $m = 6$ (strong cytotoxic) | $\approx 650$ |
-| $m = 3$ (moderate) | $\approx 2{,}600$ |
-| $m = 1.3$ (typical/weak) | $\approx 14{,}000$ |
-| $m = 1$ (very weak) | $\approx 23{,}600$ |
+| $m = 6$ (strong cytotoxic) | $\approx 260$ |
+| $m = 3$ (moderate) | $\approx 1{,}040$ |
+| $m = 1.3$ (typical/weak) | $\approx 5{,}500$ |
+| $m = 1$ (very weak) | $\approx 9{,}400$ |
 
-A strong perturbation is resolved in a few hundred cells; a weak one may need tens of thousands. Since
+A strong perturbation is resolved in a few hundred cells; a weak one needs several thousand, approaching
+ten thousand for the weakest. Since
 the median condition in Tahoe-100M has only $\sim$1,300 cells, most weak perturbations are
 **under-sampled** — the single most important practical consequence of the formula.
 
@@ -312,7 +315,8 @@ the median condition in Tahoe-100M has only $\sim$1,300 cells, most weak perturb
 - **It governs the direction of the *average* cell only** — not the fine structure of individual cells
   (rare subpopulations, local UMAP neighbourhoods). Those are set by different quantities.
 - **The noise $\Sigma$ must be measured for your own platform.** It is a plug-in number, not a
-  universal constant; the $\sigma^2 = 2.406$ above is specific to this atlas and pipeline.
+  universal constant; the $\sigma^2 = 0.9567$ above (the within-condition residual variance) is specific
+  to this atlas and pipeline, and the marginal $\sigma^2 = 2.406$ is only a conservative cross-check.
 
 Everything above is exact to leading order; `docs/THEORY.md` supplies the higher-order corrections, the
 probability guarantee, and a machine-checked proof of the algebra. But the one-line takeaway is the
