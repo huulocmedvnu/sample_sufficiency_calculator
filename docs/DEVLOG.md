@@ -354,6 +354,17 @@ scripts/verify_references.py` (32/32 DOIs).
     inserted three figure placeholders with suggested captions (F1 geometry, F2 n★ histogram, F3 EmeraldBay
     θ²(n) curve). Rebuilt PDF (19 pp) / DOCX.
 
+31. **Acted on the variance TODO: computed Tahoe within-condition σ² (documented as a refinement).**
+    `pass5_within_sigma.py` computed the within-condition per-cell variance over all **95,624,334** Tahoe
+    cells from the pass4 memmap: **σ² = 0.9567** --- almost exactly EmeraldBay's independent within-condition
+    0.963, evidence the quantity transfers across platforms (the marginal 2.406 is inflated by
+    between-condition/between-line structure). Rescaling the (unchanged) magnitudes gives n★=9,376/m²,
+    median n★ 5,794, boundary m 2.69, and spectrum 10.6% OVER / 89.0% UNDER / 0.4% Ghost (vs 2.5/89.3/8.2).
+    Per the author's decision, the conservative marginal figures stay the headline; the within-condition
+    recompute is documented as a refinement (one Phase B paragraph + Methods pointer + a SUPPLEMENT row),
+    and the TODO(author) is removed. Fixture `tahoe_within_sigma.json`. Audit: no existing headline number,
+    citation, or data table changed; only the refinement numbers added. Rebuilt PDF (19 pp) / DOCX.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one

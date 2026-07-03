@@ -55,6 +55,7 @@ Tail-controlled: `n★_δ = (2/m²θ★²)[tr(PΣP) + 2‖PΣP‖_F√L + 2‖P�
 | Tahoe quota law @ standard config | **n★ = 23,577 / m²** | derived |
 | Over/under boundary | **m = 4.27** (n★ = N₀ at median depth) | derived |
 | **Regime split** (379 drugs × 3 doses × 50 lines = 56,827 conditions, θ=0.1) | **2.5% OVER · 89.3% UNDER · 8.2% Ghost** (97.5% under-or-ghost); median n★ 14,570, median m 1.27 | `tahoe_per_cell_line.csv`, `SCALE_AUDIT.md` |
+| Within-condition σ² (refinement; theory's plug-in) | **σ²=0.9567** over all 95,624,334 cells (≈ EmeraldBay 0.963; marginal 2.406 is a conservative proxy) → n★=9,376/m²; spectrum **10.6% OVER · 89.0% UNDER · 0.4% Ghost**, median n★ 5,794, boundary m 2.69 | `tahoe_within_sigma.json`, `pass5_within_sigma.py` |
 | **Per-drug spectrum** (of 150 conditions/drug) | 132/379 drugs OVER in 0 conditions; strongest Panobinostat 73/150, Homoharringtonine 72/150 | `tahoe_per_drug.csv` |
 | Depth-fixed resolution | θ(N₀) = **0.427 / m** rad (at median N₀) | derived |
 | **Study-design layout** | **100,648,790 cells** (95,624,334 pass `full`, 5.0% filtered); **1,344 wells = 14 plates × 96**; cells/well median 71,092 (pre) / 67,212 (post) | `obs_metadata`; `tahoe_layout_summary.json` |
