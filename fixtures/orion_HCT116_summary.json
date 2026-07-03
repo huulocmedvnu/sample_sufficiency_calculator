@@ -1,0 +1,111 @@
+{
+ "line": "HCT116",
+ "theta": 0.1,
+ "format_version": "full-atlas",
+ "n_cells_total": 3404169,
+ "n_gene_targets": 17586,
+ "n_perturbations_scored": 17585,
+ "min_cells": 25,
+ "n_ntc_cells": 165562,
+ "sigma2_within": 0.9133,
+ "sigma2_marginal": 0.9167,
+ "quota_const_iso": 8950.2,
+ "m_median": 0.141,
+ "m_p90": 0.791,
+ "m_max": 5.754,
+ "n_star_median": 409983,
+ "pct_over": 0.0,
+ "pct_under": 28.3,
+ "pct_ghost": 71.7,
+ "pct_detectable": 14.7,
+ "detectable_pct_over": 0.0,
+ "aniso_iso_ratio_median": 0.9247,
+ "median_true_N0": 155,
+ "median_deficit_x": 2259.1,
+ "top_strong": [
+  {
+   "gene_target": "EIF2S3",
+   "m": 5.754035782292071,
+   "n_star_aniso": 256.0252874681954,
+   "n_cells": 96,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "RPL31",
+   "m": 5.7450704165127195,
+   "n_star_aniso": 255.27373845165832,
+   "n_cells": 29,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "RPL18",
+   "m": 5.3286507119281685,
+   "n_star_aniso": 299.5523947558268,
+   "n_cells": 68,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "MED22",
+   "m": 5.215528414057198,
+   "n_star_aniso": 311.7452780471439,
+   "n_cells": 29,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "NUP93",
+   "m": 5.197485549678689,
+   "n_star_aniso": 317.14708578396517,
+   "n_cells": 29,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "MAK16",
+   "m": 4.972472736837942,
+   "n_star_aniso": 339.3215263882263,
+   "n_cells": 32,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "UTP15",
+   "m": 4.859662204740557,
+   "n_star_aniso": 335.05621018469446,
+   "n_cells": 59,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "RPL7",
+   "m": 4.853979547812318,
+   "n_star_aniso": 361.1565755853445,
+   "n_cells": 27,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "RPL30",
+   "m": 4.85242739005166,
+   "n_star_aniso": 362.9808866443839,
+   "n_cells": 51,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "NOL8",
+   "m": 4.753433816000838,
+   "n_star_aniso": 360.197451222997,
+   "n_cells": 45,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "EXOSC9",
+   "m": 4.664497659750526,
+   "n_star_aniso": 379.4512431214588,
+   "n_cells": 216,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "HEATR1",
+   "m": 4.641611870481198,
+   "n_star_aniso": 377.9548506100884,
+   "n_cells": 75,
+   "regime": "UNDER"
+  }
+ ]
+}

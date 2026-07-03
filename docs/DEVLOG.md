@@ -388,6 +388,26 @@ scripts/verify_references.py` (32/32 DOIs).
     "not comparable" to a like-for-like within-condition match (0.9567 vs 0.963, ~1%). Audit: no citation
     keys or validation results changed. Rebuilt PDF / DOCX.
 
+34. **Cross-modality scale-up to genome-wide gene perturbation (X-Atlas/Orion).** Extended the study from
+    chemical to *genetic* perturbation on the largest public CRISPRi Perturb-seq atlas (slaf-project/X-Atlas-Orion,
+    SLAF/Lance): ~8M cells, 18,903 gene knockdowns × 2 lines (HCT116, HEK293T). Built `scripts/orion_recompute/`
+    (pass0 head-block download + basis; **pass2 streams the full expression table** — all 17.4B HCT116 + 29.1B
+    HEK293T nonzeros re-projected into PCA(50) on the fly, resumable, per-gene pseudobulk sufficient stats;
+    pass3 quota). Projection validated to 1e-4 vs scanpy; `total_counts` == raw row sum exactly. Condition =
+    (gene × line), control = pooled **Non-Targeting** centroid. **Results:** within-condition σ² = 0.913 (HCT116)
+    / 1.033 (HEK293T) — transfers across modality (≈ Tahoe 0.957 / EmeraldBay 0.963); n* = 8,950 / 10,127 per m²;
+    median m 0.14 / 0.35 (≈10× smaller than drugs); spectrum **0.0% OVER** / 28.3% / 71.7% (HCT116) and
+    0.0% / 49.4% / 50.6% (HEK293T); median deficit ~2,260× / ~248×. Marginal σ² ≈ within (weak-perturbation
+    fingerprint). Self-validations: strongest-m knockdowns are core essential genes (RPL*, POLR2*, SF3B5, NUP93,
+    EIF2S3…); HEK293T aniso/iso ratio 0.66 (first dataset where the anisotropic form departs from isotropy;
+    THEORY §8). Added `docs/ORION_GENE_PERTURBATION.md`, SUPPLEMENT §2b + honesty items 9–10, README section,
+    manuscript **Results Phase E + Table 6** (+ Abstract/Key-Points/Discussion/Limitations/Data-availability),
+    citation `huang2025xatlasorion` (Crossref-verified; 49/49 DOIs pass). Fixed `normalize_manuscript.py` to keep
+    `.csv/.sh/.npz/.bib` paths monospace (a `.csv` brace path had become math → double-subscript LaTeX error).
+    Rebuilt PDF (21 pp) / DOCX. **Honest scope:** this applies the proven framework + transferred calibration;
+    a dedicated Orion downsample-falsification (genetic Phase C) is the next step, and weak-majority magnitudes
+    (median ~155–204 cells) are order-of-magnitude near the sampling floor.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one

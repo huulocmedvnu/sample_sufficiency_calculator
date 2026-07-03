@@ -187,6 +187,31 @@ theory predicts. The same re-projection reconfirms the noise constants on *every
 holds on the primary atlas too: **5,503/5,503** predicted-OVER Tahoe conditions met the tolerance at n*
 (per-line-mean baseline, θ=0.1; `pass4c_gating.py`).
 
+## Cross-modality scale-up: gene perturbation (X-Atlas/Orion) — `docs/ORION_GENE_PERTURBATION.md`
+
+The quota is a theorem about centroid-**direction** estimation, so it is indifferent to *what* moves the
+centroid. We tested that on the largest public **genome-wide CRISPRi Perturb-seq** atlas, **X-Atlas/Orion**
+(~8M cells, 18,903 gene knockdowns × 2 lines; SLAF/Lance format), streaming **all 46.5 billion expression
+entries** from raw and mapping the framework one-to-one: condition = (target gene × line), control arm = the
+pooled **Non-Targeting** centroid, `m = ‖μ_knockdown − μ_NTC‖`. Findings (`scripts/orion_recompute/`,
+`fixtures/orion_*`):
+
+- **σ² transfers across modality.** Within-condition `σ² = 0.913` (HCT116) / `1.033` (HEK293T) — same ~1.0 band
+  as the chemical atlases (Tahoe 0.957, EmeraldBay 0.963), so the calibrated law is `n* ≈ 9,000/m²` in both
+  modalities. On Orion the *marginal* σ² ≈ the within-condition value (unlike Tahoe's 2.5× gap) — a direct
+  fingerprint that most knockdowns barely move the transcriptome.
+- **No knockdown is over-sampled.** Genome-wide at θ=0.1 rad: HCT116 **0.0% OVER / 28.3% UNDER / 71.7% Ghost**
+  (median deficit ~2,260×); HEK293T **0.0% / 49.4% / 50.6%** (~248×). Gene knockdowns move the transcriptome
+  ~4–10× less than drugs (median m 0.14–0.35 vs 1.27), so `n* ∝ 1/m²` explodes. Robust to tolerance (≤2% OVER
+  even at θ=0.3 rad).
+- **Self-validation.** The strongest-magnitude knockdowns are core essential genes (ribosomal proteins,
+  ribosome biogenesis, Pol II, splicing, nucleoporins, translation initiation) — known biology recovered at the
+  top of the spectrum. And **HEK293T is where the anisotropic form earns its keep** (aniso/iso ratio 0.66 vs
+  ~0.93 elsewhere): its noise is single-axis-dominated, the regime `docs/THEORY.md` §8 predicts.
+
+This is an *application* of the proven framework with a transferred calibration (Phase E of the manuscript), not
+an independent re-proof; a dedicated Orion downsample-falsification is the next step.
+
 ## The dual-sided framework: one threshold, two ledgers
 
 `calculate_optimal_resource_allocation(single_cell_variance, num_dimensions, perturbation_magnitude,

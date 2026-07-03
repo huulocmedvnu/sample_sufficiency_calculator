@@ -93,6 +93,38 @@ NCI-H460 rises from n★=88 (0.05 µM) to n★=39 (5 µM). Full tables → [`CAS
 
 ---
 
+## 2b. Constants of record — genetic-perturbation scale-up (X-Atlas/Orion, CRISPRi Perturb-seq)
+
+Cross-modality extension: the same calibrated framework applied to genome-wide gene knockdown
+([`ORION_GENE_PERTURBATION.md`](ORION_GENE_PERTURBATION.md); `scripts/orion_recompute/`; fixtures
+`orion_{HCT116,HEK293T}_{quota.csv,summary.json}`). Condition = (target gene × line); control arm = pooled
+**Non-Targeting (NTC)** centroid; m = ‖μ_knockdown − μ_NTC‖; quota theorem unchanged. Full-atlas streaming
+recompute (all 17.4B HCT116 + 29.1B HEK293T expression nonzeros re-projected; PCA projection validated to 1e-4
+vs scanpy; `total_counts` == raw row sum exactly). θ★ = 0.1 rad, d = 50.
+
+| quantity | HCT116 | HEK293T | source |
+|---|---|---|---|
+| cells (post-QC) / knockdowns scored | 3,404,169 / 17,585 | 4,534,299 / 17,856 | `orion_<LINE>_summary.json` |
+| NTC control cells | 165,562 | 218,838 | " |
+| **within-condition σ²** (headline plug-in) | **0.9133** | **1.0334** | " (≈ Tahoe 0.9567 / EmeraldBay 0.963 across modality) |
+| marginal σ² | 0.9167 | 1.0396 | " (marginal≈within ⇒ most knockdowns transcriptionally weak) |
+| **quota law** | **n★ = 8,950/m²** | **n★ = 10,127/m²** | derived |
+| median magnitude m | 0.141 | 0.351 | " (vs Tahoe 1.27; knockdowns ~4–10× weaker) |
+| **regime spectrum (OVER/UNDER/Ghost)** | **0.0% / 28.3% / 71.7%** | **0.0% / 49.4% / 50.6%** | " |
+| median n★ / median acquired N₀ | 409,983 / 155 | 52,908 / 204 | " |
+| **median deficit n★/N₀** | **~2,260×** | **~248×** | " (Tahoe 4.5×) |
+| detectable fraction (signal>1.5×floor); OVER among them | 14.7%; **0.0%** | 35.3%; **0.0%** | " |
+| **aniso/iso ratio** | 0.925 | **0.660** | " (HEK293T = where the anisotropic form departs from isotropy; THEORY §8) |
+| tolerance robustness (% OVER @ θ=0.2 / 0.3) | 0.0% / 0.4% | 0.2% / 2.1% | derived |
+| strongest-m knockdowns (validation) | EIF2S3, RPL31/18/7/30, MED22, NUP93, MAK16, UTP15, NOL8, EXOSC9, HEATR1 | RPL38, NUP93, POLR2C/I, RPS20, SF3B5, CPSF4, SNIP1 | `orion_<LINE>_quota.csv` (essential machinery lands at top) |
+
+**Headline:** no gene knockdown is over-sampled for direction estimation at θ★=0.1 on either line; ~50–72% are
+"ghosts." Same theorem, same σ² (~1.0) and n★ (~9,000/m²) law as chemical — but knockdowns' small magnitudes
+push `n★ ∝ 1/m²` up so the atlas is near-universally direction-under-sampled. KD efficiency (HCT116 75.4% /
+HEK293T 51.5%) does not drive magnitude here — HEK293T (lower KD) has the *larger* median m.
+
+---
+
 ## 3. Honesty ledger (consolidated — reviewers will probe these)
 
 1. **Variance definition.** The headline now uses the *within-condition* residual σ² on both atlases — Tahoe 0.9567 and EmeraldBay ≈0.963 (5-shared-line validation slice = 0.90) — a like-for-like match to ~1%. The coarser *marginal* Tahoe value (2.41, all cells) is retained only as a conservative bound; it is not directly comparable to a within-condition estimate. Both establish σ² as a platform/pipeline-specific plug-in.
@@ -110,6 +142,14 @@ NCI-H460 rises from n★=88 (0.05 µM) to n★=39 (5 µM). Full tables → [`CAS
    structure or rare-population detection; compute gains are polynomial, never exponential.
 8. **Resveratrol MoA.** metadata `moa-fine`="unclear"; it is a moderate-magnitude exemplar only — no
    mechanistic/MoA claim is attached.
+9. **Orion is an application of the proven framework, not an independent re-proof.** The geometry is a
+   theorem (Lean §10); Orion tests whether the σ² *calibration* transfers (it does, ~1.0 on both lines) and
+   what the quota says at genome scale. A dedicated Orion downsample-and-measure falsification (the
+   parameter-free slope test of Phase C) is the next step and is **not yet run**.
+10. **Orion weak-majority magnitudes are order-of-magnitude.** With median ~155–204 acquired cells/knockdown,
+    the per-condition floor on m is non-negligible; m is bias-corrected (`−tr(Σ)(1/n+1/n_NTC)`), but for the
+    weak majority n★ means "unresolvable at this depth," not an exact count. ~15% (HCT116) / 35% (HEK293T)
+    clear the floor; even among those, 0% are over-sampled. Magnitudes are survivor transcriptional norms.
 
 ---
 
