@@ -365,6 +365,11 @@ scripts/verify_references.py` (32/32 DOIs).
     and the TODO(author) is removed. Fixture `tahoe_within_sigma.json`. Audit: no existing headline number,
     citation, or data table changed; only the refinement numbers added. Rebuilt PDF (19 pp) / DOCX.
 
+32. **Handoff.** Wrote `docs/HANDOFF.md` — current state (HEAD, Constants of Record, validation status,
+    deliverable docs, build/reproduce commands, and the open items for the human author: three figure
+    placeholders to realize, the marginal-vs-within-condition σ² decision, figure legends, author-list
+    expansion, banner removal at finalization). Working tree clean; all pushed to origin/master.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
