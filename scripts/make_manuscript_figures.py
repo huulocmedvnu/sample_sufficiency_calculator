@@ -62,12 +62,12 @@ def fig1_geometry():
             ax.text((v[0] + vh[0]) / 2, -0.42, "along-signal\n(changes length)", color=BLUE, fontsize=7.5, ha="center", va="top")
             ax.text(vh[0] + 0.12, 0.72, "across-signal\n(rotates $\\hat v$)", color=VERM, fontsize=7.5, ha="left", va="center")
         else:
-            ax.text(2.9, 0.55, "jitter cancels;\n$\\hat v$ locks onto $v$", color="#444444", fontsize=8, ha="center")
+            ax.text(2.9, 0.55, "jitter cancels,\n$\\hat v$ locks onto $v$", color="#444444", fontsize=8, ha="center")
         ax.set_title(f"{ttl}  (n = {n})", fontsize=9.5)
         ax.set_xlim(-0.6, 5.2); ax.set_ylim(-1.9, 2.1); ax.set_aspect("equal")
         ax.set_xticks([]); ax.set_yticks([]); ax.grid(False)
         for s in ("left", "bottom"): ax.spines[s].set_visible(False)
-    fig.suptitle("Only noise perpendicular to the effect rotates the estimated direction; "
+    fig.suptitle("Only noise perpendicular to the effect rotates the estimated direction --- "
                  r"the scatter shrinks as $1/\sqrt{n}$", fontsize=9.5, y=1.01)
     save(fig, "fig1_geometry")
 
@@ -90,7 +90,7 @@ def fig2_tahoe_spectrum():
     ax.text(ns.min() * 1.4, ymax * 0.6, f"over-sampled\n{over:.1f}%", color=GREEN, fontsize=8)
     ax.set_xlabel(r"required cells per arm  $n^\star = 9{,}376/m^2$   (log scale)")
     ax.set_ylabel("number of (drug $\\times$ dose $\\times$ line) conditions")
-    ax.set_title(f"Tahoe-100M sufficiency spectrum: median $n^\\star$ = {np.median(ns):,.0f}; "
+    ax.set_title(f"Tahoe-100M sufficiency spectrum: median $n^\\star$ = {np.median(ns):,.0f}, "
                  f"{over:.1f}% over / {under:.1f}% under / {gh:.1f}% ghost", fontsize=9)
     save(fig, "fig2_tahoe_spectrum")
 
@@ -211,7 +211,7 @@ def fig5_trade_validation():
     ax.set_xlim(0, hi); ax.set_ylim(0, hi)
     ax.set_xlabel(r"a-priori slope  $\mathrm{tr}(P\Sigma P)/m^2$")
     ax.set_ylabel("realized downsampling slope")
-    ax.set_title("(a) Parameter-free slope, per knockdown\n(faded = weak/low-SNR; solid = strong)", fontsize=9)
+    ax.set_title("(a) Parameter-free slope, per knockdown\n(faded = weak/low-SNR, solid = strong)", fontsize=9)
     ax.legend(frameon=False, fontsize=7, loc="upper left")
     # (b) showcase downsample curves
     ax = axs[1]
