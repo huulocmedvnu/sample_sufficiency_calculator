@@ -1,0 +1,245 @@
+"""
+Generate the manuscript figures from committed fixtures. Vector PDF (for the paper) + PNG (preview),
+written to figures/. Palette: Okabe-Ito (the field-standard colourblind-safe qualitative set); series also
+carry distinct markers/linestyles and direct labels, so identity is never colour-alone.
+
+  Fig 1  geometry schematic (angular error: along- vs across-signal noise; 1/sqrt(n) shrinkage)
+  Fig 2  Tahoe-100M n* sufficiency spectrum (Phase B)
+  Fig 3  EmeraldBay held-out angular-error validation (Phase C)
+  Fig 4  cross-modality summary: magnitude distributions + OVER/UNDER/Ghost across all datasets (B/E/F)
+  Fig 5  TRADE validated falsification (Phase F): a-priori vs realized slope + showcase downsample curves
+
+Run:  python scripts/make_manuscript_figures.py
+"""
+import os, json, numpy as np, pandas as pd
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+from matplotlib.ticker import LogLocator
+
+FIG = "figures"; FX = "fixtures"; os.makedirs(FIG, exist_ok=True)
+
+# Okabe-Ito
+BLUE, VERM, GREEN, ORANGE, PURPLE, SKY, YELLOW, BLACK, GRAY = (
+    "#0072B2", "#D55E00", "#009E73", "#E69F00", "#CC79A7", "#56B4E9", "#F0E442", "#111111", "#9A9A9A")
+REG = {"OVER": GREEN, "UNDER": ORANGE, "Ghost": VERM}   # ordinal good->bad, always labelled
+
+plt.rcParams.update({
+    "figure.dpi": 140, "savefig.dpi": 300, "font.size": 9, "axes.titlesize": 10,
+    "axes.labelsize": 9, "legend.fontsize": 8, "axes.spines.top": False, "axes.spines.right": False,
+    "axes.grid": True, "grid.color": "#E6E6E6", "grid.linewidth": 0.6, "axes.axisbelow": True,
+    "axes.edgecolor": "#444444", "xtick.color": "#444444", "ytick.color": "#444444",
+    "text.color": BLACK, "axes.labelcolor": BLACK, "figure.facecolor": "white", "savefig.bbox": "tight",
+})
+
+def save(fig, name):
+    for ext in ("pdf", "png"):
+        fig.savefig(f"{FIG}/{name}.{ext}")
+    plt.close(fig); print(f"  wrote {FIG}/{name}.pdf/.png")
+
+
+def fig1_geometry():
+    fig, axs = plt.subplots(1, 2, figsize=(7.6, 3.5))
+    v = np.array([3.2, 0.0]); m = np.linalg.norm(v); u = v / m
+    for ax, n, ttl, draw_decomp in [(axs[0], 12, "few cells", True), (axs[1], 200, "many cells", False)]:
+        rng = np.random.default_rng(3)
+        sd = 3.0 / np.sqrt(n)
+        est = v + rng.normal(0, sd, size=(70, 2))
+        ax.scatter(est[:, 0], est[:, 1], s=10, color=SKY, alpha=0.5, edgecolor="none", zorder=2)
+        ax.annotate("", xy=v, xytext=(0, 0), arrowprops=dict(arrowstyle="-|>", lw=2.6, color=BLACK), zorder=4)
+        ax.text(v[0] * 0.52, -0.22, r"$v$ (true direction)", color=BLACK, fontsize=8.5, ha="center", va="top")
+        if draw_decomp:
+            vh = np.array([3.9, 1.25])                       # one illustrative estimate
+            e = vh - v; along = (e @ u) * u; perp = e - along
+            ax.annotate("", xy=vh, xytext=(0, 0), arrowprops=dict(arrowstyle="-|>", lw=1.4, color=GRAY), zorder=3)
+            ax.annotate("", xy=v + along, xytext=v, arrowprops=dict(arrowstyle="-|>", lw=2.0, color=BLUE), zorder=5)
+            ax.annotate("", xy=vh, xytext=v + along, arrowprops=dict(arrowstyle="-|>", lw=2.0, color=VERM), zorder=5)
+            ax.scatter(*vh, s=32, color=BLACK, zorder=6)
+            ax.text(vh[0] + 0.08, vh[1] + 0.02, r"$\hat v$ (estimate)", fontsize=8.5, va="center")
+            th = np.arctan2(vh[1], vh[0]); arc = np.linspace(0, th, 40); r = 1.5
+            ax.plot(r * np.cos(arc), r * np.sin(arc), color="#666666", lw=1.1, zorder=3)
+            ax.text(1.72, 0.42, r"$\theta$", color="#444444", fontsize=12)
+            ax.text((v[0] + vh[0]) / 2, -0.42, "along-signal\n(changes length)", color=BLUE, fontsize=7.5, ha="center", va="top")
+            ax.text(vh[0] + 0.12, 0.72, "across-signal\n(rotates $\\hat v$)", color=VERM, fontsize=7.5, ha="left", va="center")
+        else:
+            ax.text(2.9, 0.55, "jitter cancels;\n$\\hat v$ locks onto $v$", color="#444444", fontsize=8, ha="center")
+        ax.set_title(f"{ttl}  (n = {n})", fontsize=9.5)
+        ax.set_xlim(-0.6, 5.2); ax.set_ylim(-1.9, 2.1); ax.set_aspect("equal")
+        ax.set_xticks([]); ax.set_yticks([]); ax.grid(False)
+        for s in ("left", "bottom"): ax.spines[s].set_visible(False)
+    fig.suptitle("Only noise perpendicular to the effect rotates the estimated direction; "
+                 r"the scatter shrinks as $1/\sqrt{n}$", fontsize=9.5, y=1.01)
+    save(fig, "fig1_geometry")
+
+
+def fig2_tahoe_spectrum():
+    df = pd.read_csv(f"{FX}/tahoe_quota_per_condition.csv")
+    ns = df["n_star"].values; N0 = 1296; ghost = 50000
+    fig, ax = plt.subplots(figsize=(6.4, 3.6))
+    bins = np.logspace(np.log10(max(ns.min(), 1)), np.log10(ns.max()), 60)
+    ax.hist(ns, bins=bins, color=SKY, edgecolor="white", linewidth=0.3)
+    ax.set_xscale("log")
+    ax.axvline(N0, color=BLACK, lw=1.6, ls="--")
+    ax.axvline(ghost, color=VERM, lw=1.6, ls=":")
+    ymax = ax.get_ylim()[1]
+    ax.text(N0 * 0.92, ymax * 0.92, f"median depth\n$N_0$ = {N0:,}", ha="right", va="top", fontsize=7.5)
+    ax.text(ghost * 1.1, ymax * 0.92, "ghost\nthreshold", ha="left", va="top", fontsize=7.5, color=VERM)
+    reg = df["regime"].value_counts(normalize=True) * 100          # authoritative per-condition regime
+    over = reg.get("OVER", 0.0); gh = reg.get("Ghost", 0.0); under = reg.get("UNDER", 0.0)
+    ax.axvspan(ns.min(), N0, color=GREEN, alpha=0.08)
+    ax.text(ns.min() * 1.4, ymax * 0.6, f"over-sampled\n{over:.1f}%", color=GREEN, fontsize=8)
+    ax.set_xlabel(r"required cells per arm  $n^\star = 9{,}376/m^2$   (log scale)")
+    ax.set_ylabel("number of (drug $\\times$ dose $\\times$ line) conditions")
+    ax.set_title(f"Tahoe-100M sufficiency spectrum: median $n^\\star$ = {np.median(ns):,.0f}; "
+                 f"{over:.1f}% over / {under:.1f}% under / {gh:.1f}% ghost", fontsize=9)
+    save(fig, "fig2_tahoe_spectrum")
+
+
+def fig3_emeraldbay():
+    d = json.load(open(f"{FX}/emeraldbay_calibration.json"))
+    cur = d["heldout_curves"]
+    cols = {"DMSO_T0|HS-578T": BLUE, "DMSO_T0|HEC-1-A": GREEN, "DMSO_T0|BT-474": SKY,
+            "Encorafenib|HEC-1-A": VERM}
+    mk = {"DMSO_T0|HS-578T": "o", "DMSO_T0|HEC-1-A": "s", "DMSO_T0|BT-474": "^", "Encorafenib|HEC-1-A": "D"}
+    fig, ax = plt.subplots(figsize=(6.2, 4.2))
+    for g, c in cols.items():
+        rows = np.array(cur[g]["rows"], dtype=float)   # [n, realized_theta_RMS, predicted_theta_RMS]
+        N = cur[g]["N"]; x = 1.0 / rows[:, 0] - 1.0 / N; y = rows[:, 1] ** 2   # RMS angle -> theta^2
+        slope = cur[g]["slope"]; exp = cur[g]["expected_slope"]; r2 = cur[g]["r2"]
+        lab = g.replace("|", " x ")
+        drug = "drug" if g.startswith("Enco") else "vehicle"
+        ax.scatter(x, y, s=26, color=c, marker=mk[g], edgecolor="white", linewidth=0.4, zorder=3,
+                   label=f"{lab} ({drug}, m={cur[g]['m']:.1f}): slope {slope:.2f} vs {exp:.2f}, $R^2$={r2:.4f}")
+        xs = np.linspace(0, x.max(), 20); ax.plot(xs, exp * xs, color=c, lw=1.3, alpha=0.8)
+    ax.set_xlabel(r"$1/n - 1/N$  (finite-population sampling axis)")
+    ax.set_ylabel(r"realized mean squared angular error  $\theta^2(n)$")
+    ax.set_title("EmeraldBay held-out validation: realized $\\theta^2$ vs the parameter-free\n"
+                 r"prediction $\mathrm{tr}(P\Sigma P)/m^2\cdot(1/n-1/N)$ (lines), no fitted parameter", fontsize=9)
+    ax.legend(loc="upper left", frameon=False, fontsize=6.6)
+    save(fig, "fig3_emeraldbay_validation")
+
+
+def _regime_counts(df, col_ns, col_dep, ghost=50000):
+    ns = df[col_ns].values; dep = df[col_dep].values
+    over = (ns < dep).mean() * 100; gh = (ns > ghost).mean() * 100
+    return over, 100 - over - gh, gh
+
+
+def fig4_crossmodality():
+    tahoe = pd.read_csv(f"{FX}/tahoe_quota_per_condition.csv")
+    hct = pd.read_csv(f"{FX}/orion_HCT116_quota.csv"); hek = pd.read_csv(f"{FX}/orion_HEK293T_quota.csv")
+    jur = pd.read_csv(f"{FX}/trade_jurkat_quota.csv"); hep = pd.read_csv(f"{FX}/trade_hepg2_quota.csv")
+    sets = [("Tahoe (chem)", tahoe, BLUE, "-"), ("Orion HCT116", hct, GREEN, "--"),
+            ("Orion HEK293T", hek, ORANGE, "--"), ("TRADE Jurkat", jur, VERM, "-."),
+            ("TRADE HepG2", hep, PURPLE, "-.")]
+    fig, axs = plt.subplots(1, 2, figsize=(9.2, 3.8))
+    # (a) magnitude distributions
+    ax = axs[0]
+    bins = np.logspace(np.log10(0.03), np.log10(20), 55)
+    for name, df, c, ls in sets:
+        m = df["m"].values; m = m[m > 0]
+        h, edg = np.histogram(m, bins=bins, density=True)
+        xc = np.sqrt(edg[:-1] * edg[1:])
+        ax.plot(xc, h, color=c, ls=ls, lw=1.8, label=f"{name} (med {np.median(m):.2f})")
+        ax.axvline(np.median(m), color=c, lw=0.8, alpha=0.5)
+    ax.set_xscale("log"); ax.set_xlabel(r"effect magnitude  $m$  (log scale)")
+    ax.set_ylabel("density"); ax.set_title("(a) Magnitude distributions by dataset", fontsize=9)
+    ax.legend(frameon=False, fontsize=6.8, loc="upper right")
+    # (b) OVER/UNDER/Ghost stacked bars
+    ax = axs[1]
+    rows = [("Tahoe", *_regime_counts(tahoe, "n_star", "N0")),
+            ("Orion\nHCT116", *_regime_counts(hct, "n_star_aniso", "n_cells")),
+            ("Orion\nHEK293T", *_regime_counts(hek, "n_star_aniso", "n_cells")),
+            ("TRADE\nJurkat", *_regime_counts(jur, "n_star_aniso", "n_cells")),
+            ("TRADE\nHepG2", *_regime_counts(hep, "n_star_aniso", "n_cells"))]
+    labels = [r[0] for r in rows]; ov = np.array([r[1] for r in rows]); un = np.array([r[2] for r in rows]); gh = np.array([r[3] for r in rows])
+    x = np.arange(len(rows))
+    ax.bar(x, ov, color=REG["OVER"], label="OVER (resolvable)", edgecolor="white", linewidth=1.2)
+    ax.bar(x, un, bottom=ov, color=REG["UNDER"], label="UNDER", edgecolor="white", linewidth=1.2)
+    ax.bar(x, gh, bottom=ov + un, color=REG["Ghost"], label="Ghost (n*>50k)", edgecolor="white", linewidth=1.2)
+    for i, (o, gv) in enumerate(zip(ov, gh)):
+        ax.text(i, 101.5, f"{o:.1f}% over", ha="center", va="bottom", fontsize=6.8, color=GREEN)
+        if gv > 6:
+            ax.text(i, 100 - gv / 2, f"{gv:.0f}%", ha="center", va="center", fontsize=7, color="white")
+    ax.set_xticks(x); ax.set_xticklabels(labels, fontsize=7.5)
+    ax.set_ylabel("% of perturbations"); ax.set_ylim(0, 108); ax.grid(axis="x", visible=False)
+    ax.set_title(r"(b) Sufficiency regime ($\theta_\star$=0.1 rad)", fontsize=9)
+    ax.legend(frameon=True, facecolor="white", edgecolor="none", framealpha=0.9,
+              fontsize=7, loc="upper left", bbox_to_anchor=(1.01, 1.0))
+    fig.suptitle("Across chemical and genetic modalities: essentially nothing over-sampled once magnitudes are small "
+                 "or depth is low", fontsize=9.5, y=1.02)
+    save(fig, "fig4_crossmodality_summary")
+
+
+def _showcase_curves(line, genes, reps=200, seed=0):
+    b = np.load(f"/mnt/hdd2/loc-tran/trade_work/out/{line}/basis.npz", allow_pickle=True)
+    coords = b["coords"].astype(np.float64); gene = b["gene"].astype(str); Sig = b["Sigma"]; ntc = str(b["ntc_label"])
+    trSig = float(np.trace(Sig)); rng = np.random.default_rng(seed)
+    idx = {g: np.where(gene == g)[0] for g in set(list(genes) + [ntc])}
+    mu_ntc = coords[idx[ntc]].mean(0); n_ntc = idx[ntc].size
+    out = []
+    for g in genes:
+        ii = idx[g]; N = ii.size; C = coords[ii]; muN = C.mean(0)
+        v = muN - mu_ntc; m_raw = np.linalg.norm(v); u = v / m_raw
+        trPSP = float(trSig - u @ Sig @ u); m2 = max(m_raw**2 - trSig*(1/N+1/n_ntc), 1e-6)
+        grid = np.unique(np.geomspace(20, max(21, N // 2), 8).astype(int)); grid = grid[grid < N]
+        xs, ys = [], []
+        for n in grid:
+            a = np.empty(reps)
+            for r in range(reps):
+                mu = coords[ii[rng.choice(N, n, replace=False)]].mean(0)
+                w = mu - mu_ntc; nw = np.linalg.norm(w)
+                a[r] = np.arccos(np.clip((w/nw) @ u, -1, 1))**2 if nw else 0
+            xs.append(1/n - 1/N); ys.append(a.mean())
+        out.append(dict(g=g, N=N, m=np.sqrt(m2), x=np.array(xs), y=np.array(ys), pred=trPSP/m2))
+    return out
+
+
+def fig5_trade_validation():
+    fig, axs = plt.subplots(1, 2, figsize=(9.2, 4.0))
+    # (a) a-priori vs realized slope scatter, both lines
+    ax = axs[0]
+    for line, c, mk in [("jurkat", VERM, "o"), ("hepg2", PURPLE, "s")]:
+        R = json.load(open(f"{FX}/trade_{line}_falsification.json"))["rows"]
+        pred = np.array([r["pred_slope"] for r in R]); fit = np.array([r["fit_slope"] for r in R])
+        strong = np.array([r["m"] > 4 for r in R])
+        ax.scatter(pred[~strong], fit[~strong], s=10, color=c, alpha=0.20, edgecolor="none")
+        ax.scatter(pred[strong], fit[strong], s=26, color=c, marker=mk, edgecolor="white", linewidth=0.4,
+                   label=f"{line.capitalize()} (strong m>4: ratio {np.median(fit[strong]/pred[strong]):.2f})")
+    lim = ax.get_xlim(); hi = min(lim[1], 30)
+    ax.plot([0, hi], [0, hi], color=BLACK, lw=1.2, ls="--", label="a-priori = realized")
+    ax.set_xlim(0, hi); ax.set_ylim(0, hi)
+    ax.set_xlabel(r"a-priori slope  $\mathrm{tr}(P\Sigma P)/m^2$")
+    ax.set_ylabel("realized downsampling slope")
+    ax.set_title("(a) Parameter-free slope, per knockdown\n(faded = weak/low-SNR; solid = strong)", fontsize=9)
+    ax.legend(frameon=False, fontsize=7, loc="upper left")
+    # (b) showcase downsample curves
+    ax = axs[1]
+    show = {"jurkat": ["EXOSC4", "RPS27A", "RPS13"], "hepg2": ["RPL23", "PSMA4", "PDCD11"]}
+    cmap = {"jurkat": VERM, "hepg2": PURPLE}; mks = ["o", "s", "^"]
+    for line in ("jurkat", "hepg2"):
+        try:
+            curves = _showcase_curves(line, show[line])
+        except Exception as e:
+            print(f"  (skip {line} curves: {e})"); continue
+        for k, cu in enumerate(curves):
+            ax.scatter(cu["x"], cu["y"], s=22, color=cmap[line], marker=mks[k], edgecolor="white",
+                       linewidth=0.3, zorder=3,
+                       label=f"{line[:3].capitalize()} {cu['g']} (m={cu['m']:.1f})")
+            xs = np.linspace(0, cu["x"].max(), 20); ax.plot(xs, cu["pred"] * xs, color=cmap[line], lw=1.0, alpha=0.7)
+    ax.set_xlabel(r"$1/n - 1/N$"); ax.set_ylabel(r"realized  $\theta^2(n)$")
+    ax.set_title("(b) Held-out downsampling: strong essential genes\n(lines = a-priori prediction)", fontsize=9)
+    ax.legend(frameon=False, fontsize=6.4, loc="upper left", ncol=2)
+    fig.suptitle("TRADE Phase F: the angular-error law validated directly in the genetic modality "
+                 "(strong-knockdown slope 0.96-1.02, $R^2$=0.996)", fontsize=9.5, y=1.02)
+    save(fig, "fig5_trade_validation")
+
+
+if __name__ == "__main__":
+    print("Generating manuscript figures from fixtures ->", FIG)
+    fig1_geometry()
+    fig2_tahoe_spectrum()
+    fig3_emeraldbay()
+    fig4_crossmodality()
+    fig5_trade_validation()
+    print("done.")

@@ -28,6 +28,9 @@ deepseek.env
 
 # Built manuscript PDF (reproducible via pandoc)
 *.pdf
+# ...but the manuscript figures ARE tracked (the paper embeds them; regenerate via
+# scripts/make_manuscript_figures.py from committed fixtures).
+!figures/*.pdf
 
 # Lean / Mathlib build artifacts (multi-GB; regenerated via `lake exe cache get` + `lake build`).
 # lake-manifest.json IS committed (pins the exact Mathlib revision for reproducibility).
