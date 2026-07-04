@@ -129,10 +129,15 @@ def fig4_crossmodality():
     tahoe = pd.read_csv(f"{FX}/tahoe_quota_per_condition.csv")
     hct = pd.read_csv(f"{FX}/orion_HCT116_quota.csv"); hek = pd.read_csv(f"{FX}/orion_HEK293T_quota.csv")
     jur = pd.read_csv(f"{FX}/trade_jurkat_quota.csv"); hep = pd.read_csv(f"{FX}/trade_hepg2_quota.csv")
-    sets = [("Tahoe (chem)", tahoe, BLUE, "-"), ("Orion HCT116", hct, GREEN, "--"),
-            ("Orion HEK293T", hek, ORANGE, "--"), ("TRADE Jurkat", jur, VERM, "-."),
-            ("TRADE HepG2", hep, PURPLE, "-.")]
-    fig, axs = plt.subplots(1, 2, figsize=(9.2, 3.8))
+    # EmeraldBay: per-group m, N, and slope from the population-scale test (per-line-mean baseline)
+    ebrows = json.load(open(f"{FX}/emeraldbay_falsification_full.json"))["per_group_slope"]
+    eb_m = np.array([r["m"] for r in ebrows]); eb_N = np.array([r["N"] for r in ebrows])
+    eb_nstar = 2.0 * np.array([r["pred_slope"] for r in ebrows]) / 0.1 ** 2   # equal-arm quota at theta=0.1
+    emb = pd.DataFrame({"m": eb_m}); emb_reg = pd.DataFrame({"n_star": eb_nstar, "n_cells": eb_N})
+    sets = [("Tahoe (chem)", tahoe, BLUE, "-"), ("EmeraldBay (chem)", emb, SKY, "-"),
+            ("Orion HCT116", hct, GREEN, "--"), ("Orion HEK293T", hek, ORANGE, "--"),
+            ("TRADE Jurkat", jur, VERM, "-."), ("TRADE HepG2", hep, PURPLE, "-.")]
+    fig, axs = plt.subplots(1, 2, figsize=(9.8, 3.8))
     # (a) magnitude distributions
     ax = axs[0]
     bins = np.logspace(np.log10(0.03), np.log10(20), 55)
@@ -148,6 +153,7 @@ def fig4_crossmodality():
     # (b) OVER/UNDER/Ghost stacked bars
     ax = axs[1]
     rows = [("Tahoe", *_regime_counts(tahoe, "n_star", "N0")),
+            ("Emerald\nBay", *_regime_counts(emb_reg, "n_star", "n_cells")),
             ("Orion\nHCT116", *_regime_counts(hct, "n_star_aniso", "n_cells")),
             ("Orion\nHEK293T", *_regime_counts(hek, "n_star_aniso", "n_cells")),
             ("TRADE\nJurkat", *_regime_counts(jur, "n_star_aniso", "n_cells")),
