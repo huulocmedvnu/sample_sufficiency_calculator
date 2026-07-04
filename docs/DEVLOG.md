@@ -428,6 +428,61 @@ scripts/verify_references.py` (32/32 DOIs).
     falsification}`. Rebuilt PDF (23 pp) / DOCX. Honest: σ² transfer looser here; QC low-UMI filter near-vacuous
     in the deposited h5ad (mito is binding).
 
+36. **Manuscript figures generated from fixtures + embedded** (`427b306`). `scripts/make_manuscript_figures.py`
+    builds five vector figures (PDF + PNG) from committed fixtures, Okabe-Ito colourblind-safe palette:
+    F1 geometry schematic, F2 Tahoe n★ spectrum, F3 EmeraldBay held-out validation, F4 cross-modality summary
+    (magnitude distributions + regime bars), F5 TRADE falsification. Replaced the three manuscript placeholders
+    with real vector figures and added F4/F5. Caught a units bug (F3 fixture stores θ_RMS, squared to θ²) and a
+    regime-% source (F2 now reads the per-condition `regime` column = 10.6/89.0/0.4). `figures/*.pdf` tracked via
+    a `.gitignore` exception. PDF -> 25 pp.
+
+37. **Read the four source papers; rebuilt Discussion into the standard five-part structure** (`6181288`,
+    `4b08906`). Author added tahoe.pdf / Orion.pdf / nadig.pdf (+ EmeraldBay = same Vevo platform, 5-day).
+    Discussion reorganized into Summary of key findings / Interpretation and explanation / Comparison with
+    previous studies / Implications / Limitations and recommendations. Added the mechanistic "why" grounded in
+    TRADE's effect-size distribution (typical genome-wide KD affects ~45 genes vs essential 500+; response-vs-
+    experiment separation; GATA1-vs-EIF4A3 = our m bias-correction). NOTE: the reorganization script had a bug
+    that silently dropped the two continuation lines of the "design rule" paragraph -- fixed in phase 41.
+
+38. **Results restructured per the Results-section guideline** (`967a19b`). Author supplied an SJSU Writing-
+    Center handout: Results should state facts (not interpret), open with an intro tied to the research question,
+    close with a summary. Added the intro + a "Summary of findings" closing paragraph, and moved interpretation
+    from the six analyses into the Discussion (kept every number/table/figure/citation).
+
+39. **Completed the Methods Datasets section + fixed EmeraldBay platform framing** (`e3dec22`, `468de60`,
+    `849d332`). Cross-checked all dataset numbers against the source papers (Tahoe "379 distinct drugs" verbatim;
+    Orion 18,903 genes; TRADE 2,393 essential). Added **X-Atlas/Orion** and **TRADE** dataset paragraphs to
+    Methods. **EmeraldBay is the same Vevo Mosaic platform as Tahoe (5-day, not a different platform)** -- reframed
+    every "cross-platform" claim for Tahoe<->EmeraldBay as "across timepoints on the same platform", reserving
+    cross-platform/cross-modality for the genetic atlases. Fixed stale integration-test numbers (four groups
+    0.6/1.2/1.2/2.9%), an inaccurate "eight cell lines", an unexplained "(15,200 groups)", the overloaded "five
+    datasets", TRADE depth 45->48, and added in-text Figure 1-5 callouts.
+
+40. **Style pass: no semicolons, no "Phase A/B/C" scheme** (`33ff02b`). Per author direction: (i) removed all
+    117 prose semicolons (comma before a coordinating conjunction, else period), keeping the 36 required pandoc
+    `[@a; @b]` citation separators and fixing 4 semicolons baked into figure text; (ii) renamed the six Results
+    section headers to descriptive titles and rewrote ~30 in-text "Phase X"/"Phases E--F" cross-references as
+    descriptive pointers ("the sample-sufficiency spectrum", "the out-of-distribution validation", "the genetic
+    atlases below", etc.). **The manuscript no longer uses "Phase A-F" labels** -- DEVLOG entries above keep them
+    only as historical shorthand for the six analyses. Caught a bug where the semicolon pass corrupted LaTeX `\;`
+    thin-space commands (`\;=\;` -> `\.` = U+0307 dot accent) and broke the tectonic build; restored the estimator
+    equation.
+
+41. **EmeraldBay added to Figure 4; Discussion de-bolded + lost content restored** (`d9c519b`, `76efbe9`). Added
+    EmeraldBay to Figure 4 (a second chemical dataset was missing) using its 1,064 per-group m/N from
+    `emeraldbay_falsification_full.json` (median m 0.71 per-line-mean baseline; regime 4.3/80.0/15.7 at θ=0.1).
+    Per author direction, removed the 19 bold paragraph-lead "titles" from the Discussion so it reads as flowing
+    prose (kept the five section headers and the numbered limitations list). While verifying, found the phase-37
+    restructure bug had dropped the "design rule" paragraph's tail-bound confidence-quota equation (n★_δ) and its
+    three use points -- restored from commit 6181288, semicolon-free. Final state: 0 "Phase" labels, 0 visible
+    semicolons, 0 unresolved citations, Tables 1-7 + Figures 1-5 all referenced, PDF 28 pp.
+
+    **Known open item (author decision pending):** Figure 4(b) shows EmeraldBay's θ=0.1 regime (4.3% over), a
+    number not narrated in the text, while the text gives its gating at θ=0.20 (5.5% over) -- different tolerance,
+    not contradictory, but two "% over" figures now coexist. Also a style choice left open: Methods/Results still
+    use ~11 bold run-in paragraph headings (e.g. "Pipeline topology.", "Regime-gating accuracy.") whereas the
+    Discussion no longer does.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
