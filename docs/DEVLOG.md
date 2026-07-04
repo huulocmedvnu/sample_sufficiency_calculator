@@ -500,6 +500,17 @@ scripts/verify_references.py` (32/32 DOIs).
     slopes (9.67/11.17) in the body -- not in SUPPLEMENT; the Discussion claims decision-robustness, not low-SNR
     quota-accuracy, keeping the ghost/unresolvable framing intact.
 
+43. **Normalizer fix: directory paths kept as code, not math.** A rendering glitch surfaced during the
+    phase-42 PDF verification -- inline paths `scripts/tahoe_recompute/` and `scripts/emeraldbay_recompute/`
+    typeset with the `_r` as a subscript ("tahoe_r ecompute"). Root cause was in `scripts/normalize_manuscript.py`,
+    not the manuscript: its `CODE_RE` keeps a backtick span as `code` only if it matches a known pattern
+    (file extensions, Lean names, ...), else converts it to `$...$` math. Directory paths (trailing slash, no
+    extension) matched nothing, so the underscore entered math mode. Added `(scripts|fixtures|docs|agents|src|
+    tests|lean)/` to `CODE_RE`. Scanned the normalized output for all mathified code identifiers -- exactly the
+    two directory paths, both now render as monospace with literal underscores. `manuscript.md` diff is 2 lines
+    (`$...$`->`` `...` ``); numeric-token and citation hashes byte-identical to HEAD (0 drift). PDF/DOCX rebuilt,
+    29 pp. Source `MANUSCRIPT_DEEPSEEK.md` was already correct (backticks); only the normalizer was patched.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
