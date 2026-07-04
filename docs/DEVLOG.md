@@ -511,6 +511,24 @@ scripts/verify_references.py` (32/32 DOIs).
     (`$...$`->`` `...` ``); numeric-token and citation hashes byte-identical to HEAD (0 drift). PDF/DOCX rebuilt,
     29 pp. Source `MANUSCRIPT_DEEPSEEK.md` was already correct (backticks); only the normalizer was patched.
 
+44. **Methods restructured for biologist readers (two-layer): heavy derivations relocated to Supplementary
+    Notes S1/S2.** Per author direction (audience = biologists, not mathematicians; keep rigor). The two densest
+    Methods subsections were lightened in the main text and their derivations moved -- not deleted -- to a new
+    `# Supplementary information` section placed after Data availability, before References. (i) **Delta-method
+    subsection:** rewrote the intro around a plain-language lever-arm intuition (sideways jitter / effect length),
+    kept the key formulas (`E[θ²]`, isotropic reduction) for quantitative reviewers, and replaced the ~250-word
+    second-order paragraph with a one-sentence pointer to S1. (ii) **Distribution/tail-control subsection:**
+    replaced the whole chi-square + Laurent-Massart + confidence-quota block (~35 lines) with a 6-line "Beyond the
+    average error: a confidence quota" paragraph pointing to S2. (iii) **New S1** (Jacobian, tangent space, exact
+    `tanθ` geometry, second-order correction -- source of the 13% deficit) and **S2** (generalized chi-square,
+    `d_eff`, Laurent-Massart/Hanson-Wright, `n★_δ`, caveat) carry the relocated text verbatim. **Audit vs HEAD:**
+    citation keys 54->54 (identical), table rows 69->69, every scientific number preserved. Two intentional
+    numeric-token deltas: `@mardia2000directional` de-duplicated (doubled cite 2->1, key still present) and the
+    relocated confidence quota's `\tag{5}`/`eq. (5)` dropped (now untagged in S2). 0 unresolved citations, 0 prose
+    semicolons. Rebuilt PDF (29 pp) and DOCX; visually verified the lightened Methods (pp 4-5) and S1/S2 (pp 24-26)
+    render correctly with proper math typesetting and correct S1-before-S2 ordering. Rigor is unchanged -- proofs
+    relocated, not removed, and still backed by `docs/THEORY.md` + the Lean core.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
