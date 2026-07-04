@@ -119,7 +119,7 @@ scripts/verify_references.py` (32/32 DOIs).
     (tahoebio/EmeraldBay, 1.83M cells, 116 shards, 57.7 GB) from the raw counts with the same recipe
     (`scripts/emeraldbay_recompute/`, parallel-prefetch stream). **Scope (exact):** the HVG(2000)+PCA(50)
     embedding and the within-condition σ² ≈ 0.963 are computed over the **full atlas** (all 52 lines,
-    1,831,648 cells, 4,912 condition-line groups); the held-out per-cell validation is
+    1,831,648 cells, 4,992 condition-line groups); the held-out per-cell validation is
     restricted to the 5 shared lines (141,720 cells; 5-line σ²=0.896). Regime gating classifies all 52 lines from the per-condition moments (3,971 groups, 217 OVER = 5.5%); the downsample-and-measure accuracy check (10/10 met) is on the shared 5. **Held-out angular-error curves** (subsample n cells,
     realized RMS angle vs the closed form θ²(n)=tr(PΣP)/m²·(1/n−1/N)): all four (condition×line) groups
     give R² > 0.996; the strong DMSO_T0×HS-578T (m=6.46) matches the predicted slope to 0.2%, while the

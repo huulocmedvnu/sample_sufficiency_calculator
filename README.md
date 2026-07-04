@@ -396,7 +396,7 @@ Provided as-is; validate `sigma^2` on your own platform before planning a screen
 | Reference atlas | Total cells (global) | Unique perturbagens | Unique cell lines | Wells (line × condition) |
 |---|---:|---:|---:|---:|
 | **Tahoe-100M** | ~100,000,000 | 379 | 50 | ~56,850 |
-| **EmeraldBay** | ~1,831,756 | 27 molecules (93 conditions) | 52 | 4,992 |
+| **EmeraldBay** | ~1,831,648 | 27 molecules (93 conditions) | 52 | 4,992 |
 
 ### B. Per-well cell-count distribution (CAPTURED data only)
 

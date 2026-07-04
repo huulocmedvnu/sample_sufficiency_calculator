@@ -26,7 +26,7 @@ validity criterion (\(\rho^2\ge 3\)) rather than lumping in- and out-of-regime c
 | atlas | cells projected | conditions | tested (≥ cells) | m range |
 |:--|--:|--:|--:|:--|
 | **Tahoe-100M** (all 3,388 shards, re-streamed from raw) | 95,624,334 | 67,018 (sample × line) | 56,195 (≥ 400) | 0.25 – 13.0 |
-| **EmeraldBay** (all 116 shards, 52 lines) | 1,831,648 | 4,912 (condition × line) | 1,064 (≥ 300) | 0.17 – 9.8 |
+| **EmeraldBay** (all 116 shards, 52 lines) | 1,831,648 | 4,992 (condition × line) | 1,064 (≥ 300) | 0.17 – 9.8 |
 
 Every cell was projected through the *same* calibrated PCA(50) basis used for the manuscript's constants;
 no basis was refit. Baseline is the per-line mean (near-noiseless large pool), chosen so the test is
