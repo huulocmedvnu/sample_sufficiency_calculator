@@ -483,6 +483,23 @@ scripts/verify_references.py` (32/32 DOIs).
     use ~11 bold run-in paragraph headings (e.g. "Pipeline topology.", "Regime-gating accuracy.") whereas the
     Discussion no longer does.
 
+42. **First-order-limit / second-order-deficit passages elevated in three sections.** Following a geometric
+    stress-test of the Delta expansion, added formal treatment of the first-order approximation boundary so the
+    ~13% low-SNR slope deficit reads as a forecast, not a flaw. (i) **Methods:** new validity-regime paragraph
+    closing the Delta subsection -- exact geometry `tanθ = ‖Pe‖/(m+uᵀe)`, the along-signal `uᵀe` as a fluctuating
+    lever arm, the `Dg(v)=P/m` annihilation of parallel noise, regime `ρ²≫1`, and the emergent convexity coupling
+    `+3‖Pe‖²(uᵀe)²/m⁴` plus arc term `−⅔‖Pe‖⁴/m⁴`. (ii) **Results:** kept the Encorafenib sentence verbatim and
+    appended the deterministic-curvature explanation -- `(1/n−1/N)²` concavity, "slope shift not loss of fit"
+    (R²>0.996), sign+`1/ρ²`-growth as theory-specified. (iii) **Discussion:** new robustness paragraph -- a
+    percentage-level quota error cannot flip the OVER/UNDER decision (4.5-fold median gap, boundary m=2.69), the
+    low-SNR error lands on already-under-sampled conditions, gated OVER conditions sit at high SNR (<1% correction),
+    confirmed by 5,503/5,503 and 217/217 gating. De-duplicated the `tanθ` equation from the confidence-quota caveat
+    (now cross-references the Methods derivation). **Audit vs HEAD:** citation keys 54→54 (0 added/removed), table
+    rows 69→69, 0 numeric tokens dropped, 0 new unsourced numbers (every figure reused), 0 unresolved citations in
+    the rebuilt PDF, 0 prose semicolons. PDF 28→29 pp; DOCX rebuilt. Deliberately did NOT put the raw Table-3
+    slopes (9.67/11.17) in the body -- not in SUPPLEMENT; the Discussion claims decision-robustness, not low-SNR
+    quota-accuracy, keeping the ghost/unresolvable framing intact.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
