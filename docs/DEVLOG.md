@@ -408,6 +408,26 @@ scripts/verify_references.py` (32/32 DOIs).
     a dedicated Orion downsample-falsification (genetic Phase C) is the next step, and weak-majority magnitudes
     (median ~155–204 cells) are order-of-magnitude near the sampling floor.
 
+35. **Validated essential-gene extension (TRADE; manuscript Phase F).** Extended to a third source/regime: the
+    TRADE essential-gene CRISPRi screens (Nadig/Replogle/Weissman, Nat Genet 2025; GEO **GSE264667**),
+    Jurkat-Essential + HepG2-Essential (2,393 DepMap common-essential genes/line, dual-sgRNA, pooled NTC). Unlike
+    the 1e8-cell Orion streams, these are ~2.5e5 cells/line → load in RAM, per-cell coords retained → the
+    parameter-free **downsample-and-measure falsification runs directly** (the genetic Phase C Orion couldn't do).
+    Built `scripts/trade_recompute/` (pass0 GEO download; pass1 QC+global-embedding+full-50×50-Σ+quota; pass2
+    falsification; driver) + `docs/TRADE_EXTENSION_PLAN.md`. Topology-faithful; QC per TRADE (low-UMI frac×median
+    0.14/0.18, mito_UMI>1750/3000, single-or-dual-same-gene guides). **Results:** σ²_within 1.50 (Jurkat) / 1.87
+    (HepG2) — higher than the ~1.0 band (strong perturbations flatten PCA spectrum); large-NTC-pool constant
+    7,338 / 9,147 per m² (≈9,000 band). median m 1.84 / 2.25 (essential genes STRONG); spectrum 0.2/85.5/14.3 and
+    0.6/81.1/18.2 % OVER/UNDER/Ghost; median deficit 48× / 70×; **depth-limited, not magnitude-limited** (median
+    48–85 cells/gene). **Falsification (headline):** strong-knockdown (m>4) a-priori vs realized slope ratio
+    **1.02 / 0.96 at R²=0.996**, parameter-free, with predicted low-SNR breakdown (Spearman 0.92/0.79) — first
+    end-to-end *validated* gene-perturbation result. Biology recovered per line (Jurkat: RNA exosome EXOSC2-9,
+    splicing, Mediator; HepG2: EIF*/PSM*/RPL*). Added manuscript **Results Phase F + Table 7** (+ Abstract, Key
+    Point, Discussion, Limitations 11, Data availability GSE264667), SUPPLEMENT §2c + honesty 11–12, README,
+    citation `nadig2025trade` (Crossref-verified; 50/50 DOIs). Fixtures `trade_{jurkat,hepg2}_{quota,summary,
+    falsification}`. Rebuilt PDF (23 pp) / DOCX. Honest: σ² transfer looser here; QC low-UMI filter near-vacuous
+    in the deposited h5ad (mito is binding).
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one

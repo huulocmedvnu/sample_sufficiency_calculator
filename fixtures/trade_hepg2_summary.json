@@ -1,0 +1,116 @@
+{
+ "line": "hepg2",
+ "theta": 0.1,
+ "qc": {
+  "umi_frac": 0.18,
+  "mito_umi_max": 3000.0
+ },
+ "ntc_label": "non-targeting",
+ "n_cells_qc": 129772,
+ "n_cells_raw": 145473,
+ "qc_pass_frac": 0.8921,
+ "n_knockdowns_scored": 1883,
+ "n_ntc_cells": 4380,
+ "sigma2_within": 1.8667,
+ "sigma2_marginal": 2.1777,
+ "quota_const_iso": 18293.6,
+ "quota_const_iso_largepool": 9146.8,
+ "m_median": 2.249,
+ "m_p90": 8.021,
+ "m_max": 15.306,
+ "n_star_median": 3346,
+ "pct_over": 0.6,
+ "pct_under": 81.1,
+ "pct_ghost": 18.2,
+ "pct_detectable": 60.9,
+ "detectable_pct_over": 1.0,
+ "median_deficit_x": 70.3,
+ "aniso_iso_ratio_median": 0.931,
+ "median_N0": 48,
+ "top_strong": [
+  {
+   "gene_target": "EIF2S1",
+   "m": 15.305847475897515,
+   "n_star_aniso": 72.86911235488033,
+   "n_cells": 77,
+   "regime": "OVER"
+  },
+  {
+   "gene_target": "HSPA9",
+   "m": 14.003153538725254,
+   "n_star_aniso": 86.44897367044881,
+   "n_cells": 104,
+   "regime": "OVER"
+  },
+  {
+   "gene_target": "EIF2S3",
+   "m": 13.931190283606137,
+   "n_star_aniso": 87.96733922532528,
+   "n_cells": 52,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "PSMB5",
+   "m": 13.498980554114928,
+   "n_star_aniso": 95.06592916461528,
+   "n_cells": 119,
+   "regime": "OVER"
+  },
+  {
+   "gene_target": "PSMC5",
+   "m": 13.400873073579303,
+   "n_star_aniso": 96.28609188697033,
+   "n_cells": 116,
+   "regime": "OVER"
+  },
+  {
+   "gene_target": "RPL23A",
+   "m": 12.656163558264025,
+   "n_star_aniso": 105.39466384306117,
+   "n_cells": 67,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "EIF2B3",
+   "m": 12.621119979114527,
+   "n_star_aniso": 106.77240537189562,
+   "n_cells": 74,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "PSMC4",
+   "m": 12.554010867483711,
+   "n_star_aniso": 107.58037912522109,
+   "n_cells": 62,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "RPL36",
+   "m": 12.512526608544647,
+   "n_star_aniso": 107.76852004234051,
+   "n_cells": 86,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "RPL14",
+   "m": 12.336391604085673,
+   "n_star_aniso": 111.13944379825037,
+   "n_cells": 58,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "PSMB2",
+   "m": 12.274005387953254,
+   "n_star_aniso": 113.45248501582802,
+   "n_cells": 66,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "EIF3I",
+   "m": 12.19570240631476,
+   "n_star_aniso": 112.76260160116806,
+   "n_cells": 88,
+   "regime": "UNDER"
+  }
+ ]
+}

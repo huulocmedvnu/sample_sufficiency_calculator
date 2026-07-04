@@ -210,7 +210,25 @@ pooled **Non-Targeting** centroid, `m = ‖μ_knockdown − μ_NTC‖`. Findings
   ~0.93 elsewhere): its noise is single-axis-dominated, the regime `docs/THEORY.md` §8 predicts.
 
 This is an *application* of the proven framework with a transferred calibration (Phase E of the manuscript), not
-an independent re-proof; a dedicated Orion downsample-falsification is the next step.
+an independent re-proof; the direct falsification is supplied on the essential-gene screens below.
+
+## Validated essential-gene extension (TRADE) — `docs/TRADE_EXTENSION_PLAN.md`
+
+The Orion streaming run could apply the quota but not re-run the held-out falsification (only summary stats are
+kept). We close that on the **TRADE** essential-gene CRISPRi screens (Nadig et al., *Nat Genet* 2025; GEO
+**GSE264667**) — **Jurkat-Essential** and **HepG2-Essential**, 2,393 DepMap common-essential genes/line. At
+~2.5e5 cells/line these load in RAM, so per-cell coordinates are kept and the parameter-free downsample-and-measure
+test runs directly (`scripts/trade_recompute/`, `fixtures/trade_*`):
+
+- **First *validated* gene-perturbation result.** For strong knockdowns the a-priori slope `tr(PΣP)/m²` matches the
+  realized downsampling slope at **1.02 (Jurkat) / 0.96 (HepG2), R²=0.996**, no fitted parameter — as tight as the
+  chemical Phase C — with the predicted low-SNR breakdown (Spearman 0.92 / 0.79).
+- **A new, inverted regime.** Essential-gene knockdowns are *strong* (median m 1.8–2.2, above Tahoe's 1.27) but
+  *shallowly sampled* (median 48–85 cells/gene). So 61–71% are detectable, yet still only 0.2–0.6% are over-sampled
+  and 14–18% ghost: the binding constraint flips from magnitude (Orion) to **depth**.
+- **Biology per line.** Strongest knockdowns are the RNA exosome (EXOSC2–9)/splicing/Mediator in Jurkat, and
+  translation/proteasome/ribosome (EIF2S1, PSMB5, RPL\*) in HepG2. σ² here is higher (1.5–1.9; the large-NTC-pool
+  quota constant 7.3k–9.1k/m² returns to the ~9,000 band) — noted as a looser transfer than the other datasets.
 
 ## The dual-sided framework: one threshold, two ledgers
 

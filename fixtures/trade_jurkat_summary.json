@@ -1,0 +1,116 @@
+{
+ "line": "jurkat",
+ "theta": 0.1,
+ "qc": {
+  "umi_frac": 0.14,
+  "mito_umi_max": 1750.0
+ },
+ "ntc_label": "non-targeting",
+ "n_cells_qc": 252896,
+ "n_cells_raw": 262956,
+ "qc_pass_frac": 0.9617,
+ "n_knockdowns_scored": 2187,
+ "n_ntc_cells": 11514,
+ "sigma2_within": 1.4975,
+ "sigma2_marginal": 1.6148,
+ "quota_const_iso": 14675.7,
+ "quota_const_iso_largepool": 7337.8,
+ "m_median": 1.841,
+ "m_p90": 4.715,
+ "m_max": 10.344,
+ "n_star_median": 4112,
+ "pct_over": 0.2,
+ "pct_under": 85.5,
+ "pct_ghost": 14.3,
+ "pct_detectable": 70.6,
+ "detectable_pct_over": 0.3,
+ "median_deficit_x": 48.4,
+ "aniso_iso_ratio_median": 0.9639,
+ "median_N0": 85,
+ "top_strong": [
+  {
+   "gene_target": "EXOSC2",
+   "m": 10.344105775642774,
+   "n_star_aniso": 135.76422561762237,
+   "n_cells": 113,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "EXOSC8",
+   "m": 10.03159306001101,
+   "n_star_aniso": 143.4804009996194,
+   "n_cells": 88,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "EXOSC3",
+   "m": 9.5624740553531,
+   "n_star_aniso": 157.32010620656501,
+   "n_cells": 129,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "EXOSC4",
+   "m": 9.456705848500624,
+   "n_star_aniso": 161.00350267390252,
+   "n_cells": 183,
+   "regime": "OVER"
+  },
+  {
+   "gene_target": "EXOSC5",
+   "m": 9.320329773629767,
+   "n_star_aniso": 166.59389629752545,
+   "n_cells": 165,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "SLU7",
+   "m": 9.091392401478796,
+   "n_star_aniso": 172.82499361768762,
+   "n_cells": 52,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "EXOSC7",
+   "m": 9.078616202937658,
+   "n_star_aniso": 176.1294877141899,
+   "n_cells": 73,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "EXOSC9",
+   "m": 8.948793013223161,
+   "n_star_aniso": 178.6282358795982,
+   "n_cells": 52,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "BUD13",
+   "m": 8.528627559598094,
+   "n_star_aniso": 192.45876636713643,
+   "n_cells": 40,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "RNF113A",
+   "m": 8.128671459212264,
+   "n_star_aniso": 212.4982990756406,
+   "n_cells": 59,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "MED27",
+   "m": 8.104810990321237,
+   "n_star_aniso": 204.9066814724744,
+   "n_cells": 35,
+   "regime": "UNDER"
+  },
+  {
+   "gene_target": "MED21",
+   "m": 7.897360436143864,
+   "n_star_aniso": 221.61935412480491,
+   "n_cells": 58,
+   "regime": "UNDER"
+  }
+ ]
+}

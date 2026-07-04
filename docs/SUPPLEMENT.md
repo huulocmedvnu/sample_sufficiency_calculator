@@ -125,6 +125,37 @@ HEK293T 51.5%) does not drive magnitude here — HEK293T (lower KD) has the *lar
 
 ---
 
+## 2c. Constants of record — essential-gene extension (TRADE, GEO GSE264667), **validated** (manuscript Phase F)
+
+The genetic counterpart of Phase C: because the TRADE essential-gene CRISPRi screens are ~2.5e5 cells/line (not
+1e8), per-cell PCA coordinates are retained and the parameter-free downsample-and-measure falsification runs
+directly. Dual-sgRNA CRISPRi, 2,393 DepMap common-essential genes/line, pooled Non-Targeting control. QC per
+TRADE: low-UMI < frac×median (Jurkat 0.14 / HepG2 0.18), high-mito mito_UMI>1750/3000 (mito_UMI =
+mitopercent×UMI_count), single-or-dual-same-gene guides. Full 50×50 within-condition Σ; θ★=0.1, d=50.
+Pipeline `scripts/trade_recompute/`; docs `TRADE_EXTENSION_PLAN.md`; fixtures `trade_{jurkat,hepg2}_{quota.csv,
+summary.json,falsification.json}`.
+
+| quantity | Jurkat-Essential | HepG2-Essential | source |
+|---|---|---|---|
+| cells (raw → QC-pass) | 262,956 → 252,896 (96.2%) | 145,473 → 129,772 (89.2%) | `trade_<line>_summary.json` |
+| knockdowns scored / NTC cells | 2,187 / 11,514 | 1,883 / 4,380 | " |
+| **within-condition σ²** | **1.498** | **1.867** | " (higher than ~1.0 band; strong perturbations flatten PCA spectrum) |
+| quota law (equal-arm / large-NTC-pool) | 14,676 / **7,338** /m² | 18,294 / **9,147** /m² | " (large-pool ≈ 9,000 band) |
+| median magnitude m | 1.84 | 2.25 | " (essential genes STRONG; > Tahoe 1.27, ≫ Orion 0.14) |
+| **spectrum OVER/UNDER/Ghost** | **0.2 / 85.5 / 14.3%** | **0.6 / 81.1 / 18.2%** | " |
+| median n★ / median depth / deficit | 4,113 / 85 / 48× | 3,346 / 48 / 70× | " (**depth**-limited, not magnitude-limited) |
+| detectable (signal>1.5×floor); OVER among | 71%; 0% | 61%; 1% | " |
+| aniso/iso ratio | 0.964 | 0.931 | " |
+| **Phase-C falsification, strong m>4** | **slope ratio 1.02, R² 0.996** | **0.96, R² 0.996** | `trade_<line>_falsification.json` (parameter-free) |
+| in-regime (ρ²≥3) count; breakdown Spearman(1−ratio,1/ρ²) | 547; 0.92 | 120; 0.79 | " (predicted low-SNR breakdown reproduced) |
+| strongest-m knockdowns (validation) | EXOSC2–9 (RNA exosome), SLU7, BUD13, MED21/27 | EIF2S1, HSPA9, PSMB5/PSMC5, RPL* | `trade_<line>_quota.csv` |
+
+**Headline:** first end-to-end **validated** gene-perturbation extension — the parameter-free angular-error slope
+matches to 0.96–1.02 (R² 0.996) on strong essential-gene knockdowns, with the predicted low-SNR breakdown. New
+regime: perturbations strong but shallowly sampled (median 48–85 cells) → depth-limited, yet still ~0% over-sampled.
+
+---
+
 ## 3. Honesty ledger (consolidated — reviewers will probe these)
 
 1. **Variance definition.** The headline now uses the *within-condition* residual σ² on both atlases — Tahoe 0.9567 and EmeraldBay ≈0.963 (5-shared-line validation slice = 0.90) — a like-for-like match to ~1%. The coarser *marginal* Tahoe value (2.41, all cells) is retained only as a conservative bound; it is not directly comparable to a within-condition estimate. Both establish σ² as a platform/pipeline-specific plug-in.
@@ -150,6 +181,14 @@ HEK293T 51.5%) does not drive magnitude here — HEK293T (lower KD) has the *lar
     the per-condition floor on m is non-negligible; m is bias-corrected (`−tr(Σ)(1/n+1/n_NTC)`), but for the
     weak majority n★ means "unresolvable at this depth," not an exact count. ~15% (HCT116) / 35% (HEK293T)
     clear the floor; even among those, 0% are over-sampled. Magnitudes are survivor transcriptional norms.
+11. **TRADE σ² is higher (1.5–1.9) and the transfer is looser.** Strong, diverse essential-gene perturbations
+    flatten the PCA spectrum (top-PC EVR 0.04–0.07 vs Orion 0.13–0.20), raising per-PC variance; the large-NTC-
+    pool quota constant (7.3k–9.1k/m²) still lands near ~9,000, but σ² is a platform plug-in and does not claim
+    a tight cross-dataset match here. TRADE is depth-limited (median 48–85 cells), not magnitude-limited.
+12. **TRADE QC interpretation.** Low-UMI read as `UMI < frac×median` (Jurkat 0.14/HepG2 0.18; in the deposited
+    h5ad this filter is near-vacuous — mito is the binding filter); mito threshold stored as `mitopercent`, so
+    absolute mito UMIs reconstructed as `mitopercent×UMI_count` (>1750/3000). Baseline is the Non-Targeting
+    centroid (both quota and falsification), so m-values are NTC-referenced.
 
 ---
 
