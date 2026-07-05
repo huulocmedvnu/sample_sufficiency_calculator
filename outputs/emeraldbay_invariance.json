@@ -2,31 +2,37 @@
  "theta": 0.1,
  "reps": 300,
  "basis": "frozen-HVG (committed)",
+ "graph_scope": {
+  "source": "all_cells.npz",
+  "n_lines": 52,
+  "n_groups": 1264,
+  "n_cells": 1831648
+ },
  "over": {
   "key": "DMSO_T0|HS-578T",
   "m": 5.89,
   "nstar": 184,
   "N0": 1067,
   "n_d": 184,
-  "full_dist": 5.890347886585297,
-  "dist_rel_drift": 0.0006959796981006411,
-  "dist_sd": 0.12687988019981986,
+  "full_dist": 5.8903478877100675,
+  "dist_rel_drift": 0.0014814919025723993,
+  "dist_sd": 0.13428372772395336,
   "neighbours": [
-   "DMSO_T0|HEC-1-A",
-   "DMSO_T0|AN3 CA",
-   "DMSO_T0|C-33 A"
+   "DMSO_T0|hTERT-HPNE",
+   "DMSO_T0|SW 1088",
+   "DMSO_T0|RPMI-7951"
   ],
   "cos_full": {
-   "DMSO_T0|HEC-1-A": 0.7224,
-   "DMSO_T0|AN3 CA": 0.6569,
-   "DMSO_T0|C-33 A": 0.583
+   "DMSO_T0|hTERT-HPNE": 0.8962,
+   "DMSO_T0|SW 1088": 0.8895,
+   "DMSO_T0|RPMI-7951": 0.8824
   },
   "cos_drift": {
-   "DMSO_T0|HEC-1-A": 0.0007,
-   "DMSO_T0|AN3 CA": 0.0013,
-   "DMSO_T0|C-33 A": 0.0009
+   "DMSO_T0|hTERT-HPNE": 0.0015,
+   "DMSO_T0|SW 1088": 0.0014,
+   "DMSO_T0|RPMI-7951": 0.0016
   },
-  "cos_sd": 0.0097
+  "cos_sd": 0.0053
  },
  "under": {
   "key": "Galunisertib|AN3 CA",
@@ -34,24 +40,24 @@
   "nstar": 22475,
   "N0": 305,
   "n_d": 184,
-  "full_dist": 0.5700616784171213,
-  "dist_rel_drift": 0.10868062906553201,
-  "dist_sd": 0.05229456673365024,
+  "full_dist": 0.570061680445822,
+  "dist_rel_drift": 0.10483274516671716,
+  "dist_sd": 0.0516976997749291,
   "neighbours": [
-   "Lapatinib ditosylate|AN3 CA",
-   "Galunisertib|HEC-1-A",
-   "Fluorouracil|HEC-1-A"
+   "Fluorouracil|LS 174T",
+   "Fluorouracil|SW 1088",
+   "Oxaliplatin|LoVo"
   ],
   "cos_full": {
-   "Lapatinib ditosylate|AN3 CA": 0.6799,
-   "Galunisertib|HEC-1-A": 0.6559,
-   "Fluorouracil|HEC-1-A": 0.6431
+   "Fluorouracil|LS 174T": 0.8061,
+   "Fluorouracil|SW 1088": 0.754,
+   "Oxaliplatin|LoVo": 0.7477
   },
   "cos_drift": {
-   "Lapatinib ditosylate|AN3 CA": 0.077,
-   "Galunisertib|HEC-1-A": 0.0711,
-   "Fluorouracil|HEC-1-A": 0.0723
+   "Fluorouracil|LS 174T": 0.0859,
+   "Fluorouracil|SW 1088": 0.0773,
+   "Oxaliplatin|LoVo": 0.0787
   },
-  "cos_sd": 0.0611
+  "cos_sd": 0.0467
  }
 }

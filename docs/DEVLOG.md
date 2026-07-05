@@ -606,9 +606,11 @@ scripts/verify_references.py` (32/32 DOIs).
     reflects the documented first-order breakdown (held-out MRE range **0.6–2.9% → 0.6–5.3%**). The
     integration test's strict R²>0.99 check was correctly scoped to strong-signature (m≥5) curves,
     matching the paper's ρ²-stratified regime distinction; all 13 tests pass. Also wrote
-    `pass6_invariance.py` to regenerate the Table-4 downsampling-stability numbers (n_d 157 → 184; over
-    drift ≤0.1%, under +11%) on the frozen basis, closing a prior reproducibility gap (its generator was
-    uncommitted). Propagated every number to `manuscript` (`MANUSCRIPT_DEEPSEEK.md`), `SUPPLEMENT.md`,
+    `pass6_invariance.py` to regenerate the Table-4 downsampling-stability numbers on the frozen basis
+    (n_d 157 → 184; over drift ≤0.2%, cosine ≤0.002; under +11%), with the drug-similarity graph built over
+    **all 52 lines** (1,264 groups, `all_cells.npz`) rather than the 5 Tahoe-shared lines — closing a prior
+    reproducibility gap (its generator was uncommitted). The 4 showcase held-out curves stay on the 5 shared
+    lines by design (direct Tahoe cross-comparison). Propagated every number to `manuscript` (`MANUSCRIPT_DEEPSEEK.md`), `SUPPLEMENT.md`,
     `HANDOFF.md`, `TECHNICAL_BLUEPRINT.md`, `FALSIFICATION.md`, `ORION_GENE_PERTURBATION.md`, `README.md`,
     `EXECUTIVE_SUMMARY.md`, `INVARIANCE.md`. Tahoe left per-fit (already stable at 0.93→0.995; re-streaming
     95.6 M cells not warranted).

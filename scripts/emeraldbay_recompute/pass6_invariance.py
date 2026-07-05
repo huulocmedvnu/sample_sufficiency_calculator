@@ -12,14 +12,17 @@ full depth:
   * cosine similarity of its direction to its 3 nearest neighbours in the drug-similarity graph;
   * replicate SD of both.
 Drug-similarity graph = cosine between condition direction vectors (centroid - per-line mean), built over
-all shared-line (condition x line) groups with >= MIN_CELLS cells.
+ALL 52-line (condition x line) groups with >= MIN_CELLS cells (per-cell coords from all_cells.npz), so the
+nearest neighbours are the true nearest among the whole atlas, not just the 5 Tahoe-shared lines. Set
+EB_COORDS to another .npz (e.g. shared_cells.npz) to restrict the graph.
 
-Writes outputs/emeraldbay_invariance.json. Reads eb_work/out (basis, shared_cells, pseudobulk, sample2cond).
+Writes outputs/emeraldbay_invariance.json. Reads eb_work/out (basis, all_cells, sample2cond).
 """
 import os, json, ast, numpy as np
 
 OUT = os.environ.get("OUT_EB", "/mnt/hdd2/loc-tran/eb_work/out")
 META = "/mnt/hdd2/loc-tran/eb_work/meta/metadata"
+COORDS_NPZ = os.environ.get("EB_COORDS", os.path.join(OUT, "all_cells.npz"))  # full 52-line atlas
 HERE = os.path.dirname(__file__)
 FIGDIR = os.path.join(HERE, "..", "..", "outputs"); os.makedirs(FIGDIR, exist_ok=True)
 OUTJSON = os.path.join(FIGDIR, "emeraldbay_invariance.json")
@@ -30,7 +33,7 @@ rng = np.random.default_rng(0)
 
 import pyarrow.parquet as pq
 b = np.load(os.path.join(OUT, "basis.npz")); d = int(b["n_comps"])
-sh = np.load(os.path.join(OUT, "shared_cells.npz"), allow_pickle=True)
+sh = np.load(COORDS_NPZ, allow_pickle=True)
 coords = sh["coords"].astype(float); samp = sh["sample"].astype(str); cline = sh["line"].astype(str)
 s2cond = json.load(open(os.path.join(OUT, "sample2cond.json")))
 clm = pq.read_table(f"{META}/cell_line_metadata.parquet").to_pandas()
@@ -116,11 +119,15 @@ res_under = downsample_metrics(UNDER, n_d, nn_under)
 
 summary = dict(
     theta=THETA, reps=REPS, basis="frozen-HVG (committed)",
+    graph_scope=dict(source=os.path.basename(COORDS_NPZ), n_lines=int(np.unique(cline).size),
+                     n_groups=len(keys), n_cells=int(len(coords))),
     over=dict(key=OVER, m=round(groups[OVER]["m"], 3), nstar=int(round(nstar_over)), **res_over),
     under=dict(key=UNDER, m=round(groups[UNDER]["m"], 3), nstar=int(round(nstar_under)), **res_under),
 )
 json.dump(summary, open(OUTJSON, "w"), indent=1)
 
+print(f"[pass6-inv] graph: {len(keys)} groups over {np.unique(cline).size} lines "
+      f"({len(coords):,} cells, {os.path.basename(COORDS_NPZ)})")
 print(f"[pass6-inv] OVER  {OVER}: N0={res_over['N0']} m={groups[OVER]['m']:.2f} n*={int(round(nstar_over))}")
 print(f"           dist rel drift={res_over['dist_rel_drift']*100:.2f}%  cos drift<= {max(res_over['cos_drift'].values()):.4f}  "
       f"cos SD={res_over['cos_sd']}  dist SD={res_over['dist_sd']:.3f}")
