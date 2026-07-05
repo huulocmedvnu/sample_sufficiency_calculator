@@ -17,7 +17,10 @@ import pyarrow.parquet as pq
 
 OUT = os.environ.get("OUT_EB", "/mnt/hdd2/loc-tran/eb_work/out")
 META = "/mnt/hdd2/loc-tran/eb_work/meta/metadata"
-REPO_FIX = os.path.join(os.path.dirname(__file__), "..", "..", "fixtures", "emeraldbay_calibration.json")
+# EB_CALIB_FIX lets a parallel run (e.g. the frozen-HVG recompute) write to a separate fixture instead
+# of overwriting the committed one. Default: the committed fixtures/emeraldbay_calibration.json.
+REPO_FIX = os.environ.get("EB_CALIB_FIX",
+                          os.path.join(os.path.dirname(__file__), "..", "..", "fixtures", "emeraldbay_calibration.json"))
 THETA_GATE = 0.20
 REPS = 300
 rng = np.random.default_rng(0)

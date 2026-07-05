@@ -14,7 +14,10 @@ gating_accuracy_scope). Run: python scripts/emeraldbay_recompute/pass5_gating_fu
 """
 import os, json, numpy as np
 OUT = os.environ.get("OUT_EB", "/mnt/hdd2/loc-tran/eb_work/out")
-FIX = os.path.join(os.path.dirname(__file__), "..", "..", "fixtures", "emeraldbay_calibration.json")
+# EB_CALIB_FIX must point at the SAME fixture pass3 wrote (this pass updates it in place with the
+# full-atlas gating result). Default: the committed fixtures/emeraldbay_calibration.json.
+FIX = os.environ.get("EB_CALIB_FIX",
+                     os.path.join(os.path.dirname(__file__), "..", "..", "fixtures", "emeraldbay_calibration.json"))
 THETA_GATE = 0.20
 REPS = 200
 rng = np.random.default_rng(0)

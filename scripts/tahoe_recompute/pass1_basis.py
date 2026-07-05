@@ -28,7 +28,19 @@ N_SHARDS_FIT = int(os.environ.get("N_SHARDS_FIT", "14"))   # spread across the 3
 GENE_WIDTH = 62713          # max token_id (62712) + 1; special tokens 0,1,2 dropped
 TARGET_SUM = 1e4
 N_COMPS = 50
+# Optional frozen HVG set (token ids, .npy or .json list). When set, the per-fit seurat HVG selection is
+# REPLACED by this fixed set so the embedding reproduces across resamples (see scripts/check_basis_stability.py).
+# Default: unset (per-fit HVG, the committed behaviour). Tahoe's subspace is already stable under resampling
+# (mean cos^2 0.93); this is provided for symmetry with the EmeraldBay reproducibility fix.
+FROZEN_HVG = os.environ.get("FROZEN_HVG", "").strip()
 os.makedirs(CACHE, exist_ok=True); os.makedirs(OUT, exist_ok=True)
+
+
+def load_frozen_hvg(path, gene_width):
+    import json
+    ids = np.load(path) if path.endswith(".npy") else np.asarray(json.load(open(path)))
+    ids = np.asarray(ids, dtype=np.int64)
+    return np.unique(ids[(ids >= 0) & (ids < gene_width)])
 
 
 def shard_to_csr(path):
@@ -72,10 +84,15 @@ def main():
     # --- theislab recipe ---
     sc.pp.normalize_total(A, target_sum=TARGET_SUM)
     sc.pp.log1p(A)
-    sc.pp.highly_variable_genes(A, n_top_genes=2000, flavor="seurat")
-    hvg_mask = A.var["highly_variable"].values
-    hvg_token_ids = np.where(hvg_mask)[0].astype(np.int64)          # column index == token_id
-    A = A[:, hvg_mask].copy()
+    if FROZEN_HVG:
+        hvg_token_ids = load_frozen_hvg(FROZEN_HVG, GENE_WIDTH)
+        print(f"[pass1] FROZEN HVG from {FROZEN_HVG}: {hvg_token_ids.size} genes (per-fit selection skipped)")
+        A = A[:, hvg_token_ids].copy()
+    else:
+        sc.pp.highly_variable_genes(A, n_top_genes=2000, flavor="seurat")
+        hvg_mask = A.var["highly_variable"].values
+        hvg_token_ids = np.where(hvg_mask)[0].astype(np.int64)      # column index == token_id
+        A = A[:, hvg_mask].copy()
     print(f"[pass1] HVG selected: {A.n_vars} genes")
     sc.pp.pca(A, n_comps=N_COMPS, zero_center=True, svd_solver="arpack")
     comps = A.varm["PCs"].T.astype(np.float64)                      # (50, 2000)

@@ -55,7 +55,7 @@ four datasets, two modalities, two labs, three platforms:
 | dataset | modality | within-condition σ² | quota law @ θ=0.1 |
 |---|---|---:|---:|
 | Tahoe-100M | chemical | 0.9567 | n★ = 9,376/m² |
-| EmeraldBay | chemical | 0.963 | — |
+| EmeraldBay | chemical | 0.938 | — |
 | **X-Atlas/Orion HCT116** | **genetic (CRISPRi)** | **0.9133** | **n★ = 8,950/m²** |
 | **X-Atlas/Orion HEK293T** | **genetic (CRISPRi)** | **1.0334** | **n★ = 10,127/m²** |
 

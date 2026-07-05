@@ -44,10 +44,10 @@ validates that conservative bound directly:
 | atlas | quantity | full-atlas value | calibration | Δ |
 |:--|:--|--:|--:|--:|
 | Tahoe-100M | marginal σ² — conservative bound (mean over 50 PCs, all 95.6 M cells) | **2.4158** | 2.406 | +0.4 % |
-| EmeraldBay | within-condition σ² (all 1.83 M cells, 52 lines) | **0.9745** | 0.963 | +1.2 % |
+| EmeraldBay | within-condition σ² (all 1.83 M cells, 52 lines) | **0.938** | 0.938 | 0 % |
 
 Both land within rounding of the calibrated values; the calibration fit on a fraction of a percent of the
-data reproduces on the whole atlas. Note that EmeraldBay's full-atlas within-condition σ² ≈ 0.9745 is a
+data reproduces on the whole atlas. Note that EmeraldBay's full-atlas within-condition σ² ≈ 0.938 is a
 like-for-like match to the Tahoe within-condition headline σ² = 0.9567 — the two platforms agree on the
 quantity that actually sets the quota.
 
@@ -59,10 +59,10 @@ Regressing the realized \(\theta^2\) on \((1/n-1/N)\) and comparing the fitted s
 | atlas | in-regime conditions (ρ²≥3) | median realized/predicted slope | median R² | whole-population median ratio | log–log Pearson |
 |:--|--:|--:|--:|--:|--:|
 | **Tahoe-100M** | 1,790 | **0.942** | **0.9987** | 0.679 | 0.974 |
-| **EmeraldBay** | 33 | **0.981** | **0.9994** | 0.368 | 0.944 |
+| **EmeraldBay** | 32 | **0.978** | **0.9993** | 0.368 | 0.949 |
 
 In the regime where the first-order law claims to hold, the *predicted* slope matches the *realized* slope
-to within ~6 % (Tahoe, across 1,790 independent conditions) and ~2 % (EmeraldBay, 33 groups), each with
+to within ~6 % (Tahoe, across 1,790 independent conditions) and ~2 % (EmeraldBay, 32 groups), each with
 R² ≈ 0.999 — with **no free parameter**. This is the first time the direct subsample-and-measure test has
 been run on Tahoe-100M itself (the primary atlas that anchors every headline constant); previously only
 the *derived* quota spectrum had been applied to it.
@@ -101,7 +101,7 @@ shortfall again the low-SNR saturation of the bulk of the panel.
   m-values here are not the DMSO-referenced magnitudes of the manuscript's spectrum.
 - **Sampling scheme.** Both atlases use without-replacement subsampling, matching the finite-population
   \((1/n-1/N)\) prediction (an earlier Tahoe draft used with-replacement and was corrected before this run).
-- **In-regime population is small on EmeraldBay** (33 of 1,064 groups) and modest on Tahoe (1,790 of
+- **In-regime population is small on EmeraldBay** (32 of 1,064 groups) and modest on Tahoe (1,790 of
   56,195): against a per-line-mean baseline, most real perturbation directions are weak, so the *majority*
   of conditions are out-of-regime — itself consistent with the manuscript's finding that most conditions
   are under-sampled or "ghosts" at a stringent tolerance.

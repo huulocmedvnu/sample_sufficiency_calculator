@@ -149,24 +149,24 @@ The formula is a theorem (verified symbolically + by Monte Carlo), so a second d
 *more* true — but it **can** test whether the CLT/Gaussian-centroid *assumptions* hold on real,
 independent single cells, and whether the calibration transfers. We did this on **tahoebio/EmeraldBay**
 (a separate 1.8 M-cell, 5-day atlas sharing the 5 representative cell lines), re-estimating σ² and m from
-EmeraldBay's *own* cells: the embedding and within-condition σ² ≈ 0.96 are computed over the **full atlas** (52 lines, 1.83M cells) — a like-for-like match to Tahoe's own **within-condition σ² ≈ 0.9567** (Tahoe's marginal 2.406 is only a conservative bound), a like-for-like cross-platform match; re-estimation is still
+EmeraldBay's *own* cells: the embedding (a **frozen** 2000-HVG PCA(50) set for reproducibility) and within-condition σ² ≈ 0.938 are computed over the **full atlas** (52 lines, 1.83M cells) — a like-for-like match to Tahoe's own **within-condition σ² ≈ 0.9567** (to ~2%) (Tahoe's marginal 2.406 is only a conservative bound), a like-for-like cross-platform match; re-estimation is still
 necessary in general, confirming σ² is the platform-specific input).
 
-Per-cell coordinates were retained for the **full 52-line atlas**, so the gating verification and the full-population falsification (below) span the whole atlas; the four illustrative **held-out angular-error curves** here use the 5 lines shared with Tahoe (141,720 cells; 5-line σ²=0.90) for direct cross-comparison. They compare the realized RMS angle from n subsampled cells to the closed form
+Per-cell coordinates were retained for the **full 52-line atlas**, so the gating verification and the full-population falsification (below) span the whole atlas; the four illustrative **held-out angular-error curves** here use the 5 lines shared with Tahoe (141,720 cells; 5-line σ²=0.85) for direct cross-comparison. They compare the realized RMS angle from n subsampled cells to the closed form
 `θ²(n)=tr(PΣP)/m²·(1/n−1/N)` (finite-population-corrected):
 
 | group (N, m) | mean rel. err | fitted slope vs `tr(PΣP)/m²` | R² |
 |---|---|---|---|
-| DMSO_T0 × HS-578T (1067, m=6.46) | **0.6%** | 0.789 vs 0.787 | **0.9999** |
-| DMSO_T0 × HEC-1-A (435, m=3.63) | 1.2% | 1.819 vs 1.854 | 0.9990 |
-| DMSO_T0 × BT-474 (461, m=3.56) | 1.2% | 1.561 vs 1.623 | 0.9998 |
-| Encorafenib × HEC-1-A (1117, m=1.78, drug) | 2.9% | 9.67 vs 11.17 (low-SNR) | 0.9965 |
+| DMSO_T0 × HS-578T (1067, m=5.89) | **0.8%** | 0.906 vs 0.918 | **0.9999** |
+| DMSO_T0 × HEC-1-A (435, m=3.58) | 0.6% | 1.831 vs 1.845 | 0.9999 |
+| DMSO_T0 × BT-474 (461, m=3.35) | 0.8% | 1.709 vs 1.780 | 0.9977 |
+| Irinotecan × HS-578T (563, m=1.96, drug) | 5.3% | 10.08 vs 12.81 (low-SNR) | 0.9786 |
 
-`realized² ∝ (1/n − 1/N)` is linear-through-origin with **R² > 0.99**, and the fitted slope matches the
-anisotropic `tr(PΣP)/m²` to **<1% for strong signatures** (the weaker m≈3 group deviates ~15% at small
+`realized² ∝ (1/n − 1/N)` is linear-through-origin with **R² > 0.997 (reference groups; 0.979 for the low-magnitude drug group)**, and the fitted slope matches the
+anisotropic `tr(PΣP)/m²` to **within ~1–4% for the reference groups** (the low-magnitude drug group deviates ~21% at small
 n — the expected breakdown of the first-order law at lower SNR, §5 of `THEORY.md`). **Regime gating
-(full atlas):** of 3,971 (condition × line) groups across all 52 lines, 217 (5.5%) are predicted
-OVER-sampled, and the downsample-and-measure check now covers **every one — 217/217 (100%)** meet the
+(full atlas):** of 3,971 (condition × line) groups across all 52 lines, 347 (8.7%) are predicted
+OVER-sampled, and the downsample-and-measure check now covers **every one — 347/347 (100%)** meet the
 tolerance at n* when downsampled (`pass5_gating_full.py`).
 
 This is distilled into `fixtures/emeraldbay_calibration.json` and asserted by
@@ -179,11 +179,11 @@ Beyond the four illustrative curves, the **parameter-free** slope test was run a
 population of both atlases. All **95,624,334 Tahoe cells** were re-streamed from raw and **56,195**
 conditions tested; the full 52-line EmeraldBay atlas gave **1,064** groups. In the theory's validity
 regime (`ρ²≥3`) the a-priori slope `tr(PΣP)/m²` matches the realized fitted slope to a median ratio of
-**0.94** (1,790 Tahoe conditions) and **0.98** (33 EmeraldBay groups), each at **R²≈0.999** with no
+**0.94** (1,790 Tahoe conditions) and **0.98** (32 EmeraldBay groups), each at **R²≈0.999** with no
 fitted parameter; outside it the deficit grows monotonically with `1/ρ²`, exactly as the second-order
 theory predicts. The same re-projection reconfirms the noise constants on *every* cell — Tahoe marginal
-(conservative-bound) **σ²=2.4158** (all 95.6M cells) vs the 2.406 marginal calibration, EmeraldBay within-condition **σ²=0.9745** vs
-0.963 (constants fit on ≤1% subsamples, holding to within 0.4%/1.2%). And the OVER/UNDER gating decision
+(conservative-bound) **σ²=2.4158** (all 95.6M cells) vs the 2.406 marginal calibration (0.4%), and EmeraldBay within-condition **σ²=0.938**
+computed over all 1.83M cells, matching its frozen-basis calibration. And the OVER/UNDER gating decision
 holds on the primary atlas too: **5,503/5,503** predicted-OVER Tahoe conditions met the tolerance at n*
 (per-line-mean baseline, θ=0.1; `pass4c_gating.py`).
 
@@ -197,7 +197,7 @@ pooled **Non-Targeting** centroid, `m = ‖μ_knockdown − μ_NTC‖`. Findings
 `fixtures/orion_*`):
 
 - **σ² transfers across modality.** Within-condition `σ² = 0.913` (HCT116) / `1.033` (HEK293T) — same ~1.0 band
-  as the chemical atlases (Tahoe 0.957, EmeraldBay 0.963), so the calibrated law is `n* ≈ 9,000/m²` in both
+  as the chemical atlases (Tahoe 0.957, EmeraldBay 0.938), so the calibrated law is `n* ≈ 9,000/m²` in both
   modalities. On Orion the *marginal* σ² ≈ the within-condition value (unlike Tahoe's 2.5× gap) — a direct
   fingerprint that most knockdowns barely move the transcriptome.
 - **No knockdown is over-sampled.** Genome-wide at θ=0.1 rad: HCT116 **0.0% OVER / 28.3% UNDER / 71.7% Ghost**

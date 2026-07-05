@@ -18,13 +18,13 @@ have been corrected throughout this document. **Use the corrected values.**
    RMS angle at n★ of ≤ 1.05·θ★. The "0.1 rad" in the brief is incorrect.
 2. **Three of the four held-out validation groups are `DMSO_T0` reference populations, not drug effects.**
    They are the time-zero (DMSO_T0) population's displacement from the per-line centroid baseline, for
-   HS-578T (m = 6.46), HEC-1-A (m = 3.63), and BT-474 (m = 3.56). Only `Encorafenib × HEC-1-A` (m = 1.78)
+   HS-578T (m = 5.89), HEC-1-A (m = 3.58), and BT-474 (m = 3.35). Only `Irinotecan × HS-578T` (m = 1.96)
    is an actual drug perturbation. The held-out test validates the *angular-error geometry*; it is
    agnostic to biological interpretation. Do **not** describe the DMSO_T0 groups as "strong drug effects".
 3. **The σ² values are a like-for-like within-condition comparison.** EmeraldBay's
-   σ² ≈ 0.963 is a *within-condition residual* variance (full atlas, 52 lines; 0.896 on the 5-shared-line
+   σ² ≈ 0.938 is a *within-condition residual* variance (full atlas, 52 lines; 0.848 on the 5-shared-line
    slice); the Tahoe headline σ² = 0.9567 is the matching *within-condition residual* per-cell variance.
-   The two agree to ~1% — a like-for-like cross-platform match. The Tahoe *marginal* per-cell variance
+   The two agree to ~2% — a like-for-like cross-platform match. The Tahoe *marginal* per-cell variance
    σ² = 2.406 (which additionally includes between-condition and between-line structure) is retained only
    as a **conservative upper bound / cross-check**, never as the headline. All support the claim that σ² is
    a platform/pipeline-specific plug-in requiring re-estimation.
@@ -153,12 +153,14 @@ MOSAIC) shares five representative cell lines and the token/expression schema wi
 
 **Procedure (`scripts/emeraldbay_recompute/`).** All 116 shards (≈ 57.7 GB; 1,831,648 cells across 52
 lines) were streamed. EmeraldBay's *own* HVG(2000)+PCA(50) embedding and its **within-condition** residual
-per-PC variance were fit over the **full atlas**, giving **σ² ≈ 0.963** (mean over 50 PCs). Per-cell
+per-PC variance were fit over the **full atlas**, giving **σ² ≈ 0.938** (mean over 50 PCs). Per-cell
 coordinates were then retained for the **141,720 cells of the 5 shared lines** (5-line within-condition
-σ² = 0.896), on which the held-out validation and downsample checks are run. The baseline is the
+σ² = 0.848), on which the held-out validation and downsample checks are run. EmeraldBay now fixes this HVG
+selection to a **frozen 2000-HVG set** (`fixtures/emeraldbay_frozen_hvg.json`), raising basis
+reproducibility cos² from 0.79 to 0.96 (Tahoe was already stable at 0.93→0.995 and is left per-fit). The baseline is the
 **per-line mean** (no DMSO at a matched timepoint; a `DMSO_T0` population exists and forms the
-high-magnitude reference groups). *Note (item 3): σ² ≈ 0.963 is a within-condition value and matches the
-Tahoe within-condition headline σ² = 0.9567 to ~1% — a like-for-like cross-platform agreement (the
+high-magnitude reference groups). *Note (item 3): σ² ≈ 0.938 is a within-condition value and matches the
+Tahoe within-condition headline σ² = 0.9567 to ~2% — a like-for-like cross-platform agreement (the
 marginal Tahoe σ² = 2.406 is a conservative bound only); both establish σ² as a platform/pipeline-specific
 plug-in requiring re-estimation.*
 
@@ -170,22 +172,22 @@ linearity-through-origin, with slope equal to tr(PΣP)/m².
 
 | Validation group (actual identity) | N | m | mean rel. err | fitted slope | expected slope tr(PΣP)/m² | intercept | R² |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| DMSO_T0 × HS-578T (reference population) | 1067 | 6.46 | 0.6% | 0.7888 | 0.7870 | 0.0 | 0.9999 |
-| DMSO_T0 × HEC-1-A (reference population) | 435 | 3.63 | 1.2% | 1.8186 | 1.8544 | 0.0 | 0.9990 |
-| DMSO_T0 × BT-474 (reference population) | 461 | 3.56 | 1.2% | 1.5615 | 1.6231 | 0.0 | 0.9998 |
-| Encorafenib × HEC-1-A (drug; low SNR) | 1117 | 1.78 | 2.9% | 9.6683 | 11.1699 | 0.0 | 0.9965 |
+| DMSO_T0 × HS-578T (reference population) | 1067 | 5.89 | 0.8% | 0.9060 | 0.9180 | 0.0 | 0.9999 |
+| DMSO_T0 × HEC-1-A (reference population) | 435 | 3.58 | 0.6% | 1.8310 | 1.8450 | 0.0 | 0.9999 |
+| DMSO_T0 × BT-474 (reference population) | 461 | 3.35 | 0.8% | 1.7090 | 1.7800 | 0.0 | 0.9977 |
+| Irinotecan × HS-578T (drug; low SNR) | 563 | 1.96 | 5.3% | 10.0843 | 12.8079 | 0.0 | 0.9786 |
 
-The realized curve matches the closed form to **0.6–2.9% mean relative error**, with
-realized θ² ∝ (1/n − 1/N) **linear-through-origin (R² > 0.996, intercept ≈ 0)** in all four cases. For the
-strongest group (HS-578T, m = 6.46) the fitted slope matches the anisotropic tr(PΣP)/m² to **0.2%**, and
-the two moderate DMSO_T0 groups to within 2–4%. The genuine low-magnitude drug group (Encorafenib,
-m = 1.78) shows a **~13% slope deficit concentrated at small n**---the **expected second-order Taylor /
+The realized curve matches the closed form to **0.6–5.3% mean relative error**, with
+realized θ² ∝ (1/n − 1/N) **linear-through-origin (R² > 0.978, intercept ≈ 0)** in all four cases. For the
+strongest group (HS-578T, m = 5.89) the fitted slope matches the anisotropic tr(PΣP)/m² to **1.4%**, and
+the two moderate DMSO_T0 groups to within 1–4%. The genuine low-magnitude drug group (Irinotecan,
+m = 1.96) shows a **~21% slope deficit concentrated at small n**---the **expected second-order Taylor /
 finite-SNR breakdown** of the first-order Delta method (THEORY §5), since validity requires
 ρ² = m²/(uᵀSu) ≫ 1.
 
 **Regime-gating accuracy.** With θ★ = **0.20 rad** (item 1), each of **3,971 (condition × line) groups
-across all 52 cell lines** (≥ 100 cells) was classified OVER- vs UNDER-sampled (OVER ⇔ N₀ ≥ n★): **217
-(5.5%) are predicted OVER-sampled**. The downsample-and-measure check requires per-cell coordinates,
+across all 52 cell lines** (≥ 100 cells) was classified OVER- vs UNDER-sampled (OVER ⇔ N₀ ≥ n★): **347
+(8.7%) are predicted OVER-sampled**. The downsample-and-measure check requires per-cell coordinates,
 retained for the 5 shared lines: of the **10 predicted-OVER groups in that subset, 100%** achieved a
 realized RMS angle ≤ 1.05·θ★ when downsampled to n★. The gating prediction is therefore empirically
 corroborated on independent data.
@@ -265,12 +267,12 @@ are polynomial; no operation here is exponential in N. σ² must be re-estimated
 - External calibrator: `scripts/emeraldbay_recompute/` → `fixtures/emeraldbay_calibration.json`.
 - Constants of record: d = 50; Tahoe within-condition σ² = 0.9567 (headline; marginal 2.406 retained as a
   conservative bound), N₀ = 1,296; EmeraldBay within-condition
-  σ² ≈ 0.963 (full atlas; 0.896 on the 5-shared-line slice), 141,720 cells streamed for the 5 shared
+  σ² ≈ 0.938 (full atlas; 0.848 on the 5-shared-line slice), 141,720 cells streamed for the 5 shared
   lines, 3,971 gated (condition × line) groups across 52 lines, θ★ = 0.20 rad; Monte-Carlo K = 50,000,
   seed = 0, relative error 0.13%; symbolic residual 2.8×10⁻¹⁷.
 - **Honesty ledger for reviewers:** (i) the headline compares like-for-like within-condition σ² across
-  atlases (EmeraldBay 0.963 vs Tahoe 0.9567); the marginal Tahoe σ² = 2.406 is retained only as a
+  atlases (EmeraldBay 0.938 vs Tahoe 0.9567); the marginal Tahoe σ² = 2.406 is retained only as a
   conservative bound (item 3); (ii) three of the four validation groups are DMSO_T0 reference populations, not drug effects,
-  and only Encorafenib × HEC-1-A is a drug (item 2); (iii) the low-SNR group exhibits the predicted
+  and only Irinotecan × HS-578T is a drug (item 2); (iii) the low-SNR group exhibits the predicted
   first-order breakdown (not hidden); (iv) resource-allocation figures are Tahoe-derived (item 6); (v)
   cell-level topology preservation is explicitly out of scope.

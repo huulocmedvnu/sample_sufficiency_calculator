@@ -21,7 +21,22 @@ N_SHARDS_FIT = int(os.environ.get("N_SHARDS_FIT", "10"))
 GENE_WIDTH = 63287          # max token_id 63286 + 1; special tokens 0,1,2 dropped
 TARGET_SUM = 1e4
 N_COMPS = 50
+# Optional frozen HVG set (token ids, .npy or .json list). When set, the per-fit seurat HVG selection
+# is REPLACED by this fixed set so the embedding is reproducible across resamples -- see
+# scripts/check_basis_stability.py / confirm_frozen_hvg.py (per-fit HVG churn is the dominant source of
+# EmeraldBay subspace instability: mean cos^2 0.79 -> 0.92 once the HVG set is frozen). Default: unset
+# (per-fit HVG, the committed behaviour).
+FROZEN_HVG = os.environ.get("FROZEN_HVG", "").strip()
 os.makedirs(CACHE, exist_ok=True); os.makedirs(OUT, exist_ok=True)
+
+
+def load_frozen_hvg(path, gene_width):
+    import json
+    ids = (np.load(path) if path.endswith(".npy")
+           else np.asarray(json.load(open(path))))
+    ids = np.asarray(ids, dtype=np.int64)
+    ids = ids[(ids >= 0) & (ids < gene_width)]
+    return np.unique(ids)
 
 
 def shard_to_csr(path):
@@ -50,9 +65,14 @@ def main():
     A = ad.AnnData(X=X); A.obs["drug"] = np.concatenate(drugs); A.obs["cell_line"] = np.concatenate(lines)
     print(f"[pass1-eb] subsample: {A.n_obs} cells x {A.n_vars} genes")
     sc.pp.normalize_total(A, target_sum=TARGET_SUM); sc.pp.log1p(A)
-    sc.pp.highly_variable_genes(A, n_top_genes=2000, flavor="seurat")
-    hvg = np.where(A.var["highly_variable"].values)[0].astype(np.int64)
-    A = A[:, A.var["highly_variable"].values].copy()
+    if FROZEN_HVG:
+        hvg = load_frozen_hvg(FROZEN_HVG, GENE_WIDTH)
+        print(f"[pass1-eb] FROZEN HVG from {FROZEN_HVG}: {hvg.size} genes (per-fit selection skipped)")
+        A = A[:, hvg].copy()
+    else:
+        sc.pp.highly_variable_genes(A, n_top_genes=2000, flavor="seurat")
+        hvg = np.where(A.var["highly_variable"].values)[0].astype(np.int64)
+        A = A[:, A.var["highly_variable"].values].copy()
     sc.pp.pca(A, n_comps=N_COMPS, zero_center=True, svd_solver="arpack")
     comps = A.varm["PCs"].T.astype(np.float64)
     pca_mean = np.asarray(A.X.mean(axis=0)).ravel().astype(np.float64)

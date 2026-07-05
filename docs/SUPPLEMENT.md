@@ -60,9 +60,10 @@ Tail-controlled: `n★_δ = (2/m²θ★²)[tr(PΣP) + 2‖PΣP‖_F√L + 2‖P�
 | Depth-fixed resolution | θ(N₀) = **0.269 / m** rad (at median N₀) | derived |
 | **Study-design layout** | **100,648,790 cells** (95,624,334 pass `full`, 5.0% filtered); **1,344 wells = 14 plates × 96**; cells/well median 71,092 (pre) / 67,212 (post) | `obs_metadata`; `tahoe_layout_summary.json` |
 | Plate QC variation | plate3 11.63% filter loss (operationalizes "excl3") vs 3–5% typical | `per_plate` in `tahoe_layout_summary.json` |
-| **EmeraldBay** within-condition σ² | **≈ 0.963** (full atlas, 52 lines, 1.83M cells; 5-shared-line slice = 0.896) | `scripts/emeraldbay_recompute/` (own PCA(50); ≈ Tahoe within-condition 0.9567) |
+| **EmeraldBay** within-condition σ² | **≈ 0.938** (full atlas, 52 lines, 1.83M cells; 5-shared-line slice = 0.848) | `scripts/emeraldbay_recompute/` (own **frozen** HVG(2000)+PCA(50); ≈ Tahoe within-condition 0.9567 to ~2%) |
+| EmeraldBay basis reproducibility | own 50-d subspace reproduces across disjoint-shard refits at mean cos² **0.79 → 0.96** once the HVG set is frozen (per-fit HVG churn removed); Tahoe 0.93 → 0.995 | `scripts/check_basis_stability.py`, `confirm_frozen_hvg.py`; `fixtures/emeraldbay_frozen_hvg.json` |
 | EmeraldBay cells streamed (5 shared cell lines) | 141,720 (of 1.83M; 57.7 GB / 116 shards) | `scripts/emeraldbay_recompute/` |
-| EmeraldBay gating (full atlas) | **3,971 groups, 52 lines** (≥100 cells): 217 OVER (5.5%), 94.5% UNDER; downsample-verified **217/217 → 100% over all 52 lines** (`pass5_gating_full.py`) | gating, θ★ = 0.20 rad |
+| EmeraldBay gating (full atlas) | **3,971 groups, 52 lines** (≥100 cells): 347 OVER (8.7%), 91.3% UNDER; downsample-verified **347/347 → 100% over all 52 lines** (`pass5_gating_full.py`) | gating, θ★ = 0.20 rad |
 | Tahoe gating (full atlas, direct) | downsample-verified **5,503/5,503 → 100%** of predicted-OVER conditions over all 44 lines with any OVER condition (per-line-mean baseline; `pass4c_gating.py`) | θ★ = 0.1 rad; ≠ DMSO-referenced 10.6% spectrum |
 | Symbolic Jacobian residual | zero matrix; max float diff 2.8×10⁻¹⁷ | `verify_theory.py` L1 |
 | Monte-Carlo check | K=50,000; seed=0; rel. err 0.13%; ρ²=3.82×10⁵; d_eff=12.2 | `verify_theory.py` L2 |
@@ -78,10 +79,10 @@ validation groups and the 132 gated groups are restricted to the 5 lines shared 
 
 | Group (actual identity) | N | m | mean rel. err | slope vs tr(PΣP)/m² | R² |
 |---|---:|---:|---:|---:|---:|
-| DMSO_T0 × HS-578T | 1067 | 6.46 | 0.6% | 0.789 vs 0.787 | 0.9999 |
-| DMSO_T0 × HEC-1-A | 435 | 3.63 | 1.2% | 1.819 vs 1.854 | 0.9990 |
-| DMSO_T0 × BT-474 | 461 | 3.56 | 1.2% | 1.561 vs 1.623 | 0.9998 |
-| Encorafenib × HEC-1-A (drug) | 1117 | 1.78 | 2.9% | 9.67 vs 11.17 (low-SNR) | 0.9965 |
+| DMSO_T0 × HS-578T | 1067 | 5.89 | 0.8% | 0.906 vs 0.918 | 0.9999 |
+| DMSO_T0 × HEC-1-A | 435 | 3.58 | 0.6% | 1.831 vs 1.845 | 0.9999 |
+| DMSO_T0 × BT-474 | 461 | 3.35 | 0.8% | 1.709 vs 1.780 | 0.9977 |
+| Irinotecan × HS-578T (drug) | 563 | 1.96 | 5.3% | 10.08 vs 12.81 (low-SNR) | 0.9786 |
 
 **Case-study spectrum (Tahoe; n★ = 9,376/m², per-drug median m and OVER out of 150 conditions):**
 Panobinostat m=4.24 OVER in 120/150; Homoharringtonine m=5.88 OVER in 100/150; Harringtonine m=3.67 OVER
@@ -106,7 +107,7 @@ vs scanpy; `total_counts` == raw row sum exactly). θ★ = 0.1 rad, d = 50.
 |---|---|---|---|
 | cells (post-QC) / knockdowns scored | 3,404,169 / 17,585 | 4,534,299 / 17,856 | `orion_<LINE>_summary.json` |
 | NTC control cells | 165,562 | 218,838 | " |
-| **within-condition σ²** (headline plug-in) | **0.9133** | **1.0334** | " (≈ Tahoe 0.9567 / EmeraldBay 0.963 across modality) |
+| **within-condition σ²** (headline plug-in) | **0.9133** | **1.0334** | " (≈ Tahoe 0.9567 / EmeraldBay 0.938 across modality) |
 | marginal σ² | 0.9167 | 1.0396 | " (marginal≈within ⇒ most knockdowns transcriptionally weak) |
 | **quota law** | **n★ = 8,950/m²** | **n★ = 10,127/m²** | derived |
 | median magnitude m | 0.141 | 0.351 | " (vs Tahoe 1.27; knockdowns ~4–10× weaker) |
@@ -158,12 +159,17 @@ regime: perturbations strong but shallowly sampled (median 48–85 cells) → de
 
 ## 3. Honesty ledger (consolidated — reviewers will probe these)
 
-1. **Variance definition.** The headline now uses the *within-condition* residual σ² on both atlases — Tahoe 0.9567 and EmeraldBay ≈0.963 (5-shared-line validation slice = 0.90) — a like-for-like match to ~1%. The coarser *marginal* Tahoe value (2.41, all cells) is retained only as a conservative bound; it is not directly comparable to a within-condition estimate. Both establish σ² as a platform/pipeline-specific plug-in.
+1. **Variance definition.** The headline now uses the *within-condition* residual σ² on both atlases — Tahoe 0.9567 and EmeraldBay ≈0.938 (5-shared-line validation slice = 0.85) — a like-for-like match to ~2%. The coarser *marginal* Tahoe value (2.41, all cells) is retained only as a conservative bound; it is not directly comparable to a within-condition estimate. Both establish σ² as a platform/pipeline-specific plug-in.
 2. **DMSO_T0 group identity.** Three of the four validation groups are DMSO_T0 time-zero reference
-   populations (HS-578T, HEC-1-A, BT-474), not drug effects; only Encorafenib×HEC-1-A is a drug. The
+   populations (HS-578T, HEC-1-A, BT-474), not drug effects; only Irinotecan×HS-578T is a drug. The
    held-out test validates geometry, not biology.
-3. **Low-SNR breakdown is expected, not hidden.** Encorafenib (m=1.78) shows a ~13% slope deficit at small
+3. **Low-SNR breakdown is expected, not hidden.** Irinotecan (m=1.96) shows a ~21% slope deficit at small
    n — the first-order Delta breakdown when ρ²=m²/(uᵀSu) is not ≫1 (THEORY §5).
+4. **EmeraldBay HVG is frozen for reproducibility.** The EmeraldBay embedding uses a frozen 2000-HVG set
+   (`fixtures/emeraldbay_frozen_hvg.json`) rather than a per-fit selection: per-fit HVG churn dropped the
+   50-d subspace agreement between disjoint-shard refits to cos²≈0.79, and freezing the HVG set restores it
+   to ≈0.96 (Tahoe's basis was already stable at 0.93→0.995 and is left per-fit). The validation conclusions
+   are unchanged by the switch; σ², the held-out slope match, and the 100% gating guarantee all persist.
 4. **Gating tolerance = 0.20 rad** in the EmeraldBay experiment (not 0.1).
 5. **Resource figures (~156× multiplex, 99%/~100% compute) are Tahoe-derived** (over-sampled exemplar
    homoharringtonine 5 µM × NCI-H460, N₀=6,060, θ=0.1), not EmeraldBay.

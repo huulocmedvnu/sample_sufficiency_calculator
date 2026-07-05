@@ -98,16 +98,21 @@ def fig2_tahoe_spectrum():
 def fig3_emeraldbay():
     d = json.load(open(f"{FX}/emeraldbay_calibration.json"))
     cur = d["heldout_curves"]
-    cols = {"DMSO_T0|HS-578T": BLUE, "DMSO_T0|HEC-1-A": GREEN, "DMSO_T0|BT-474": SKY,
-            "Encorafenib|HEC-1-A": VERM}
-    mk = {"DMSO_T0|HS-578T": "o", "DMSO_T0|HEC-1-A": "s", "DMSO_T0|BT-474": "^", "Encorafenib|HEC-1-A": "D"}
+    # DMSO_T0 reference groups first (by descending m), then the single non-DMSO drug group; keys are
+    # read from the fixture so the figure follows whichever groups the recompute selected.
+    dmso = sorted([g for g in cur if g.startswith("DMSO_T0")], key=lambda g: -cur[g]["m"])
+    drugg = [g for g in cur if not g.startswith("DMSO_T0")]
+    order = dmso + drugg
+    palette = [BLUE, GREEN, SKY, VERM]; markers = ["o", "s", "^", "D"]
+    cols = {g: palette[i % len(palette)] for i, g in enumerate(order)}
+    mk = {g: markers[i % len(markers)] for i, g in enumerate(order)}
     fig, ax = plt.subplots(figsize=(6.2, 4.2))
     for g, c in cols.items():
         rows = np.array(cur[g]["rows"], dtype=float)   # [n, realized_theta_RMS, predicted_theta_RMS]
         N = cur[g]["N"]; x = 1.0 / rows[:, 0] - 1.0 / N; y = rows[:, 1] ** 2   # RMS angle -> theta^2
         slope = cur[g]["slope"]; exp = cur[g]["expected_slope"]; r2 = cur[g]["r2"]
         lab = g.replace("|", " x ")
-        drug = "drug" if g.startswith("Enco") else "vehicle"
+        drug = "vehicle" if g.startswith("DMSO_T0") else "drug"
         ax.scatter(x, y, s=26, color=c, marker=mk[g], edgecolor="white", linewidth=0.4, zorder=3,
                    label=f"{lab} ({drug}, m={cur[g]['m']:.1f}): slope {slope:.2f} vs {exp:.2f}, $R^2$={r2:.4f}")
         xs = np.linspace(0, x.max(), 20); ax.plot(xs, exp * xs, color=c, lw=1.3, alpha=0.8)

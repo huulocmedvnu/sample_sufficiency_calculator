@@ -1,0 +1,57 @@
+{
+ "theta": 0.1,
+ "reps": 300,
+ "basis": "frozen-HVG (committed)",
+ "over": {
+  "key": "DMSO_T0|HS-578T",
+  "m": 5.89,
+  "nstar": 184,
+  "N0": 1067,
+  "n_d": 184,
+  "full_dist": 5.890347886585297,
+  "dist_rel_drift": 0.0006959796981006411,
+  "dist_sd": 0.12687988019981986,
+  "neighbours": [
+   "DMSO_T0|HEC-1-A",
+   "DMSO_T0|AN3 CA",
+   "DMSO_T0|C-33 A"
+  ],
+  "cos_full": {
+   "DMSO_T0|HEC-1-A": 0.7224,
+   "DMSO_T0|AN3 CA": 0.6569,
+   "DMSO_T0|C-33 A": 0.583
+  },
+  "cos_drift": {
+   "DMSO_T0|HEC-1-A": 0.0007,
+   "DMSO_T0|AN3 CA": 0.0013,
+   "DMSO_T0|C-33 A": 0.0009
+  },
+  "cos_sd": 0.0097
+ },
+ "under": {
+  "key": "Galunisertib|AN3 CA",
+  "m": 0.57,
+  "nstar": 22475,
+  "N0": 305,
+  "n_d": 184,
+  "full_dist": 0.5700616784171213,
+  "dist_rel_drift": 0.10868062906553201,
+  "dist_sd": 0.05229456673365024,
+  "neighbours": [
+   "Lapatinib ditosylate|AN3 CA",
+   "Galunisertib|HEC-1-A",
+   "Fluorouracil|HEC-1-A"
+  ],
+  "cos_full": {
+   "Lapatinib ditosylate|AN3 CA": 0.6799,
+   "Galunisertib|HEC-1-A": 0.6559,
+   "Fluorouracil|HEC-1-A": 0.6431
+  },
+  "cos_drift": {
+   "Lapatinib ditosylate|AN3 CA": 0.077,
+   "Galunisertib|HEC-1-A": 0.0711,
+   "Fluorouracil|HEC-1-A": 0.0723
+  },
+  "cos_sd": 0.0611
+ }
+}
