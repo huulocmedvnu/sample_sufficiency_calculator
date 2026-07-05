@@ -1,0 +1,19 @@
+# Pinned environment for the from-raw recompute / calibration pipeline
+# (scripts/{tahoe,emeraldbay,orion,trade}_recompute/). These are the exact
+# versions used to generate the committed fixtures/ (Python 3.13.12).
+#
+# The calculator + verification test suite has separate, looser deps
+# (requirements-dev.txt: numpy, sympy, pytest) run in CI on Python 3.10-3.12.
+#
+#   pip install -r scripts/requirements-recompute.txt
+
+numpy==2.4.4
+scipy==1.18.0
+pandas==2.3.3
+scikit-learn==1.9.0
+scanpy==1.12.2
+anndata==0.12.18
+h5py==3.16.0
+pyarrow==24.0.0
+pylance==8.0.0          # provides `import lance` (Orion SLAF/Lance reader)
+huggingface-hub==1.10.1

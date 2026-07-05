@@ -16,6 +16,7 @@ cached/derived results.
 
 Run (from repo root):
 ```bash
+pip install -r scripts/requirements-recompute.txt   # pinned env (Python 3.13.12); generated the committed fixtures
 export OUT=/mnt/hdd2/loc-tran/tahoe_work/out
 python scripts/tahoe_recompute/pass1_basis.py        # minutes
 python scripts/tahoe_recompute/pass2_pseudobulk.py   # hours (streams ~337 GB); resumable
