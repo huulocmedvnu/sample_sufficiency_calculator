@@ -613,7 +613,20 @@ scripts/verify_references.py` (32/32 DOIs).
     lines by design (direct Tahoe cross-comparison). Propagated every number to `manuscript` (`MANUSCRIPT_DEEPSEEK.md`), `SUPPLEMENT.md`,
     `HANDOFF.md`, `TECHNICAL_BLUEPRINT.md`, `FALSIFICATION.md`, `ORION_GENE_PERTURBATION.md`, `README.md`,
     `EXECUTIVE_SUMMARY.md`, `INVARIANCE.md`. Tahoe left per-fit (already stable at 0.93→0.995; re-streaming
-    95.6 M cells not warranted).
+    95.6 M cells not warranted). Committed on `master` as `b89403e` + `3e5974a`.
+51. **Figure/table captions: interpretive guidance + fixed the PDF label duplication** (this session,
+    `c4820f5` → `835517d` → `853dd70`). Each of the 5 figure and 7 table captions gained a short sentence
+    on how to read it (what to look for, which rows are calibrated inputs vs outputs). First drafted with
+    an explicit "How to read." label, then removed the label and folded the guidance into normal
+    declarative caption prose (journal convention), trimming the redundancy this exposed in the Fig 1/3/5
+    captions and converting an imperative "Compare ..." in Table 3. **Then fixed a pre-existing bug** (present
+    before this session): the PDF printed every figure label twice ("Figure N: Figure N. ...") because the
+    numbers are carried MANUALLY in the caption text ("**Figure N.**", matching the DOCX and the plain-text
+    in-body refs) while LaTeX *also* auto-numbered each figure float. Added
+    `\usepackage{caption}\captionsetup{labelformat=empty,labelsep=none}` to the generated `header-includes`
+    in `scripts/normalize_manuscript.py`, suppressing LaTeX's auto label so figures render "Figure N." once.
+    Self-contained (standard pandoc command unchanged); DOCX was already correct; pipe-table captions
+    unaffected. Rebuilt PDF/DOCX, 0 unresolved citations, 13/13 tests pass.
 
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
