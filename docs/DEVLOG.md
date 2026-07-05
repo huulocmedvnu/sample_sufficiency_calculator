@@ -555,6 +555,34 @@ scripts/verify_references.py` (32/32 DOIs).
     changed: Orion's canonical repo is `Xaira-Therapeutics/X-Atlas-Orion`; the recompute read a legitimate
     `slaf-project` SLAF/Lance re-release.)
 
+47. **Methods/Results IMRaD tightening** (`4aea8c1`). Two related structural edits after a reviewer-style pass
+    against a Materials-and-Methods rubric (replicability, tool versions, no methods/results mixing). (i) **Results**
+    "A closed-form anisotropic cell quota" was trimmed from a full re-derivation to a *statement* of the quota
+    `n★ = 2 tr(PΣP)/(m²θ★²)` + its calibrated form `9,376/m²` + Figure 1, cross-referencing Methods -- the
+    step-by-step derivation (CLT sampling law, intermediate `E[θ²]`, PCA-diagonal and isotropic reductions) now
+    lives only in Methods (+ Supplementary S1/S2), removing the Results/Methods duplication a reader had flagged.
+    (ii) **Methods** gained a study-design lead paragraph (theory + verification, then secondary re-analysis of five
+    public atlases, no new cells generated) and a new **Statistical analysis** subsection consolidating the analysis
+    plan (OLS-through-origin regression of realized `θ²` on `(1/n−1/N)`, fitted/predicted slope ratio + `R²`,
+    `ρ²≥3` stratification, Spearman for the low-SNR breakdown) with an explicit note that inference is
+    estimation-based (no NHST/significance thresholds). Audit: 0 unresolved citations, 0 prose semicolons (the 4
+    Methods `; ` are `[@a; @b]` separators or a LaTeX `\;` thin space), Figure 1 retained. PDF 28→29 pp across the
+    trim + additions. Rebuilt PDF/DOCX.
+
+48. **Pinned the from-raw recompute environment + stated versions** (`37af668`). Closed the point-3 reproducibility
+    gap: the recompute/calibration pipeline (`scripts/{tahoe,emeraldbay,orion,trade}_recompute/`) had unpinned deps
+    (`requirements-dev.txt` only lists numpy/sympy/pytest for the calculator+CI). Added
+    **`scripts/requirements-recompute.txt`** pinning the exact versions used to generate the committed fixtures
+    (**Python 3.13.12**): numpy 2.4.4, scipy 1.18.0, pandas 2.3.3, scikit-learn 1.9.0, scanpy 1.12.2, anndata
+    0.12.18, h5py 3.16.0, pyarrow 24.0.0, pylance 8.0.0, huggingface-hub 1.10.1. Honesty basis: no env manifest was
+    recorded, but the fixtures were regenerated 2026-07-03 on this same single-machine miniconda base, so the live
+    versions are the ones that produced them. The Methods **Statistical analysis** subsection now states these
+    versions and points to the pinned file, keeping the recompute Python (3.13.12) explicitly distinct from the
+    calculator/CI matrix (3.10-3.12). `scripts/tahoe_recompute/README.md` run block installs the pin first. Rebuilt
+    PDF (29 pp) / DOCX; `scanpy 1.12.2` and the `requirements-recompute.txt` path render (path kept monospace, no
+    subscript leak), 0 unresolved citations. **Open (deferred):** the Trap-1 item -- verification *outcome* numbers
+    (0.13% / 0.34% / 0.6-2.9% / R²>0.996) still sit in Methods -- left as a defensible computational-paper convention.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
