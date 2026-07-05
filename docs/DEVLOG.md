@@ -529,6 +529,32 @@ scripts/verify_references.py` (32/32 DOIs).
     render correctly with proper math typesetting and correct S1-before-S2 ordering. Rigor is unchanged -- proofs
     relocated, not removed, and still backed by `docs/THEORY.md` + the Lean core.
 
+45. **EmeraldBay dataset facts re-verified against the source + two constant fixes** (`4e3e6d2`). Re-checked the
+    EmeraldBay claims against the official `tahoebio/EmeraldBay` Hugging Face dataset card. Core facts all confirmed
+    (1,831,648 cells across 116 shards, 52 cell lines, 27 drugs, 93 conditions, 5-day MOSAIC/Vevo platform, 57.7 GB,
+    CC-BY-4.0) -- and the phase-39 "same MOSAIC platform as Tahoe" reframing is correct (Vevo Therapeutics renamed to
+    Tahoe Therapeutics). Two numeric discrepancies fixed: (i) the README global-inventory cell count 1,831,756 ->
+    1,831,648 (the exact figure used everywhere else in the repo, confirmed on HF -- a stale typo); (ii) the
+    condition-line group count 4,912 -> 4,992 (a digit transposition -- HF `summary_statistics` = 4,992 rows = 52
+    lines x 96, and the README already said 4,992), fixed in the manuscript source (`MANUSCRIPT_DEEPSEEK.md`),
+    `FALSIFICATION.md`, and this DEVLOG (phase 13). Regenerated `manuscript.md` via the normalizer and rebuilt
+    manuscript.pdf (29 pp) / .docx; verified 4,992 renders and no stale 4,912 or 1,831,756 remains anywhere (excl.
+    vendored `.lake/`), 0 unresolved citations.
+
+46. **Remaining datasets verified against primary sources + Tahoe recompute footnote** (`653724d`). Re-checked
+    Tahoe-100M, X-Atlas/Orion, and TRADE against their papers/dataset cards -- **all facts accurate**, no numeric
+    errors. Confirmed: Tahoe (100.6M cells, 379 drugs, 50 lines, 1,344 wells = 14 plates x 96, Vevo Mosaic, Zhang
+    et al. 2025, doi 10.1101/2025.02.20.639398); Orion (~8M cells, 18,903 genes, HCT116/HEK293T, FiCS/Xaira, KD
+    75.4%/51.5%, ~16k UMIs/cell, Huang et al. 2025, doi 10.1101/2025.06.11.659105); TRADE (Nadig/Replogle/Weissman,
+    Nat Genet 2025 57:1228-1237, doi 10.1038/s41588-025-02169-3, 2,393 essential genes/line, Jurkat + HepG2,
+    GSE264667). One contextual nuance addressed with a Methods **footnote**: the repo's headline **56,827** (drug x
+    dose x line) conditions comes from the independent from-raw reprocessing retaining all 50 cell lines, whereas the
+    Tahoe paper's post-QC panel reports **52,886** conditions across **47** lines (its own line-level filtering, not a
+    data discrepancy). Added to the manuscript source (the manuscript's first footnote), regenerated `manuscript.md`,
+    rebuilt PDF (29 pp) / DOCX; footnote renders, 0 unresolved citations, no prose semicolons. (Also noted, not
+    changed: Orion's canonical repo is `Xaira-Therapeutics/X-Atlas-Orion`; the recompute read a legitimate
+    `slaf-project` SLAF/Lance re-release.)
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The two high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
