@@ -21,13 +21,21 @@
   },
   {
    "dataset": "Orion HCT116",
-   "n": 0,
-   "pending": true
+   "n": 1059,
+   "median_ratio_all": 0.148,
+   "n_in_regime": 0,
+   "median_ratio_in_regime": null,
+   "median_r2_in_regime": null,
+   "spearman_deficit_vs_inv_rho2": 0.024
   },
   {
    "dataset": "Orion HEK293T",
-   "n": 0,
-   "pending": true
+   "n": 2670,
+   "median_ratio_all": 0.304,
+   "n_in_regime": 0,
+   "median_ratio_in_regime": null,
+   "median_r2_in_regime": null,
+   "spearman_deficit_vs_inv_rho2": 0.118
   },
   {
    "dataset": "TRADE Jurkat",

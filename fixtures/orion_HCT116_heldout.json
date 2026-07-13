@@ -1,0 +1,10609 @@
+{
+ "description": "Orion HCT116 held-out angular-error falsification, all N>=400 knockdowns vs pooled-NTC centroid (streamed per-cell). Same routine as EmeraldBay pass4.",
+ "line": "HCT116",
+ "min_cells": 400,
+ "reps": 200,
+ "n_groups": 1059,
+ "median_ratio_all": 0.1479,
+ "median_r2_all": -0.96769,
+ "n_in_regime": 0,
+ "median_ratio_in_regime": null,
+ "median_r2_in_regime": null,
+ "spearman_deficit_vs_inv_rho2": 0.0236,
+ "m_range": [
+  0.157,
+  1.734
+ ],
+ "per_group": [
+  {
+   "N": 649,
+   "m": 0.3377,
+   "rho2": 0.04,
+   "pred_slope": 350.717955,
+   "fit_slope": 54.436604,
+   "ratio": 0.1552,
+   "r2": -0.30546,
+   "gene_target": "A1BG"
+  },
+  {
+   "N": 428,
+   "m": 0.2153,
+   "rho2": 0.04,
+   "pred_slope": 978.025023,
+   "fit_slope": 63.575918,
+   "ratio": 0.065,
+   "r2": -4.63763,
+   "gene_target": "A1CF"
+  },
+  {
+   "N": 529,
+   "m": 0.5299,
+   "rho2": 0.03,
+   "pred_slope": 131.772753,
+   "fit_slope": 46.026099,
+   "ratio": 0.3493,
+   "r2": 0.53496,
+   "gene_target": "ABCA7"
+  },
+  {
+   "N": 481,
+   "m": 0.3266,
+   "rho2": 0.02,
+   "pred_slope": 378.599343,
+   "fit_slope": 55.404581,
+   "ratio": 0.1463,
+   "r2": -0.94532,
+   "gene_target": "ABCA9"
+  },
+  {
+   "N": 422,
+   "m": 0.3788,
+   "rho2": 0.03,
+   "pred_slope": 252.328327,
+   "fit_slope": 51.859652,
+   "ratio": 0.2055,
+   "r2": -0.27006,
+   "gene_target": "ABCB4"
+  },
+  {
+   "N": 427,
+   "m": 0.6176,
+   "rho2": 0.21,
+   "pred_slope": 116.039695,
+   "fit_slope": 37.132592,
+   "ratio": 0.32,
+   "r2": 0.55957,
+   "gene_target": "ABCB8"
+  },
+  {
+   "N": 540,
+   "m": 0.3513,
+   "rho2": 0.01,
+   "pred_slope": 269.281972,
+   "fit_slope": 58.428149,
+   "ratio": 0.217,
+   "r2": -0.3857,
+   "gene_target": "ABL2"
+  },
+  {
+   "N": 409,
+   "m": 0.6386,
+   "rho2": 0.06,
+   "pred_slope": 98.348043,
+   "fit_slope": 38.602057,
+   "ratio": 0.3925,
+   "r2": 0.63501,
+   "gene_target": "ACIN1"
+  },
+  {
+   "N": 453,
+   "m": 0.3618,
+   "rho2": 0.01,
+   "pred_slope": 268.595005,
+   "fit_slope": 56.644934,
+   "ratio": 0.2109,
+   "r2": -1.26067,
+   "gene_target": "ACOXL"
+  },
+  {
+   "N": 577,
+   "m": 0.2841,
+   "rho2": 0.07,
+   "pred_slope": 549.182215,
+   "fit_slope": 56.727428,
+   "ratio": 0.1033,
+   "r2": -1.21543,
+   "gene_target": "ACP5"
+  },
+  {
+   "N": 493,
+   "m": 0.2496,
+   "rho2": 0.03,
+   "pred_slope": 690.932548,
+   "fit_slope": 61.163852,
+   "ratio": 0.0885,
+   "r2": -2.30763,
+   "gene_target": "ACSL5"
+  },
+  {
+   "N": 554,
+   "m": 0.4159,
+   "rho2": 0.02,
+   "pred_slope": 200.995259,
+   "fit_slope": 52.180842,
+   "ratio": 0.2596,
+   "r2": -0.14043,
+   "gene_target": "ACSM5"
+  },
+  {
+   "N": 414,
+   "m": 0.3338,
+   "rho2": 0.01,
+   "pred_slope": 328.439291,
+   "fit_slope": 57.423166,
+   "ratio": 0.1748,
+   "r2": -1.51859,
+   "gene_target": "ACSM6"
+  },
+  {
+   "N": 477,
+   "m": 0.3205,
+   "rho2": 0.06,
+   "pred_slope": 429.254069,
+   "fit_slope": 55.138519,
+   "ratio": 0.1285,
+   "r2": -1.05975,
+   "gene_target": "ACTA1"
+  },
+  {
+   "N": 438,
+   "m": 0.318,
+   "rho2": 0.01,
+   "pred_slope": 356.372844,
+   "fit_slope": 61.911427,
+   "ratio": 0.1737,
+   "r2": -1.02519,
+   "gene_target": "ACTA2"
+  },
+  {
+   "N": 440,
+   "m": 0.369,
+   "rho2": 0.04,
+   "pred_slope": 288.387315,
+   "fit_slope": 51.482253,
+   "ratio": 0.1785,
+   "r2": -0.48067,
+   "gene_target": "ACTG2"
+  },
+  {
+   "N": 491,
+   "m": 0.7013,
+   "rho2": 0.03,
+   "pred_slope": 62.398388,
+   "fit_slope": 42.727579,
+   "ratio": 0.6848,
+   "r2": 0.7586,
+   "gene_target": "ACTL10"
+  },
+  {
+   "N": 423,
+   "m": 0.4581,
+   "rho2": 0.01,
+   "pred_slope": 168.499037,
+   "fit_slope": 54.013,
+   "ratio": 0.3206,
+   "r2": 0.06276,
+   "gene_target": "ADAMTS2"
+  },
+  {
+   "N": 449,
+   "m": 0.4206,
+   "rho2": 0.02,
+   "pred_slope": 189.088771,
+   "fit_slope": 51.515448,
+   "ratio": 0.2724,
+   "r2": 0.19248,
+   "gene_target": "ADGRF3"
+  },
+  {
+   "N": 510,
+   "m": 0.27,
+   "rho2": 0.01,
+   "pred_slope": 511.233069,
+   "fit_slope": 63.198128,
+   "ratio": 0.1236,
+   "r2": -2.18754,
+   "gene_target": "ADGRF5"
+  },
+  {
+   "N": 415,
+   "m": 0.7158,
+   "rho2": 0.05,
+   "pred_slope": 72.544784,
+   "fit_slope": 37.205537,
+   "ratio": 0.5129,
+   "r2": 0.73095,
+   "gene_target": "ADO"
+  },
+  {
+   "N": 535,
+   "m": 0.365,
+   "rho2": 0.04,
+   "pred_slope": 327.012338,
+   "fit_slope": 53.079419,
+   "ratio": 0.1623,
+   "r2": -0.31653,
+   "gene_target": "ADORA3"
+  },
+  {
+   "N": 400,
+   "m": 0.4463,
+   "rho2": 0.02,
+   "pred_slope": 177.721027,
+   "fit_slope": 52.136566,
+   "ratio": 0.2934,
+   "r2": 0.06685,
+   "gene_target": "ADRA1D"
+  },
+  {
+   "N": 476,
+   "m": 0.2807,
+   "rho2": 0.05,
+   "pred_slope": 546.615641,
+   "fit_slope": 58.18273,
+   "ratio": 0.1064,
+   "r2": -1.65653,
+   "gene_target": "ADRM1"
+  },
+  {
+   "N": 461,
+   "m": 0.4242,
+   "rho2": 0.02,
+   "pred_slope": 225.614511,
+   "fit_slope": 53.535392,
+   "ratio": 0.2373,
+   "r2": -0.13427,
+   "gene_target": "AFG1L"
+  },
+  {
+   "N": 512,
+   "m": 0.2823,
+   "rho2": 0.01,
+   "pred_slope": 483.044042,
+   "fit_slope": 60.658758,
+   "ratio": 0.1256,
+   "r2": -1.29797,
+   "gene_target": "AGBL1"
+  },
+  {
+   "N": 424,
+   "m": 0.2744,
+   "rho2": 0.02,
+   "pred_slope": 544.171003,
+   "fit_slope": 59.598867,
+   "ratio": 0.1095,
+   "r2": -2.02695,
+   "gene_target": "AGBL5"
+  },
+  {
+   "N": 402,
+   "m": 0.4132,
+   "rho2": 0.08,
+   "pred_slope": 251.595109,
+   "fit_slope": 49.485063,
+   "ratio": 0.1967,
+   "r2": -0.09297,
+   "gene_target": "AGGF1"
+  },
+  {
+   "N": 417,
+   "m": 0.418,
+   "rho2": 0.03,
+   "pred_slope": 213.090943,
+   "fit_slope": 51.700187,
+   "ratio": 0.2426,
+   "r2": -0.00319,
+   "gene_target": "AIFM1"
+  },
+  {
+   "N": 518,
+   "m": 0.2196,
+   "rho2": 0.01,
+   "pred_slope": 891.22234,
+   "fit_slope": 64.60726,
+   "ratio": 0.0725,
+   "r2": -4.22209,
+   "gene_target": "AK4"
+  },
+  {
+   "N": 458,
+   "m": 0.4304,
+   "rho2": 0.13,
+   "pred_slope": 241.925521,
+   "fit_slope": 46.970513,
+   "ratio": 0.1942,
+   "r2": -0.09557,
+   "gene_target": "AKAP12"
+  },
+  {
+   "N": 400,
+   "m": 0.3215,
+   "rho2": 0.02,
+   "pred_slope": 348.187051,
+   "fit_slope": 59.812815,
+   "ratio": 0.1718,
+   "r2": -0.67002,
+   "gene_target": "AKNAD1"
+  },
+  {
+   "N": 482,
+   "m": 0.2601,
+   "rho2": 0.02,
+   "pred_slope": 609.653761,
+   "fit_slope": 59.803813,
+   "ratio": 0.0981,
+   "r2": -2.45909,
+   "gene_target": "AKR1B1"
+  },
+  {
+   "N": 410,
+   "m": 0.5943,
+   "rho2": 0.2,
+   "pred_slope": 132.742201,
+   "fit_slope": 39.12532,
+   "ratio": 0.2947,
+   "r2": 0.43549,
+   "gene_target": "ALDH1A3"
+  },
+  {
+   "N": 412,
+   "m": 0.3475,
+   "rho2": 0.04,
+   "pred_slope": 398.750753,
+   "fit_slope": 55.115976,
+   "ratio": 0.1382,
+   "r2": -0.94281,
+   "gene_target": "ALDH3A1"
+  },
+  {
+   "N": 560,
+   "m": 0.3119,
+   "rho2": 0.05,
+   "pred_slope": 464.725813,
+   "fit_slope": 56.563755,
+   "ratio": 0.1217,
+   "r2": -0.80415,
+   "gene_target": "ALDH3B1"
+  },
+  {
+   "N": 455,
+   "m": 0.4064,
+   "rho2": 0.02,
+   "pred_slope": 211.563508,
+   "fit_slope": 53.795661,
+   "ratio": 0.2543,
+   "r2": -0.15567,
+   "gene_target": "ALG9"
+  },
+  {
+   "N": 404,
+   "m": 0.2936,
+   "rho2": 0.04,
+   "pred_slope": 512.663756,
+   "fit_slope": 58.414488,
+   "ratio": 0.1139,
+   "r2": -1.6341,
+   "gene_target": "ALOX12"
+  },
+  {
+   "N": 429,
+   "m": 0.4168,
+   "rho2": 0.03,
+   "pred_slope": 210.960189,
+   "fit_slope": 49.045887,
+   "ratio": 0.2325,
+   "r2": -0.01999,
+   "gene_target": "ALOX12B"
+  },
+  {
+   "N": 464,
+   "m": 0.3096,
+   "rho2": 0.01,
+   "pred_slope": 433.230656,
+   "fit_slope": 61.623769,
+   "ratio": 0.1422,
+   "r2": -1.02637,
+   "gene_target": "ALPL"
+  },
+  {
+   "N": 490,
+   "m": 0.2885,
+   "rho2": 0.05,
+   "pred_slope": 539.035716,
+   "fit_slope": 58.611895,
+   "ratio": 0.1087,
+   "r2": -1.38353,
+   "gene_target": "AMER2"
+  },
+  {
+   "N": 479,
+   "m": 0.2386,
+   "rho2": 0.03,
+   "pred_slope": 780.37679,
+   "fit_slope": 62.947807,
+   "ratio": 0.0807,
+   "r2": -2.93192,
+   "gene_target": "ANKDD1B"
+  },
+  {
+   "N": 477,
+   "m": 0.3128,
+   "rho2": 0.02,
+   "pred_slope": 438.461298,
+   "fit_slope": 58.771126,
+   "ratio": 0.134,
+   "r2": -1.04357,
+   "gene_target": "ANKRD34A"
+  },
+  {
+   "N": 551,
+   "m": 0.4213,
+   "rho2": 0.02,
+   "pred_slope": 213.906782,
+   "fit_slope": 55.021166,
+   "ratio": 0.2572,
+   "r2": -0.1484,
+   "gene_target": "ANKRD63"
+  },
+  {
+   "N": 432,
+   "m": 0.3881,
+   "rho2": 0.02,
+   "pred_slope": 239.627485,
+   "fit_slope": 55.736613,
+   "ratio": 0.2326,
+   "r2": -0.32371,
+   "gene_target": "AOC1"
+  },
+  {
+   "N": 406,
+   "m": 0.6069,
+   "rho2": 0.04,
+   "pred_slope": 79.883241,
+   "fit_slope": 40.897024,
+   "ratio": 0.512,
+   "r2": 0.59856,
+   "gene_target": "AOX1"
+  },
+  {
+   "N": 525,
+   "m": 0.2724,
+   "rho2": 0.09,
+   "pred_slope": 594.149895,
+   "fit_slope": 58.022744,
+   "ratio": 0.0977,
+   "r2": -1.57961,
+   "gene_target": "AP1G1"
+  },
+  {
+   "N": 474,
+   "m": 0.8746,
+   "rho2": 0.79,
+   "pred_slope": 56.660777,
+   "fit_slope": 26.626026,
+   "ratio": 0.4699,
+   "r2": 0.83629,
+   "gene_target": "APC"
+  },
+  {
+   "N": 455,
+   "m": 0.3933,
+   "rho2": 0.03,
+   "pred_slope": 236.099788,
+   "fit_slope": 52.721588,
+   "ratio": 0.2233,
+   "r2": -0.25556,
+   "gene_target": "APC2"
+  },
+  {
+   "N": 409,
+   "m": 0.2913,
+   "rho2": 0.01,
+   "pred_slope": 441.68417,
+   "fit_slope": 62.673663,
+   "ratio": 0.1419,
+   "r2": -1.84554,
+   "gene_target": "APH1B"
+  },
+  {
+   "N": 427,
+   "m": 0.3847,
+   "rho2": 0.01,
+   "pred_slope": 247.287116,
+   "fit_slope": 56.445229,
+   "ratio": 0.2283,
+   "r2": -0.68147,
+   "gene_target": "APLP1"
+  },
+  {
+   "N": 459,
+   "m": 0.2785,
+   "rho2": 0.05,
+   "pred_slope": 580.665553,
+   "fit_slope": 57.868668,
+   "ratio": 0.0997,
+   "r2": -1.80668,
+   "gene_target": "APOBEC3A"
+  },
+  {
+   "N": 491,
+   "m": 0.3596,
+   "rho2": 0.02,
+   "pred_slope": 260.180838,
+   "fit_slope": 54.791189,
+   "ratio": 0.2106,
+   "r2": -0.53467,
+   "gene_target": "APOBR"
+  },
+  {
+   "N": 551,
+   "m": 0.2226,
+   "rho2": 0.03,
+   "pred_slope": 846.485761,
+   "fit_slope": 61.969717,
+   "ratio": 0.0732,
+   "r2": -3.01823,
+   "gene_target": "APRG1"
+  },
+  {
+   "N": 415,
+   "m": 0.3092,
+   "rho2": 0.06,
+   "pred_slope": 462.485438,
+   "fit_slope": 56.509398,
+   "ratio": 0.1222,
+   "r2": -1.58336,
+   "gene_target": "ARF3"
+  },
+  {
+   "N": 595,
+   "m": 0.2427,
+   "rho2": 0.04,
+   "pred_slope": 765.537738,
+   "fit_slope": 62.092925,
+   "ratio": 0.0811,
+   "r2": -2.14432,
+   "gene_target": "ARHGAP8"
+  },
+  {
+   "N": 454,
+   "m": 0.2917,
+   "rho2": 0.01,
+   "pred_slope": 453.691935,
+   "fit_slope": 62.972025,
+   "ratio": 0.1388,
+   "r2": -2.57899,
+   "gene_target": "ARHGAP9"
+  },
+  {
+   "N": 426,
+   "m": 0.4029,
+   "rho2": 0.05,
+   "pred_slope": 258.597488,
+   "fit_slope": 50.290472,
+   "ratio": 0.1945,
+   "r2": -0.21387,
+   "gene_target": "ARID3A"
+  },
+  {
+   "N": 462,
+   "m": 0.3803,
+   "rho2": 0.01,
+   "pred_slope": 257.767827,
+   "fit_slope": 57.341715,
+   "ratio": 0.2225,
+   "r2": -0.18915,
+   "gene_target": "ARPC3"
+  },
+  {
+   "N": 424,
+   "m": 0.3685,
+   "rho2": 0.03,
+   "pred_slope": 301.264297,
+   "fit_slope": 54.489473,
+   "ratio": 0.1809,
+   "r2": -0.49332,
+   "gene_target": "ARPC5"
+  },
+  {
+   "N": 490,
+   "m": 0.2023,
+   "rho2": 0.01,
+   "pred_slope": 1021.715773,
+   "fit_slope": 65.724342,
+   "ratio": 0.0643,
+   "r2": -5.43825,
+   "gene_target": "ART3"
+  },
+  {
+   "N": 400,
+   "m": 0.3649,
+   "rho2": 0.02,
+   "pred_slope": 289.2002,
+   "fit_slope": 54.071369,
+   "ratio": 0.187,
+   "r2": -0.68401,
+   "gene_target": "ASB1"
+  },
+  {
+   "N": 444,
+   "m": 0.9604,
+   "rho2": 0.17,
+   "pred_slope": 45.266311,
+   "fit_slope": 25.29182,
+   "ratio": 0.5587,
+   "r2": 0.8425,
+   "gene_target": "ASB12"
+  },
+  {
+   "N": 490,
+   "m": 0.3683,
+   "rho2": 0.01,
+   "pred_slope": 259.456875,
+   "fit_slope": 57.985274,
+   "ratio": 0.2235,
+   "r2": -0.68659,
+   "gene_target": "ASB15"
+  },
+  {
+   "N": 464,
+   "m": 0.4736,
+   "rho2": 0.03,
+   "pred_slope": 191.660025,
+   "fit_slope": 48.528283,
+   "ratio": 0.2532,
+   "r2": 0.11817,
+   "gene_target": "ASIC3"
+  },
+  {
+   "N": 451,
+   "m": 0.4042,
+   "rho2": 0.14,
+   "pred_slope": 272.043803,
+   "fit_slope": 48.676073,
+   "ratio": 0.1789,
+   "r2": -0.21595,
+   "gene_target": "ASXL2"
+  },
+  {
+   "N": 426,
+   "m": 0.4133,
+   "rho2": 0.12,
+   "pred_slope": 253.040693,
+   "fit_slope": 48.231867,
+   "ratio": 0.1906,
+   "r2": -0.28871,
+   "gene_target": "ATE1"
+  },
+  {
+   "N": 572,
+   "m": 0.5459,
+   "rho2": 0.05,
+   "pred_slope": 124.125954,
+   "fit_slope": 41.119873,
+   "ratio": 0.3313,
+   "r2": 0.51089,
+   "gene_target": "ATF7IP"
+  },
+  {
+   "N": 498,
+   "m": 0.5757,
+   "rho2": 0.02,
+   "pred_slope": 98.133672,
+   "fit_slope": 48.737271,
+   "ratio": 0.4966,
+   "r2": 0.522,
+   "gene_target": "ATG101"
+  },
+  {
+   "N": 602,
+   "m": 0.2664,
+   "rho2": 0.03,
+   "pred_slope": 618.17436,
+   "fit_slope": 60.31814,
+   "ratio": 0.0976,
+   "r2": -1.21754,
+   "gene_target": "ATP6V1G3"
+  },
+  {
+   "N": 434,
+   "m": 0.2696,
+   "rho2": 0.02,
+   "pred_slope": 604.00752,
+   "fit_slope": 61.265312,
+   "ratio": 0.1014,
+   "r2": -2.07304,
+   "gene_target": "ATP9B"
+  },
+  {
+   "N": 426,
+   "m": 0.4643,
+   "rho2": 0.05,
+   "pred_slope": 204.775356,
+   "fit_slope": 48.969926,
+   "ratio": 0.2391,
+   "r2": 0.06105,
+   "gene_target": "AXDND1"
+  },
+  {
+   "N": 673,
+   "m": 0.277,
+   "rho2": 0.02,
+   "pred_slope": 534.989781,
+   "fit_slope": 59.213259,
+   "ratio": 0.1107,
+   "r2": -1.19403,
+   "gene_target": "B3GALT5"
+  },
+  {
+   "N": 453,
+   "m": 0.7146,
+   "rho2": 0.03,
+   "pred_slope": 60.89643,
+   "fit_slope": 40.573385,
+   "ratio": 0.6663,
+   "r2": 0.67402,
+   "gene_target": "B4GALNT3"
+  },
+  {
+   "N": 659,
+   "m": 0.2886,
+   "rho2": 0.05,
+   "pred_slope": 529.14314,
+   "fit_slope": 56.471511,
+   "ratio": 0.1067,
+   "r2": -1.31482,
+   "gene_target": "BBOX1"
+  },
+  {
+   "N": 403,
+   "m": 0.2543,
+   "rho2": 0.05,
+   "pred_slope": 696.640396,
+   "fit_slope": 60.398495,
+   "ratio": 0.0867,
+   "r2": -2.81982,
+   "gene_target": "BCAR1"
+  },
+  {
+   "N": 528,
+   "m": 0.7734,
+   "rho2": 0.03,
+   "pred_slope": 55.789132,
+   "fit_slope": 39.98021,
+   "ratio": 0.7166,
+   "r2": 0.80613,
+   "gene_target": "BCAS3"
+  },
+  {
+   "N": 470,
+   "m": 0.4269,
+   "rho2": 0.02,
+   "pred_slope": 210.599735,
+   "fit_slope": 53.973705,
+   "ratio": 0.2563,
+   "r2": -0.1131,
+   "gene_target": "BCDIN3D"
+  },
+  {
+   "N": 518,
+   "m": 0.3039,
+   "rho2": 0.04,
+   "pred_slope": 486.230617,
+   "fit_slope": 56.84482,
+   "ratio": 0.1169,
+   "r2": -1.27543,
+   "gene_target": "BCL2L1"
+  },
+  {
+   "N": 442,
+   "m": 0.6278,
+   "rho2": 0.03,
+   "pred_slope": 91.574953,
+   "fit_slope": 46.101642,
+   "ratio": 0.5034,
+   "r2": 0.56718,
+   "gene_target": "BCL2L13"
+  },
+  {
+   "N": 414,
+   "m": 0.2743,
+   "rho2": 0.04,
+   "pred_slope": 596.340284,
+   "fit_slope": 61.188276,
+   "ratio": 0.1026,
+   "r2": -2.05676,
+   "gene_target": "BDH1"
+  },
+  {
+   "N": 481,
+   "m": 0.8525,
+   "rho2": 0.24,
+   "pred_slope": 55.190962,
+   "fit_slope": 27.551567,
+   "ratio": 0.4992,
+   "r2": 0.87425,
+   "gene_target": "BECN1"
+  },
+  {
+   "N": 408,
+   "m": 0.3245,
+   "rho2": 0.08,
+   "pred_slope": 395.305599,
+   "fit_slope": 54.430212,
+   "ratio": 0.1377,
+   "r2": -1.08203,
+   "gene_target": "BFSP1"
+  },
+  {
+   "N": 667,
+   "m": 0.2535,
+   "rho2": 0.01,
+   "pred_slope": 607.569365,
+   "fit_slope": 62.950726,
+   "ratio": 0.1036,
+   "r2": -1.60583,
+   "gene_target": "BLVRA"
+  },
+  {
+   "N": 584,
+   "m": 0.2531,
+   "rho2": 0.06,
+   "pred_slope": 709.105655,
+   "fit_slope": 60.321337,
+   "ratio": 0.0851,
+   "r2": -2.17874,
+   "gene_target": "BMP4"
+  },
+  {
+   "N": 440,
+   "m": 0.3893,
+   "rho2": 0.01,
+   "pred_slope": 248.082422,
+   "fit_slope": 57.399448,
+   "ratio": 0.2314,
+   "r2": -0.38336,
+   "gene_target": "BMP6"
+  },
+  {
+   "N": 474,
+   "m": 1.0059,
+   "rho2": 0.15,
+   "pred_slope": 43.419861,
+   "fit_slope": 24.960883,
+   "ratio": 0.5749,
+   "r2": 0.8735,
+   "gene_target": "BMPR1A"
+  },
+  {
+   "N": 521,
+   "m": 0.2463,
+   "rho2": 0.02,
+   "pred_slope": 646.272936,
+   "fit_slope": 60.565212,
+   "ratio": 0.0937,
+   "r2": -2.37228,
+   "gene_target": "BNIP5"
+  },
+  {
+   "N": 616,
+   "m": 0.5038,
+   "rho2": 0.02,
+   "pred_slope": 128.063232,
+   "fit_slope": 53.08646,
+   "ratio": 0.4145,
+   "r2": 0.40223,
+   "gene_target": "BOK"
+  },
+  {
+   "N": 534,
+   "m": 0.2046,
+   "rho2": 0.02,
+   "pred_slope": 996.938922,
+   "fit_slope": 64.600676,
+   "ratio": 0.0648,
+   "r2": -4.34152,
+   "gene_target": "BRS3"
+  },
+  {
+   "N": 402,
+   "m": 0.3309,
+   "rho2": 0.05,
+   "pred_slope": 410.236092,
+   "fit_slope": 54.908235,
+   "ratio": 0.1338,
+   "r2": -1.11069,
+   "gene_target": "BRSK2"
+  },
+  {
+   "N": 428,
+   "m": 0.2867,
+   "rho2": 0.05,
+   "pred_slope": 552.02219,
+   "fit_slope": 58.566459,
+   "ratio": 0.1061,
+   "r2": -1.70397,
+   "gene_target": "BSCL2"
+  },
+  {
+   "N": 447,
+   "m": 0.3186,
+   "rho2": 0.01,
+   "pred_slope": 389.761617,
+   "fit_slope": 60.888215,
+   "ratio": 0.1562,
+   "r2": -1.41665,
+   "gene_target": "BSPH1"
+  },
+  {
+   "N": 532,
+   "m": 0.4499,
+   "rho2": 0.01,
+   "pred_slope": 186.38453,
+   "fit_slope": 54.343815,
+   "ratio": 0.2916,
+   "r2": -0.07584,
+   "gene_target": "BTBD8"
+  },
+  {
+   "N": 508,
+   "m": 0.3237,
+   "rho2": 0.02,
+   "pred_slope": 357.726913,
+   "fit_slope": 57.101406,
+   "ratio": 0.1596,
+   "r2": -0.73405,
+   "gene_target": "BZW1"
+  },
+  {
+   "N": 409,
+   "m": 0.2667,
+   "rho2": 0.04,
+   "pred_slope": 612.181246,
+   "fit_slope": 60.030945,
+   "ratio": 0.0981,
+   "r2": -2.43737,
+   "gene_target": "C12orf40"
+  },
+  {
+   "N": 445,
+   "m": 0.2627,
+   "rho2": 0.02,
+   "pred_slope": 607.453335,
+   "fit_slope": 61.628787,
+   "ratio": 0.1015,
+   "r2": -1.98002,
+   "gene_target": "C14orf132"
+  },
+  {
+   "N": 538,
+   "m": 0.3552,
+   "rho2": 0.03,
+   "pred_slope": 320.46436,
+   "fit_slope": 52.644121,
+   "ratio": 0.1643,
+   "r2": -0.41932,
+   "gene_target": "C1QTNF9"
+  },
+  {
+   "N": 550,
+   "m": 0.2759,
+   "rho2": 0.02,
+   "pred_slope": 556.493894,
+   "fit_slope": 59.729687,
+   "ratio": 0.1073,
+   "r2": -1.63113,
+   "gene_target": "C1QTNF9B"
+  },
+  {
+   "N": 404,
+   "m": 0.384,
+   "rho2": 0.02,
+   "pred_slope": 278.653994,
+   "fit_slope": 54.789946,
+   "ratio": 0.1966,
+   "r2": -0.52443,
+   "gene_target": "C1orf198"
+  },
+  {
+   "N": 743,
+   "m": 0.3421,
+   "rho2": 0.03,
+   "pred_slope": 363.935586,
+   "fit_slope": 55.994271,
+   "ratio": 0.1539,
+   "r2": -0.25093,
+   "gene_target": "C2"
+  },
+  {
+   "N": 617,
+   "m": 0.2407,
+   "rho2": 0.04,
+   "pred_slope": 774.145972,
+   "fit_slope": 60.836829,
+   "ratio": 0.0786,
+   "r2": -2.11429,
+   "gene_target": "C22orf31"
+  },
+  {
+   "N": 754,
+   "m": 0.3607,
+   "rho2": 0.14,
+   "pred_slope": 359.830761,
+   "fit_slope": 50.750735,
+   "ratio": 0.141,
+   "r2": -0.24662,
+   "gene_target": "C5AR2"
+  },
+  {
+   "N": 416,
+   "m": 0.2664,
+   "rho2": 0.05,
+   "pred_slope": 672.772545,
+   "fit_slope": 60.259735,
+   "ratio": 0.0896,
+   "r2": -2.75997,
+   "gene_target": "C5orf24"
+  },
+  {
+   "N": 498,
+   "m": 0.262,
+   "rho2": 0.02,
+   "pred_slope": 544.856655,
+   "fit_slope": 60.2792,
+   "ratio": 0.1106,
+   "r2": -1.92102,
+   "gene_target": "C8B"
+  },
+  {
+   "N": 418,
+   "m": 0.689,
+   "rho2": 0.04,
+   "pred_slope": 68.422626,
+   "fit_slope": 39.495112,
+   "ratio": 0.5772,
+   "r2": 0.74704,
+   "gene_target": "C9orf78"
+  },
+  {
+   "N": 401,
+   "m": 0.4673,
+   "rho2": 0.02,
+   "pred_slope": 155.074159,
+   "fit_slope": 54.526867,
+   "ratio": 0.3516,
+   "r2": 0.13496,
+   "gene_target": "CA8"
+  },
+  {
+   "N": 420,
+   "m": 0.3601,
+   "rho2": 0.03,
+   "pred_slope": 303.101882,
+   "fit_slope": 55.715701,
+   "ratio": 0.1838,
+   "r2": -0.2445,
+   "gene_target": "CACNA1A"
+  },
+  {
+   "N": 447,
+   "m": 0.299,
+   "rho2": 0.02,
+   "pred_slope": 471.658838,
+   "fit_slope": 58.422579,
+   "ratio": 0.1239,
+   "r2": -1.47861,
+   "gene_target": "CACNA1S"
+  },
+  {
+   "N": 528,
+   "m": 0.2574,
+   "rho2": 0.01,
+   "pred_slope": 582.612727,
+   "fit_slope": 59.266506,
+   "ratio": 0.1017,
+   "r2": -2.73641,
+   "gene_target": "CACNB2"
+  },
+  {
+   "N": 424,
+   "m": 0.2966,
+   "rho2": 0.04,
+   "pred_slope": 469.087613,
+   "fit_slope": 56.395107,
+   "ratio": 0.1202,
+   "r2": -1.60108,
+   "gene_target": "CALB1"
+  },
+  {
+   "N": 447,
+   "m": 0.2776,
+   "rho2": 0.02,
+   "pred_slope": 532.029315,
+   "fit_slope": 58.704505,
+   "ratio": 0.1103,
+   "r2": -1.8744,
+   "gene_target": "CAMP"
+  },
+  {
+   "N": 440,
+   "m": 0.4211,
+   "rho2": 0.02,
+   "pred_slope": 225.489267,
+   "fit_slope": 55.116662,
+   "ratio": 0.2444,
+   "r2": -0.11852,
+   "gene_target": "CAMTA2"
+  },
+  {
+   "N": 447,
+   "m": 0.3272,
+   "rho2": 0.02,
+   "pred_slope": 356.074605,
+   "fit_slope": 56.433615,
+   "ratio": 0.1585,
+   "r2": -0.91159,
+   "gene_target": "CAPG"
+  },
+  {
+   "N": 485,
+   "m": 0.3901,
+   "rho2": 0.03,
+   "pred_slope": 260.305418,
+   "fit_slope": 50.973797,
+   "ratio": 0.1958,
+   "r2": -0.34742,
+   "gene_target": "CARD8"
+  },
+  {
+   "N": 479,
+   "m": 0.8037,
+   "rho2": 0.43,
+   "pred_slope": 66.777205,
+   "fit_slope": 28.548589,
+   "ratio": 0.4275,
+   "r2": 0.79032,
+   "gene_target": "CASC3"
+  },
+  {
+   "N": 441,
+   "m": 0.1874,
+   "rho2": 0.02,
+   "pred_slope": 1262.877595,
+   "fit_slope": 67.10063,
+   "ratio": 0.0531,
+   "r2": -6.01822,
+   "gene_target": "CASP2"
+  },
+  {
+   "N": 618,
+   "m": 0.4727,
+   "rho2": 0.17,
+   "pred_slope": 207.131275,
+   "fit_slope": 44.56829,
+   "ratio": 0.2152,
+   "r2": 0.26021,
+   "gene_target": "CASP3"
+  },
+  {
+   "N": 531,
+   "m": 0.3724,
+   "rho2": 0.02,
+   "pred_slope": 243.875465,
+   "fit_slope": 54.591322,
+   "ratio": 0.2238,
+   "r2": -0.0673,
+   "gene_target": "CASP4"
+  },
+  {
+   "N": 447,
+   "m": 0.3557,
+   "rho2": 0.03,
+   "pred_slope": 304.242888,
+   "fit_slope": 52.58851,
+   "ratio": 0.1729,
+   "r2": -0.75819,
+   "gene_target": "CAT"
+  },
+  {
+   "N": 456,
+   "m": 0.2898,
+   "rho2": 0.1,
+   "pred_slope": 509.496894,
+   "fit_slope": 56.576721,
+   "ratio": 0.111,
+   "r2": -1.55647,
+   "gene_target": "CCDC121"
+  },
+  {
+   "N": 521,
+   "m": 0.4395,
+   "rho2": 0.02,
+   "pred_slope": 191.379583,
+   "fit_slope": 52.231728,
+   "ratio": 0.2729,
+   "r2": 0.03886,
+   "gene_target": "CCDC134"
+  },
+  {
+   "N": 561,
+   "m": 0.2631,
+   "rho2": 0.01,
+   "pred_slope": 541.879987,
+   "fit_slope": 64.37121,
+   "ratio": 0.1188,
+   "r2": -1.94388,
+   "gene_target": "CCDC144NL"
+  },
+  {
+   "N": 471,
+   "m": 0.4449,
+   "rho2": 0.02,
+   "pred_slope": 163.176674,
+   "fit_slope": 49.570769,
+   "ratio": 0.3038,
+   "r2": 0.15295,
+   "gene_target": "CCDC178"
+  },
+  {
+   "N": 449,
+   "m": 0.3199,
+   "rho2": 0.04,
+   "pred_slope": 386.033592,
+   "fit_slope": 54.568098,
+   "ratio": 0.1414,
+   "r2": -0.9365,
+   "gene_target": "CCDC28B"
+  },
+  {
+   "N": 479,
+   "m": 0.3098,
+   "rho2": 0.01,
+   "pred_slope": 361.890611,
+   "fit_slope": 60.547116,
+   "ratio": 0.1673,
+   "r2": -1.19198,
+   "gene_target": "CCDC33"
+  },
+  {
+   "N": 500,
+   "m": 0.2805,
+   "rho2": 0.04,
+   "pred_slope": 526.745625,
+   "fit_slope": 57.205392,
+   "ratio": 0.1086,
+   "r2": -1.55726,
+   "gene_target": "CCDC65"
+  },
+  {
+   "N": 522,
+   "m": 1.1302,
+   "rho2": 0.64,
+   "pred_slope": 34.810399,
+   "fit_slope": 19.643489,
+   "ratio": 0.5643,
+   "r2": 0.89978,
+   "gene_target": "CCDC73"
+  },
+  {
+   "N": 452,
+   "m": 0.4198,
+   "rho2": 0.02,
+   "pred_slope": 190.335694,
+   "fit_slope": 51.102532,
+   "ratio": 0.2685,
+   "r2": -0.05733,
+   "gene_target": "CCDC77"
+  },
+  {
+   "N": 481,
+   "m": 0.4989,
+   "rho2": 0.02,
+   "pred_slope": 136.69516,
+   "fit_slope": 54.160031,
+   "ratio": 0.3962,
+   "r2": 0.45098,
+   "gene_target": "CCDC93"
+  },
+  {
+   "N": 905,
+   "m": 0.305,
+   "rho2": 0.06,
+   "pred_slope": 486.692022,
+   "fit_slope": 56.216888,
+   "ratio": 0.1155,
+   "r2": -0.46013,
+   "gene_target": "CCK"
+  },
+  {
+   "N": 624,
+   "m": 0.4155,
+   "rho2": 0.01,
+   "pred_slope": 184.974035,
+   "fit_slope": 56.356405,
+   "ratio": 0.3047,
+   "r2": 0.04001,
+   "gene_target": "CCL14"
+  },
+  {
+   "N": 500,
+   "m": 0.4087,
+   "rho2": 0.07,
+   "pred_slope": 272.576347,
+   "fit_slope": 49.287383,
+   "ratio": 0.1808,
+   "r2": -0.02753,
+   "gene_target": "CCL18"
+  },
+  {
+   "N": 637,
+   "m": 0.2091,
+   "rho2": 0.03,
+   "pred_slope": 1059.651665,
+   "fit_slope": 63.882649,
+   "ratio": 0.0603,
+   "r2": -3.52208,
+   "gene_target": "CCL27"
+  },
+  {
+   "N": 525,
+   "m": 0.4813,
+   "rho2": 0.02,
+   "pred_slope": 152.574696,
+   "fit_slope": 52.581631,
+   "ratio": 0.3446,
+   "r2": 0.38175,
+   "gene_target": "CCNI2"
+  },
+  {
+   "N": 640,
+   "m": 0.2198,
+   "rho2": 0.01,
+   "pred_slope": 918.002743,
+   "fit_slope": 62.779836,
+   "ratio": 0.0684,
+   "r2": -3.48742,
+   "gene_target": "CCNP"
+  },
+  {
+   "N": 421,
+   "m": 0.593,
+   "rho2": 0.02,
+   "pred_slope": 91.790201,
+   "fit_slope": 50.080756,
+   "ratio": 0.5456,
+   "r2": 0.54699,
+   "gene_target": "CCR6"
+  },
+  {
+   "N": 427,
+   "m": 0.3041,
+   "rho2": 0.08,
+   "pred_slope": 497.320814,
+   "fit_slope": 55.992882,
+   "ratio": 0.1126,
+   "r2": -1.57969,
+   "gene_target": "CCR7"
+  },
+  {
+   "N": 419,
+   "m": 0.3394,
+   "rho2": 0.05,
+   "pred_slope": 379.823266,
+   "fit_slope": 53.944257,
+   "ratio": 0.142,
+   "r2": -1.01834,
+   "gene_target": "CD180"
+  },
+  {
+   "N": 410,
+   "m": 0.2751,
+   "rho2": 0.08,
+   "pred_slope": 627.687596,
+   "fit_slope": 59.070731,
+   "ratio": 0.0941,
+   "r2": -2.32701,
+   "gene_target": "CD200R1"
+  },
+  {
+   "N": 422,
+   "m": 0.2698,
+   "rho2": 0.05,
+   "pred_slope": 553.019404,
+   "fit_slope": 59.108984,
+   "ratio": 0.1069,
+   "r2": -1.89209,
+   "gene_target": "CD226"
+  },
+  {
+   "N": 529,
+   "m": 0.6532,
+   "rho2": 0.04,
+   "pred_slope": 75.746108,
+   "fit_slope": 39.789858,
+   "ratio": 0.5253,
+   "r2": 0.66198,
+   "gene_target": "CD300LD-AS1"
+  },
+  {
+   "N": 412,
+   "m": 0.271,
+   "rho2": 0.05,
+   "pred_slope": 584.173572,
+   "fit_slope": 59.396499,
+   "ratio": 0.1017,
+   "r2": -2.39458,
+   "gene_target": "CD300LF"
+  },
+  {
+   "N": 612,
+   "m": 0.6454,
+   "rho2": 0.04,
+   "pred_slope": 74.160309,
+   "fit_slope": 40.144243,
+   "ratio": 0.5413,
+   "r2": 0.75028,
+   "gene_target": "CD46"
+  },
+  {
+   "N": 628,
+   "m": 0.2976,
+   "rho2": 0.01,
+   "pred_slope": 396.741858,
+   "fit_slope": 57.901388,
+   "ratio": 0.1459,
+   "r2": -0.84676,
+   "gene_target": "CD59"
+  },
+  {
+   "N": 417,
+   "m": 0.5546,
+   "rho2": 0.02,
+   "pred_slope": 112.945679,
+   "fit_slope": 49.53905,
+   "ratio": 0.4386,
+   "r2": 0.46855,
+   "gene_target": "CD83"
+  },
+  {
+   "N": 560,
+   "m": 0.2809,
+   "rho2": 0.05,
+   "pred_slope": 568.923641,
+   "fit_slope": 58.592674,
+   "ratio": 0.103,
+   "r2": -1.42151,
+   "gene_target": "CD86"
+  },
+  {
+   "N": 588,
+   "m": 0.3171,
+   "rho2": 0.02,
+   "pred_slope": 371.744511,
+   "fit_slope": 56.635084,
+   "ratio": 0.1523,
+   "r2": -0.80534,
+   "gene_target": "CDH17"
+  },
+  {
+   "N": 655,
+   "m": 0.2113,
+   "rho2": 0.02,
+   "pred_slope": 951.338407,
+   "fit_slope": 64.750604,
+   "ratio": 0.0681,
+   "r2": -2.72776,
+   "gene_target": "CDHR2"
+  },
+  {
+   "N": 432,
+   "m": 0.6223,
+   "rho2": 0.23,
+   "pred_slope": 127.500654,
+   "fit_slope": 38.270005,
+   "ratio": 0.3002,
+   "r2": 0.49297,
+   "gene_target": "CDIN1"
+  },
+  {
+   "N": 789,
+   "m": 0.174,
+   "rho2": 0.02,
+   "pred_slope": 1424.666375,
+   "fit_slope": 65.464683,
+   "ratio": 0.046,
+   "r2": -4.37351,
+   "gene_target": "CDK5RAP1"
+  },
+  {
+   "N": 405,
+   "m": 0.3009,
+   "rho2": 0.01,
+   "pred_slope": 402.253485,
+   "fit_slope": 57.728935,
+   "ratio": 0.1435,
+   "r2": -1.5038,
+   "gene_target": "CDKL3"
+  },
+  {
+   "N": 412,
+   "m": 0.3028,
+   "rho2": 0.02,
+   "pred_slope": 482.662322,
+   "fit_slope": 59.144297,
+   "ratio": 0.1225,
+   "r2": -1.78572,
+   "gene_target": "CEACAM3"
+  },
+  {
+   "N": 549,
+   "m": 0.2458,
+   "rho2": 0.01,
+   "pred_slope": 654.731761,
+   "fit_slope": 61.706347,
+   "ratio": 0.0942,
+   "r2": -2.0299,
+   "gene_target": "CEL"
+  },
+  {
+   "N": 431,
+   "m": 0.2846,
+   "rho2": 0.02,
+   "pred_slope": 508.763721,
+   "fit_slope": 61.155871,
+   "ratio": 0.1202,
+   "r2": -1.57072,
+   "gene_target": "CELF5"
+  },
+  {
+   "N": 450,
+   "m": 0.3394,
+   "rho2": 0.04,
+   "pred_slope": 345.579708,
+   "fit_slope": 54.1127,
+   "ratio": 0.1566,
+   "r2": -0.56862,
+   "gene_target": "CEP57L1"
+  },
+  {
+   "N": 450,
+   "m": 0.2718,
+   "rho2": 0.01,
+   "pred_slope": 526.625799,
+   "fit_slope": 63.302579,
+   "ratio": 0.1202,
+   "r2": -2.18781,
+   "gene_target": "CEP68"
+  },
+  {
+   "N": 579,
+   "m": 0.3255,
+   "rho2": 0.02,
+   "pred_slope": 354.487839,
+   "fit_slope": 56.482152,
+   "ratio": 0.1593,
+   "r2": -0.7406,
+   "gene_target": "CETN2"
+  },
+  {
+   "N": 451,
+   "m": 0.4607,
+   "rho2": 0.02,
+   "pred_slope": 174.245034,
+   "fit_slope": 50.586022,
+   "ratio": 0.2903,
+   "r2": 0.09084,
+   "gene_target": "CFAP157"
+  },
+  {
+   "N": 746,
+   "m": 0.2404,
+   "rho2": 0.01,
+   "pred_slope": 671.683736,
+   "fit_slope": 61.3727,
+   "ratio": 0.0914,
+   "r2": -1.62838,
+   "gene_target": "CFAP47"
+  },
+  {
+   "N": 470,
+   "m": 0.458,
+   "rho2": 0.02,
+   "pred_slope": 179.219995,
+   "fit_slope": 52.052768,
+   "ratio": 0.2904,
+   "r2": 0.09687,
+   "gene_target": "CFDP1"
+  },
+  {
+   "N": 451,
+   "m": 0.3693,
+   "rho2": 0.01,
+   "pred_slope": 279.055814,
+   "fit_slope": 57.755023,
+   "ratio": 0.207,
+   "r2": -0.70336,
+   "gene_target": "CFHR3"
+  },
+  {
+   "N": 402,
+   "m": 0.3907,
+   "rho2": 0.02,
+   "pred_slope": 215.269776,
+   "fit_slope": 56.663053,
+   "ratio": 0.2632,
+   "r2": -0.10099,
+   "gene_target": "CHAT"
+  },
+  {
+   "N": 608,
+   "m": 0.6571,
+   "rho2": 0.07,
+   "pred_slope": 100.524205,
+   "fit_slope": 37.32284,
+   "ratio": 0.3713,
+   "r2": 0.60889,
+   "gene_target": "CHD2"
+  },
+  {
+   "N": 538,
+   "m": 0.2595,
+   "rho2": 0.02,
+   "pred_slope": 634.140487,
+   "fit_slope": 60.425716,
+   "ratio": 0.0953,
+   "r2": -2.09599,
+   "gene_target": "CHI3L2"
+  },
+  {
+   "N": 417,
+   "m": 0.2988,
+   "rho2": 0.08,
+   "pred_slope": 442.610796,
+   "fit_slope": 55.771762,
+   "ratio": 0.126,
+   "r2": -1.33683,
+   "gene_target": "CITED1"
+  },
+  {
+   "N": 476,
+   "m": 0.3272,
+   "rho2": 0.01,
+   "pred_slope": 366.808792,
+   "fit_slope": 61.083308,
+   "ratio": 0.1665,
+   "r2": -1.19727,
+   "gene_target": "CLCN4"
+  },
+  {
+   "N": 425,
+   "m": 0.3172,
+   "rho2": 0.04,
+   "pred_slope": 419.231399,
+   "fit_slope": 54.955852,
+   "ratio": 0.1311,
+   "r2": -1.38993,
+   "gene_target": "CLEC3B"
+  },
+  {
+   "N": 438,
+   "m": 0.3741,
+   "rho2": 0.02,
+   "pred_slope": 287.721593,
+   "fit_slope": 54.957167,
+   "ratio": 0.191,
+   "r2": -0.32611,
+   "gene_target": "CLLU1-AS1"
+  },
+  {
+   "N": 445,
+   "m": 0.2335,
+   "rho2": 0.02,
+   "pred_slope": 753.157147,
+   "fit_slope": 62.97998,
+   "ratio": 0.0836,
+   "r2": -3.6531,
+   "gene_target": "CLPSL2"
+  },
+  {
+   "N": 468,
+   "m": 0.3906,
+   "rho2": 0.07,
+   "pred_slope": 292.081248,
+   "fit_slope": 50.595097,
+   "ratio": 0.1732,
+   "r2": -0.28484,
+   "gene_target": "CLSTN1"
+  },
+  {
+   "N": 550,
+   "m": 0.2633,
+   "rho2": 0.02,
+   "pred_slope": 642.869178,
+   "fit_slope": 61.654982,
+   "ratio": 0.0959,
+   "r2": -1.85871,
+   "gene_target": "CLVS2"
+  },
+  {
+   "N": 402,
+   "m": 0.27,
+   "rho2": 0.03,
+   "pred_slope": 581.391218,
+   "fit_slope": 59.205415,
+   "ratio": 0.1018,
+   "r2": -2.34744,
+   "gene_target": "CLXN"
+  },
+  {
+   "N": 409,
+   "m": 0.6556,
+   "rho2": 0.04,
+   "pred_slope": 70.283969,
+   "fit_slope": 41.166752,
+   "ratio": 0.5857,
+   "r2": 0.70088,
+   "gene_target": "CMKLR1"
+  },
+  {
+   "N": 473,
+   "m": 0.452,
+   "rho2": 0.02,
+   "pred_slope": 190.131848,
+   "fit_slope": 52.752736,
+   "ratio": 0.2775,
+   "r2": 0.12339,
+   "gene_target": "CMTM6"
+  },
+  {
+   "N": 451,
+   "m": 0.4128,
+   "rho2": 0.02,
+   "pred_slope": 211.379535,
+   "fit_slope": 52.209473,
+   "ratio": 0.247,
+   "r2": -0.35017,
+   "gene_target": "CNGA4"
+  },
+  {
+   "N": 463,
+   "m": 0.4799,
+   "rho2": 0.19,
+   "pred_slope": 192.834571,
+   "fit_slope": 43.593135,
+   "ratio": 0.2261,
+   "r2": 0.08317,
+   "gene_target": "CNOT4"
+  },
+  {
+   "N": 474,
+   "m": 0.3782,
+   "rho2": 0.02,
+   "pred_slope": 276.025913,
+   "fit_slope": 56.492426,
+   "ratio": 0.2047,
+   "r2": -0.48698,
+   "gene_target": "CNP"
+  },
+  {
+   "N": 459,
+   "m": 0.26,
+   "rho2": 0.04,
+   "pred_slope": 620.775341,
+   "fit_slope": 59.581974,
+   "ratio": 0.096,
+   "r2": -2.00195,
+   "gene_target": "CNPPD1"
+  },
+  {
+   "N": 531,
+   "m": 0.3007,
+   "rho2": 0.08,
+   "pred_slope": 507.280583,
+   "fit_slope": 56.2107,
+   "ratio": 0.1108,
+   "r2": -1.02164,
+   "gene_target": "COL10A1"
+  },
+  {
+   "N": 519,
+   "m": 0.2451,
+   "rho2": 0.05,
+   "pred_slope": 772.027301,
+   "fit_slope": 61.538441,
+   "ratio": 0.0797,
+   "r2": -2.57209,
+   "gene_target": "COL6A6"
+  },
+  {
+   "N": 402,
+   "m": 0.3349,
+   "rho2": 0.07,
+   "pred_slope": 412.203637,
+   "fit_slope": 54.361338,
+   "ratio": 0.1319,
+   "r2": -1.36443,
+   "gene_target": "COMMD3"
+  },
+  {
+   "N": 424,
+   "m": 0.6553,
+   "rho2": 0.03,
+   "pred_slope": 79.770543,
+   "fit_slope": 42.600171,
+   "ratio": 0.534,
+   "r2": 0.64839,
+   "gene_target": "COX17"
+  },
+  {
+   "N": 585,
+   "m": 0.3606,
+   "rho2": 0.01,
+   "pred_slope": 280.189946,
+   "fit_slope": 58.362226,
+   "ratio": 0.2083,
+   "r2": -0.53527,
+   "gene_target": "CPSF4L"
+  },
+  {
+   "N": 680,
+   "m": 0.2083,
+   "rho2": 0.04,
+   "pred_slope": 1003.816176,
+   "fit_slope": 63.828904,
+   "ratio": 0.0636,
+   "r2": -2.68006,
+   "gene_target": "CRACD"
+  },
+  {
+   "N": 572,
+   "m": 0.3649,
+   "rho2": 0.06,
+   "pred_slope": 342.42973,
+   "fit_slope": 51.22831,
+   "ratio": 0.1496,
+   "r2": -0.42688,
+   "gene_target": "CRB2"
+  },
+  {
+   "N": 400,
+   "m": 0.279,
+   "rho2": 0.03,
+   "pred_slope": 570.994323,
+   "fit_slope": 60.209351,
+   "ratio": 0.1054,
+   "r2": -1.89883,
+   "gene_target": "CRLF2"
+  },
+  {
+   "N": 571,
+   "m": 0.2306,
+   "rho2": 0.03,
+   "pred_slope": 803.624912,
+   "fit_slope": 62.519062,
+   "ratio": 0.0778,
+   "r2": -2.48439,
+   "gene_target": "CRYAA"
+  },
+  {
+   "N": 617,
+   "m": 0.2013,
+   "rho2": 0.01,
+   "pred_slope": 1032.346392,
+   "fit_slope": 66.160903,
+   "ratio": 0.0641,
+   "r2": -4.12476,
+   "gene_target": "CSRNP3"
+  },
+  {
+   "N": 453,
+   "m": 0.2744,
+   "rho2": 0.05,
+   "pred_slope": 600.802184,
+   "fit_slope": 59.127438,
+   "ratio": 0.0984,
+   "r2": -1.84249,
+   "gene_target": "CT45A1"
+  },
+  {
+   "N": 403,
+   "m": 0.6486,
+   "rho2": 0.03,
+   "pred_slope": 79.169881,
+   "fit_slope": 44.407166,
+   "ratio": 0.5609,
+   "r2": 0.65515,
+   "gene_target": "CT47A7"
+  },
+  {
+   "N": 494,
+   "m": 0.3016,
+   "rho2": 0.01,
+   "pred_slope": 390.415421,
+   "fit_slope": 60.46373,
+   "ratio": 0.1549,
+   "r2": -1.08275,
+   "gene_target": "CTSC"
+  },
+  {
+   "N": 549,
+   "m": 0.3075,
+   "rho2": 0.02,
+   "pred_slope": 432.227405,
+   "fit_slope": 59.085968,
+   "ratio": 0.1367,
+   "r2": -1.07229,
+   "gene_target": "CTSL"
+  },
+  {
+   "N": 774,
+   "m": 0.1724,
+   "rho2": 0.02,
+   "pred_slope": 1484.997969,
+   "fit_slope": 66.001577,
+   "ratio": 0.0444,
+   "r2": -4.66339,
+   "gene_target": "CTSS"
+  },
+  {
+   "N": 421,
+   "m": 0.4241,
+   "rho2": 0.01,
+   "pred_slope": 209.185649,
+   "fit_slope": 56.255923,
+   "ratio": 0.2689,
+   "r2": -0.19546,
+   "gene_target": "CUTA"
+  },
+  {
+   "N": 413,
+   "m": 0.2964,
+   "rho2": 0.02,
+   "pred_slope": 451.890421,
+   "fit_slope": 59.709802,
+   "ratio": 0.1321,
+   "r2": -1.89635,
+   "gene_target": "CXCR5"
+  },
+  {
+   "N": 590,
+   "m": 0.3901,
+   "rho2": 0.02,
+   "pred_slope": 211.495178,
+   "fit_slope": 55.745577,
+   "ratio": 0.2636,
+   "r2": 0.02538,
+   "gene_target": "CYP11A1"
+  },
+  {
+   "N": 478,
+   "m": 0.3475,
+   "rho2": 0.01,
+   "pred_slope": 339.651944,
+   "fit_slope": 58.076776,
+   "ratio": 0.171,
+   "r2": -0.43432,
+   "gene_target": "CYP11B1"
+  },
+  {
+   "N": 594,
+   "m": 0.5116,
+   "rho2": 0.02,
+   "pred_slope": 126.888355,
+   "fit_slope": 52.552705,
+   "ratio": 0.4142,
+   "r2": 0.37175,
+   "gene_target": "CYP19A1"
+  },
+  {
+   "N": 599,
+   "m": 0.3528,
+   "rho2": 0.01,
+   "pred_slope": 272.284535,
+   "fit_slope": 59.780956,
+   "ratio": 0.2196,
+   "r2": -0.15796,
+   "gene_target": "CYP26B1"
+  },
+  {
+   "N": 543,
+   "m": 0.2845,
+   "rho2": 0.01,
+   "pred_slope": 455.089404,
+   "fit_slope": 58.932796,
+   "ratio": 0.1295,
+   "r2": -1.62223,
+   "gene_target": "CYP2C8"
+  },
+  {
+   "N": 542,
+   "m": 0.3324,
+   "rho2": 0.03,
+   "pred_slope": 359.969427,
+   "fit_slope": 54.972802,
+   "ratio": 0.1527,
+   "r2": -0.48485,
+   "gene_target": "CYP4B1"
+  },
+  {
+   "N": 407,
+   "m": 0.2957,
+   "rho2": 0.02,
+   "pred_slope": 475.684949,
+   "fit_slope": 59.864004,
+   "ratio": 0.1258,
+   "r2": -1.96879,
+   "gene_target": "DBI"
+  },
+  {
+   "N": 711,
+   "m": 0.2382,
+   "rho2": 0.02,
+   "pred_slope": 782.086589,
+   "fit_slope": 63.172215,
+   "ratio": 0.0808,
+   "r2": -1.55683,
+   "gene_target": "DBNDD2"
+  },
+  {
+   "N": 614,
+   "m": 0.2436,
+   "rho2": 0.01,
+   "pred_slope": 679.723285,
+   "fit_slope": 62.299858,
+   "ratio": 0.0917,
+   "r2": -2.30261,
+   "gene_target": "DBX1"
+  },
+  {
+   "N": 489,
+   "m": 0.3324,
+   "rho2": 0.04,
+   "pred_slope": 368.705397,
+   "fit_slope": 54.272514,
+   "ratio": 0.1472,
+   "r2": -0.61334,
+   "gene_target": "DCAF16"
+  },
+  {
+   "N": 460,
+   "m": 0.4061,
+   "rho2": 0.04,
+   "pred_slope": 262.498107,
+   "fit_slope": 51.103342,
+   "ratio": 0.1947,
+   "r2": -0.18549,
+   "gene_target": "DCAF4L2"
+  },
+  {
+   "N": 446,
+   "m": 0.4346,
+   "rho2": 0.02,
+   "pred_slope": 186.59007,
+   "fit_slope": 52.676387,
+   "ratio": 0.2823,
+   "r2": 0.00456,
+   "gene_target": "DCAF8L2"
+  },
+  {
+   "N": 409,
+   "m": 0.2321,
+   "rho2": 0.04,
+   "pred_slope": 771.168726,
+   "fit_slope": 62.238487,
+   "ratio": 0.0807,
+   "r2": -3.72033,
+   "gene_target": "DCXR"
+  },
+  {
+   "N": 688,
+   "m": 0.5469,
+   "rho2": 0.08,
+   "pred_slope": 144.753894,
+   "fit_slope": 42.11721,
+   "ratio": 0.291,
+   "r2": 0.58322,
+   "gene_target": "DDB1"
+  },
+  {
+   "N": 455,
+   "m": 0.4064,
+   "rho2": 0.02,
+   "pred_slope": 232.266395,
+   "fit_slope": 52.704359,
+   "ratio": 0.2269,
+   "r2": -0.15947,
+   "gene_target": "DDIT4"
+  },
+  {
+   "N": 636,
+   "m": 0.2369,
+   "rho2": 0.01,
+   "pred_slope": 668.918533,
+   "fit_slope": 63.300167,
+   "ratio": 0.0946,
+   "r2": -2.24614,
+   "gene_target": "DDR1"
+  },
+  {
+   "N": 634,
+   "m": 0.2048,
+   "rho2": 0.02,
+   "pred_slope": 983.964754,
+   "fit_slope": 64.713307,
+   "ratio": 0.0658,
+   "r2": -2.87833,
+   "gene_target": "DEF6"
+  },
+  {
+   "N": 523,
+   "m": 0.2676,
+   "rho2": 0.01,
+   "pred_slope": 517.946019,
+   "fit_slope": 61.279543,
+   "ratio": 0.1183,
+   "r2": -2.01544,
+   "gene_target": "DEFA1"
+  },
+  {
+   "N": 493,
+   "m": 0.2745,
+   "rho2": 0.02,
+   "pred_slope": 568.644813,
+   "fit_slope": 58.878663,
+   "ratio": 0.1035,
+   "r2": -1.96049,
+   "gene_target": "DEFB103B"
+  },
+  {
+   "N": 435,
+   "m": 0.5794,
+   "rho2": 0.07,
+   "pred_slope": 125.054469,
+   "fit_slope": 40.399692,
+   "ratio": 0.3231,
+   "r2": 0.51412,
+   "gene_target": "DENND4B"
+  },
+  {
+   "N": 543,
+   "m": 0.3004,
+   "rho2": 0.01,
+   "pred_slope": 421.669525,
+   "fit_slope": 58.63503,
+   "ratio": 0.1391,
+   "r2": -1.65804,
+   "gene_target": "DES"
+  },
+  {
+   "N": 450,
+   "m": 0.3239,
+   "rho2": 0.02,
+   "pred_slope": 363.990255,
+   "fit_slope": 56.663978,
+   "ratio": 0.1557,
+   "r2": -1.26441,
+   "gene_target": "DEUP1"
+  },
+  {
+   "N": 462,
+   "m": 0.2499,
+   "rho2": 0.06,
+   "pred_slope": 692.041428,
+   "fit_slope": 60.924701,
+   "ratio": 0.088,
+   "r2": -2.29254,
+   "gene_target": "DGKQ"
+  },
+  {
+   "N": 442,
+   "m": 0.3134,
+   "rho2": 0.02,
+   "pred_slope": 407.502152,
+   "fit_slope": 59.018296,
+   "ratio": 0.1448,
+   "r2": -1.3244,
+   "gene_target": "DHRS3"
+  },
+  {
+   "N": 425,
+   "m": 0.3025,
+   "rho2": 0.02,
+   "pred_slope": 480.850818,
+   "fit_slope": 60.147918,
+   "ratio": 0.1251,
+   "r2": -1.61169,
+   "gene_target": "DHRS4"
+  },
+  {
+   "N": 409,
+   "m": 1.463,
+   "rho2": 1.05,
+   "pred_slope": 21.034861,
+   "fit_slope": 14.519473,
+   "ratio": 0.6903,
+   "r2": 0.95911,
+   "gene_target": "DHX15"
+  },
+  {
+   "N": 404,
+   "m": 0.308,
+   "rho2": 0.02,
+   "pred_slope": 397.431432,
+   "fit_slope": 56.042524,
+   "ratio": 0.141,
+   "r2": -1.56952,
+   "gene_target": "DHX35"
+  },
+  {
+   "N": 450,
+   "m": 0.4001,
+   "rho2": 0.03,
+   "pred_slope": 268.045168,
+   "fit_slope": 52.012264,
+   "ratio": 0.194,
+   "r2": -0.35813,
+   "gene_target": "DIPK2A"
+  },
+  {
+   "N": 422,
+   "m": 0.2621,
+   "rho2": 0.04,
+   "pred_slope": 644.676036,
+   "fit_slope": 59.998539,
+   "ratio": 0.0931,
+   "r2": -2.52476,
+   "gene_target": "DISC1"
+  },
+  {
+   "N": 431,
+   "m": 0.3338,
+   "rho2": 0.03,
+   "pred_slope": 339.776855,
+   "fit_slope": 55.4813,
+   "ratio": 0.1633,
+   "r2": -0.8582,
+   "gene_target": "DISP2"
+  },
+  {
+   "N": 489,
+   "m": 0.3485,
+   "rho2": 0.02,
+   "pred_slope": 297.520237,
+   "fit_slope": 56.597571,
+   "ratio": 0.1902,
+   "r2": -0.65025,
+   "gene_target": "DISP3"
+  },
+  {
+   "N": 400,
+   "m": 0.3632,
+   "rho2": 0.04,
+   "pred_slope": 314.66355,
+   "fit_slope": 51.984535,
+   "ratio": 0.1652,
+   "r2": -0.8589,
+   "gene_target": "DLGAP1"
+  },
+  {
+   "N": 444,
+   "m": 0.3938,
+   "rho2": 0.02,
+   "pred_slope": 239.674543,
+   "fit_slope": 55.560036,
+   "ratio": 0.2318,
+   "r2": -0.37835,
+   "gene_target": "DNAI3"
+  },
+  {
+   "N": 429,
+   "m": 0.2909,
+   "rho2": 0.07,
+   "pred_slope": 512.838075,
+   "fit_slope": 56.788016,
+   "ratio": 0.1107,
+   "r2": -1.57908,
+   "gene_target": "DNAJB11"
+  },
+  {
+   "N": 412,
+   "m": 0.4027,
+   "rho2": 0.03,
+   "pred_slope": 245.260285,
+   "fit_slope": 52.405474,
+   "ratio": 0.2137,
+   "r2": -0.23844,
+   "gene_target": "DNAJC16"
+  },
+  {
+   "N": 767,
+   "m": 0.316,
+   "rho2": 0.05,
+   "pred_slope": 427.936944,
+   "fit_slope": 54.333618,
+   "ratio": 0.127,
+   "r2": -0.57205,
+   "gene_target": "DNAJC25"
+  },
+  {
+   "N": 546,
+   "m": 0.3569,
+   "rho2": 0.02,
+   "pred_slope": 272.132101,
+   "fit_slope": 53.905026,
+   "ratio": 0.1981,
+   "r2": -0.5003,
+   "gene_target": "DNAL4"
+  },
+  {
+   "N": 692,
+   "m": 0.3492,
+   "rho2": 0.01,
+   "pred_slope": 298.7824,
+   "fit_slope": 59.037772,
+   "ratio": 0.1976,
+   "r2": -0.52951,
+   "gene_target": "DNMT3B"
+  },
+  {
+   "N": 466,
+   "m": 0.273,
+   "rho2": 0.04,
+   "pred_slope": 586.424224,
+   "fit_slope": 59.943193,
+   "ratio": 0.1022,
+   "r2": -1.61045,
+   "gene_target": "DOC2A"
+  },
+  {
+   "N": 487,
+   "m": 0.2754,
+   "rho2": 0.02,
+   "pred_slope": 541.409364,
+   "fit_slope": 59.069935,
+   "ratio": 0.1091,
+   "r2": -1.80373,
+   "gene_target": "DPF1"
+  },
+  {
+   "N": 679,
+   "m": 0.3708,
+   "rho2": 0.04,
+   "pred_slope": 282.088181,
+   "fit_slope": 50.112215,
+   "ratio": 0.1776,
+   "r2": -0.07481,
+   "gene_target": "DPH1"
+  },
+  {
+   "N": 416,
+   "m": 0.3319,
+   "rho2": 0.02,
+   "pred_slope": 366.439323,
+   "fit_slope": 57.511408,
+   "ratio": 0.1569,
+   "r2": -0.78627,
+   "gene_target": "DSE"
+  },
+  {
+   "N": 572,
+   "m": 0.2698,
+   "rho2": 0.02,
+   "pred_slope": 565.963574,
+   "fit_slope": 60.551152,
+   "ratio": 0.107,
+   "r2": -1.90929,
+   "gene_target": "DST"
+  },
+  {
+   "N": 501,
+   "m": 0.3262,
+   "rho2": 0.01,
+   "pred_slope": 380.799012,
+   "fit_slope": 59.40693,
+   "ratio": 0.156,
+   "r2": -0.90393,
+   "gene_target": "DUSP16"
+  },
+  {
+   "N": 410,
+   "m": 0.2696,
+   "rho2": 0.05,
+   "pred_slope": 576.699583,
+   "fit_slope": 60.349794,
+   "ratio": 0.1046,
+   "r2": -1.93658,
+   "gene_target": "DUSP7"
+  },
+  {
+   "N": 421,
+   "m": 0.2301,
+   "rho2": 0.05,
+   "pred_slope": 851.895891,
+   "fit_slope": 63.362167,
+   "ratio": 0.0744,
+   "r2": -3.52774,
+   "gene_target": "DYNLT3"
+  },
+  {
+   "N": 554,
+   "m": 0.4378,
+   "rho2": 0.02,
+   "pred_slope": 178.752014,
+   "fit_slope": 50.223823,
+   "ratio": 0.281,
+   "r2": -0.01889,
+   "gene_target": "EBP"
+  },
+  {
+   "N": 474,
+   "m": 0.861,
+   "rho2": 0.77,
+   "pred_slope": 63.48763,
+   "fit_slope": 27.576563,
+   "ratio": 0.4344,
+   "r2": 0.81773,
+   "gene_target": "ECI2"
+  },
+  {
+   "N": 440,
+   "m": 0.5658,
+   "rho2": 0.02,
+   "pred_slope": 108.145802,
+   "fit_slope": 46.57573,
+   "ratio": 0.4307,
+   "r2": 0.51565,
+   "gene_target": "ECSCR"
+  },
+  {
+   "N": 467,
+   "m": 0.4695,
+   "rho2": 0.07,
+   "pred_slope": 216.728259,
+   "fit_slope": 47.216694,
+   "ratio": 0.2179,
+   "r2": 0.0725,
+   "gene_target": "EFL1"
+  },
+  {
+   "N": 411,
+   "m": 0.5013,
+   "rho2": 0.02,
+   "pred_slope": 143.110404,
+   "fit_slope": 51.835247,
+   "ratio": 0.3622,
+   "r2": 0.19732,
+   "gene_target": "EGFL7"
+  },
+  {
+   "N": 423,
+   "m": 0.5196,
+   "rho2": 0.04,
+   "pred_slope": 119.703776,
+   "fit_slope": 44.504486,
+   "ratio": 0.3718,
+   "r2": 0.39392,
+   "gene_target": "EIF1AD"
+  },
+  {
+   "N": 559,
+   "m": 0.5721,
+   "rho2": 0.09,
+   "pred_slope": 130.280937,
+   "fit_slope": 39.632813,
+   "ratio": 0.3042,
+   "r2": 0.49845,
+   "gene_target": "ELANE"
+  },
+  {
+   "N": 444,
+   "m": 0.2903,
+   "rho2": 0.07,
+   "pred_slope": 508.25843,
+   "fit_slope": 57.072497,
+   "ratio": 0.1123,
+   "r2": -1.47083,
+   "gene_target": "ELF3"
+  },
+  {
+   "N": 634,
+   "m": 0.4292,
+   "rho2": 0.03,
+   "pred_slope": 222.904405,
+   "fit_slope": 48.643053,
+   "ratio": 0.2182,
+   "r2": 0.01943,
+   "gene_target": "ELOF1"
+  },
+  {
+   "N": 446,
+   "m": 0.7836,
+   "rho2": 0.29,
+   "pred_slope": 72.271664,
+   "fit_slope": 30.174198,
+   "ratio": 0.4175,
+   "r2": 0.77912,
+   "gene_target": "ELP5"
+  },
+  {
+   "N": 517,
+   "m": 0.3373,
+   "rho2": 0.01,
+   "pred_slope": 312.832573,
+   "fit_slope": 55.406546,
+   "ratio": 0.1771,
+   "r2": -0.89929,
+   "gene_target": "EMB"
+  },
+  {
+   "N": 468,
+   "m": 0.3432,
+   "rho2": 0.04,
+   "pred_slope": 349.146305,
+   "fit_slope": 53.702073,
+   "ratio": 0.1538,
+   "r2": -0.58523,
+   "gene_target": "EMC3"
+  },
+  {
+   "N": 604,
+   "m": 0.3664,
+   "rho2": 0.17,
+   "pred_slope": 329.324982,
+   "fit_slope": 50.478363,
+   "ratio": 0.1533,
+   "r2": -0.28809,
+   "gene_target": "EML2"
+  },
+  {
+   "N": 611,
+   "m": 0.2449,
+   "rho2": 0.01,
+   "pred_slope": 621.042596,
+   "fit_slope": 64.221834,
+   "ratio": 0.1034,
+   "r2": -2.18171,
+   "gene_target": "EMP2"
+  },
+  {
+   "N": 414,
+   "m": 0.3792,
+   "rho2": 0.03,
+   "pred_slope": 262.976962,
+   "fit_slope": 49.969178,
+   "ratio": 0.19,
+   "r2": -0.58033,
+   "gene_target": "EMX2"
+  },
+  {
+   "N": 446,
+   "m": 0.367,
+   "rho2": 0.02,
+   "pred_slope": 256.708899,
+   "fit_slope": 55.978773,
+   "ratio": 0.2181,
+   "r2": -0.63617,
+   "gene_target": "ENPP6"
+  },
+  {
+   "N": 412,
+   "m": 0.2578,
+   "rho2": 0.06,
+   "pred_slope": 717.773644,
+   "fit_slope": 60.321733,
+   "ratio": 0.084,
+   "r2": -3.46674,
+   "gene_target": "ENSA"
+  },
+  {
+   "N": 495,
+   "m": 0.305,
+   "rho2": 0.03,
+   "pred_slope": 420.178337,
+   "fit_slope": 55.768008,
+   "ratio": 0.1327,
+   "r2": -1.06944,
+   "gene_target": "EPHA4"
+  },
+  {
+   "N": 420,
+   "m": 0.26,
+   "rho2": 0.03,
+   "pred_slope": 639.443292,
+   "fit_slope": 60.973349,
+   "ratio": 0.0954,
+   "r2": -2.24376,
+   "gene_target": "EPN3"
+  },
+  {
+   "N": 519,
+   "m": 0.1921,
+   "rho2": 0.03,
+   "pred_slope": 1203.978021,
+   "fit_slope": 64.973181,
+   "ratio": 0.054,
+   "r2": -4.90113,
+   "gene_target": "EPOR"
+  },
+  {
+   "N": 497,
+   "m": 0.3282,
+   "rho2": 0.04,
+   "pred_slope": 387.524954,
+   "fit_slope": 55.921496,
+   "ratio": 0.1443,
+   "r2": -0.77126,
+   "gene_target": "ERBB3"
+  },
+  {
+   "N": 424,
+   "m": 0.3607,
+   "rho2": 0.01,
+   "pred_slope": 305.965594,
+   "fit_slope": 58.156875,
+   "ratio": 0.1901,
+   "r2": -0.51865,
+   "gene_target": "ERBIN"
+  },
+  {
+   "N": 594,
+   "m": 0.3869,
+   "rho2": 0.02,
+   "pred_slope": 255.419914,
+   "fit_slope": 54.376932,
+   "ratio": 0.2129,
+   "r2": -0.0813,
+   "gene_target": "ERH"
+  },
+  {
+   "N": 894,
+   "m": 0.2256,
+   "rho2": 0.01,
+   "pred_slope": 794.789868,
+   "fit_slope": 62.957022,
+   "ratio": 0.0792,
+   "r2": -2.50411,
+   "gene_target": "ESRRG"
+  },
+  {
+   "N": 447,
+   "m": 0.3958,
+   "rho2": 0.05,
+   "pred_slope": 257.633274,
+   "fit_slope": 49.676916,
+   "ratio": 0.1928,
+   "r2": -0.32886,
+   "gene_target": "ETHE1"
+  },
+  {
+   "N": 487,
+   "m": 0.4118,
+   "rho2": 0.02,
+   "pred_slope": 211.479714,
+   "fit_slope": 52.3362,
+   "ratio": 0.2475,
+   "r2": -0.05386,
+   "gene_target": "EXOC3L2"
+  },
+  {
+   "N": 408,
+   "m": 0.2474,
+   "rho2": 0.02,
+   "pred_slope": 722.004849,
+   "fit_slope": 63.731883,
+   "ratio": 0.0883,
+   "r2": -3.95801,
+   "gene_target": "EYA1"
+  },
+  {
+   "N": 421,
+   "m": 0.3603,
+   "rho2": 0.01,
+   "pred_slope": 299.989895,
+   "fit_slope": 57.359565,
+   "ratio": 0.1912,
+   "r2": -0.72585,
+   "gene_target": "F11"
+  },
+  {
+   "N": 435,
+   "m": 0.2313,
+   "rho2": 0.05,
+   "pred_slope": 794.759014,
+   "fit_slope": 62.029861,
+   "ratio": 0.078,
+   "r2": -3.25459,
+   "gene_target": "FAM153A"
+  },
+  {
+   "N": 787,
+   "m": 0.5494,
+   "rho2": 0.02,
+   "pred_slope": 101.866632,
+   "fit_slope": 49.836139,
+   "ratio": 0.4892,
+   "r2": 0.51809,
+   "gene_target": "FAM156B"
+  },
+  {
+   "N": 436,
+   "m": 0.4742,
+   "rho2": 0.02,
+   "pred_slope": 168.286491,
+   "fit_slope": 50.875131,
+   "ratio": 0.3023,
+   "r2": 0.26512,
+   "gene_target": "FAM167A"
+  },
+  {
+   "N": 457,
+   "m": 0.3181,
+   "rho2": 0.01,
+   "pred_slope": 371.154746,
+   "fit_slope": 59.717262,
+   "ratio": 0.1609,
+   "r2": -1.47614,
+   "gene_target": "FAM170A"
+  },
+  {
+   "N": 492,
+   "m": 0.3751,
+   "rho2": 0.01,
+   "pred_slope": 258.156463,
+   "fit_slope": 55.994531,
+   "ratio": 0.2169,
+   "r2": -0.68067,
+   "gene_target": "FAM200C"
+  },
+  {
+   "N": 827,
+   "m": 0.2331,
+   "rho2": 0.02,
+   "pred_slope": 780.526679,
+   "fit_slope": 62.273727,
+   "ratio": 0.0798,
+   "r2": -1.76499,
+   "gene_target": "FAM204A"
+  },
+  {
+   "N": 404,
+   "m": 0.3894,
+   "rho2": 0.02,
+   "pred_slope": 268.830015,
+   "fit_slope": 54.342214,
+   "ratio": 0.2021,
+   "r2": -0.31905,
+   "gene_target": "FAM209A"
+  },
+  {
+   "N": 784,
+   "m": 0.2954,
+   "rho2": 0.02,
+   "pred_slope": 474.211685,
+   "fit_slope": 58.771493,
+   "ratio": 0.1239,
+   "r2": -0.59671,
+   "gene_target": "FAM217B"
+  },
+  {
+   "N": 428,
+   "m": 0.5953,
+   "rho2": 0.35,
+   "pred_slope": 127.671613,
+   "fit_slope": 38.057167,
+   "ratio": 0.2981,
+   "r2": 0.50515,
+   "gene_target": "FAM25EP"
+  },
+  {
+   "N": 726,
+   "m": 0.3365,
+   "rho2": 0.01,
+   "pred_slope": 334.142713,
+   "fit_slope": 56.248435,
+   "ratio": 0.1683,
+   "r2": -0.35067,
+   "gene_target": "FAM3D"
+  },
+  {
+   "N": 564,
+   "m": 0.3668,
+   "rho2": 0.01,
+   "pred_slope": 249.815813,
+   "fit_slope": 54.815601,
+   "ratio": 0.2194,
+   "r2": -0.09502,
+   "gene_target": "FAM81B"
+  },
+  {
+   "N": 445,
+   "m": 0.3135,
+   "rho2": 0.01,
+   "pred_slope": 417.027757,
+   "fit_slope": 60.813427,
+   "ratio": 0.1458,
+   "r2": -1.11544,
+   "gene_target": "FAM83A"
+  },
+  {
+   "N": 474,
+   "m": 0.2882,
+   "rho2": 0.01,
+   "pred_slope": 425.195966,
+   "fit_slope": 60.085828,
+   "ratio": 0.1413,
+   "r2": -1.40168,
+   "gene_target": "FANCA"
+  },
+  {
+   "N": 443,
+   "m": 0.2617,
+   "rho2": 0.02,
+   "pred_slope": 646.578345,
+   "fit_slope": 61.427242,
+   "ratio": 0.095,
+   "r2": -2.40778,
+   "gene_target": "FANCF"
+  },
+  {
+   "N": 463,
+   "m": 0.4528,
+   "rho2": 0.02,
+   "pred_slope": 166.553624,
+   "fit_slope": 55.506556,
+   "ratio": 0.3333,
+   "r2": 0.14474,
+   "gene_target": "FAT1"
+  },
+  {
+   "N": 433,
+   "m": 0.3877,
+   "rho2": 0.06,
+   "pred_slope": 276.224598,
+   "fit_slope": 50.665016,
+   "ratio": 0.1834,
+   "r2": -0.41642,
+   "gene_target": "FAXDC2"
+  },
+  {
+   "N": 419,
+   "m": 0.2506,
+   "rho2": 0.04,
+   "pred_slope": 740.634935,
+   "fit_slope": 62.183757,
+   "ratio": 0.084,
+   "r2": -2.66075,
+   "gene_target": "FBLIM1"
+  },
+  {
+   "N": 557,
+   "m": 0.3007,
+   "rho2": 0.02,
+   "pred_slope": 474.494907,
+   "fit_slope": 57.653837,
+   "ratio": 0.1215,
+   "r2": -1.35899,
+   "gene_target": "FBXO31"
+  },
+  {
+   "N": 610,
+   "m": 0.1944,
+   "rho2": 0.05,
+   "pred_slope": 1222.349157,
+   "fit_slope": 65.590148,
+   "ratio": 0.0537,
+   "r2": -4.35816,
+   "gene_target": "FBXO8"
+  },
+  {
+   "N": 437,
+   "m": 0.4882,
+   "rho2": 0.02,
+   "pred_slope": 135.907547,
+   "fit_slope": 49.805872,
+   "ratio": 0.3665,
+   "r2": 0.30939,
+   "gene_target": "FCER2"
+  },
+  {
+   "N": 575,
+   "m": 0.3938,
+   "rho2": 0.01,
+   "pred_slope": 209.220348,
+   "fit_slope": 55.172301,
+   "ratio": 0.2637,
+   "r2": -0.14816,
+   "gene_target": "FCGBP"
+  },
+  {
+   "N": 485,
+   "m": 0.2877,
+   "rho2": 0.03,
+   "pred_slope": 476.650104,
+   "fit_slope": 58.152323,
+   "ratio": 0.122,
+   "r2": -1.37339,
+   "gene_target": "FCN3"
+  },
+  {
+   "N": 540,
+   "m": 0.3416,
+   "rho2": 0.04,
+   "pred_slope": 387.43634,
+   "fit_slope": 55.251542,
+   "ratio": 0.1426,
+   "r2": -0.71726,
+   "gene_target": "FDFT1"
+  },
+  {
+   "N": 1128,
+   "m": 0.3865,
+   "rho2": 0.01,
+   "pred_slope": 200.851143,
+   "fit_slope": 54.529916,
+   "ratio": 0.2715,
+   "r2": 0.22852,
+   "gene_target": "FGD3"
+  },
+  {
+   "N": 448,
+   "m": 0.2915,
+   "rho2": 0.03,
+   "pred_slope": 517.843157,
+   "fit_slope": 57.618035,
+   "ratio": 0.1113,
+   "r2": -1.71955,
+   "gene_target": "FGD5"
+  },
+  {
+   "N": 440,
+   "m": 0.2933,
+   "rho2": 0.02,
+   "pred_slope": 487.043676,
+   "fit_slope": 60.40513,
+   "ratio": 0.124,
+   "r2": -1.59643,
+   "gene_target": "FGF7"
+  },
+  {
+   "N": 602,
+   "m": 0.2877,
+   "rho2": 0.02,
+   "pred_slope": 480.046595,
+   "fit_slope": 59.378959,
+   "ratio": 0.1237,
+   "r2": -1.02573,
+   "gene_target": "FIS1"
+  },
+  {
+   "N": 461,
+   "m": 0.2538,
+   "rho2": 0.01,
+   "pred_slope": 594.704885,
+   "fit_slope": 63.181836,
+   "ratio": 0.1062,
+   "r2": -2.01021,
+   "gene_target": "FLG"
+  },
+  {
+   "N": 477,
+   "m": 0.3457,
+   "rho2": 0.01,
+   "pred_slope": 313.757795,
+   "fit_slope": 57.056279,
+   "ratio": 0.1818,
+   "r2": -0.62487,
+   "gene_target": "FN3K"
+  },
+  {
+   "N": 667,
+   "m": 0.186,
+   "rho2": 0.04,
+   "pred_slope": 1294.903934,
+   "fit_slope": 65.87018,
+   "ratio": 0.0509,
+   "r2": -3.75667,
+   "gene_target": "FOXB2"
+  },
+  {
+   "N": 737,
+   "m": 0.2214,
+   "rho2": 0.02,
+   "pred_slope": 891.591715,
+   "fit_slope": 63.946837,
+   "ratio": 0.0717,
+   "r2": -2.12758,
+   "gene_target": "FOXP1"
+  },
+  {
+   "N": 409,
+   "m": 0.5501,
+   "rho2": 0.04,
+   "pred_slope": 122.939656,
+   "fit_slope": 43.414651,
+   "ratio": 0.3531,
+   "r2": 0.45946,
+   "gene_target": "FOXP2"
+  },
+  {
+   "N": 733,
+   "m": 0.4216,
+   "rho2": 0.01,
+   "pred_slope": 206.745321,
+   "fit_slope": 56.437275,
+   "ratio": 0.273,
+   "r2": 0.29809,
+   "gene_target": "FRG2"
+  },
+  {
+   "N": 421,
+   "m": 0.2768,
+   "rho2": 0.01,
+   "pred_slope": 522.682209,
+   "fit_slope": 62.47866,
+   "ratio": 0.1195,
+   "r2": -3.00054,
+   "gene_target": "FRG2C"
+  },
+  {
+   "N": 514,
+   "m": 0.3458,
+   "rho2": 0.03,
+   "pred_slope": 353.073896,
+   "fit_slope": 54.581036,
+   "ratio": 0.1546,
+   "r2": -0.52773,
+   "gene_target": "FRMD4A"
+  },
+  {
+   "N": 403,
+   "m": 0.287,
+   "rho2": 0.02,
+   "pred_slope": 517.729175,
+   "fit_slope": 59.397593,
+   "ratio": 0.1147,
+   "r2": -1.7975,
+   "gene_target": "FRMD8"
+  },
+  {
+   "N": 472,
+   "m": 0.2858,
+   "rho2": 0.01,
+   "pred_slope": 486.202264,
+   "fit_slope": 62.850976,
+   "ratio": 0.1293,
+   "r2": -1.68134,
+   "gene_target": "FRMPD4"
+  },
+  {
+   "N": 441,
+   "m": 0.3628,
+   "rho2": 0.01,
+   "pred_slope": 291.189353,
+   "fit_slope": 58.674998,
+   "ratio": 0.2015,
+   "r2": -0.53805,
+   "gene_target": "FSCN1"
+  },
+  {
+   "N": 443,
+   "m": 0.3173,
+   "rho2": 0.02,
+   "pred_slope": 391.598626,
+   "fit_slope": 55.750861,
+   "ratio": 0.1424,
+   "r2": -1.46935,
+   "gene_target": "FSIP2"
+  },
+  {
+   "N": 440,
+   "m": 0.3008,
+   "rho2": 0.02,
+   "pred_slope": 502.331158,
+   "fit_slope": 59.525735,
+   "ratio": 0.1185,
+   "r2": -1.37242,
+   "gene_target": "FSTL5"
+  },
+  {
+   "N": 430,
+   "m": 0.34,
+   "rho2": 0.02,
+   "pred_slope": 322.856733,
+   "fit_slope": 58.465945,
+   "ratio": 0.1811,
+   "r2": -1.01751,
+   "gene_target": "FTCD"
+  },
+  {
+   "N": 435,
+   "m": 0.6962,
+   "rho2": 0.04,
+   "pred_slope": 73.986561,
+   "fit_slope": 37.626109,
+   "ratio": 0.5086,
+   "r2": 0.64834,
+   "gene_target": "FTSJ1"
+  },
+  {
+   "N": 442,
+   "m": 0.2937,
+   "rho2": 0.02,
+   "pred_slope": 479.750716,
+   "fit_slope": 60.305842,
+   "ratio": 0.1257,
+   "r2": -1.25427,
+   "gene_target": "FUNDC1"
+  },
+  {
+   "N": 598,
+   "m": 0.5331,
+   "rho2": 0.06,
+   "pred_slope": 137.763884,
+   "fit_slope": 42.900657,
+   "ratio": 0.3114,
+   "r2": 0.51116,
+   "gene_target": "FUS"
+  },
+  {
+   "N": 414,
+   "m": 0.589,
+   "rho2": 0.03,
+   "pred_slope": 110.787963,
+   "fit_slope": 44.670627,
+   "ratio": 0.4032,
+   "r2": 0.58354,
+   "gene_target": "FXYD7"
+  },
+  {
+   "N": 445,
+   "m": 0.396,
+   "rho2": 0.02,
+   "pred_slope": 249.407965,
+   "fit_slope": 52.088341,
+   "ratio": 0.2088,
+   "r2": -0.45552,
+   "gene_target": "FZD6"
+  },
+  {
+   "N": 551,
+   "m": 0.2898,
+   "rho2": 0.02,
+   "pred_slope": 515.007894,
+   "fit_slope": 58.86629,
+   "ratio": 0.1143,
+   "r2": -1.39181,
+   "gene_target": "GABBR2"
+  },
+  {
+   "N": 454,
+   "m": 0.2713,
+   "rho2": 0.08,
+   "pred_slope": 647.797083,
+   "fit_slope": 58.926022,
+   "ratio": 0.091,
+   "r2": -2.30177,
+   "gene_target": "GADD45A"
+  },
+  {
+   "N": 420,
+   "m": 0.297,
+   "rho2": 0.04,
+   "pred_slope": 507.805871,
+   "fit_slope": 56.575231,
+   "ratio": 0.1114,
+   "r2": -1.91919,
+   "gene_target": "GALK2"
+  },
+  {
+   "N": 409,
+   "m": 0.4198,
+   "rho2": 0.02,
+   "pred_slope": 215.052239,
+   "fit_slope": 54.608013,
+   "ratio": 0.2539,
+   "r2": -0.21667,
+   "gene_target": "GALNTL5"
+  },
+  {
+   "N": 420,
+   "m": 0.2959,
+   "rho2": 0.05,
+   "pred_slope": 455.79539,
+   "fit_slope": 56.911888,
+   "ratio": 0.1249,
+   "r2": -1.4096,
+   "gene_target": "GAPDH"
+  },
+  {
+   "N": 429,
+   "m": 0.6525,
+   "rho2": 0.05,
+   "pred_slope": 75.49943,
+   "fit_slope": 38.49957,
+   "ratio": 0.5099,
+   "r2": 0.72828,
+   "gene_target": "GARIN1B"
+  },
+  {
+   "N": 706,
+   "m": 0.2466,
+   "rho2": 0.01,
+   "pred_slope": 632.132059,
+   "fit_slope": 66.972257,
+   "ratio": 0.1059,
+   "r2": -1.53907,
+   "gene_target": "GARIN2"
+  },
+  {
+   "N": 470,
+   "m": 0.3075,
+   "rho2": 0.03,
+   "pred_slope": 457.650164,
+   "fit_slope": 56.778117,
+   "ratio": 0.1241,
+   "r2": -1.45418,
+   "gene_target": "GARIN6"
+  },
+  {
+   "N": 420,
+   "m": 0.3837,
+   "rho2": 0.01,
+   "pred_slope": 215.092076,
+   "fit_slope": 54.694032,
+   "ratio": 0.2543,
+   "r2": -0.71499,
+   "gene_target": "GASK1B"
+  },
+  {
+   "N": 466,
+   "m": 0.2912,
+   "rho2": 0.02,
+   "pred_slope": 507.840299,
+   "fit_slope": 61.782801,
+   "ratio": 0.1217,
+   "r2": -1.48705,
+   "gene_target": "GATA4"
+  },
+  {
+   "N": 429,
+   "m": 0.2769,
+   "rho2": 0.06,
+   "pred_slope": 533.072615,
+   "fit_slope": 57.685477,
+   "ratio": 0.1082,
+   "r2": -1.83453,
+   "gene_target": "GCG"
+  },
+  {
+   "N": 441,
+   "m": 0.3864,
+   "rho2": 0.06,
+   "pred_slope": 294.690442,
+   "fit_slope": 51.682472,
+   "ratio": 0.1754,
+   "r2": -0.37011,
+   "gene_target": "GCNT2"
+  },
+  {
+   "N": 407,
+   "m": 0.8027,
+   "rho2": 0.04,
+   "pred_slope": 47.851868,
+   "fit_slope": 36.892526,
+   "ratio": 0.771,
+   "r2": 0.83247,
+   "gene_target": "GCNT3"
+  },
+  {
+   "N": 408,
+   "m": 0.2815,
+   "rho2": 0.04,
+   "pred_slope": 546.302333,
+   "fit_slope": 58.901437,
+   "ratio": 0.1078,
+   "r2": -2.06853,
+   "gene_target": "GCNT4"
+  },
+  {
+   "N": 489,
+   "m": 0.9011,
+   "rho2": 0.04,
+   "pred_slope": 37.069387,
+   "fit_slope": 35.898868,
+   "ratio": 0.9684,
+   "r2": 0.83949,
+   "gene_target": "GCNT7"
+  },
+  {
+   "N": 468,
+   "m": 0.3122,
+   "rho2": 0.02,
+   "pred_slope": 441.921841,
+   "fit_slope": 58.943438,
+   "ratio": 0.1334,
+   "r2": -1.36065,
+   "gene_target": "GDAP1L1"
+  },
+  {
+   "N": 404,
+   "m": 0.3487,
+   "rho2": 0.03,
+   "pred_slope": 314.978134,
+   "fit_slope": 53.933601,
+   "ratio": 0.1712,
+   "r2": -0.7696,
+   "gene_target": "GDF5"
+  },
+  {
+   "N": 464,
+   "m": 0.2909,
+   "rho2": 0.05,
+   "pred_slope": 515.379854,
+   "fit_slope": 57.324062,
+   "ratio": 0.1112,
+   "r2": -1.68118,
+   "gene_target": "GDI2"
+  },
+  {
+   "N": 451,
+   "m": 0.3569,
+   "rho2": 0.05,
+   "pred_slope": 314.933285,
+   "fit_slope": 52.667768,
+   "ratio": 0.1672,
+   "r2": -0.31709,
+   "gene_target": "GDNF-AS1"
+  },
+  {
+   "N": 619,
+   "m": 0.2935,
+   "rho2": 0.02,
+   "pred_slope": 458.113102,
+   "fit_slope": 56.925779,
+   "ratio": 0.1243,
+   "r2": -1.58801,
+   "gene_target": "GEM"
+  },
+  {
+   "N": 408,
+   "m": 0.3001,
+   "rho2": 0.01,
+   "pred_slope": 446.805763,
+   "fit_slope": 59.589132,
+   "ratio": 0.1334,
+   "r2": -2.03261,
+   "gene_target": "GEMIN6"
+  },
+  {
+   "N": 428,
+   "m": 0.2443,
+   "rho2": 0.02,
+   "pred_slope": 710.123483,
+   "fit_slope": 63.286866,
+   "ratio": 0.0891,
+   "r2": -2.84494,
+   "gene_target": "GFI1"
+  },
+  {
+   "N": 524,
+   "m": 0.3839,
+   "rho2": 0.12,
+   "pred_slope": 276.347719,
+   "fit_slope": 49.183508,
+   "ratio": 0.178,
+   "r2": -0.08409,
+   "gene_target": "GFM1"
+  },
+  {
+   "N": 737,
+   "m": 0.3396,
+   "rho2": 0.03,
+   "pred_slope": 384.966043,
+   "fit_slope": 54.45558,
+   "ratio": 0.1415,
+   "r2": -0.36172,
+   "gene_target": "GHRHR"
+  },
+  {
+   "N": 426,
+   "m": 0.3302,
+   "rho2": 0.02,
+   "pred_slope": 361.700345,
+   "fit_slope": 57.140157,
+   "ratio": 0.158,
+   "r2": -0.90093,
+   "gene_target": "GJB7"
+  },
+  {
+   "N": 524,
+   "m": 0.379,
+   "rho2": 0.02,
+   "pred_slope": 259.549043,
+   "fit_slope": 51.956646,
+   "ratio": 0.2002,
+   "r2": -0.61994,
+   "gene_target": "GJC3"
+  },
+  {
+   "N": 445,
+   "m": 0.2442,
+   "rho2": 0.04,
+   "pred_slope": 712.49586,
+   "fit_slope": 61.614729,
+   "ratio": 0.0865,
+   "r2": -2.50898,
+   "gene_target": "GLI3"
+  },
+  {
+   "N": 567,
+   "m": 0.2733,
+   "rho2": 0.02,
+   "pred_slope": 590.279525,
+   "fit_slope": 60.851328,
+   "ratio": 0.1031,
+   "r2": -1.57303,
+   "gene_target": "GLMP"
+  },
+  {
+   "N": 474,
+   "m": 0.2942,
+   "rho2": 0.08,
+   "pred_slope": 532.482305,
+   "fit_slope": 57.117561,
+   "ratio": 0.1073,
+   "r2": -1.35767,
+   "gene_target": "GLS"
+  },
+  {
+   "N": 639,
+   "m": 0.5044,
+   "rho2": 0.03,
+   "pred_slope": 126.238096,
+   "fit_slope": 47.68591,
+   "ratio": 0.3777,
+   "r2": 0.58682,
+   "gene_target": "GML"
+  },
+  {
+   "N": 532,
+   "m": 0.2955,
+   "rho2": 0.04,
+   "pred_slope": 498.754239,
+   "fit_slope": 57.377496,
+   "ratio": 0.115,
+   "r2": -1.26178,
+   "gene_target": "GNB1L"
+  },
+  {
+   "N": 459,
+   "m": 0.397,
+   "rho2": 0.02,
+   "pred_slope": 227.679043,
+   "fit_slope": 54.141078,
+   "ratio": 0.2378,
+   "r2": -0.50586,
+   "gene_target": "GOLM2"
+  },
+  {
+   "N": 590,
+   "m": 0.2765,
+   "rho2": 0.01,
+   "pred_slope": 504.942794,
+   "fit_slope": 60.394181,
+   "ratio": 0.1196,
+   "r2": -1.53867,
+   "gene_target": "GP2"
+  },
+  {
+   "N": 401,
+   "m": 0.353,
+   "rho2": 0.05,
+   "pred_slope": 337.148518,
+   "fit_slope": 54.17401,
+   "ratio": 0.1607,
+   "r2": -0.55951,
+   "gene_target": "GPR137"
+  },
+  {
+   "N": 404,
+   "m": 0.3512,
+   "rho2": 0.08,
+   "pred_slope": 357.567765,
+   "fit_slope": 52.84877,
+   "ratio": 0.1478,
+   "r2": -0.80369,
+   "gene_target": "GPR153"
+  },
+  {
+   "N": 442,
+   "m": 0.2987,
+   "rho2": 0.02,
+   "pred_slope": 448.414254,
+   "fit_slope": 58.360849,
+   "ratio": 0.1301,
+   "r2": -1.90386,
+   "gene_target": "GPR52"
+  },
+  {
+   "N": 495,
+   "m": 0.3289,
+   "rho2": 0.01,
+   "pred_slope": 321.663346,
+   "fit_slope": 60.152974,
+   "ratio": 0.187,
+   "r2": -1.01006,
+   "gene_target": "GRHPR"
+  },
+  {
+   "N": 653,
+   "m": 0.2722,
+   "rho2": 0.04,
+   "pred_slope": 559.903891,
+   "fit_slope": 58.414581,
+   "ratio": 0.1043,
+   "r2": -1.14937,
+   "gene_target": "GRIA4"
+  },
+  {
+   "N": 568,
+   "m": 0.3429,
+   "rho2": 0.01,
+   "pred_slope": 332.307648,
+   "fit_slope": 55.50419,
+   "ratio": 0.167,
+   "r2": -0.75063,
+   "gene_target": "GRID2IP"
+  },
+  {
+   "N": 517,
+   "m": 0.2794,
+   "rho2": 0.05,
+   "pred_slope": 590.580486,
+   "fit_slope": 58.43642,
+   "ratio": 0.0989,
+   "r2": -1.62573,
+   "gene_target": "GRM4"
+  },
+  {
+   "N": 543,
+   "m": 0.2306,
+   "rho2": 0.04,
+   "pred_slope": 800.72674,
+   "fit_slope": 61.139948,
+   "ratio": 0.0764,
+   "r2": -3.04697,
+   "gene_target": "GRM5"
+  },
+  {
+   "N": 427,
+   "m": 0.3065,
+   "rho2": 0.05,
+   "pred_slope": 475.305011,
+   "fit_slope": 57.417059,
+   "ratio": 0.1208,
+   "r2": -1.28027,
+   "gene_target": "GSDMD"
+  },
+  {
+   "N": 469,
+   "m": 0.3265,
+   "rho2": 0.02,
+   "pred_slope": 390.212709,
+   "fit_slope": 56.068921,
+   "ratio": 0.1437,
+   "r2": -1.19647,
+   "gene_target": "GSTM2"
+  },
+  {
+   "N": 437,
+   "m": 0.2871,
+   "rho2": 0.02,
+   "pred_slope": 493.833366,
+   "fit_slope": 59.324675,
+   "ratio": 0.1201,
+   "r2": -1.72365,
+   "gene_target": "GSTT2"
+  },
+  {
+   "N": 471,
+   "m": 0.5412,
+   "rho2": 0.05,
+   "pred_slope": 120.10802,
+   "fit_slope": 41.941694,
+   "ratio": 0.3492,
+   "r2": 0.5843,
+   "gene_target": "GTPBP10"
+  },
+  {
+   "N": 432,
+   "m": 0.3185,
+   "rho2": 0.08,
+   "pred_slope": 456.889386,
+   "fit_slope": 55.937467,
+   "ratio": 0.1224,
+   "r2": -1.10546,
+   "gene_target": "GUF1"
+  },
+  {
+   "N": 419,
+   "m": 0.2047,
+   "rho2": 0.03,
+   "pred_slope": 1064.671191,
+   "fit_slope": 64.927442,
+   "ratio": 0.061,
+   "r2": -5.68824,
+   "gene_target": "GYPE"
+  },
+  {
+   "N": 440,
+   "m": 0.6185,
+   "rho2": 0.29,
+   "pred_slope": 109.775337,
+   "fit_slope": 35.39834,
+   "ratio": 0.3225,
+   "r2": 0.52215,
+   "gene_target": "H2AC17"
+  },
+  {
+   "N": 414,
+   "m": 0.63,
+   "rho2": 0.04,
+   "pred_slope": 77.826032,
+   "fit_slope": 40.053483,
+   "ratio": 0.5147,
+   "r2": 0.65306,
+   "gene_target": "H2AC4"
+  },
+  {
+   "N": 448,
+   "m": 0.2557,
+   "rho2": 0.08,
+   "pred_slope": 675.843235,
+   "fit_slope": 60.580929,
+   "ratio": 0.0896,
+   "r2": -2.13952,
+   "gene_target": "H3C7"
+  },
+  {
+   "N": 443,
+   "m": 0.4588,
+   "rho2": 0.02,
+   "pred_slope": 157.290148,
+   "fit_slope": 53.812407,
+   "ratio": 0.3421,
+   "r2": 0.07849,
+   "gene_target": "HAPLN3"
+  },
+  {
+   "N": 887,
+   "m": 0.475,
+   "rho2": 0.02,
+   "pred_slope": 153.03114,
+   "fit_slope": 51.712492,
+   "ratio": 0.3379,
+   "r2": 0.36548,
+   "gene_target": "HAPSTR1"
+  },
+  {
+   "N": 513,
+   "m": 0.3417,
+   "rho2": 0.02,
+   "pred_slope": 342.206725,
+   "fit_slope": 55.849467,
+   "ratio": 0.1632,
+   "r2": -0.68516,
+   "gene_target": "HDAC9"
+  },
+  {
+   "N": 429,
+   "m": 0.266,
+   "rho2": 0.02,
+   "pred_slope": 581.368256,
+   "fit_slope": 60.625177,
+   "ratio": 0.1043,
+   "r2": -2.4506,
+   "gene_target": "HEATR5B"
+  },
+  {
+   "N": 443,
+   "m": 0.2964,
+   "rho2": 0.03,
+   "pred_slope": 462.291873,
+   "fit_slope": 57.054479,
+   "ratio": 0.1234,
+   "r2": -1.88441,
+   "gene_target": "HES2"
+  },
+  {
+   "N": 658,
+   "m": 0.2299,
+   "rho2": 0.03,
+   "pred_slope": 846.730556,
+   "fit_slope": 63.385526,
+   "ratio": 0.0749,
+   "r2": -2.18145,
+   "gene_target": "HGFAC"
+  },
+  {
+   "N": 407,
+   "m": 0.3074,
+   "rho2": 0.04,
+   "pred_slope": 455.332886,
+   "fit_slope": 55.632058,
+   "ratio": 0.1222,
+   "r2": -1.94562,
+   "gene_target": "HIF1A"
+  },
+  {
+   "N": 492,
+   "m": 0.2492,
+   "rho2": 0.07,
+   "pred_slope": 708.423765,
+   "fit_slope": 59.983146,
+   "ratio": 0.0847,
+   "r2": -2.15227,
+   "gene_target": "HIVEP3"
+  },
+  {
+   "N": 711,
+   "m": 0.402,
+   "rho2": 0.01,
+   "pred_slope": 209.407288,
+   "fit_slope": 56.282409,
+   "ratio": 0.2688,
+   "r2": -0.17672,
+   "gene_target": "HLA-DPB1"
+  },
+  {
+   "N": 680,
+   "m": 0.2976,
+   "rho2": 0.01,
+   "pred_slope": 431.254124,
+   "fit_slope": 62.792764,
+   "ratio": 0.1456,
+   "r2": -0.70053,
+   "gene_target": "HLA-DRA"
+  },
+  {
+   "N": 543,
+   "m": 0.265,
+   "rho2": 0.02,
+   "pred_slope": 637.645431,
+   "fit_slope": 61.532371,
+   "ratio": 0.0965,
+   "r2": -1.482,
+   "gene_target": "HLCS"
+  },
+  {
+   "N": 440,
+   "m": 0.353,
+   "rho2": 0.03,
+   "pred_slope": 316.073645,
+   "fit_slope": 53.853386,
+   "ratio": 0.1704,
+   "r2": -0.55763,
+   "gene_target": "HLF"
+  },
+  {
+   "N": 416,
+   "m": 0.3076,
+   "rho2": 0.02,
+   "pred_slope": 472.729474,
+   "fit_slope": 60.285219,
+   "ratio": 0.1275,
+   "r2": -1.48066,
+   "gene_target": "HMBS"
+  },
+  {
+   "N": 538,
+   "m": 0.4953,
+   "rho2": 0.05,
+   "pred_slope": 175.161752,
+   "fit_slope": 45.63631,
+   "ratio": 0.2605,
+   "r2": 0.26285,
+   "gene_target": "HMG20B"
+  },
+  {
+   "N": 565,
+   "m": 0.2693,
+   "rho2": 0.02,
+   "pred_slope": 575.57534,
+   "fit_slope": 60.864769,
+   "ratio": 0.1057,
+   "r2": -1.69546,
+   "gene_target": "HMOX1"
+  },
+  {
+   "N": 474,
+   "m": 0.5384,
+   "rho2": 0.02,
+   "pred_slope": 122.861233,
+   "fit_slope": 48.647255,
+   "ratio": 0.396,
+   "r2": 0.31276,
+   "gene_target": "HNF1A"
+  },
+  {
+   "N": 415,
+   "m": 0.3878,
+   "rho2": 0.03,
+   "pred_slope": 276.170614,
+   "fit_slope": 54.428645,
+   "ratio": 0.1971,
+   "r2": -0.30217,
+   "gene_target": "HNMT"
+  },
+  {
+   "N": 424,
+   "m": 0.5193,
+   "rho2": 0.02,
+   "pred_slope": 124.972386,
+   "fit_slope": 50.921662,
+   "ratio": 0.4075,
+   "r2": 0.29097,
+   "gene_target": "HNRNPA1L2"
+  },
+  {
+   "N": 703,
+   "m": 0.3397,
+   "rho2": 0.01,
+   "pred_slope": 283.371583,
+   "fit_slope": 59.684428,
+   "ratio": 0.2106,
+   "r2": -0.38262,
+   "gene_target": "HNRNPCL1"
+  },
+  {
+   "N": 570,
+   "m": 0.3382,
+   "rho2": 0.06,
+   "pred_slope": 402.480229,
+   "fit_slope": 52.862212,
+   "ratio": 0.1313,
+   "r2": -0.80088,
+   "gene_target": "HNRNPM"
+  },
+  {
+   "N": 590,
+   "m": 0.2279,
+   "rho2": 0.03,
+   "pred_slope": 802.744697,
+   "fit_slope": 62.050526,
+   "ratio": 0.0773,
+   "r2": -2.6086,
+   "gene_target": "HPN"
+  },
+  {
+   "N": 566,
+   "m": 0.262,
+   "rho2": 0.01,
+   "pred_slope": 562.390986,
+   "fit_slope": 65.803257,
+   "ratio": 0.117,
+   "r2": -1.89275,
+   "gene_target": "HS3ST6"
+  },
+  {
+   "N": 450,
+   "m": 0.2175,
+   "rho2": 0.03,
+   "pred_slope": 880.446947,
+   "fit_slope": 63.790908,
+   "ratio": 0.0725,
+   "r2": -3.73993,
+   "gene_target": "HSPB1"
+  },
+  {
+   "N": 938,
+   "m": 0.7394,
+   "rho2": 0.28,
+   "pred_slope": 71.458851,
+   "fit_slope": 29.922601,
+   "ratio": 0.4187,
+   "r2": 0.82816,
+   "gene_target": "HSPE1"
+  },
+  {
+   "N": 603,
+   "m": 0.441,
+   "rho2": 0.01,
+   "pred_slope": 182.954393,
+   "fit_slope": 52.999351,
+   "ratio": 0.2897,
+   "r2": -0.35169,
+   "gene_target": "HTR2A"
+  },
+  {
+   "N": 689,
+   "m": 0.4667,
+   "rho2": 0.03,
+   "pred_slope": 186.714213,
+   "fit_slope": 46.943726,
+   "ratio": 0.2514,
+   "r2": 0.21995,
+   "gene_target": "HTR5A"
+  },
+  {
+   "N": 490,
+   "m": 0.3114,
+   "rho2": 0.03,
+   "pred_slope": 399.986753,
+   "fit_slope": 55.717608,
+   "ratio": 0.1393,
+   "r2": -1.16159,
+   "gene_target": "HYAL4"
+  },
+  {
+   "N": 496,
+   "m": 0.2913,
+   "rho2": 0.02,
+   "pred_slope": 497.511744,
+   "fit_slope": 58.397537,
+   "ratio": 0.1174,
+   "r2": -1.45971,
+   "gene_target": "IAH1"
+  },
+  {
+   "N": 442,
+   "m": 0.3089,
+   "rho2": 0.03,
+   "pred_slope": 427.516505,
+   "fit_slope": 55.320872,
+   "ratio": 0.1294,
+   "r2": -1.57518,
+   "gene_target": "IAPP"
+  },
+  {
+   "N": 402,
+   "m": 0.3202,
+   "rho2": 0.01,
+   "pred_slope": 388.790037,
+   "fit_slope": 61.223194,
+   "ratio": 0.1575,
+   "r2": -1.76516,
+   "gene_target": "IBTK"
+  },
+  {
+   "N": 430,
+   "m": 0.6885,
+   "rho2": 0.27,
+   "pred_slope": 95.0611,
+   "fit_slope": 33.781511,
+   "ratio": 0.3554,
+   "r2": 0.67638,
+   "gene_target": "ID1"
+  },
+  {
+   "N": 670,
+   "m": 0.2506,
+   "rho2": 0.04,
+   "pred_slope": 691.16382,
+   "fit_slope": 58.700287,
+   "ratio": 0.0849,
+   "r2": -1.98469,
+   "gene_target": "ID2"
+  },
+  {
+   "N": 439,
+   "m": 0.3074,
+   "rho2": 0.03,
+   "pred_slope": 426.311337,
+   "fit_slope": 56.377475,
+   "ratio": 0.1322,
+   "r2": -1.40421,
+   "gene_target": "IFFO1"
+  },
+  {
+   "N": 489,
+   "m": 0.2595,
+   "rho2": 0.04,
+   "pred_slope": 647.497981,
+   "fit_slope": 60.264549,
+   "ratio": 0.0931,
+   "r2": -2.3425,
+   "gene_target": "IFI35"
+  },
+  {
+   "N": 637,
+   "m": 0.3202,
+   "rho2": 0.01,
+   "pred_slope": 402.276536,
+   "fit_slope": 57.629755,
+   "ratio": 0.1433,
+   "r2": -1.03173,
+   "gene_target": "IFITM3"
+  },
+  {
+   "N": 498,
+   "m": 0.2112,
+   "rho2": 0.03,
+   "pred_slope": 979.625355,
+   "fit_slope": 63.610254,
+   "ratio": 0.0649,
+   "r2": -4.03317,
+   "gene_target": "IFNA13"
+  },
+  {
+   "N": 420,
+   "m": 0.3801,
+   "rho2": 0.03,
+   "pred_slope": 274.114055,
+   "fit_slope": 51.999711,
+   "ratio": 0.1897,
+   "r2": -0.43788,
+   "gene_target": "IFNW1"
+  },
+  {
+   "N": 590,
+   "m": 0.3516,
+   "rho2": 0.01,
+   "pred_slope": 298.561721,
+   "fit_slope": 60.616267,
+   "ratio": 0.203,
+   "r2": -0.68751,
+   "gene_target": "IFT140"
+  },
+  {
+   "N": 447,
+   "m": 0.3927,
+   "rho2": 0.01,
+   "pred_slope": 240.461287,
+   "fit_slope": 57.786403,
+   "ratio": 0.2403,
+   "r2": -0.3067,
+   "gene_target": "IGFL2"
+  },
+  {
+   "N": 483,
+   "m": 0.2938,
+   "rho2": 0.05,
+   "pred_slope": 497.251518,
+   "fit_slope": 56.244371,
+   "ratio": 0.1131,
+   "r2": -1.54835,
+   "gene_target": "IK"
+  },
+  {
+   "N": 478,
+   "m": 0.4573,
+   "rho2": 0.03,
+   "pred_slope": 164.756649,
+   "fit_slope": 49.16114,
+   "ratio": 0.2984,
+   "r2": 0.25361,
+   "gene_target": "IKZF4"
+  },
+  {
+   "N": 560,
+   "m": 0.3875,
+   "rho2": 0.01,
+   "pred_slope": 243.541549,
+   "fit_slope": 56.509227,
+   "ratio": 0.232,
+   "r2": -0.26461,
+   "gene_target": "IL11RA"
+  },
+  {
+   "N": 411,
+   "m": 0.3205,
+   "rho2": 0.04,
+   "pred_slope": 433.462533,
+   "fit_slope": 56.243715,
+   "ratio": 0.1298,
+   "r2": -1.39089,
+   "gene_target": "IL13"
+  },
+  {
+   "N": 456,
+   "m": 0.2094,
+   "rho2": 0.02,
+   "pred_slope": 1052.456447,
+   "fit_slope": 65.905667,
+   "ratio": 0.0626,
+   "r2": -4.10399,
+   "gene_target": "IL13RA2"
+  },
+  {
+   "N": 467,
+   "m": 0.5139,
+   "rho2": 0.02,
+   "pred_slope": 126.660184,
+   "fit_slope": 47.900485,
+   "ratio": 0.3782,
+   "r2": 0.24697,
+   "gene_target": "IL17F"
+  },
+  {
+   "N": 404,
+   "m": 0.286,
+   "rho2": 0.06,
+   "pred_slope": 542.964983,
+   "fit_slope": 57.663094,
+   "ratio": 0.1062,
+   "r2": -2.0138,
+   "gene_target": "IL17RC"
+  },
+  {
+   "N": 592,
+   "m": 0.2853,
+   "rho2": 0.02,
+   "pred_slope": 466.615017,
+   "fit_slope": 59.109869,
+   "ratio": 0.1267,
+   "r2": -1.19077,
+   "gene_target": "IL18RAP"
+  },
+  {
+   "N": 422,
+   "m": 0.2299,
+   "rho2": 0.05,
+   "pred_slope": 827.665033,
+   "fit_slope": 62.004082,
+   "ratio": 0.0749,
+   "r2": -3.58187,
+   "gene_target": "IL1R2"
+  },
+  {
+   "N": 551,
+   "m": 0.4225,
+   "rho2": 0.01,
+   "pred_slope": 191.502758,
+   "fit_slope": 55.417136,
+   "ratio": 0.2894,
+   "r2": -0.21558,
+   "gene_target": "IL20RA"
+  },
+  {
+   "N": 429,
+   "m": 0.2939,
+   "rho2": 0.06,
+   "pred_slope": 483.903204,
+   "fit_slope": 56.97886,
+   "ratio": 0.1177,
+   "r2": -1.45718,
+   "gene_target": "IL5"
+  },
+  {
+   "N": 436,
+   "m": 0.5319,
+   "rho2": 0.3,
+   "pred_slope": 151.84739,
+   "fit_slope": 39.656516,
+   "ratio": 0.2612,
+   "r2": 0.30839,
+   "gene_target": "ING1"
+  },
+  {
+   "N": 565,
+   "m": 0.2325,
+   "rho2": 0.04,
+   "pred_slope": 825.582669,
+   "fit_slope": 61.804679,
+   "ratio": 0.0749,
+   "r2": -2.60578,
+   "gene_target": "INKA2"
+  },
+  {
+   "N": 440,
+   "m": 0.3188,
+   "rho2": 0.07,
+   "pred_slope": 431.426218,
+   "fit_slope": 55.080173,
+   "ratio": 0.1277,
+   "r2": -1.04378,
+   "gene_target": "INPP4B"
+  },
+  {
+   "N": 431,
+   "m": 0.2988,
+   "rho2": 0.03,
+   "pred_slope": 434.293008,
+   "fit_slope": 57.21192,
+   "ratio": 0.1317,
+   "r2": -1.66163,
+   "gene_target": "INTU"
+  },
+  {
+   "N": 675,
+   "m": 0.199,
+   "rho2": 0.03,
+   "pred_slope": 1116.513047,
+   "fit_slope": 64.03924,
+   "ratio": 0.0574,
+   "r2": -3.82851,
+   "gene_target": "IQCF3"
+  },
+  {
+   "N": 702,
+   "m": 0.2664,
+   "rho2": 0.02,
+   "pred_slope": 602.524044,
+   "fit_slope": 61.065537,
+   "ratio": 0.1013,
+   "r2": -1.41148,
+   "gene_target": "IQCN"
+  },
+  {
+   "N": 760,
+   "m": 0.3574,
+   "rho2": 0.01,
+   "pred_slope": 257.660619,
+   "fit_slope": 56.115302,
+   "ratio": 0.2178,
+   "r2": -0.43974,
+   "gene_target": "IRAG2"
+  },
+  {
+   "N": 466,
+   "m": 0.4512,
+   "rho2": 0.01,
+   "pred_slope": 164.893855,
+   "fit_slope": 55.693617,
+   "ratio": 0.3378,
+   "r2": 0.08124,
+   "gene_target": "IRAK1"
+  },
+  {
+   "N": 507,
+   "m": 0.3337,
+   "rho2": 0.02,
+   "pred_slope": 345.986861,
+   "fit_slope": 57.899467,
+   "ratio": 0.1673,
+   "r2": -0.67619,
+   "gene_target": "ITGB2"
+  },
+  {
+   "N": 549,
+   "m": 0.4492,
+   "rho2": 0.02,
+   "pred_slope": 151.67934,
+   "fit_slope": 53.703038,
+   "ratio": 0.3541,
+   "r2": 0.24062,
+   "gene_target": "ITLN1"
+  },
+  {
+   "N": 410,
+   "m": 0.4876,
+   "rho2": 0.05,
+   "pred_slope": 160.056958,
+   "fit_slope": 45.843509,
+   "ratio": 0.2864,
+   "r2": 0.34424,
+   "gene_target": "JAML"
+  },
+  {
+   "N": 489,
+   "m": 0.3676,
+   "rho2": 0.13,
+   "pred_slope": 318.76768,
+   "fit_slope": 50.56209,
+   "ratio": 0.1586,
+   "r2": -0.45245,
+   "gene_target": "KAT8"
+  },
+  {
+   "N": 569,
+   "m": 0.2383,
+   "rho2": 0.01,
+   "pred_slope": 751.314885,
+   "fit_slope": 62.844255,
+   "ratio": 0.0836,
+   "r2": -3.10798,
+   "gene_target": "KCNE3"
+  },
+  {
+   "N": 442,
+   "m": 0.3708,
+   "rho2": 0.03,
+   "pred_slope": 282.78649,
+   "fit_slope": 53.195779,
+   "ratio": 0.1881,
+   "r2": -0.53471,
+   "gene_target": "KCNE5"
+  },
+  {
+   "N": 440,
+   "m": 0.3918,
+   "rho2": 0.02,
+   "pred_slope": 241.144177,
+   "fit_slope": 56.17417,
+   "ratio": 0.2329,
+   "r2": -0.39252,
+   "gene_target": "KCNMB2"
+  },
+  {
+   "N": 844,
+   "m": 0.2962,
+   "rho2": 0.01,
+   "pred_slope": 475.694964,
+   "fit_slope": 62.034193,
+   "ratio": 0.1304,
+   "r2": -0.64063,
+   "gene_target": "KCNT1"
+  },
+  {
+   "N": 492,
+   "m": 0.2862,
+   "rho2": 0.02,
+   "pred_slope": 530.997923,
+   "fit_slope": 60.597371,
+   "ratio": 0.1141,
+   "r2": -1.1288,
+   "gene_target": "KCP"
+  },
+  {
+   "N": 482,
+   "m": 0.298,
+   "rho2": 0.06,
+   "pred_slope": 501.231791,
+   "fit_slope": 56.598595,
+   "ratio": 0.1129,
+   "r2": -1.24517,
+   "gene_target": "KCTD5"
+  },
+  {
+   "N": 518,
+   "m": 0.4188,
+   "rho2": 0.02,
+   "pred_slope": 201.576048,
+   "fit_slope": 55.527445,
+   "ratio": 0.2755,
+   "r2": -0.11178,
+   "gene_target": "KIAA0930"
+  },
+  {
+   "N": 407,
+   "m": 0.2139,
+   "rho2": 0.02,
+   "pred_slope": 934.235501,
+   "fit_slope": 65.108674,
+   "ratio": 0.0697,
+   "r2": -4.76363,
+   "gene_target": "KIAA1549L"
+  },
+  {
+   "N": 409,
+   "m": 0.2907,
+   "rho2": 0.02,
+   "pred_slope": 525.084216,
+   "fit_slope": 59.976326,
+   "ratio": 0.1142,
+   "r2": -1.88458,
+   "gene_target": "KIF22"
+  },
+  {
+   "N": 428,
+   "m": 0.3432,
+   "rho2": 0.02,
+   "pred_slope": 349.720986,
+   "fit_slope": 57.312959,
+   "ratio": 0.1639,
+   "r2": -1.05087,
+   "gene_target": "KIR2DL4"
+  },
+  {
+   "N": 410,
+   "m": 0.302,
+   "rho2": 0.02,
+   "pred_slope": 439.52749,
+   "fit_slope": 57.897803,
+   "ratio": 0.1317,
+   "r2": -1.60317,
+   "gene_target": "KIR3DL2"
+  },
+  {
+   "N": 426,
+   "m": 0.3318,
+   "rho2": 0.09,
+   "pred_slope": 416.355108,
+   "fit_slope": 54.766222,
+   "ratio": 0.1315,
+   "r2": -1.00421,
+   "gene_target": "KLF10"
+  },
+  {
+   "N": 414,
+   "m": 0.3255,
+   "rho2": 0.05,
+   "pred_slope": 414.423825,
+   "fit_slope": 54.938386,
+   "ratio": 0.1326,
+   "r2": -1.28143,
+   "gene_target": "KLHL6"
+  },
+  {
+   "N": 447,
+   "m": 0.3869,
+   "rho2": 0.03,
+   "pred_slope": 272.721948,
+   "fit_slope": 52.211712,
+   "ratio": 0.1914,
+   "r2": -0.63443,
+   "gene_target": "KLK11"
+  },
+  {
+   "N": 822,
+   "m": 0.2209,
+   "rho2": 0.01,
+   "pred_slope": 845.558342,
+   "fit_slope": 63.25334,
+   "ratio": 0.0748,
+   "r2": -2.12332,
+   "gene_target": "KLRC1"
+  },
+  {
+   "N": 407,
+   "m": 0.3365,
+   "rho2": 0.02,
+   "pred_slope": 311.832554,
+   "fit_slope": 54.051918,
+   "ratio": 0.1733,
+   "r2": -0.92789,
+   "gene_target": "KLRC4"
+  },
+  {
+   "N": 661,
+   "m": 0.3966,
+   "rho2": 0.01,
+   "pred_slope": 217.089767,
+   "fit_slope": 59.397631,
+   "ratio": 0.2736,
+   "r2": -0.31788,
+   "gene_target": "KLRD1"
+  },
+  {
+   "N": 622,
+   "m": 0.3979,
+   "rho2": 0.01,
+   "pred_slope": 225.702164,
+   "fit_slope": 56.5155,
+   "ratio": 0.2504,
+   "r2": -0.12579,
+   "gene_target": "KRT34"
+  },
+  {
+   "N": 498,
+   "m": 0.308,
+   "rho2": 0.07,
+   "pred_slope": 482.333483,
+   "fit_slope": 55.571683,
+   "ratio": 0.1152,
+   "r2": -1.32225,
+   "gene_target": "KRT36"
+  },
+  {
+   "N": 544,
+   "m": 0.2861,
+   "rho2": 0.02,
+   "pred_slope": 467.304443,
+   "fit_slope": 59.342916,
+   "ratio": 0.127,
+   "r2": -1.32623,
+   "gene_target": "KRT6A"
+  },
+  {
+   "N": 521,
+   "m": 0.3709,
+   "rho2": 0.01,
+   "pred_slope": 277.213384,
+   "fit_slope": 57.217557,
+   "ratio": 0.2064,
+   "r2": -0.64259,
+   "gene_target": "KRT79"
+  },
+  {
+   "N": 441,
+   "m": 0.3129,
+   "rho2": 0.01,
+   "pred_slope": 403.515824,
+   "fit_slope": 59.916347,
+   "ratio": 0.1485,
+   "r2": -1.194,
+   "gene_target": "KRTAP13-2"
+  },
+  {
+   "N": 515,
+   "m": 0.2533,
+   "rho2": 0.04,
+   "pred_slope": 684.099113,
+   "fit_slope": 59.757091,
+   "ratio": 0.0874,
+   "r2": -2.15298,
+   "gene_target": "KRTAP22-2"
+  },
+  {
+   "N": 765,
+   "m": 0.2202,
+   "rho2": 0.01,
+   "pred_slope": 863.047663,
+   "fit_slope": 64.262976,
+   "ratio": 0.0745,
+   "r2": -2.27612,
+   "gene_target": "KRTAP9-1"
+  },
+  {
+   "N": 587,
+   "m": 0.3024,
+   "rho2": 0.01,
+   "pred_slope": 441.648098,
+   "fit_slope": 60.393772,
+   "ratio": 0.1367,
+   "r2": -0.90704,
+   "gene_target": "L1TD1"
+  },
+  {
+   "N": 478,
+   "m": 0.7076,
+   "rho2": 0.09,
+   "pred_slope": 91.389706,
+   "fit_slope": 35.08872,
+   "ratio": 0.3839,
+   "r2": 0.70674,
+   "gene_target": "L2HGDH"
+  },
+  {
+   "N": 492,
+   "m": 0.2836,
+   "rho2": 0.04,
+   "pred_slope": 519.693491,
+   "fit_slope": 57.907848,
+   "ratio": 0.1114,
+   "r2": -1.5016,
+   "gene_target": "LAG3"
+  },
+  {
+   "N": 542,
+   "m": 0.2295,
+   "rho2": 0.01,
+   "pred_slope": 725.261714,
+   "fit_slope": 65.281624,
+   "ratio": 0.09,
+   "r2": -2.99259,
+   "gene_target": "LAIR2"
+  },
+  {
+   "N": 510,
+   "m": 0.2734,
+   "rho2": 0.02,
+   "pred_slope": 582.112186,
+   "fit_slope": 60.894077,
+   "ratio": 0.1046,
+   "r2": -2.07197,
+   "gene_target": "LAMA5"
+  },
+  {
+   "N": 404,
+   "m": 0.4734,
+   "rho2": 0.02,
+   "pred_slope": 166.630683,
+   "fit_slope": 50.188637,
+   "ratio": 0.3012,
+   "r2": 0.12904,
+   "gene_target": "LAPTM4A"
+  },
+  {
+   "N": 550,
+   "m": 0.2785,
+   "rho2": 0.01,
+   "pred_slope": 478.932753,
+   "fit_slope": 64.270649,
+   "ratio": 0.1342,
+   "r2": -1.32527,
+   "gene_target": "LCE1D"
+  },
+  {
+   "N": 481,
+   "m": 0.2679,
+   "rho2": 0.03,
+   "pred_slope": 612.901467,
+   "fit_slope": 60.15056,
+   "ratio": 0.0981,
+   "r2": -1.92127,
+   "gene_target": "LCE4A"
+  },
+  {
+   "N": 455,
+   "m": 0.3393,
+   "rho2": 0.01,
+   "pred_slope": 293.811373,
+   "fit_slope": 57.360542,
+   "ratio": 0.1952,
+   "r2": -0.80952,
+   "gene_target": "LDHAL6B"
+  },
+  {
+   "N": 429,
+   "m": 0.3241,
+   "rho2": 0.02,
+   "pred_slope": 341.451461,
+   "fit_slope": 57.799371,
+   "ratio": 0.1693,
+   "r2": -0.98816,
+   "gene_target": "LEF1"
+  },
+  {
+   "N": 717,
+   "m": 0.8189,
+   "rho2": 1.28,
+   "pred_slope": 66.184554,
+   "fit_slope": 27.184804,
+   "ratio": 0.4107,
+   "r2": 0.78211,
+   "gene_target": "LGALS1"
+  },
+  {
+   "N": 672,
+   "m": 0.3185,
+   "rho2": 0.02,
+   "pred_slope": 382.34983,
+   "fit_slope": 59.020978,
+   "ratio": 0.1544,
+   "r2": -0.61927,
+   "gene_target": "LILRB4"
+  },
+  {
+   "N": 566,
+   "m": 0.2558,
+   "rho2": 0.04,
+   "pred_slope": 687.949484,
+   "fit_slope": 60.647383,
+   "ratio": 0.0882,
+   "r2": -2.06303,
+   "gene_target": "LINC01465"
+  },
+  {
+   "N": 527,
+   "m": 0.7159,
+   "rho2": 0.03,
+   "pred_slope": 59.763535,
+   "fit_slope": 42.914701,
+   "ratio": 0.7181,
+   "r2": 0.76276,
+   "gene_target": "LINC02911"
+  },
+  {
+   "N": 573,
+   "m": 0.2841,
+   "rho2": 0.02,
+   "pred_slope": 506.432074,
+   "fit_slope": 57.611039,
+   "ratio": 0.1138,
+   "r2": -1.42244,
+   "gene_target": "LINC03041"
+  },
+  {
+   "N": 455,
+   "m": 0.4059,
+   "rho2": 0.02,
+   "pred_slope": 219.035527,
+   "fit_slope": 53.148612,
+   "ratio": 0.2426,
+   "r2": -0.26715,
+   "gene_target": "LINGO2"
+  },
+  {
+   "N": 469,
+   "m": 0.3162,
+   "rho2": 0.02,
+   "pred_slope": 431.657987,
+   "fit_slope": 56.996096,
+   "ratio": 0.132,
+   "r2": -1.58952,
+   "gene_target": "LMBR1"
+  },
+  {
+   "N": 400,
+   "m": 0.386,
+   "rho2": 0.03,
+   "pred_slope": 275.740278,
+   "fit_slope": 53.050817,
+   "ratio": 0.1924,
+   "r2": -0.20006,
+   "gene_target": "LMF2"
+  },
+  {
+   "N": 567,
+   "m": 0.2863,
+   "rho2": 0.01,
+   "pred_slope": 453.584457,
+   "fit_slope": 60.454098,
+   "ratio": 0.1333,
+   "r2": -1.71228,
+   "gene_target": "LPCAT1"
+  },
+  {
+   "N": 538,
+   "m": 0.3415,
+   "rho2": 0.02,
+   "pred_slope": 332.95716,
+   "fit_slope": 56.814292,
+   "ratio": 0.1706,
+   "r2": -0.73505,
+   "gene_target": "LRCH4"
+  },
+  {
+   "N": 690,
+   "m": 0.3742,
+   "rho2": 0.01,
+   "pred_slope": 268.130485,
+   "fit_slope": 56.724554,
+   "ratio": 0.2116,
+   "r2": -0.26917,
+   "gene_target": "LRCOL1"
+  },
+  {
+   "N": 423,
+   "m": 0.4144,
+   "rho2": 0.02,
+   "pred_slope": 253.223279,
+   "fit_slope": 53.91202,
+   "ratio": 0.2129,
+   "r2": -0.50842,
+   "gene_target": "LRP1"
+  },
+  {
+   "N": 506,
+   "m": 0.3557,
+   "rho2": 0.06,
+   "pred_slope": 354.374813,
+   "fit_slope": 52.171247,
+   "ratio": 0.1472,
+   "r2": -0.60851,
+   "gene_target": "LRRC2"
+  },
+  {
+   "N": 491,
+   "m": 0.3754,
+   "rho2": 0.02,
+   "pred_slope": 246.97489,
+   "fit_slope": 57.27543,
+   "ratio": 0.2319,
+   "r2": -0.18102,
+   "gene_target": "LRRC25"
+  },
+  {
+   "N": 541,
+   "m": 0.2137,
+   "rho2": 0.05,
+   "pred_slope": 943.335955,
+   "fit_slope": 62.477076,
+   "ratio": 0.0662,
+   "r2": -3.00242,
+   "gene_target": "LRRC59"
+  },
+  {
+   "N": 469,
+   "m": 0.2178,
+   "rho2": 0.02,
+   "pred_slope": 880.290542,
+   "fit_slope": 63.194325,
+   "ratio": 0.0718,
+   "r2": -3.81732,
+   "gene_target": "LRRIQ1"
+  },
+  {
+   "N": 545,
+   "m": 0.2809,
+   "rho2": 0.06,
+   "pred_slope": 543.432802,
+   "fit_slope": 57.082114,
+   "ratio": 0.105,
+   "r2": -1.3631,
+   "gene_target": "LRRK2"
+  },
+  {
+   "N": 428,
+   "m": 0.2921,
+   "rho2": 0.01,
+   "pred_slope": 450.221245,
+   "fit_slope": 62.992842,
+   "ratio": 0.1399,
+   "r2": -1.48435,
+   "gene_target": "LRRN3"
+  },
+  {
+   "N": 499,
+   "m": 0.2366,
+   "rho2": 0.03,
+   "pred_slope": 776.958226,
+   "fit_slope": 61.793576,
+   "ratio": 0.0795,
+   "r2": -3.02404,
+   "gene_target": "LRRN4"
+  },
+  {
+   "N": 511,
+   "m": 0.772,
+   "rho2": 0.11,
+   "pred_slope": 68.569147,
+   "fit_slope": 32.346549,
+   "ratio": 0.4717,
+   "r2": 0.78057,
+   "gene_target": "LSG1"
+  },
+  {
+   "N": 832,
+   "m": 0.4702,
+   "rho2": 0.07,
+   "pred_slope": 191.081097,
+   "fit_slope": 45.866147,
+   "ratio": 0.24,
+   "r2": 0.45117,
+   "gene_target": "LUC7L2"
+  },
+  {
+   "N": 403,
+   "m": 0.2481,
+   "rho2": 0.01,
+   "pred_slope": 631.748677,
+   "fit_slope": 62.854035,
+   "ratio": 0.0995,
+   "r2": -3.37428,
+   "gene_target": "LY96"
+  },
+  {
+   "N": 449,
+   "m": 0.489,
+   "rho2": 0.02,
+   "pred_slope": 147.7642,
+   "fit_slope": 50.894337,
+   "ratio": 0.3444,
+   "r2": 0.25615,
+   "gene_target": "LYG2"
+  },
+  {
+   "N": 584,
+   "m": 0.3002,
+   "rho2": 0.02,
+   "pred_slope": 432.112328,
+   "fit_slope": 59.339959,
+   "ratio": 0.1373,
+   "r2": -0.76146,
+   "gene_target": "LYZL2"
+  },
+  {
+   "N": 529,
+   "m": 0.2929,
+   "rho2": 0.03,
+   "pred_slope": 491.620933,
+   "fit_slope": 57.187978,
+   "ratio": 0.1163,
+   "r2": -1.52145,
+   "gene_target": "LZTS2"
+  },
+  {
+   "N": 437,
+   "m": 0.2776,
+   "rho2": 0.02,
+   "pred_slope": 570.277041,
+   "fit_slope": 62.036246,
+   "ratio": 0.1088,
+   "r2": -2.13393,
+   "gene_target": "MACROD1"
+  },
+  {
+   "N": 565,
+   "m": 0.3558,
+   "rho2": 0.18,
+   "pred_slope": 353.030059,
+   "fit_slope": 51.429864,
+   "ratio": 0.1457,
+   "r2": -0.42817,
+   "gene_target": "MAGEB1"
+  },
+  {
+   "N": 907,
+   "m": 0.8292,
+   "rho2": 0.03,
+   "pred_slope": 44.560414,
+   "fit_slope": 37.995041,
+   "ratio": 0.8527,
+   "r2": 0.90322,
+   "gene_target": "MAGEC3"
+  },
+  {
+   "N": 439,
+   "m": 0.5969,
+   "rho2": 0.09,
+   "pred_slope": 117.665501,
+   "fit_slope": 39.377088,
+   "ratio": 0.3347,
+   "r2": 0.54114,
+   "gene_target": "MAMSTR"
+  },
+  {
+   "N": 548,
+   "m": 0.4137,
+   "rho2": 0.02,
+   "pred_slope": 209.220057,
+   "fit_slope": 52.082322,
+   "ratio": 0.2489,
+   "r2": -0.07643,
+   "gene_target": "MAN2B1"
+  },
+  {
+   "N": 471,
+   "m": 0.2197,
+   "rho2": 0.03,
+   "pred_slope": 904.396595,
+   "fit_slope": 62.87719,
+   "ratio": 0.0695,
+   "r2": -4.49397,
+   "gene_target": "MANBA"
+  },
+  {
+   "N": 510,
+   "m": 0.4849,
+   "rho2": 0.02,
+   "pred_slope": 150.287392,
+   "fit_slope": 50.291181,
+   "ratio": 0.3346,
+   "r2": 0.21479,
+   "gene_target": "MAP3K9"
+  },
+  {
+   "N": 524,
+   "m": 0.3643,
+   "rho2": 0.02,
+   "pred_slope": 289.681411,
+   "fit_slope": 54.665116,
+   "ratio": 0.1887,
+   "r2": -0.45828,
+   "gene_target": "MAPK10"
+  },
+  {
+   "N": 462,
+   "m": 0.2911,
+   "rho2": 0.02,
+   "pred_slope": 471.800958,
+   "fit_slope": 57.3841,
+   "ratio": 0.1216,
+   "r2": -1.41359,
+   "gene_target": "MAPK8IP1"
+  },
+  {
+   "N": 455,
+   "m": 0.398,
+   "rho2": 0.04,
+   "pred_slope": 235.203077,
+   "fit_slope": 50.301052,
+   "ratio": 0.2139,
+   "r2": -0.09443,
+   "gene_target": "MAPKBP1"
+  },
+  {
+   "N": 411,
+   "m": 0.4472,
+   "rho2": 0.02,
+   "pred_slope": 170.774614,
+   "fit_slope": 50.305873,
+   "ratio": 0.2946,
+   "r2": -0.0375,
+   "gene_target": "MARCHF1"
+  },
+  {
+   "N": 556,
+   "m": 0.2895,
+   "rho2": 0.02,
+   "pred_slope": 480.983568,
+   "fit_slope": 60.115202,
+   "ratio": 0.125,
+   "r2": -0.94,
+   "gene_target": "MARCHF2"
+  },
+  {
+   "N": 461,
+   "m": 0.3528,
+   "rho2": 0.02,
+   "pred_slope": 301.792257,
+   "fit_slope": 54.824857,
+   "ratio": 0.1817,
+   "r2": -0.90203,
+   "gene_target": "MARK2"
+  },
+  {
+   "N": 442,
+   "m": 0.4296,
+   "rho2": 0.05,
+   "pred_slope": 229.967859,
+   "fit_slope": 48.759609,
+   "ratio": 0.212,
+   "r2": -0.00247,
+   "gene_target": "MAST1"
+  },
+  {
+   "N": 425,
+   "m": 0.4424,
+   "rho2": 0.1,
+   "pred_slope": 224.764263,
+   "fit_slope": 47.218466,
+   "ratio": 0.2101,
+   "r2": 0.04458,
+   "gene_target": "MAT2B"
+  },
+  {
+   "N": 509,
+   "m": 0.5822,
+   "rho2": 0.07,
+   "pred_slope": 122.83578,
+   "fit_slope": 39.869956,
+   "ratio": 0.3246,
+   "r2": 0.48147,
+   "gene_target": "MAVS"
+  },
+  {
+   "N": 469,
+   "m": 0.5384,
+   "rho2": 0.26,
+   "pred_slope": 151.935413,
+   "fit_slope": 39.933287,
+   "ratio": 0.2628,
+   "r2": 0.34256,
+   "gene_target": "MB"
+  },
+  {
+   "N": 410,
+   "m": 0.6002,
+   "rho2": 0.03,
+   "pred_slope": 106.704386,
+   "fit_slope": 46.149557,
+   "ratio": 0.4325,
+   "r2": 0.51686,
+   "gene_target": "MBNL1"
+  },
+  {
+   "N": 470,
+   "m": 0.5172,
+   "rho2": 0.01,
+   "pred_slope": 125.167461,
+   "fit_slope": 53.167696,
+   "ratio": 0.4248,
+   "r2": 0.34305,
+   "gene_target": "MBOAT7"
+  },
+  {
+   "N": 566,
+   "m": 0.3567,
+   "rho2": 0.01,
+   "pred_slope": 274.97806,
+   "fit_slope": 58.09623,
+   "ratio": 0.2113,
+   "r2": -0.63518,
+   "gene_target": "MCCC2"
+  },
+  {
+   "N": 481,
+   "m": 0.2778,
+   "rho2": 0.03,
+   "pred_slope": 553.477945,
+   "fit_slope": 58.989564,
+   "ratio": 0.1066,
+   "r2": -1.86624,
+   "gene_target": "MDFIC"
+  },
+  {
+   "N": 546,
+   "m": 0.289,
+   "rho2": 0.01,
+   "pred_slope": 473.333163,
+   "fit_slope": 61.085455,
+   "ratio": 0.1291,
+   "r2": -1.88006,
+   "gene_target": "MELTF"
+  },
+  {
+   "N": 462,
+   "m": 0.2625,
+   "rho2": 0.01,
+   "pred_slope": 572.916816,
+   "fit_slope": 60.741471,
+   "ratio": 0.106,
+   "r2": -2.50249,
+   "gene_target": "METTL15"
+  },
+  {
+   "N": 503,
+   "m": 0.5221,
+   "rho2": 0.02,
+   "pred_slope": 126.365769,
+   "fit_slope": 50.107577,
+   "ratio": 0.3965,
+   "r2": 0.45664,
+   "gene_target": "METTL18"
+  },
+  {
+   "N": 425,
+   "m": 0.4851,
+   "rho2": 0.1,
+   "pred_slope": 200.008742,
+   "fit_slope": 45.290916,
+   "ratio": 0.2264,
+   "r2": 0.22173,
+   "gene_target": "MFN2"
+  },
+  {
+   "N": 415,
+   "m": 0.7617,
+   "rho2": 0.03,
+   "pred_slope": 55.277329,
+   "fit_slope": 39.692123,
+   "ratio": 0.7181,
+   "r2": 0.68817,
+   "gene_target": "MFSD6"
+  },
+  {
+   "N": 524,
+   "m": 0.4392,
+   "rho2": 0.02,
+   "pred_slope": 197.704558,
+   "fit_slope": 51.262141,
+   "ratio": 0.2593,
+   "r2": 0.12636,
+   "gene_target": "MIER1"
+  },
+  {
+   "N": 687,
+   "m": 0.2217,
+   "rho2": 0.01,
+   "pred_slope": 805.022803,
+   "fit_slope": 66.858163,
+   "ratio": 0.0831,
+   "r2": -2.84198,
+   "gene_target": "MINDY4B"
+  },
+  {
+   "N": 569,
+   "m": 0.2238,
+   "rho2": 0.03,
+   "pred_slope": 855.611376,
+   "fit_slope": 62.696724,
+   "ratio": 0.0733,
+   "r2": -2.96545,
+   "gene_target": "MIR205HG"
+  },
+  {
+   "N": 451,
+   "m": 0.2574,
+   "rho2": 0.02,
+   "pred_slope": 603.229306,
+   "fit_slope": 60.547394,
+   "ratio": 0.1004,
+   "r2": -2.65827,
+   "gene_target": "MIR9-1HG"
+  },
+  {
+   "N": 635,
+   "m": 0.3184,
+   "rho2": 0.01,
+   "pred_slope": 379.082222,
+   "fit_slope": 61.126017,
+   "ratio": 0.1612,
+   "r2": -0.55987,
+   "gene_target": "MKNK1"
+  },
+  {
+   "N": 496,
+   "m": 0.3371,
+   "rho2": 0.02,
+   "pred_slope": 364.705226,
+   "fit_slope": 54.43357,
+   "ratio": 0.1493,
+   "r2": -1.17795,
+   "gene_target": "MKRN2OS"
+  },
+  {
+   "N": 400,
+   "m": 0.5218,
+   "rho2": 0.02,
+   "pred_slope": 124.331272,
+   "fit_slope": 50.530709,
+   "ratio": 0.4064,
+   "r2": 0.36768,
+   "gene_target": "MKX"
+  },
+  {
+   "N": 492,
+   "m": 0.3817,
+   "rho2": 0.14,
+   "pred_slope": 311.117803,
+   "fit_slope": 50.430269,
+   "ratio": 0.1621,
+   "r2": -0.28308,
+   "gene_target": "MLEC"
+  },
+  {
+   "N": 402,
+   "m": 0.3308,
+   "rho2": 0.09,
+   "pred_slope": 411.039053,
+   "fit_slope": 54.520878,
+   "ratio": 0.1326,
+   "r2": -1.16482,
+   "gene_target": "MMP7"
+  },
+  {
+   "N": 405,
+   "m": 0.4068,
+   "rho2": 0.02,
+   "pred_slope": 196.532006,
+   "fit_slope": 53.521905,
+   "ratio": 0.2723,
+   "r2": -0.53136,
+   "gene_target": "MNDA"
+  },
+  {
+   "N": 423,
+   "m": 0.3122,
+   "rho2": 0.01,
+   "pred_slope": 403.415248,
+   "fit_slope": 60.187568,
+   "ratio": 0.1492,
+   "r2": -1.86875,
+   "gene_target": "MORN3"
+  },
+  {
+   "N": 478,
+   "m": 0.2396,
+   "rho2": 0.01,
+   "pred_slope": 698.891231,
+   "fit_slope": 62.924965,
+   "ratio": 0.09,
+   "r2": -3.17985,
+   "gene_target": "MPZ"
+  },
+  {
+   "N": 551,
+   "m": 0.2659,
+   "rho2": 0.01,
+   "pred_slope": 471.188276,
+   "fit_slope": 63.053168,
+   "ratio": 0.1338,
+   "r2": -2.15976,
+   "gene_target": "MROH6"
+  },
+  {
+   "N": 433,
+   "m": 0.7156,
+   "rho2": 0.32,
+   "pred_slope": 80.585779,
+   "fit_slope": 31.300006,
+   "ratio": 0.3884,
+   "r2": 0.69666,
+   "gene_target": "MRPL11"
+  },
+  {
+   "N": 484,
+   "m": 0.4044,
+   "rho2": 0.11,
+   "pred_slope": 276.066003,
+   "fit_slope": 48.629915,
+   "ratio": 0.1762,
+   "r2": -0.1871,
+   "gene_target": "MRPS10"
+  },
+  {
+   "N": 471,
+   "m": 0.3638,
+   "rho2": 0.01,
+   "pred_slope": 290.30127,
+   "fit_slope": 57.534155,
+   "ratio": 0.1982,
+   "r2": -0.55298,
+   "gene_target": "MSC"
+  },
+  {
+   "N": 552,
+   "m": 0.3856,
+   "rho2": 0.1,
+   "pred_slope": 302.305298,
+   "fit_slope": 49.175693,
+   "ratio": 0.1627,
+   "r2": -0.29091,
+   "gene_target": "MSMB"
+  },
+  {
+   "N": 463,
+   "m": 0.2995,
+   "rho2": 0.04,
+   "pred_slope": 477.331639,
+   "fit_slope": 57.424239,
+   "ratio": 0.1203,
+   "r2": -1.19549,
+   "gene_target": "MT1F"
+  },
+  {
+   "N": 441,
+   "m": 0.4092,
+   "rho2": 0.01,
+   "pred_slope": 237.768755,
+   "fit_slope": 56.611615,
+   "ratio": 0.2381,
+   "r2": -0.27611,
+   "gene_target": "MT3"
+  },
+  {
+   "N": 519,
+   "m": 0.3613,
+   "rho2": 0.01,
+   "pred_slope": 254.134782,
+   "fit_slope": 55.792871,
+   "ratio": 0.2195,
+   "r2": -0.39148,
+   "gene_target": "MTARC1"
+  },
+  {
+   "N": 488,
+   "m": 0.4419,
+   "rho2": 0.02,
+   "pred_slope": 183.611649,
+   "fit_slope": 53.978181,
+   "ratio": 0.294,
+   "r2": -0.03607,
+   "gene_target": "MTCH2"
+  },
+  {
+   "N": 404,
+   "m": 0.3218,
+   "rho2": 0.05,
+   "pred_slope": 447.518364,
+   "fit_slope": 56.375585,
+   "ratio": 0.126,
+   "r2": -1.40357,
+   "gene_target": "MTCL1"
+  },
+  {
+   "N": 539,
+   "m": 0.3252,
+   "rho2": 0.01,
+   "pred_slope": 355.992336,
+   "fit_slope": 59.697719,
+   "ratio": 0.1677,
+   "r2": -0.53914,
+   "gene_target": "MTHFD2"
+  },
+  {
+   "N": 654,
+   "m": 0.2635,
+   "rho2": 0.01,
+   "pred_slope": 551.25383,
+   "fit_slope": 61.665841,
+   "ratio": 0.1119,
+   "r2": -1.31252,
+   "gene_target": "MTHFR"
+  },
+  {
+   "N": 417,
+   "m": 0.2964,
+   "rho2": 0.1,
+   "pred_slope": 512.299334,
+   "fit_slope": 56.469813,
+   "ratio": 0.1102,
+   "r2": -1.57503,
+   "gene_target": "MTRF1L"
+  },
+  {
+   "N": 418,
+   "m": 0.4657,
+   "rho2": 0.02,
+   "pred_slope": 165.22804,
+   "fit_slope": 49.533721,
+   "ratio": 0.2998,
+   "r2": 0.05998,
+   "gene_target": "MUC13"
+  },
+  {
+   "N": 481,
+   "m": 0.4612,
+   "rho2": 0.02,
+   "pred_slope": 154.573896,
+   "fit_slope": 50.186443,
+   "ratio": 0.3247,
+   "r2": 0.06782,
+   "gene_target": "MUC15"
+  },
+  {
+   "N": 450,
+   "m": 0.3194,
+   "rho2": 0.02,
+   "pred_slope": 388.616314,
+   "fit_slope": 57.939912,
+   "ratio": 0.1491,
+   "r2": -0.92099,
+   "gene_target": "MUC17"
+  },
+  {
+   "N": 534,
+   "m": 0.2613,
+   "rho2": 0.01,
+   "pred_slope": 548.884946,
+   "fit_slope": 64.576859,
+   "ratio": 0.1177,
+   "r2": -1.83425,
+   "gene_target": "MUC7"
+  },
+  {
+   "N": 463,
+   "m": 0.379,
+   "rho2": 0.06,
+   "pred_slope": 292.73912,
+   "fit_slope": 50.67786,
+   "ratio": 0.1731,
+   "r2": -0.40102,
+   "gene_target": "MUCL1"
+  },
+  {
+   "N": 611,
+   "m": 0.295,
+   "rho2": 0.02,
+   "pred_slope": 439.223792,
+   "fit_slope": 57.111849,
+   "ratio": 0.13,
+   "r2": -1.27695,
+   "gene_target": "MYADM"
+  },
+  {
+   "N": 605,
+   "m": 0.3182,
+   "rho2": 0.03,
+   "pred_slope": 399.485012,
+   "fit_slope": 55.598928,
+   "ratio": 0.1392,
+   "r2": -0.79284,
+   "gene_target": "MYCN"
+  },
+  {
+   "N": 588,
+   "m": 0.267,
+   "rho2": 0.04,
+   "pred_slope": 614.310223,
+   "fit_slope": 58.448284,
+   "ratio": 0.0951,
+   "r2": -1.73105,
+   "gene_target": "MYH6"
+  },
+  {
+   "N": 434,
+   "m": 0.2662,
+   "rho2": 0.07,
+   "pred_slope": 624.127483,
+   "fit_slope": 59.198799,
+   "ratio": 0.0949,
+   "r2": -2.18239,
+   "gene_target": "MYO16"
+  },
+  {
+   "N": 404,
+   "m": 0.2925,
+   "rho2": 0.01,
+   "pred_slope": 416.580592,
+   "fit_slope": 59.42931,
+   "ratio": 0.1427,
+   "r2": -2.08467,
+   "gene_target": "MYO1A"
+  },
+  {
+   "N": 432,
+   "m": 0.3063,
+   "rho2": 0.01,
+   "pred_slope": 428.735972,
+   "fit_slope": 64.23962,
+   "ratio": 0.1498,
+   "r2": -1.49242,
+   "gene_target": "MYO1C"
+  },
+  {
+   "N": 411,
+   "m": 0.4084,
+   "rho2": 0.02,
+   "pred_slope": 196.096931,
+   "fit_slope": 53.737424,
+   "ratio": 0.274,
+   "r2": -0.41849,
+   "gene_target": "MYOD1"
+  },
+  {
+   "N": 466,
+   "m": 0.1643,
+   "rho2": 0.02,
+   "pred_slope": 1656.999421,
+   "fit_slope": 68.919664,
+   "ratio": 0.0416,
+   "r2": -8.39006,
+   "gene_target": "MYOT"
+  },
+  {
+   "N": 648,
+   "m": 0.2535,
+   "rho2": 0.01,
+   "pred_slope": 557.002578,
+   "fit_slope": 62.500263,
+   "ratio": 0.1122,
+   "r2": -2.41562,
+   "gene_target": "MYRF"
+  },
+  {
+   "N": 413,
+   "m": 0.3405,
+   "rho2": 0.02,
+   "pred_slope": 326.4281,
+   "fit_slope": 56.169352,
+   "ratio": 0.1721,
+   "r2": -1.08181,
+   "gene_target": "NAGS"
+  },
+  {
+   "N": 578,
+   "m": 0.2184,
+   "rho2": 0.04,
+   "pred_slope": 962.542781,
+   "fit_slope": 62.321407,
+   "ratio": 0.0647,
+   "r2": -3.02289,
+   "gene_target": "NAV3"
+  },
+  {
+   "N": 903,
+   "m": 0.2376,
+   "rho2": 0.01,
+   "pred_slope": 697.429972,
+   "fit_slope": 61.616566,
+   "ratio": 0.0883,
+   "r2": -1.8148,
+   "gene_target": "NBPF8"
+  },
+  {
+   "N": 407,
+   "m": 0.4806,
+   "rho2": 0.02,
+   "pred_slope": 145.727291,
+   "fit_slope": 50.449121,
+   "ratio": 0.3462,
+   "r2": 0.29975,
+   "gene_target": "NCK1"
+  },
+  {
+   "N": 443,
+   "m": 0.4819,
+   "rho2": 0.02,
+   "pred_slope": 148.189923,
+   "fit_slope": 52.948954,
+   "ratio": 0.3573,
+   "r2": 0.16585,
+   "gene_target": "NCKAP1"
+  },
+  {
+   "N": 411,
+   "m": 0.3269,
+   "rho2": 0.08,
+   "pred_slope": 435.002869,
+   "fit_slope": 55.168687,
+   "ratio": 0.1268,
+   "r2": -1.19372,
+   "gene_target": "NCOR2"
+  },
+  {
+   "N": 420,
+   "m": 0.3329,
+   "rho2": 0.01,
+   "pred_slope": 311.32455,
+   "fit_slope": 58.052124,
+   "ratio": 0.1865,
+   "r2": -1.22943,
+   "gene_target": "NCR1"
+  },
+  {
+   "N": 504,
+   "m": 0.3921,
+   "rho2": 0.02,
+   "pred_slope": 237.184566,
+   "fit_slope": 52.630427,
+   "ratio": 0.2219,
+   "r2": -0.37452,
+   "gene_target": "NDFIP2"
+  },
+  {
+   "N": 596,
+   "m": 0.54,
+   "rho2": 0.03,
+   "pred_slope": 119.542456,
+   "fit_slope": 46.197965,
+   "ratio": 0.3865,
+   "r2": 0.53524,
+   "gene_target": "NDUFS5"
+  },
+  {
+   "N": 598,
+   "m": 0.2743,
+   "rho2": 0.04,
+   "pred_slope": 616.723001,
+   "fit_slope": 59.797303,
+   "ratio": 0.097,
+   "r2": -1.47542,
+   "gene_target": "NECAB3"
+  },
+  {
+   "N": 414,
+   "m": 0.3636,
+   "rho2": 0.02,
+   "pred_slope": 256.42125,
+   "fit_slope": 55.950936,
+   "ratio": 0.2182,
+   "r2": -0.39932,
+   "gene_target": "NEFM"
+  },
+  {
+   "N": 456,
+   "m": 0.5553,
+   "rho2": 0.02,
+   "pred_slope": 111.337892,
+   "fit_slope": 49.178421,
+   "ratio": 0.4417,
+   "r2": 0.33712,
+   "gene_target": "NEK5"
+  },
+  {
+   "N": 865,
+   "m": 0.2552,
+   "rho2": 0.01,
+   "pred_slope": 534.844525,
+   "fit_slope": 64.856223,
+   "ratio": 0.1213,
+   "r2": -1.18879,
+   "gene_target": "NEU4"
+  },
+  {
+   "N": 432,
+   "m": 0.2549,
+   "rho2": 0.05,
+   "pred_slope": 681.850432,
+   "fit_slope": 60.491149,
+   "ratio": 0.0887,
+   "r2": -2.49998,
+   "gene_target": "NEURL1B"
+  },
+  {
+   "N": 408,
+   "m": 0.515,
+   "rho2": 0.02,
+   "pred_slope": 135.138421,
+   "fit_slope": 48.978201,
+   "ratio": 0.3624,
+   "r2": 0.22956,
+   "gene_target": "NFATC2"
+  },
+  {
+   "N": 519,
+   "m": 0.274,
+   "rho2": 0.01,
+   "pred_slope": 578.257943,
+   "fit_slope": 62.31795,
+   "ratio": 0.1078,
+   "r2": -1.98641,
+   "gene_target": "NFIX"
+  },
+  {
+   "N": 523,
+   "m": 0.2415,
+   "rho2": 0.04,
+   "pred_slope": 756.542511,
+   "fit_slope": 60.826317,
+   "ratio": 0.0804,
+   "r2": -2.2676,
+   "gene_target": "NFKBID"
+  },
+  {
+   "N": 479,
+   "m": 0.3197,
+   "rho2": 0.06,
+   "pred_slope": 465.81621,
+   "fit_slope": 55.369011,
+   "ratio": 0.1189,
+   "r2": -1.09744,
+   "gene_target": "NHERF2"
+  },
+  {
+   "N": 428,
+   "m": 0.2517,
+   "rho2": 0.06,
+   "pred_slope": 681.672181,
+   "fit_slope": 60.320551,
+   "ratio": 0.0885,
+   "r2": -2.34217,
+   "gene_target": "NHSL1"
+  },
+  {
+   "N": 401,
+   "m": 0.3247,
+   "rho2": 0.09,
+   "pred_slope": 415.46574,
+   "fit_slope": 54.19057,
+   "ratio": 0.1304,
+   "r2": -1.21774,
+   "gene_target": "NIM1K"
+  },
+  {
+   "N": 410,
+   "m": 0.2597,
+   "rho2": 0.04,
+   "pred_slope": 661.864888,
+   "fit_slope": 62.177792,
+   "ratio": 0.0939,
+   "r2": -2.33592,
+   "gene_target": "NIPAL4"
+  },
+  {
+   "N": 456,
+   "m": 0.3614,
+   "rho2": 0.02,
+   "pred_slope": 311.044422,
+   "fit_slope": 57.080046,
+   "ratio": 0.1835,
+   "r2": -0.73422,
+   "gene_target": "NKAIN4"
+  },
+  {
+   "N": 534,
+   "m": 0.2689,
+   "rho2": 0.06,
+   "pred_slope": 613.544316,
+   "fit_slope": 58.757396,
+   "ratio": 0.0958,
+   "r2": -1.65563,
+   "gene_target": "NKAPL"
+  },
+  {
+   "N": 429,
+   "m": 0.5656,
+   "rho2": 0.02,
+   "pred_slope": 103.322417,
+   "fit_slope": 48.164404,
+   "ratio": 0.4662,
+   "r2": 0.4497,
+   "gene_target": "NLGN2"
+  },
+  {
+   "N": 468,
+   "m": 0.4514,
+   "rho2": 0.02,
+   "pred_slope": 172.373041,
+   "fit_slope": 52.317901,
+   "ratio": 0.3035,
+   "r2": 0.01926,
+   "gene_target": "NLRP12"
+  },
+  {
+   "N": 872,
+   "m": 0.2433,
+   "rho2": 0.06,
+   "pred_slope": 772.824061,
+   "fit_slope": 59.974701,
+   "ratio": 0.0776,
+   "r2": -1.458,
+   "gene_target": "NMBR"
+  },
+  {
+   "N": 591,
+   "m": 0.4868,
+   "rho2": 0.11,
+   "pred_slope": 175.731287,
+   "fit_slope": 43.492053,
+   "ratio": 0.2475,
+   "r2": 0.32437,
+   "gene_target": "NME2"
+  },
+  {
+   "N": 402,
+   "m": 0.4677,
+   "rho2": 0.02,
+   "pred_slope": 146.397369,
+   "fit_slope": 49.626097,
+   "ratio": 0.339,
+   "r2": -0.00139,
+   "gene_target": "NMNAT3"
+  },
+  {
+   "N": 471,
+   "m": 0.2445,
+   "rho2": 0.02,
+   "pred_slope": 683.180923,
+   "fit_slope": 60.117404,
+   "ratio": 0.088,
+   "r2": -2.41643,
+   "gene_target": "NNMT"
+  },
+  {
+   "N": 513,
+   "m": 0.2304,
+   "rho2": 0.01,
+   "pred_slope": 786.921653,
+   "fit_slope": 63.328281,
+   "ratio": 0.0805,
+   "r2": -3.08227,
+   "gene_target": "NOTCH4"
+  },
+  {
+   "N": 512,
+   "m": 0.2725,
+   "rho2": 0.06,
+   "pred_slope": 607.482729,
+   "fit_slope": 58.990676,
+   "ratio": 0.0971,
+   "r2": -1.77156,
+   "gene_target": "NOVA1"
+  },
+  {
+   "N": 553,
+   "m": 0.2766,
+   "rho2": 0.02,
+   "pred_slope": 533.774541,
+   "fit_slope": 58.491978,
+   "ratio": 0.1096,
+   "r2": -1.79542,
+   "gene_target": "NPAS4"
+  },
+  {
+   "N": 509,
+   "m": 0.3024,
+   "rho2": 0.01,
+   "pred_slope": 402.771368,
+   "fit_slope": 60.079447,
+   "ratio": 0.1492,
+   "r2": -1.2086,
+   "gene_target": "NPR1"
+  },
+  {
+   "N": 486,
+   "m": 0.3675,
+   "rho2": 0.02,
+   "pred_slope": 325.800629,
+   "fit_slope": 55.660382,
+   "ratio": 0.1708,
+   "r2": -0.8792,
+   "gene_target": "NPRL3"
+  },
+  {
+   "N": 543,
+   "m": 0.2722,
+   "rho2": 0.06,
+   "pred_slope": 607.293376,
+   "fit_slope": 57.750798,
+   "ratio": 0.0951,
+   "r2": -1.78824,
+   "gene_target": "NQO1"
+  },
+  {
+   "N": 427,
+   "m": 0.2778,
+   "rho2": 0.06,
+   "pred_slope": 572.195085,
+   "fit_slope": 58.974761,
+   "ratio": 0.1031,
+   "r2": -1.94185,
+   "gene_target": "NR5A2"
+  },
+  {
+   "N": 425,
+   "m": 0.3535,
+   "rho2": 0.07,
+   "pred_slope": 348.226951,
+   "fit_slope": 53.039128,
+   "ratio": 0.1523,
+   "r2": -0.61456,
+   "gene_target": "NRXN2"
+  },
+  {
+   "N": 815,
+   "m": 0.157,
+   "rho2": 0.03,
+   "pred_slope": 1766.360139,
+   "fit_slope": 68.234495,
+   "ratio": 0.0386,
+   "r2": -5.53434,
+   "gene_target": "NRXN3"
+  },
+  {
+   "N": 432,
+   "m": 0.3841,
+   "rho2": 0.01,
+   "pred_slope": 251.328358,
+   "fit_slope": 55.809665,
+   "ratio": 0.2221,
+   "r2": -0.78136,
+   "gene_target": "NSF"
+  },
+  {
+   "N": 456,
+   "m": 0.327,
+   "rho2": 0.07,
+   "pred_slope": 411.559913,
+   "fit_slope": 54.693776,
+   "ratio": 0.1329,
+   "r2": -1.03883,
+   "gene_target": "NT5C1B"
+  },
+  {
+   "N": 552,
+   "m": 0.2274,
+   "rho2": 0.02,
+   "pred_slope": 817.730836,
+   "fit_slope": 61.445385,
+   "ratio": 0.0751,
+   "r2": -3.14721,
+   "gene_target": "NUMB"
+  },
+  {
+   "N": 407,
+   "m": 0.3397,
+   "rho2": 0.02,
+   "pred_slope": 322.766302,
+   "fit_slope": 58.765339,
+   "ratio": 0.1821,
+   "r2": -0.96079,
+   "gene_target": "NUTM2G"
+  },
+  {
+   "N": 473,
+   "m": 0.3768,
+   "rho2": 0.02,
+   "pred_slope": 265.65114,
+   "fit_slope": 54.55337,
+   "ratio": 0.2054,
+   "r2": -0.40611,
+   "gene_target": "NWD1"
+  },
+  {
+   "N": 406,
+   "m": 0.3062,
+   "rho2": 0.03,
+   "pred_slope": 452.589212,
+   "fit_slope": 56.803868,
+   "ratio": 0.1255,
+   "r2": -1.19477,
+   "gene_target": "NWD2"
+  },
+  {
+   "N": 401,
+   "m": 0.2332,
+   "rho2": 0.09,
+   "pred_slope": 811.907271,
+   "fit_slope": 62.015472,
+   "ratio": 0.0764,
+   "r2": -3.22597,
+   "gene_target": "NXF2"
+  },
+  {
+   "N": 448,
+   "m": 0.352,
+   "rho2": 0.02,
+   "pred_slope": 296.762726,
+   "fit_slope": 57.945644,
+   "ratio": 0.1953,
+   "r2": -0.49005,
+   "gene_target": "OAF"
+  },
+  {
+   "N": 405,
+   "m": 0.3973,
+   "rho2": 0.07,
+   "pred_slope": 260.397855,
+   "fit_slope": 48.904486,
+   "ratio": 0.1878,
+   "r2": -0.3984,
+   "gene_target": "OAZ3"
+  },
+  {
+   "N": 422,
+   "m": 0.2967,
+   "rho2": 0.05,
+   "pred_slope": 535.82347,
+   "fit_slope": 58.792493,
+   "ratio": 0.1097,
+   "r2": -1.63459,
+   "gene_target": "OGFOD2"
+  },
+  {
+   "N": 435,
+   "m": 0.4396,
+   "rho2": 0.02,
+   "pred_slope": 173.793434,
+   "fit_slope": 52.303664,
+   "ratio": 0.301,
+   "r2": -0.14896,
+   "gene_target": "OGN"
+  },
+  {
+   "N": 405,
+   "m": 0.3842,
+   "rho2": 0.02,
+   "pred_slope": 234.864964,
+   "fit_slope": 54.653156,
+   "ratio": 0.2327,
+   "r2": -0.30914,
+   "gene_target": "OLFML2A"
+  },
+  {
+   "N": 402,
+   "m": 0.2723,
+   "rho2": 0.07,
+   "pred_slope": 619.415964,
+   "fit_slope": 60.20541,
+   "ratio": 0.0972,
+   "r2": -2.25153,
+   "gene_target": "OPA3"
+  },
+  {
+   "N": 564,
+   "m": 0.2652,
+   "rho2": 0.01,
+   "pred_slope": 540.818915,
+   "fit_slope": 61.711651,
+   "ratio": 0.1141,
+   "r2": -2.24992,
+   "gene_target": "OPTC"
+  },
+  {
+   "N": 416,
+   "m": 0.3089,
+   "rho2": 0.02,
+   "pred_slope": 375.82963,
+   "fit_slope": 57.027198,
+   "ratio": 0.1517,
+   "r2": -1.44672,
+   "gene_target": "OR10P1"
+  },
+  {
+   "N": 528,
+   "m": 0.281,
+   "rho2": 0.05,
+   "pred_slope": 543.68938,
+   "fit_slope": 56.983804,
+   "ratio": 0.1048,
+   "r2": -1.48133,
+   "gene_target": "OR11L1"
+  },
+  {
+   "N": 453,
+   "m": 0.4602,
+   "rho2": 0.02,
+   "pred_slope": 165.20352,
+   "fit_slope": 53.219066,
+   "ratio": 0.3221,
+   "r2": -0.01691,
+   "gene_target": "OR12D2"
+  },
+  {
+   "N": 628,
+   "m": 0.2507,
+   "rho2": 0.01,
+   "pred_slope": 694.14322,
+   "fit_slope": 62.650576,
+   "ratio": 0.0903,
+   "r2": -2.23471,
+   "gene_target": "OR13A1"
+  },
+  {
+   "N": 417,
+   "m": 0.555,
+   "rho2": 0.02,
+   "pred_slope": 105.550137,
+   "fit_slope": 47.328279,
+   "ratio": 0.4484,
+   "r2": 0.45635,
+   "gene_target": "OR1E1"
+  },
+  {
+   "N": 524,
+   "m": 0.3665,
+   "rho2": 0.01,
+   "pred_slope": 260.806218,
+   "fit_slope": 56.850114,
+   "ratio": 0.218,
+   "r2": -0.57522,
+   "gene_target": "OR2S2"
+  },
+  {
+   "N": 461,
+   "m": 0.2615,
+   "rho2": 0.02,
+   "pred_slope": 596.065089,
+   "fit_slope": 61.185647,
+   "ratio": 0.1026,
+   "r2": -2.45899,
+   "gene_target": "OR2T8"
+  },
+  {
+   "N": 417,
+   "m": 0.2916,
+   "rho2": 0.04,
+   "pred_slope": 502.378736,
+   "fit_slope": 58.534373,
+   "ratio": 0.1165,
+   "r2": -1.57183,
+   "gene_target": "OR4F5"
+  },
+  {
+   "N": 520,
+   "m": 0.3319,
+   "rho2": 0.03,
+   "pred_slope": 370.129035,
+   "fit_slope": 54.848719,
+   "ratio": 0.1482,
+   "r2": -0.61121,
+   "gene_target": "OR4K5"
+  },
+  {
+   "N": 421,
+   "m": 0.2993,
+   "rho2": 0.01,
+   "pred_slope": 409.716352,
+   "fit_slope": 62.858358,
+   "ratio": 0.1534,
+   "r2": -1.77019,
+   "gene_target": "OR4N5"
+  },
+  {
+   "N": 412,
+   "m": 0.2438,
+   "rho2": 0.04,
+   "pred_slope": 755.97001,
+   "fit_slope": 62.742991,
+   "ratio": 0.083,
+   "r2": -3.06612,
+   "gene_target": "OR51Q1"
+  },
+  {
+   "N": 468,
+   "m": 0.2905,
+   "rho2": 0.04,
+   "pred_slope": 505.863005,
+   "fit_slope": 57.133908,
+   "ratio": 0.1129,
+   "r2": -1.46252,
+   "gene_target": "OR52M1"
+  },
+  {
+   "N": 517,
+   "m": 0.3718,
+   "rho2": 0.01,
+   "pred_slope": 258.254573,
+   "fit_slope": 55.354017,
+   "ratio": 0.2143,
+   "r2": -0.55732,
+   "gene_target": "OR56A1"
+  },
+  {
+   "N": 413,
+   "m": 0.492,
+   "rho2": 0.02,
+   "pred_slope": 142.793796,
+   "fit_slope": 49.750564,
+   "ratio": 0.3484,
+   "r2": 0.13758,
+   "gene_target": "OR56B4"
+  },
+  {
+   "N": 406,
+   "m": 0.586,
+   "rho2": 0.03,
+   "pred_slope": 87.30724,
+   "fit_slope": 42.824814,
+   "ratio": 0.4905,
+   "r2": 0.57378,
+   "gene_target": "OR6B2"
+  },
+  {
+   "N": 574,
+   "m": 0.5191,
+   "rho2": 0.03,
+   "pred_slope": 113.279599,
+   "fit_slope": 45.387766,
+   "ratio": 0.4007,
+   "r2": 0.57876,
+   "gene_target": "OR6K3"
+  },
+  {
+   "N": 463,
+   "m": 0.2762,
+   "rho2": 0.02,
+   "pred_slope": 542.963828,
+   "fit_slope": 59.052326,
+   "ratio": 0.1088,
+   "r2": -2.14014,
+   "gene_target": "OR6P1"
+  },
+  {
+   "N": 847,
+   "m": 0.3409,
+   "rho2": 0.01,
+   "pred_slope": 285.130114,
+   "fit_slope": 56.846109,
+   "ratio": 0.1994,
+   "r2": -0.17537,
+   "gene_target": "OR6S1"
+  },
+  {
+   "N": 416,
+   "m": 0.5069,
+   "rho2": 0.03,
+   "pred_slope": 128.509243,
+   "fit_slope": 47.178911,
+   "ratio": 0.3671,
+   "r2": 0.38745,
+   "gene_target": "OR7D2"
+  },
+  {
+   "N": 521,
+   "m": 0.2679,
+   "rho2": 0.03,
+   "pred_slope": 589.366209,
+   "fit_slope": 58.674838,
+   "ratio": 0.0996,
+   "r2": -1.76872,
+   "gene_target": "OR8J3"
+  },
+  {
+   "N": 564,
+   "m": 0.2917,
+   "rho2": 0.01,
+   "pred_slope": 439.864443,
+   "fit_slope": 62.874721,
+   "ratio": 0.1429,
+   "r2": -1.48539,
+   "gene_target": "OR9G1"
+  },
+  {
+   "N": 604,
+   "m": 0.1866,
+   "rho2": 0.02,
+   "pred_slope": 1270.345695,
+   "fit_slope": 65.988058,
+   "ratio": 0.0519,
+   "r2": -4.73136,
+   "gene_target": "OR9G4"
+  },
+  {
+   "N": 425,
+   "m": 0.3159,
+   "rho2": 0.07,
+   "pred_slope": 461.507826,
+   "fit_slope": 56.544268,
+   "ratio": 0.1225,
+   "r2": -1.34228,
+   "gene_target": "OR9Q2"
+  },
+  {
+   "N": 420,
+   "m": 0.2944,
+   "rho2": 0.01,
+   "pred_slope": 426.07128,
+   "fit_slope": 62.205676,
+   "ratio": 0.146,
+   "r2": -1.59426,
+   "gene_target": "OSBPL9"
+  },
+  {
+   "N": 426,
+   "m": 0.226,
+   "rho2": 0.03,
+   "pred_slope": 795.257265,
+   "fit_slope": 62.863566,
+   "ratio": 0.079,
+   "r2": -2.99183,
+   "gene_target": "OSCAR"
+  },
+  {
+   "N": 424,
+   "m": 0.3442,
+   "rho2": 0.02,
+   "pred_slope": 348.430328,
+   "fit_slope": 57.687366,
+   "ratio": 0.1656,
+   "r2": -1.04286,
+   "gene_target": "OTUB1"
+  },
+  {
+   "N": 510,
+   "m": 0.2366,
+   "rho2": 0.03,
+   "pred_slope": 789.295936,
+   "fit_slope": 62.113607,
+   "ratio": 0.0787,
+   "r2": -2.70839,
+   "gene_target": "OVGP1"
+  },
+  {
+   "N": 688,
+   "m": 0.2233,
+   "rho2": 0.02,
+   "pred_slope": 899.979897,
+   "fit_slope": 62.40573,
+   "ratio": 0.0693,
+   "r2": -2.78892,
+   "gene_target": "PABPC3"
+  },
+  {
+   "N": 603,
+   "m": 0.4269,
+   "rho2": 0.1,
+   "pred_slope": 237.384838,
+   "fit_slope": 46.319481,
+   "ratio": 0.1951,
+   "r2": 0.01374,
+   "gene_target": "PACRG"
+  },
+  {
+   "N": 533,
+   "m": 0.3237,
+   "rho2": 0.01,
+   "pred_slope": 374.981258,
+   "fit_slope": 58.696631,
+   "ratio": 0.1565,
+   "r2": -1.15126,
+   "gene_target": "PACSIN1"
+  },
+  {
+   "N": 611,
+   "m": 0.1929,
+   "rho2": 0.01,
+   "pred_slope": 1092.830697,
+   "fit_slope": 67.86703,
+   "ratio": 0.0621,
+   "r2": -4.4751,
+   "gene_target": "PARP16"
+  },
+  {
+   "N": 485,
+   "m": 0.418,
+   "rho2": 0.02,
+   "pred_slope": 216.060937,
+   "fit_slope": 53.759341,
+   "ratio": 0.2488,
+   "r2": -0.14145,
+   "gene_target": "PATL1"
+  },
+  {
+   "N": 473,
+   "m": 0.1936,
+   "rho2": 0.02,
+   "pred_slope": 1237.294945,
+   "fit_slope": 66.610406,
+   "ratio": 0.0538,
+   "r2": -5.46217,
+   "gene_target": "PATL2"
+  },
+  {
+   "N": 451,
+   "m": 0.3943,
+   "rho2": 0.01,
+   "pred_slope": 220.042507,
+   "fit_slope": 55.177589,
+   "ratio": 0.2508,
+   "r2": -0.19699,
+   "gene_target": "PATZ1"
+  },
+  {
+   "N": 532,
+   "m": 0.3739,
+   "rho2": 0.09,
+   "pred_slope": 308.550478,
+   "fit_slope": 50.392311,
+   "ratio": 0.1633,
+   "r2": -0.25716,
+   "gene_target": "PBX2"
+  },
+  {
+   "N": 514,
+   "m": 0.361,
+   "rho2": 0.02,
+   "pred_slope": 334.451687,
+   "fit_slope": 56.713161,
+   "ratio": 0.1696,
+   "r2": -0.47455,
+   "gene_target": "PCDH10"
+  },
+  {
+   "N": 891,
+   "m": 0.3212,
+   "rho2": 0.01,
+   "pred_slope": 323.439,
+   "fit_slope": 63.126282,
+   "ratio": 0.1952,
+   "r2": -0.59999,
+   "gene_target": "PCED1B"
+  },
+  {
+   "N": 682,
+   "m": 0.2859,
+   "rho2": 0.02,
+   "pred_slope": 477.420241,
+   "fit_slope": 59.105356,
+   "ratio": 0.1238,
+   "r2": -1.01915,
+   "gene_target": "PCGF5"
+  },
+  {
+   "N": 420,
+   "m": 0.5891,
+   "rho2": 0.05,
+   "pred_slope": 119.680444,
+   "fit_slope": 41.200918,
+   "ratio": 0.3443,
+   "r2": 0.53622,
+   "gene_target": "PCLO"
+  },
+  {
+   "N": 535,
+   "m": 0.3694,
+   "rho2": 0.02,
+   "pred_slope": 260.210871,
+   "fit_slope": 54.469701,
+   "ratio": 0.2093,
+   "r2": -0.29078,
+   "gene_target": "PDE1A"
+  },
+  {
+   "N": 519,
+   "m": 0.2648,
+   "rho2": 0.01,
+   "pred_slope": 554.29319,
+   "fit_slope": 63.777782,
+   "ratio": 0.1151,
+   "r2": -1.92931,
+   "gene_target": "PDE6G"
+  },
+  {
+   "N": 426,
+   "m": 0.3845,
+   "rho2": 0.04,
+   "pred_slope": 318.52,
+   "fit_slope": 53.571963,
+   "ratio": 0.1682,
+   "r2": -0.56564,
+   "gene_target": "PDSS2"
+  },
+  {
+   "N": 460,
+   "m": 0.2847,
+   "rho2": 0.06,
+   "pred_slope": 550.800623,
+   "fit_slope": 57.521404,
+   "ratio": 0.1044,
+   "r2": -1.58408,
+   "gene_target": "PDXP"
+  },
+  {
+   "N": 406,
+   "m": 0.2622,
+   "rho2": 0.01,
+   "pred_slope": 589.940169,
+   "fit_slope": 62.594427,
+   "ratio": 0.1061,
+   "r2": -3.15506,
+   "gene_target": "PDZD4"
+  },
+  {
+   "N": 627,
+   "m": 0.2415,
+   "rho2": 0.01,
+   "pred_slope": 726.266781,
+   "fit_slope": 63.276176,
+   "ratio": 0.0871,
+   "r2": -1.93159,
+   "gene_target": "PEG10"
+  },
+  {
+   "N": 404,
+   "m": 0.2774,
+   "rho2": 0.05,
+   "pred_slope": 560.056635,
+   "fit_slope": 58.657727,
+   "ratio": 0.1047,
+   "r2": -2.00626,
+   "gene_target": "PFDN1"
+  },
+  {
+   "N": 592,
+   "m": 0.2289,
+   "rho2": 0.03,
+   "pred_slope": 797.991804,
+   "fit_slope": 62.382496,
+   "ratio": 0.0782,
+   "r2": -2.42703,
+   "gene_target": "PFKM"
+  },
+  {
+   "N": 451,
+   "m": 0.5844,
+   "rho2": 0.03,
+   "pred_slope": 104.577042,
+   "fit_slope": 43.363667,
+   "ratio": 0.4147,
+   "r2": 0.48191,
+   "gene_target": "PGPEP1L"
+  },
+  {
+   "N": 469,
+   "m": 0.4052,
+   "rho2": 0.02,
+   "pred_slope": 218.858337,
+   "fit_slope": 52.694905,
+   "ratio": 0.2408,
+   "r2": -0.12691,
+   "gene_target": "PHLDA1"
+  },
+  {
+   "N": 419,
+   "m": 0.3014,
+   "rho2": 0.03,
+   "pred_slope": 463.61182,
+   "fit_slope": 58.777024,
+   "ratio": 0.1268,
+   "r2": -1.35264,
+   "gene_target": "PHLDB1"
+  },
+  {
+   "N": 548,
+   "m": 0.3728,
+   "rho2": 0.01,
+   "pred_slope": 258.372296,
+   "fit_slope": 61.030619,
+   "ratio": 0.2362,
+   "r2": -0.42437,
+   "gene_target": "PIAS2"
+  },
+  {
+   "N": 664,
+   "m": 0.2252,
+   "rho2": 0.01,
+   "pred_slope": 852.784854,
+   "fit_slope": 65.04233,
+   "ratio": 0.0763,
+   "r2": -2.41798,
+   "gene_target": "PIK3AP1"
+  },
+  {
+   "N": 512,
+   "m": 0.2856,
+   "rho2": 0.01,
+   "pred_slope": 445.513176,
+   "fit_slope": 59.904847,
+   "ratio": 0.1345,
+   "r2": -1.80299,
+   "gene_target": "PIK3CG"
+  },
+  {
+   "N": 543,
+   "m": 0.322,
+   "rho2": 0.01,
+   "pred_slope": 379.106124,
+   "fit_slope": 58.697603,
+   "ratio": 0.1548,
+   "r2": -1.07503,
+   "gene_target": "PISD"
+  },
+  {
+   "N": 579,
+   "m": 0.2279,
+   "rho2": 0.05,
+   "pred_slope": 824.893334,
+   "fit_slope": 61.135715,
+   "ratio": 0.0741,
+   "r2": -2.71598,
+   "gene_target": "PITPNM2"
+  },
+  {
+   "N": 920,
+   "m": 0.2214,
+   "rho2": 0.01,
+   "pred_slope": 843.184147,
+   "fit_slope": 64.054103,
+   "ratio": 0.076,
+   "r2": -2.07115,
+   "gene_target": "PITX2"
+  },
+  {
+   "N": 412,
+   "m": 0.281,
+   "rho2": 0.01,
+   "pred_slope": 547.745273,
+   "fit_slope": 63.389153,
+   "ratio": 0.1157,
+   "r2": -2.15631,
+   "gene_target": "PLA2G10"
+  },
+  {
+   "N": 431,
+   "m": 0.2995,
+   "rho2": 0.02,
+   "pred_slope": 465.493844,
+   "fit_slope": 58.44453,
+   "ratio": 0.1256,
+   "r2": -1.59759,
+   "gene_target": "PLA2G4E"
+  },
+  {
+   "N": 621,
+   "m": 0.5029,
+   "rho2": 0.12,
+   "pred_slope": 173.370149,
+   "fit_slope": 42.43472,
+   "ratio": 0.2448,
+   "r2": 0.31469,
+   "gene_target": "PLAC1"
+  },
+  {
+   "N": 622,
+   "m": 0.2953,
+   "rho2": 0.01,
+   "pred_slope": 468.145144,
+   "fit_slope": 60.650052,
+   "ratio": 0.1296,
+   "r2": -1.13214,
+   "gene_target": "PLCH1"
+  },
+  {
+   "N": 460,
+   "m": 0.4407,
+   "rho2": 0.02,
+   "pred_slope": 168.283231,
+   "fit_slope": 51.062328,
+   "ratio": 0.3034,
+   "r2": -0.12455,
+   "gene_target": "PLEKHA4"
+  },
+  {
+   "N": 440,
+   "m": 0.2653,
+   "rho2": 0.03,
+   "pred_slope": 629.678782,
+   "fit_slope": 60.3174,
+   "ratio": 0.0958,
+   "r2": -2.36411,
+   "gene_target": "PLEKHG1"
+  },
+  {
+   "N": 401,
+   "m": 0.3738,
+   "rho2": 0.01,
+   "pred_slope": 258.035243,
+   "fit_slope": 56.074354,
+   "ratio": 0.2173,
+   "r2": -0.84126,
+   "gene_target": "PLEKHS1"
+  },
+  {
+   "N": 419,
+   "m": 0.4599,
+   "rho2": 0.02,
+   "pred_slope": 151.296849,
+   "fit_slope": 49.445782,
+   "ratio": 0.3268,
+   "r2": 0.06619,
+   "gene_target": "PLIN2"
+  },
+  {
+   "N": 599,
+   "m": 0.2925,
+   "rho2": 0.07,
+   "pred_slope": 525.410966,
+   "fit_slope": 56.747917,
+   "ratio": 0.108,
+   "r2": -1.195,
+   "gene_target": "PLK2"
+  },
+  {
+   "N": 563,
+   "m": 0.372,
+   "rho2": 0.06,
+   "pred_slope": 317.139099,
+   "fit_slope": 51.647716,
+   "ratio": 0.1629,
+   "r2": -0.24357,
+   "gene_target": "PLPP7"
+  },
+  {
+   "N": 600,
+   "m": 0.2856,
+   "rho2": 0.01,
+   "pred_slope": 497.993351,
+   "fit_slope": 61.967409,
+   "ratio": 0.1244,
+   "r2": -1.54208,
+   "gene_target": "PLSCR5"
+  },
+  {
+   "N": 445,
+   "m": 0.3452,
+   "rho2": 0.02,
+   "pred_slope": 337.445473,
+   "fit_slope": 58.227965,
+   "ratio": 0.1726,
+   "r2": -0.56049,
+   "gene_target": "PLXNA3"
+  },
+  {
+   "N": 450,
+   "m": 0.3101,
+   "rho2": 0.02,
+   "pred_slope": 458.102672,
+   "fit_slope": 59.38042,
+   "ratio": 0.1296,
+   "r2": -1.06343,
+   "gene_target": "PNMA5"
+  },
+  {
+   "N": 577,
+   "m": 0.2385,
+   "rho2": 0.01,
+   "pred_slope": 749.702336,
+   "fit_slope": 62.94148,
+   "ratio": 0.084,
+   "r2": -2.77556,
+   "gene_target": "PNPLA6"
+  },
+  {
+   "N": 591,
+   "m": 0.3043,
+   "rho2": 0.04,
+   "pred_slope": 443.749918,
+   "fit_slope": 56.189497,
+   "ratio": 0.1266,
+   "r2": -0.79952,
+   "gene_target": "PNRC2"
+  },
+  {
+   "N": 517,
+   "m": 0.3894,
+   "rho2": 0.05,
+   "pred_slope": 250.647565,
+   "fit_slope": 49.396201,
+   "ratio": 0.1971,
+   "r2": -0.17004,
+   "gene_target": "PODNL1"
+  },
+  {
+   "N": 407,
+   "m": 1.5988,
+   "rho2": 0.29,
+   "pred_slope": 16.504475,
+   "fit_slope": 13.924397,
+   "ratio": 0.8437,
+   "r2": 0.98833,
+   "gene_target": "POLR1B"
+  },
+  {
+   "N": 558,
+   "m": 0.5007,
+   "rho2": 0.1,
+   "pred_slope": 168.768898,
+   "fit_slope": 41.379704,
+   "ratio": 0.2452,
+   "r2": 0.28893,
+   "gene_target": "POM121L2"
+  },
+  {
+   "N": 792,
+   "m": 0.195,
+   "rho2": 0.01,
+   "pred_slope": 993.3639,
+   "fit_slope": 67.880914,
+   "ratio": 0.0683,
+   "r2": -3.24538,
+   "gene_target": "POMT2"
+  },
+  {
+   "N": 460,
+   "m": 0.3495,
+   "rho2": 0.02,
+   "pred_slope": 322.541927,
+   "fit_slope": 56.766833,
+   "ratio": 0.176,
+   "r2": -0.47869,
+   "gene_target": "POSTN"
+  },
+  {
+   "N": 411,
+   "m": 0.6329,
+   "rho2": 0.02,
+   "pred_slope": 80.604797,
+   "fit_slope": 48.403582,
+   "ratio": 0.6005,
+   "r2": 0.61907,
+   "gene_target": "POU2AF1"
+  },
+  {
+   "N": 472,
+   "m": 0.2983,
+   "rho2": 0.01,
+   "pred_slope": 412.004025,
+   "fit_slope": 60.55809,
+   "ratio": 0.147,
+   "r2": -1.14069,
+   "gene_target": "POU5F1"
+  },
+  {
+   "N": 556,
+   "m": 0.4823,
+   "rho2": 0.03,
+   "pred_slope": 180.740375,
+   "fit_slope": 47.362144,
+   "ratio": 0.262,
+   "r2": 0.11395,
+   "gene_target": "PPARG"
+  },
+  {
+   "N": 756,
+   "m": 0.2412,
+   "rho2": 0.02,
+   "pred_slope": 728.700532,
+   "fit_slope": 61.368942,
+   "ratio": 0.0842,
+   "r2": -1.80885,
+   "gene_target": "PPARGC1A"
+  },
+  {
+   "N": 854,
+   "m": 0.2001,
+   "rho2": 0.04,
+   "pred_slope": 1124.583479,
+   "fit_slope": 63.285775,
+   "ratio": 0.0563,
+   "r2": -2.85403,
+   "gene_target": "PPFIA2"
+  },
+  {
+   "N": 616,
+   "m": 0.5377,
+   "rho2": 0.01,
+   "pred_slope": 111.688265,
+   "fit_slope": 51.708599,
+   "ratio": 0.463,
+   "r2": 0.30469,
+   "gene_target": "PPFIA3"
+  },
+  {
+   "N": 476,
+   "m": 0.3339,
+   "rho2": 0.05,
+   "pred_slope": 376.360775,
+   "fit_slope": 53.304593,
+   "ratio": 0.1416,
+   "r2": -0.94264,
+   "gene_target": "PPIC"
+  },
+  {
+   "N": 485,
+   "m": 1.0178,
+   "rho2": 0.26,
+   "pred_slope": 45.672861,
+   "fit_slope": 24.443438,
+   "ratio": 0.5352,
+   "r2": 0.8716,
+   "gene_target": "PPIL2"
+  },
+  {
+   "N": 843,
+   "m": 0.1656,
+   "rho2": 0.01,
+   "pred_slope": 1487.38824,
+   "fit_slope": 67.80257,
+   "ratio": 0.0456,
+   "r2": -4.36533,
+   "gene_target": "PPIP5K1"
+  },
+  {
+   "N": 468,
+   "m": 0.3898,
+   "rho2": 0.01,
+   "pred_slope": 256.892241,
+   "fit_slope": 55.795811,
+   "ratio": 0.2172,
+   "r2": -0.62967,
+   "gene_target": "PPP1R9B"
+  },
+  {
+   "N": 427,
+   "m": 0.2782,
+   "rho2": 0.02,
+   "pred_slope": 511.230929,
+   "fit_slope": 60.175771,
+   "ratio": 0.1177,
+   "r2": -1.95128,
+   "gene_target": "PPP2R5B"
+  },
+  {
+   "N": 434,
+   "m": 0.4817,
+   "rho2": 0.03,
+   "pred_slope": 162.182316,
+   "fit_slope": 48.54191,
+   "ratio": 0.2993,
+   "r2": 0.11618,
+   "gene_target": "PRAMEF6"
+  },
+  {
+   "N": 677,
+   "m": 0.4436,
+   "rho2": 0.06,
+   "pred_slope": 207.687115,
+   "fit_slope": 45.520492,
+   "ratio": 0.2192,
+   "r2": 0.17881,
+   "gene_target": "PRCD"
+  },
+  {
+   "N": 421,
+   "m": 0.59,
+   "rho2": 0.03,
+   "pred_slope": 102.208232,
+   "fit_slope": 45.698495,
+   "ratio": 0.4471,
+   "r2": 0.55377,
+   "gene_target": "PRCP"
+  },
+  {
+   "N": 432,
+   "m": 0.3431,
+   "rho2": 0.01,
+   "pred_slope": 328.398836,
+   "fit_slope": 58.586564,
+   "ratio": 0.1784,
+   "r2": -0.79038,
+   "gene_target": "PRELID2"
+  },
+  {
+   "N": 410,
+   "m": 0.4737,
+   "rho2": 0.03,
+   "pred_slope": 170.129717,
+   "fit_slope": 46.847923,
+   "ratio": 0.2754,
+   "r2": -0.05773,
+   "gene_target": "PRICKLE4"
+  },
+  {
+   "N": 475,
+   "m": 0.416,
+   "rho2": 0.02,
+   "pred_slope": 191.877125,
+   "fit_slope": 53.522898,
+   "ratio": 0.2789,
+   "r2": -0.09383,
+   "gene_target": "PRKRIP1"
+  },
+  {
+   "N": 488,
+   "m": 0.3093,
+   "rho2": 0.02,
+   "pred_slope": 418.857406,
+   "fit_slope": 58.498141,
+   "ratio": 0.1397,
+   "r2": -1.27592,
+   "gene_target": "PRL"
+  },
+  {
+   "N": 500,
+   "m": 0.3563,
+   "rho2": 0.07,
+   "pred_slope": 312.598827,
+   "fit_slope": 50.779964,
+   "ratio": 0.1624,
+   "r2": -0.57275,
+   "gene_target": "PRM1"
+  },
+  {
+   "N": 405,
+   "m": 0.2891,
+   "rho2": 0.01,
+   "pred_slope": 438.466647,
+   "fit_slope": 62.209059,
+   "ratio": 0.1419,
+   "r2": -1.4513,
+   "gene_target": "PROC"
+  },
+  {
+   "N": 560,
+   "m": 0.2342,
+   "rho2": 0.01,
+   "pred_slope": 723.631074,
+   "fit_slope": 63.568694,
+   "ratio": 0.0878,
+   "r2": -2.14171,
+   "gene_target": "PROM1"
+  },
+  {
+   "N": 483,
+   "m": 0.5071,
+   "rho2": 0.07,
+   "pred_slope": 152.027306,
+   "fit_slope": 43.805703,
+   "ratio": 0.2881,
+   "r2": 0.48762,
+   "gene_target": "PRPF18"
+  },
+  {
+   "N": 540,
+   "m": 0.2147,
+   "rho2": 0.03,
+   "pred_slope": 961.797299,
+   "fit_slope": 62.508935,
+   "ratio": 0.065,
+   "r2": -4.26805,
+   "gene_target": "PRPS1L1"
+  },
+  {
+   "N": 528,
+   "m": 0.2408,
+   "rho2": 0.02,
+   "pred_slope": 719.489753,
+   "fit_slope": 62.91156,
+   "ratio": 0.0874,
+   "r2": -2.30272,
+   "gene_target": "PRR4"
+  },
+  {
+   "N": 672,
+   "m": 0.3252,
+   "rho2": 0.02,
+   "pred_slope": 368.490071,
+   "fit_slope": 56.852766,
+   "ratio": 0.1543,
+   "r2": -0.53245,
+   "gene_target": "PRR5"
+  },
+  {
+   "N": 491,
+   "m": 0.3264,
+   "rho2": 0.02,
+   "pred_slope": 403.890559,
+   "fit_slope": 56.037035,
+   "ratio": 0.1387,
+   "r2": -1.40771,
+   "gene_target": "PRR9"
+  },
+  {
+   "N": 409,
+   "m": 0.2713,
+   "rho2": 0.03,
+   "pred_slope": 547.926398,
+   "fit_slope": 59.248775,
+   "ratio": 0.1081,
+   "r2": -2.65621,
+   "gene_target": "PRRC2B"
+  },
+  {
+   "N": 457,
+   "m": 0.3498,
+   "rho2": 0.07,
+   "pred_slope": 342.439023,
+   "fit_slope": 51.732463,
+   "ratio": 0.1511,
+   "r2": -0.60672,
+   "gene_target": "PRSS16"
+  },
+  {
+   "N": 480,
+   "m": 0.2772,
+   "rho2": 0.01,
+   "pred_slope": 459.695952,
+   "fit_slope": 63.969725,
+   "ratio": 0.1392,
+   "r2": -1.93382,
+   "gene_target": "PRTFDC1"
+  },
+  {
+   "N": 408,
+   "m": 0.2898,
+   "rho2": 0.05,
+   "pred_slope": 486.263717,
+   "fit_slope": 57.185246,
+   "ratio": 0.1176,
+   "r2": -1.82861,
+   "gene_target": "PRXL2A"
+  },
+  {
+   "N": 431,
+   "m": 0.4869,
+   "rho2": 0.07,
+   "pred_slope": 163.431991,
+   "fit_slope": 43.039479,
+   "ratio": 0.2633,
+   "r2": 0.06994,
+   "gene_target": "PRXL2B"
+  },
+  {
+   "N": 405,
+   "m": 0.3459,
+   "rho2": 0.01,
+   "pred_slope": 299.553428,
+   "fit_slope": 59.799178,
+   "ratio": 0.1996,
+   "r2": -0.64924,
+   "gene_target": "PSAT1"
+  },
+  {
+   "N": 566,
+   "m": 0.2855,
+   "rho2": 0.03,
+   "pred_slope": 535.603512,
+   "fit_slope": 58.795309,
+   "ratio": 0.1098,
+   "r2": -1.34278,
+   "gene_target": "PSENEN"
+  },
+  {
+   "N": 471,
+   "m": 0.3432,
+   "rho2": 0.03,
+   "pred_slope": 342.04825,
+   "fit_slope": 53.477176,
+   "ratio": 0.1563,
+   "r2": -0.86316,
+   "gene_target": "PSG11"
+  },
+  {
+   "N": 470,
+   "m": 0.4099,
+   "rho2": 0.03,
+   "pred_slope": 251.983352,
+   "fit_slope": 50.882634,
+   "ratio": 0.2019,
+   "r2": -0.32438,
+   "gene_target": "PSORS1C2"
+  },
+  {
+   "N": 554,
+   "m": 0.2853,
+   "rho2": 0.04,
+   "pred_slope": 516.089097,
+   "fit_slope": 57.314146,
+   "ratio": 0.1111,
+   "r2": -1.21764,
+   "gene_target": "PTAFR"
+  },
+  {
+   "N": 611,
+   "m": 0.2096,
+   "rho2": 0.05,
+   "pred_slope": 982.842975,
+   "fit_slope": 63.011181,
+   "ratio": 0.0641,
+   "r2": -3.1789,
+   "gene_target": "PTGER4"
+  },
+  {
+   "N": 442,
+   "m": 0.2479,
+   "rho2": 0.02,
+   "pred_slope": 734.93418,
+   "fit_slope": 61.532588,
+   "ratio": 0.0837,
+   "r2": -2.92112,
+   "gene_target": "PTGR1"
+  },
+  {
+   "N": 417,
+   "m": 0.3133,
+   "rho2": 0.01,
+   "pred_slope": 433.312825,
+   "fit_slope": 60.678995,
+   "ratio": 0.14,
+   "r2": -1.70755,
+   "gene_target": "PTMS"
+  },
+  {
+   "N": 432,
+   "m": 0.4056,
+   "rho2": 0.02,
+   "pred_slope": 237.760497,
+   "fit_slope": 54.664817,
+   "ratio": 0.2299,
+   "r2": -0.0319,
+   "gene_target": "PTPDC1"
+  },
+  {
+   "N": 574,
+   "m": 0.3267,
+   "rho2": 0.01,
+   "pred_slope": 326.72748,
+   "fit_slope": 58.04884,
+   "ratio": 0.1777,
+   "r2": -0.94648,
+   "gene_target": "PTPRD"
+  },
+  {
+   "N": 960,
+   "m": 0.2208,
+   "rho2": 0.0,
+   "pred_slope": 759.799718,
+   "fit_slope": 70.140666,
+   "ratio": 0.0923,
+   "r2": -2.51239,
+   "gene_target": "PTPRE"
+  },
+  {
+   "N": 581,
+   "m": 0.2155,
+   "rho2": 0.02,
+   "pred_slope": 926.715468,
+   "fit_slope": 63.4643,
+   "ratio": 0.0685,
+   "r2": -3.37664,
+   "gene_target": "PTPRK"
+  },
+  {
+   "N": 470,
+   "m": 0.6301,
+   "rho2": 0.02,
+   "pred_slope": 79.942919,
+   "fit_slope": 47.194253,
+   "ratio": 0.5903,
+   "r2": 0.69851,
+   "gene_target": "PTPRU"
+  },
+  {
+   "N": 409,
+   "m": 0.8281,
+   "rho2": 0.12,
+   "pred_slope": 58.335158,
+   "fit_slope": 30.360169,
+   "ratio": 0.5204,
+   "r2": 0.87554,
+   "gene_target": "PTS"
+  },
+  {
+   "N": 502,
+   "m": 0.2928,
+   "rho2": 0.01,
+   "pred_slope": 474.053792,
+   "fit_slope": 59.451915,
+   "ratio": 0.1254,
+   "r2": -1.57185,
+   "gene_target": "PURA"
+  },
+  {
+   "N": 723,
+   "m": 0.2151,
+   "rho2": 0.03,
+   "pred_slope": 943.432747,
+   "fit_slope": 64.269765,
+   "ratio": 0.0681,
+   "r2": -2.1977,
+   "gene_target": "PUS7L"
+  },
+  {
+   "N": 412,
+   "m": 0.453,
+   "rho2": 0.02,
+   "pred_slope": 174.808914,
+   "fit_slope": 52.443649,
+   "ratio": 0.3,
+   "r2": -0.20343,
+   "gene_target": "PYGL"
+  },
+  {
+   "N": 459,
+   "m": 0.2557,
+   "rho2": 0.05,
+   "pred_slope": 696.244591,
+   "fit_slope": 59.280372,
+   "ratio": 0.0851,
+   "r2": -3.18301,
+   "gene_target": "PYY"
+  },
+  {
+   "N": 512,
+   "m": 0.3274,
+   "rho2": 0.04,
+   "pred_slope": 416.743518,
+   "fit_slope": 55.477069,
+   "ratio": 0.1331,
+   "r2": -0.88081,
+   "gene_target": "RAB25"
+  },
+  {
+   "N": 786,
+   "m": 0.1946,
+   "rho2": 0.02,
+   "pred_slope": 1128.793919,
+   "fit_slope": 64.533903,
+   "ratio": 0.0572,
+   "r2": -3.02485,
+   "gene_target": "RAB34"
+  },
+  {
+   "N": 479,
+   "m": 0.2942,
+   "rho2": 0.03,
+   "pred_slope": 501.084598,
+   "fit_slope": 57.141911,
+   "ratio": 0.114,
+   "r2": -1.75296,
+   "gene_target": "RAB6B"
+  },
+  {
+   "N": 435,
+   "m": 0.5542,
+   "rho2": 0.03,
+   "pred_slope": 113.810536,
+   "fit_slope": 44.157929,
+   "ratio": 0.388,
+   "r2": 0.34106,
+   "gene_target": "RAB9A"
+  },
+  {
+   "N": 488,
+   "m": 0.3044,
+   "rho2": 0.01,
+   "pred_slope": 395.776211,
+   "fit_slope": 60.156274,
+   "ratio": 0.152,
+   "r2": -1.1578,
+   "gene_target": "RAD51AP1"
+  },
+  {
+   "N": 404,
+   "m": 0.5056,
+   "rho2": 0.05,
+   "pred_slope": 159.189671,
+   "fit_slope": 45.645244,
+   "ratio": 0.2867,
+   "r2": 0.29899,
+   "gene_target": "RALGDS"
+  },
+  {
+   "N": 537,
+   "m": 0.4878,
+   "rho2": 0.02,
+   "pred_slope": 159.154146,
+   "fit_slope": 46.784419,
+   "ratio": 0.294,
+   "r2": 0.18307,
+   "gene_target": "RAPH1"
+  },
+  {
+   "N": 533,
+   "m": 0.4136,
+   "rho2": 0.05,
+   "pred_slope": 251.508162,
+   "fit_slope": 50.024958,
+   "ratio": 0.1989,
+   "r2": 0.06908,
+   "gene_target": "RARA"
+  },
+  {
+   "N": 487,
+   "m": 0.5185,
+   "rho2": 0.15,
+   "pred_slope": 157.91854,
+   "fit_slope": 42.090437,
+   "ratio": 0.2665,
+   "r2": 0.43593,
+   "gene_target": "RARG"
+  },
+  {
+   "N": 523,
+   "m": 0.2056,
+   "rho2": 0.05,
+   "pred_slope": 1077.924813,
+   "fit_slope": 63.489695,
+   "ratio": 0.0589,
+   "r2": -4.23734,
+   "gene_target": "RASA1"
+  },
+  {
+   "N": 474,
+   "m": 0.3873,
+   "rho2": 0.01,
+   "pred_slope": 236.981958,
+   "fit_slope": 59.165992,
+   "ratio": 0.2497,
+   "r2": -0.20018,
+   "gene_target": "RASAL3"
+  },
+  {
+   "N": 405,
+   "m": 0.2285,
+   "rho2": 0.01,
+   "pred_slope": 786.984499,
+   "fit_slope": 64.057725,
+   "ratio": 0.0814,
+   "r2": -3.67932,
+   "gene_target": "RASGRP1"
+  },
+  {
+   "N": 512,
+   "m": 0.3252,
+   "rho2": 0.01,
+   "pred_slope": 350.558105,
+   "fit_slope": 60.346281,
+   "ratio": 0.1721,
+   "r2": -1.28085,
+   "gene_target": "RASGRP2"
+  },
+  {
+   "N": 460,
+   "m": 0.2425,
+   "rho2": 0.04,
+   "pred_slope": 778.790529,
+   "fit_slope": 62.096528,
+   "ratio": 0.0797,
+   "r2": -2.64022,
+   "gene_target": "RASL10B"
+  },
+  {
+   "N": 561,
+   "m": 0.2206,
+   "rho2": 0.02,
+   "pred_slope": 826.009348,
+   "fit_slope": 63.392058,
+   "ratio": 0.0767,
+   "r2": -3.08993,
+   "gene_target": "RBBP8NL"
+  },
+  {
+   "N": 512,
+   "m": 0.4386,
+   "rho2": 0.02,
+   "pred_slope": 186.671893,
+   "fit_slope": 50.12301,
+   "ratio": 0.2685,
+   "r2": -0.02248,
+   "gene_target": "RBFOX2"
+  },
+  {
+   "N": 622,
+   "m": 0.3743,
+   "rho2": 0.02,
+   "pred_slope": 272.661725,
+   "fit_slope": 56.949706,
+   "ratio": 0.2089,
+   "r2": -0.16219,
+   "gene_target": "RBL2"
+  },
+  {
+   "N": 413,
+   "m": 1.7337,
+   "rho2": 0.63,
+   "pred_slope": 12.918626,
+   "fit_slope": 10.926443,
+   "ratio": 0.8458,
+   "r2": 0.99068,
+   "gene_target": "RCC1L"
+  },
+  {
+   "N": 499,
+   "m": 0.3872,
+   "rho2": 0.02,
+   "pred_slope": 264.045852,
+   "fit_slope": 53.314254,
+   "ratio": 0.2019,
+   "r2": -0.26734,
+   "gene_target": "RCCD1"
+  },
+  {
+   "N": 431,
+   "m": 0.3675,
+   "rho2": 0.04,
+   "pred_slope": 284.158861,
+   "fit_slope": 53.248972,
+   "ratio": 0.1874,
+   "r2": -0.31803,
+   "gene_target": "RDH13"
+  },
+  {
+   "N": 422,
+   "m": 0.2591,
+   "rho2": 0.05,
+   "pred_slope": 642.711165,
+   "fit_slope": 59.7076,
+   "ratio": 0.0929,
+   "r2": -2.68321,
+   "gene_target": "REG3G"
+  },
+  {
+   "N": 605,
+   "m": 0.3161,
+   "rho2": 0.01,
+   "pred_slope": 383.786864,
+   "fit_slope": 59.257921,
+   "ratio": 0.1544,
+   "r2": -0.77003,
+   "gene_target": "RER1"
+  },
+  {
+   "N": 437,
+   "m": 0.5416,
+   "rho2": 0.02,
+   "pred_slope": 105.360705,
+   "fit_slope": 48.840827,
+   "ratio": 0.4636,
+   "r2": 0.56557,
+   "gene_target": "RETNLB"
+  },
+  {
+   "N": 506,
+   "m": 0.3333,
+   "rho2": 0.01,
+   "pred_slope": 290.616097,
+   "fit_slope": 61.432176,
+   "ratio": 0.2114,
+   "r2": -0.76246,
+   "gene_target": "RFXAP"
+  },
+  {
+   "N": 421,
+   "m": 0.7712,
+   "rho2": 0.03,
+   "pred_slope": 54.5419,
+   "fit_slope": 38.381956,
+   "ratio": 0.7037,
+   "r2": 0.71812,
+   "gene_target": "RGMA"
+  },
+  {
+   "N": 429,
+   "m": 0.356,
+   "rho2": 0.02,
+   "pred_slope": 318.566932,
+   "fit_slope": 55.91212,
+   "ratio": 0.1755,
+   "r2": -0.68306,
+   "gene_target": "RGMB"
+  },
+  {
+   "N": 408,
+   "m": 0.3419,
+   "rho2": 0.04,
+   "pred_slope": 381.554156,
+   "fit_slope": 54.308656,
+   "ratio": 0.1423,
+   "r2": -1.54124,
+   "gene_target": "RHBDF2"
+  },
+  {
+   "N": 452,
+   "m": 0.2618,
+   "rho2": 0.06,
+   "pred_slope": 695.660304,
+   "fit_slope": 60.306658,
+   "ratio": 0.0867,
+   "r2": -2.44684,
+   "gene_target": "RIDA"
+  },
+  {
+   "N": 566,
+   "m": 0.252,
+   "rho2": 0.05,
+   "pred_slope": 689.630112,
+   "fit_slope": 59.883744,
+   "ratio": 0.0868,
+   "r2": -1.98559,
+   "gene_target": "RNASE8"
+  },
+  {
+   "N": 543,
+   "m": 0.2843,
+   "rho2": 0.02,
+   "pred_slope": 540.076921,
+   "fit_slope": 60.097507,
+   "ratio": 0.1113,
+   "r2": -1.43192,
+   "gene_target": "RND2"
+  },
+  {
+   "N": 415,
+   "m": 0.3244,
+   "rho2": 0.02,
+   "pred_slope": 419.37821,
+   "fit_slope": 60.434685,
+   "ratio": 0.1441,
+   "r2": -1.11343,
+   "gene_target": "RNF112"
+  },
+  {
+   "N": 675,
+   "m": 0.2034,
+   "rho2": 0.01,
+   "pred_slope": 991.055321,
+   "fit_slope": 65.403664,
+   "ratio": 0.066,
+   "r2": -3.68391,
+   "gene_target": "RNF123"
+  },
+  {
+   "N": 473,
+   "m": 0.2718,
+   "rho2": 0.05,
+   "pred_slope": 599.142329,
+   "fit_slope": 59.315201,
+   "ratio": 0.099,
+   "r2": -1.78688,
+   "gene_target": "RNF141"
+  },
+  {
+   "N": 403,
+   "m": 0.5252,
+   "rho2": 0.02,
+   "pred_slope": 136.148032,
+   "fit_slope": 48.601774,
+   "ratio": 0.357,
+   "r2": 0.30991,
+   "gene_target": "RNF144A"
+  },
+  {
+   "N": 429,
+   "m": 0.3025,
+   "rho2": 0.04,
+   "pred_slope": 490.780353,
+   "fit_slope": 57.432824,
+   "ratio": 0.117,
+   "r2": -1.40565,
+   "gene_target": "RNF207"
+  },
+  {
+   "N": 449,
+   "m": 0.1924,
+   "rho2": 0.02,
+   "pred_slope": 1213.924227,
+   "fit_slope": 66.750957,
+   "ratio": 0.055,
+   "r2": -6.37005,
+   "gene_target": "RNF25"
+  },
+  {
+   "N": 405,
+   "m": 0.338,
+   "rho2": 0.07,
+   "pred_slope": 391.780754,
+   "fit_slope": 55.001811,
+   "ratio": 0.1404,
+   "r2": -0.75655,
+   "gene_target": "RNF43"
+  },
+  {
+   "N": 554,
+   "m": 0.1865,
+   "rho2": 0.02,
+   "pred_slope": 1264.759175,
+   "fit_slope": 66.173127,
+   "ratio": 0.0523,
+   "r2": -4.51277,
+   "gene_target": "RORC"
+  },
+  {
+   "N": 615,
+   "m": 0.2902,
+   "rho2": 0.02,
+   "pred_slope": 510.126484,
+   "fit_slope": 59.139425,
+   "ratio": 0.1159,
+   "r2": -1.43969,
+   "gene_target": "RPL22"
+  },
+  {
+   "N": 486,
+   "m": 0.4358,
+   "rho2": 0.02,
+   "pred_slope": 173.814866,
+   "fit_slope": 53.253613,
+   "ratio": 0.3064,
+   "r2": 0.0942,
+   "gene_target": "RPS6KB2"
+  },
+  {
+   "N": 412,
+   "m": 0.3136,
+   "rho2": 0.02,
+   "pred_slope": 403.631979,
+   "fit_slope": 59.025376,
+   "ratio": 0.1462,
+   "r2": -1.31265,
+   "gene_target": "RSAD2"
+  },
+  {
+   "N": 471,
+   "m": 0.4587,
+   "rho2": 0.02,
+   "pred_slope": 158.783447,
+   "fit_slope": 49.753387,
+   "ratio": 0.3133,
+   "r2": 0.27985,
+   "gene_target": "RSC1A1"
+  },
+  {
+   "N": 549,
+   "m": 0.4265,
+   "rho2": 0.02,
+   "pred_slope": 168.824685,
+   "fit_slope": 52.754631,
+   "ratio": 0.3125,
+   "r2": 0.14953,
+   "gene_target": "RSPH10B"
+  },
+  {
+   "N": 423,
+   "m": 0.5004,
+   "rho2": 0.03,
+   "pred_slope": 159.292362,
+   "fit_slope": 47.256372,
+   "ratio": 0.2967,
+   "r2": 0.36596,
+   "gene_target": "RSPH3"
+  },
+  {
+   "N": 404,
+   "m": 0.297,
+   "rho2": 0.02,
+   "pred_slope": 462.139367,
+   "fit_slope": 57.941151,
+   "ratio": 0.1254,
+   "r2": -2.19391,
+   "gene_target": "RTL4"
+  },
+  {
+   "N": 494,
+   "m": 0.2445,
+   "rho2": 0.04,
+   "pred_slope": 731.966905,
+   "fit_slope": 60.911157,
+   "ratio": 0.0832,
+   "r2": -2.60827,
+   "gene_target": "RTL9"
+  },
+  {
+   "N": 545,
+   "m": 0.2142,
+   "rho2": 0.03,
+   "pred_slope": 992.227329,
+   "fit_slope": 64.032528,
+   "ratio": 0.0645,
+   "r2": -3.75,
+   "gene_target": "RTN3"
+  },
+  {
+   "N": 573,
+   "m": 0.4572,
+   "rho2": 0.03,
+   "pred_slope": 190.290355,
+   "fit_slope": 50.333761,
+   "ratio": 0.2645,
+   "r2": 0.22491,
+   "gene_target": "RUNX3"
+  },
+  {
+   "N": 614,
+   "m": 0.2677,
+   "rho2": 0.11,
+   "pred_slope": 590.21253,
+   "fit_slope": 57.720225,
+   "ratio": 0.0978,
+   "r2": -1.39338,
+   "gene_target": "RUSC1"
+  },
+  {
+   "N": 482,
+   "m": 0.2214,
+   "rho2": 0.02,
+   "pred_slope": 889.702501,
+   "fit_slope": 62.51104,
+   "ratio": 0.0703,
+   "r2": -3.35494,
+   "gene_target": "RUSC2"
+  },
+  {
+   "N": 521,
+   "m": 0.3049,
+   "rho2": 0.04,
+   "pred_slope": 462.954664,
+   "fit_slope": 56.879516,
+   "ratio": 0.1229,
+   "r2": -0.94251,
+   "gene_target": "S100A1"
+  },
+  {
+   "N": 426,
+   "m": 0.3131,
+   "rho2": 0.05,
+   "pred_slope": 442.788286,
+   "fit_slope": 55.98462,
+   "ratio": 0.1264,
+   "r2": -1.38417,
+   "gene_target": "S100A12"
+  },
+  {
+   "N": 514,
+   "m": 0.379,
+   "rho2": 0.02,
+   "pred_slope": 247.566686,
+   "fit_slope": 55.621923,
+   "ratio": 0.2247,
+   "r2": -0.29872,
+   "gene_target": "S100A13"
+  },
+  {
+   "N": 407,
+   "m": 0.3923,
+   "rho2": 0.02,
+   "pred_slope": 214.385089,
+   "fit_slope": 52.522983,
+   "ratio": 0.245,
+   "r2": -0.40801,
+   "gene_target": "S1PR1"
+  },
+  {
+   "N": 470,
+   "m": 0.2714,
+   "rho2": 0.02,
+   "pred_slope": 580.27026,
+   "fit_slope": 60.038302,
+   "ratio": 0.1035,
+   "r2": -2.19818,
+   "gene_target": "SALL1"
+  },
+  {
+   "N": 461,
+   "m": 0.5382,
+   "rho2": 0.02,
+   "pred_slope": 110.281391,
+   "fit_slope": 48.667001,
+   "ratio": 0.4413,
+   "r2": 0.55682,
+   "gene_target": "SALL2"
+  },
+  {
+   "N": 468,
+   "m": 0.4197,
+   "rho2": 0.05,
+   "pred_slope": 267.710927,
+   "fit_slope": 51.016544,
+   "ratio": 0.1906,
+   "r2": -0.18263,
+   "gene_target": "SAP30"
+  },
+  {
+   "N": 428,
+   "m": 0.2623,
+   "rho2": 0.02,
+   "pred_slope": 620.374824,
+   "fit_slope": 60.682519,
+   "ratio": 0.0978,
+   "r2": -2.52228,
+   "gene_target": "SARS2"
+  },
+  {
+   "N": 691,
+   "m": 0.3403,
+   "rho2": 0.01,
+   "pred_slope": 317.923109,
+   "fit_slope": 61.792025,
+   "ratio": 0.1944,
+   "r2": -0.3533,
+   "gene_target": "SCG3"
+  },
+  {
+   "N": 516,
+   "m": 0.2516,
+   "rho2": 0.04,
+   "pred_slope": 707.179346,
+   "fit_slope": 59.758049,
+   "ratio": 0.0845,
+   "r2": -2.4631,
+   "gene_target": "SCGB1C1"
+  },
+  {
+   "N": 518,
+   "m": 0.2605,
+   "rho2": 0.02,
+   "pred_slope": 600.550431,
+   "fit_slope": 59.896945,
+   "ratio": 0.0997,
+   "r2": -2.00584,
+   "gene_target": "SCGB2A2"
+  },
+  {
+   "N": 480,
+   "m": 0.5787,
+   "rho2": 0.03,
+   "pred_slope": 93.780634,
+   "fit_slope": 43.339008,
+   "ratio": 0.4621,
+   "r2": 0.5171,
+   "gene_target": "SCHIP1"
+  },
+  {
+   "N": 706,
+   "m": 0.2615,
+   "rho2": 0.03,
+   "pred_slope": 618.031466,
+   "fit_slope": 58.995735,
+   "ratio": 0.0955,
+   "r2": -1.47644,
+   "gene_target": "SCMH1"
+  },
+  {
+   "N": 408,
+   "m": 0.3212,
+   "rho2": 0.01,
+   "pred_slope": 415.289166,
+   "fit_slope": 59.93297,
+   "ratio": 0.1443,
+   "r2": -1.74188,
+   "gene_target": "SCNN1D"
+  },
+  {
+   "N": 417,
+   "m": 0.3134,
+   "rho2": 0.02,
+   "pred_slope": 407.105601,
+   "fit_slope": 57.429301,
+   "ratio": 0.1411,
+   "r2": -1.74671,
+   "gene_target": "SDK1"
+  },
+  {
+   "N": 401,
+   "m": 0.2845,
+   "rho2": 0.05,
+   "pred_slope": 555.356062,
+   "fit_slope": 58.564052,
+   "ratio": 0.1055,
+   "r2": -2.21863,
+   "gene_target": "SDR9C7"
+  },
+  {
+   "N": 442,
+   "m": 0.324,
+   "rho2": 0.02,
+   "pred_slope": 397.84846,
+   "fit_slope": 59.247107,
+   "ratio": 0.1489,
+   "r2": -1.40983,
+   "gene_target": "SEC61A1"
+  },
+  {
+   "N": 646,
+   "m": 0.2542,
+   "rho2": 0.01,
+   "pred_slope": 611.180161,
+   "fit_slope": 62.619242,
+   "ratio": 0.1025,
+   "r2": -1.4178,
+   "gene_target": "SEMA4D"
+  },
+  {
+   "N": 438,
+   "m": 0.4002,
+   "rho2": 0.01,
+   "pred_slope": 213.69548,
+   "fit_slope": 57.220556,
+   "ratio": 0.2678,
+   "r2": -0.37922,
+   "gene_target": "SEPSECS"
+  },
+  {
+   "N": 441,
+   "m": 0.2716,
+   "rho2": 0.04,
+   "pred_slope": 581.654543,
+   "fit_slope": 58.184258,
+   "ratio": 0.1,
+   "r2": -2.18152,
+   "gene_target": "SEPTIN4"
+  },
+  {
+   "N": 458,
+   "m": 0.4217,
+   "rho2": 0.02,
+   "pred_slope": 199.346441,
+   "fit_slope": 52.676064,
+   "ratio": 0.2642,
+   "r2": -0.10432,
+   "gene_target": "SEPTIN7"
+  },
+  {
+   "N": 425,
+   "m": 0.3216,
+   "rho2": 0.02,
+   "pred_slope": 366.613078,
+   "fit_slope": 55.822485,
+   "ratio": 0.1523,
+   "r2": -1.32781,
+   "gene_target": "SERPINA1"
+  },
+  {
+   "N": 508,
+   "m": 0.279,
+   "rho2": 0.01,
+   "pred_slope": 524.207818,
+   "fit_slope": 61.544999,
+   "ratio": 0.1174,
+   "r2": -1.52609,
+   "gene_target": "SERPINA5"
+  },
+  {
+   "N": 469,
+   "m": 0.2924,
+   "rho2": 0.04,
+   "pred_slope": 501.653246,
+   "fit_slope": 57.592455,
+   "ratio": 0.1148,
+   "r2": -1.48888,
+   "gene_target": "SERPINB13"
+  },
+  {
+   "N": 434,
+   "m": 0.3743,
+   "rho2": 0.03,
+   "pred_slope": 296.623313,
+   "fit_slope": 53.652128,
+   "ratio": 0.1809,
+   "r2": -0.49284,
+   "gene_target": "SGCA"
+  },
+  {
+   "N": 419,
+   "m": 0.2791,
+   "rho2": 0.06,
+   "pred_slope": 567.290908,
+   "fit_slope": 59.416592,
+   "ratio": 0.1047,
+   "r2": -1.78387,
+   "gene_target": "SGIP1"
+  },
+  {
+   "N": 543,
+   "m": 0.5813,
+   "rho2": 0.13,
+   "pred_slope": 124.360147,
+   "fit_slope": 38.728494,
+   "ratio": 0.3114,
+   "r2": 0.61031,
+   "gene_target": "SGK3"
+  },
+  {
+   "N": 402,
+   "m": 0.3548,
+   "rho2": 0.11,
+   "pred_slope": 348.51446,
+   "fit_slope": 52.650036,
+   "ratio": 0.1511,
+   "r2": -0.70769,
+   "gene_target": "SGTA"
+  },
+  {
+   "N": 433,
+   "m": 0.2867,
+   "rho2": 0.03,
+   "pred_slope": 504.263994,
+   "fit_slope": 58.294933,
+   "ratio": 0.1156,
+   "r2": -1.76486,
+   "gene_target": "SH3BGR"
+  },
+  {
+   "N": 531,
+   "m": 0.3655,
+   "rho2": 0.01,
+   "pred_slope": 258.60048,
+   "fit_slope": 60.303752,
+   "ratio": 0.2332,
+   "r2": -0.69187,
+   "gene_target": "SH3GL3"
+  },
+  {
+   "N": 417,
+   "m": 0.3793,
+   "rho2": 0.03,
+   "pred_slope": 314.086201,
+   "fit_slope": 56.110362,
+   "ratio": 0.1786,
+   "r2": -0.61319,
+   "gene_target": "SHF"
+  },
+  {
+   "N": 405,
+   "m": 0.4364,
+   "rho2": 0.07,
+   "pred_slope": 238.338361,
+   "fit_slope": 49.734259,
+   "ratio": 0.2087,
+   "r2": 0.02963,
+   "gene_target": "SIGLEC15"
+  },
+  {
+   "N": 431,
+   "m": 0.2963,
+   "rho2": 0.02,
+   "pred_slope": 414.405083,
+   "fit_slope": 58.366423,
+   "ratio": 0.1408,
+   "r2": -1.72478,
+   "gene_target": "SIPA1"
+  },
+  {
+   "N": 505,
+   "m": 0.5745,
+   "rho2": 0.17,
+   "pred_slope": 127.404234,
+   "fit_slope": 37.525721,
+   "ratio": 0.2945,
+   "r2": 0.42866,
+   "gene_target": "SIRT4"
+  },
+  {
+   "N": 407,
+   "m": 0.2635,
+   "rho2": 0.01,
+   "pred_slope": 575.32929,
+   "fit_slope": 63.907065,
+   "ratio": 0.1111,
+   "r2": -2.52065,
+   "gene_target": "SLC10A4"
+  },
+  {
+   "N": 417,
+   "m": 0.3776,
+   "rho2": 0.03,
+   "pred_slope": 266.726128,
+   "fit_slope": 53.67223,
+   "ratio": 0.2012,
+   "r2": -0.18209,
+   "gene_target": "SLC12A2"
+  },
+  {
+   "N": 451,
+   "m": 0.3455,
+   "rho2": 0.05,
+   "pred_slope": 351.32827,
+   "fit_slope": 53.640398,
+   "ratio": 0.1527,
+   "r2": -0.75099,
+   "gene_target": "SLC12A5"
+  },
+  {
+   "N": 499,
+   "m": 0.4027,
+   "rho2": 0.02,
+   "pred_slope": 203.510606,
+   "fit_slope": 55.109188,
+   "ratio": 0.2708,
+   "r2": -0.072,
+   "gene_target": "SLC12A8"
+  },
+  {
+   "N": 524,
+   "m": 0.2089,
+   "rho2": 0.04,
+   "pred_slope": 1004.897601,
+   "fit_slope": 62.991391,
+   "ratio": 0.0627,
+   "r2": -4.24046,
+   "gene_target": "SLC22A10"
+  },
+  {
+   "N": 417,
+   "m": 0.621,
+   "rho2": 0.02,
+   "pred_slope": 93.199716,
+   "fit_slope": 48.116118,
+   "ratio": 0.5163,
+   "r2": 0.5375,
+   "gene_target": "SLC22A17"
+  },
+  {
+   "N": 412,
+   "m": 0.3463,
+   "rho2": 0.11,
+   "pred_slope": 354.648625,
+   "fit_slope": 52.580951,
+   "ratio": 0.1483,
+   "r2": -0.74874,
+   "gene_target": "SLC24A1"
+  },
+  {
+   "N": 406,
+   "m": 0.2812,
+   "rho2": 0.02,
+   "pred_slope": 532.878,
+   "fit_slope": 59.186601,
+   "ratio": 0.1111,
+   "r2": -2.27908,
+   "gene_target": "SLC24A3"
+  },
+  {
+   "N": 541,
+   "m": 0.2504,
+   "rho2": 0.02,
+   "pred_slope": 716.566912,
+   "fit_slope": 61.632849,
+   "ratio": 0.086,
+   "r2": -2.33855,
+   "gene_target": "SLC25A19"
+  },
+  {
+   "N": 419,
+   "m": 0.4555,
+   "rho2": 0.12,
+   "pred_slope": 215.725595,
+   "fit_slope": 45.597363,
+   "ratio": 0.2114,
+   "r2": -0.06927,
+   "gene_target": "SLC25A25"
+  },
+  {
+   "N": 503,
+   "m": 0.2911,
+   "rho2": 0.01,
+   "pred_slope": 475.214059,
+   "fit_slope": 62.780435,
+   "ratio": 0.1321,
+   "r2": -1.60957,
+   "gene_target": "SLC25A30"
+  },
+  {
+   "N": 508,
+   "m": 0.2699,
+   "rho2": 0.03,
+   "pred_slope": 588.330717,
+   "fit_slope": 59.659398,
+   "ratio": 0.1014,
+   "r2": -1.51167,
+   "gene_target": "SLC25A38"
+  },
+  {
+   "N": 540,
+   "m": 0.4922,
+   "rho2": 0.02,
+   "pred_slope": 158.80757,
+   "fit_slope": 48.937335,
+   "ratio": 0.3082,
+   "r2": 0.13475,
+   "gene_target": "SLC25A42"
+  },
+  {
+   "N": 416,
+   "m": 0.2969,
+   "rho2": 0.02,
+   "pred_slope": 479.580458,
+   "fit_slope": 61.114554,
+   "ratio": 0.1274,
+   "r2": -1.54673,
+   "gene_target": "SLC27A5"
+  },
+  {
+   "N": 468,
+   "m": 0.3974,
+   "rho2": 0.02,
+   "pred_slope": 227.372641,
+   "fit_slope": 54.829121,
+   "ratio": 0.2411,
+   "r2": -0.26024,
+   "gene_target": "SLC29A1"
+  },
+  {
+   "N": 567,
+   "m": 0.2219,
+   "rho2": 0.01,
+   "pred_slope": 933.069375,
+   "fit_slope": 65.807386,
+   "ratio": 0.0705,
+   "r2": -2.88554,
+   "gene_target": "SLC34A1"
+  },
+  {
+   "N": 421,
+   "m": 0.3028,
+   "rho2": 0.03,
+   "pred_slope": 470.033992,
+   "fit_slope": 57.787198,
+   "ratio": 0.1229,
+   "r2": -1.25479,
+   "gene_target": "SLC39A12"
+  },
+  {
+   "N": 406,
+   "m": 0.7967,
+   "rho2": 0.03,
+   "pred_slope": 52.836421,
+   "fit_slope": 41.936388,
+   "ratio": 0.7937,
+   "r2": 0.68721,
+   "gene_target": "SLC39A14"
+  },
+  {
+   "N": 404,
+   "m": 0.2237,
+   "rho2": 0.04,
+   "pred_slope": 939.132267,
+   "fit_slope": 63.782966,
+   "ratio": 0.0679,
+   "r2": -4.36924,
+   "gene_target": "SLC39A4"
+  },
+  {
+   "N": 476,
+   "m": 0.3131,
+   "rho2": 0.03,
+   "pred_slope": 430.700293,
+   "fit_slope": 55.368523,
+   "ratio": 0.1286,
+   "r2": -1.19064,
+   "gene_target": "SLC44A4"
+  },
+  {
+   "N": 873,
+   "m": 0.1946,
+   "rho2": 0.01,
+   "pred_slope": 1056.989935,
+   "fit_slope": 64.953788,
+   "ratio": 0.0615,
+   "r2": -3.07877,
+   "gene_target": "SLC45A4"
+  },
+  {
+   "N": 462,
+   "m": 0.3776,
+   "rho2": 0.03,
+   "pred_slope": 279.202004,
+   "fit_slope": 53.666061,
+   "ratio": 0.1922,
+   "r2": -0.30076,
+   "gene_target": "SLC5A5"
+  },
+  {
+   "N": 415,
+   "m": 0.257,
+   "rho2": 0.02,
+   "pred_slope": 650.356281,
+   "fit_slope": 62.273172,
+   "ratio": 0.0958,
+   "r2": -3.54389,
+   "gene_target": "SLC6A3"
+  },
+  {
+   "N": 484,
+   "m": 0.9361,
+   "rho2": 0.26,
+   "pred_slope": 48.84137,
+   "fit_slope": 26.004071,
+   "ratio": 0.5324,
+   "r2": 0.8948,
+   "gene_target": "SLC7A4"
+  },
+  {
+   "N": 588,
+   "m": 0.3987,
+   "rho2": 0.01,
+   "pred_slope": 211.668559,
+   "fit_slope": 59.987077,
+   "ratio": 0.2834,
+   "r2": -0.37384,
+   "gene_target": "SLC8A1"
+  },
+  {
+   "N": 418,
+   "m": 0.4908,
+   "rho2": 0.05,
+   "pred_slope": 162.9949,
+   "fit_slope": 44.786477,
+   "ratio": 0.2748,
+   "r2": 0.14526,
+   "gene_target": "SLC9A9"
+  },
+  {
+   "N": 628,
+   "m": 0.526,
+   "rho2": 0.24,
+   "pred_slope": 162.18735,
+   "fit_slope": 40.377976,
+   "ratio": 0.249,
+   "r2": 0.41592,
+   "gene_target": "SLF1"
+  },
+  {
+   "N": 578,
+   "m": 0.1899,
+   "rho2": 0.04,
+   "pred_slope": 1243.571314,
+   "fit_slope": 65.389355,
+   "ratio": 0.0526,
+   "r2": -4.69694,
+   "gene_target": "SLITRK5"
+  },
+  {
+   "N": 638,
+   "m": 0.4375,
+   "rho2": 0.02,
+   "pred_slope": 168.959455,
+   "fit_slope": 50.852711,
+   "ratio": 0.301,
+   "r2": 0.0669,
+   "gene_target": "SMAP2"
+  },
+  {
+   "N": 475,
+   "m": 0.3635,
+   "rho2": 0.04,
+   "pred_slope": 303.193018,
+   "fit_slope": 51.022734,
+   "ratio": 0.1683,
+   "r2": -0.50378,
+   "gene_target": "SMARCB1"
+  },
+  {
+   "N": 505,
+   "m": 0.253,
+   "rho2": 0.05,
+   "pred_slope": 684.005955,
+   "fit_slope": 60.013731,
+   "ratio": 0.0877,
+   "r2": -2.15897,
+   "gene_target": "SMARCD3"
+  },
+  {
+   "N": 432,
+   "m": 0.3292,
+   "rho2": 0.02,
+   "pred_slope": 377.720879,
+   "fit_slope": 57.973436,
+   "ratio": 0.1535,
+   "r2": -1.14941,
+   "gene_target": "SMIM12"
+  },
+  {
+   "N": 689,
+   "m": 0.2808,
+   "rho2": 0.01,
+   "pred_slope": 525.779574,
+   "fit_slope": 60.403425,
+   "ratio": 0.1149,
+   "r2": -1.05324,
+   "gene_target": "SMIM5"
+  },
+  {
+   "N": 460,
+   "m": 0.3253,
+   "rho2": 0.01,
+   "pred_slope": 371.135886,
+   "fit_slope": 57.575513,
+   "ratio": 0.1551,
+   "r2": -1.18224,
+   "gene_target": "SMPD2"
+  },
+  {
+   "N": 675,
+   "m": 0.3218,
+   "rho2": 0.04,
+   "pred_slope": 408.176236,
+   "fit_slope": 56.144038,
+   "ratio": 0.1375,
+   "r2": -0.35591,
+   "gene_target": "SMR3A"
+  },
+  {
+   "N": 420,
+   "m": 0.3651,
+   "rho2": 0.09,
+   "pred_slope": 315.874477,
+   "fit_slope": 51.452072,
+   "ratio": 0.1629,
+   "r2": -0.43793,
+   "gene_target": "SNX19"
+  },
+  {
+   "N": 414,
+   "m": 0.2586,
+   "rho2": 0.04,
+   "pred_slope": 605.631732,
+   "fit_slope": 59.643787,
+   "ratio": 0.0985,
+   "r2": -2.39427,
+   "gene_target": "SNX33"
+  },
+  {
+   "N": 628,
+   "m": 0.2517,
+   "rho2": 0.01,
+   "pred_slope": 655.89532,
+   "fit_slope": 63.320068,
+   "ratio": 0.0965,
+   "r2": -1.79715,
+   "gene_target": "SOX6"
+  },
+  {
+   "N": 477,
+   "m": 0.4534,
+   "rho2": 0.02,
+   "pred_slope": 182.273552,
+   "fit_slope": 50.383746,
+   "ratio": 0.2764,
+   "r2": -0.04373,
+   "gene_target": "SP7"
+  },
+  {
+   "N": 423,
+   "m": 0.3674,
+   "rho2": 0.02,
+   "pred_slope": 295.34655,
+   "fit_slope": 56.304767,
+   "ratio": 0.1906,
+   "r2": -0.66665,
+   "gene_target": "SPATA21"
+  },
+  {
+   "N": 407,
+   "m": 0.4601,
+   "rho2": 0.02,
+   "pred_slope": 180.903194,
+   "fit_slope": 52.403932,
+   "ratio": 0.2897,
+   "r2": 0.04465,
+   "gene_target": "SPATA22"
+  },
+  {
+   "N": 405,
+   "m": 0.2692,
+   "rho2": 0.03,
+   "pred_slope": 607.174381,
+   "fit_slope": 59.971052,
+   "ratio": 0.0988,
+   "r2": -2.40575,
+   "gene_target": "SPATA7"
+  },
+  {
+   "N": 436,
+   "m": 0.4283,
+   "rho2": 0.02,
+   "pred_slope": 173.147886,
+   "fit_slope": 52.538447,
+   "ratio": 0.3034,
+   "r2": -0.06016,
+   "gene_target": "SPATC1L"
+  },
+  {
+   "N": 401,
+   "m": 0.3278,
+   "rho2": 0.01,
+   "pred_slope": 353.070601,
+   "fit_slope": 60.770753,
+   "ratio": 0.1721,
+   "r2": -1.51284,
+   "gene_target": "SPATS2L"
+  },
+  {
+   "N": 505,
+   "m": 0.2743,
+   "rho2": 0.05,
+   "pred_slope": 582.838526,
+   "fit_slope": 58.80455,
+   "ratio": 0.1009,
+   "r2": -1.54421,
+   "gene_target": "SPRR1B"
+  },
+  {
+   "N": 489,
+   "m": 0.2929,
+   "rho2": 0.03,
+   "pred_slope": 491.288533,
+   "fit_slope": 57.046135,
+   "ratio": 0.1161,
+   "r2": -1.37773,
+   "gene_target": "SPRR3"
+  },
+  {
+   "N": 446,
+   "m": 0.3294,
+   "rho2": 0.02,
+   "pred_slope": 357.913813,
+   "fit_slope": 55.855765,
+   "ratio": 0.1561,
+   "r2": -1.21137,
+   "gene_target": "SPRYD4"
+  },
+  {
+   "N": 437,
+   "m": 0.3989,
+   "rho2": 0.02,
+   "pred_slope": 211.782439,
+   "fit_slope": 56.019387,
+   "ratio": 0.2645,
+   "r2": -0.28378,
+   "gene_target": "SPTBN4"
+  },
+  {
+   "N": 637,
+   "m": 0.6613,
+   "rho2": 0.02,
+   "pred_slope": 75.594272,
+   "fit_slope": 45.306031,
+   "ratio": 0.5993,
+   "r2": 0.64368,
+   "gene_target": "SPX"
+  },
+  {
+   "N": 563,
+   "m": 0.2335,
+   "rho2": 0.02,
+   "pred_slope": 776.943512,
+   "fit_slope": 62.350942,
+   "ratio": 0.0803,
+   "r2": -3.11737,
+   "gene_target": "SRGN"
+  },
+  {
+   "N": 417,
+   "m": 0.5287,
+   "rho2": 0.02,
+   "pred_slope": 125.721331,
+   "fit_slope": 50.790448,
+   "ratio": 0.404,
+   "r2": 0.387,
+   "gene_target": "SRSF12"
+  },
+  {
+   "N": 416,
+   "m": 0.6085,
+   "rho2": 0.05,
+   "pred_slope": 90.572453,
+   "fit_slope": 39.448301,
+   "ratio": 0.4355,
+   "r2": 0.60356,
+   "gene_target": "SSR2"
+  },
+  {
+   "N": 409,
+   "m": 0.4718,
+   "rho2": 0.02,
+   "pred_slope": 171.235981,
+   "fit_slope": 49.911019,
+   "ratio": 0.2915,
+   "r2": 0.02363,
+   "gene_target": "SSTR5"
+  },
+  {
+   "N": 464,
+   "m": 0.4821,
+   "rho2": 0.02,
+   "pred_slope": 168.206643,
+   "fit_slope": 51.428272,
+   "ratio": 0.3057,
+   "r2": 0.23739,
+   "gene_target": "ST3GAL6"
+  },
+  {
+   "N": 422,
+   "m": 0.2656,
+   "rho2": 0.01,
+   "pred_slope": 545.78771,
+   "fit_slope": 62.04794,
+   "ratio": 0.1137,
+   "r2": -2.08924,
+   "gene_target": "STAC2"
+  },
+  {
+   "N": 459,
+   "m": 0.3004,
+   "rho2": 0.04,
+   "pred_slope": 477.257897,
+   "fit_slope": 57.049003,
+   "ratio": 0.1195,
+   "r2": -1.34351,
+   "gene_target": "STAU1"
+  },
+  {
+   "N": 402,
+   "m": 0.2755,
+   "rho2": 0.04,
+   "pred_slope": 595.194982,
+   "fit_slope": 59.79935,
+   "ratio": 0.1005,
+   "r2": -2.15058,
+   "gene_target": "STEEP1"
+  },
+  {
+   "N": 443,
+   "m": 0.2821,
+   "rho2": 0.06,
+   "pred_slope": 577.065952,
+   "fit_slope": 59.197138,
+   "ratio": 0.1026,
+   "r2": -1.54807,
+   "gene_target": "STK25"
+  },
+  {
+   "N": 461,
+   "m": 0.6101,
+   "rho2": 0.03,
+   "pred_slope": 91.581328,
+   "fit_slope": 45.082728,
+   "ratio": 0.4923,
+   "r2": 0.56055,
+   "gene_target": "STYXL2"
+  },
+  {
+   "N": 552,
+   "m": 0.2521,
+   "rho2": 0.01,
+   "pred_slope": 625.236648,
+   "fit_slope": 63.040186,
+   "ratio": 0.1008,
+   "r2": -2.43814,
+   "gene_target": "SULT1A1"
+  },
+  {
+   "N": 409,
+   "m": 0.2831,
+   "rho2": 0.01,
+   "pred_slope": 493.219372,
+   "fit_slope": 61.62491,
+   "ratio": 0.1249,
+   "r2": -2.08921,
+   "gene_target": "SULT1A2"
+  },
+  {
+   "N": 810,
+   "m": 0.1785,
+   "rho2": 0.02,
+   "pred_slope": 1348.026262,
+   "fit_slope": 65.433513,
+   "ratio": 0.0485,
+   "r2": -4.33326,
+   "gene_target": "SULT1A3"
+  },
+  {
+   "N": 547,
+   "m": 0.3107,
+   "rho2": 0.01,
+   "pred_slope": 390.921162,
+   "fit_slope": 59.977734,
+   "ratio": 0.1534,
+   "r2": -0.96769,
+   "gene_target": "SULT1A4"
+  },
+  {
+   "N": 665,
+   "m": 0.2399,
+   "rho2": 0.02,
+   "pred_slope": 769.540259,
+   "fit_slope": 62.33011,
+   "ratio": 0.081,
+   "r2": -2.3089,
+   "gene_target": "SYBU"
+  },
+  {
+   "N": 456,
+   "m": 0.2213,
+   "rho2": 0.06,
+   "pred_slope": 965.677441,
+   "fit_slope": 63.036371,
+   "ratio": 0.0653,
+   "r2": -4.3063,
+   "gene_target": "SYCP3"
+  },
+  {
+   "N": 611,
+   "m": 0.2192,
+   "rho2": 0.03,
+   "pred_slope": 888.874489,
+   "fit_slope": 62.75438,
+   "ratio": 0.0706,
+   "r2": -2.7649,
+   "gene_target": "SYNE1"
+  },
+  {
+   "N": 405,
+   "m": 0.3953,
+   "rho2": 0.07,
+   "pred_slope": 262.917664,
+   "fit_slope": 48.856116,
+   "ratio": 0.1858,
+   "r2": -0.36728,
+   "gene_target": "SYNE2"
+  },
+  {
+   "N": 458,
+   "m": 0.3482,
+   "rho2": 0.11,
+   "pred_slope": 362.217321,
+   "fit_slope": 52.484042,
+   "ratio": 0.1449,
+   "r2": -0.7777,
+   "gene_target": "SYNJ1"
+  },
+  {
+   "N": 467,
+   "m": 0.3306,
+   "rho2": 0.02,
+   "pred_slope": 342.611439,
+   "fit_slope": 56.661331,
+   "ratio": 0.1654,
+   "r2": -0.59307,
+   "gene_target": "SYNPO2"
+  },
+  {
+   "N": 452,
+   "m": 0.1929,
+   "rho2": 0.02,
+   "pred_slope": 1189.786574,
+   "fit_slope": 66.420875,
+   "ratio": 0.0558,
+   "r2": -6.34968,
+   "gene_target": "SYNPO2L"
+  },
+  {
+   "N": 474,
+   "m": 0.3432,
+   "rho2": 0.01,
+   "pred_slope": 310.599821,
+   "fit_slope": 57.769349,
+   "ratio": 0.186,
+   "r2": -0.78153,
+   "gene_target": "SYTL1"
+  },
+  {
+   "N": 435,
+   "m": 0.3647,
+   "rho2": 0.09,
+   "pred_slope": 324.340416,
+   "fit_slope": 51.312253,
+   "ratio": 0.1582,
+   "r2": -0.62932,
+   "gene_target": "SYTL3"
+  },
+  {
+   "N": 442,
+   "m": 0.4769,
+   "rho2": 0.02,
+   "pred_slope": 141.202861,
+   "fit_slope": 50.053845,
+   "ratio": 0.3545,
+   "r2": 0.34295,
+   "gene_target": "TAC3"
+  },
+  {
+   "N": 558,
+   "m": 0.4227,
+   "rho2": 0.02,
+   "pred_slope": 182.918462,
+   "fit_slope": 50.688458,
+   "ratio": 0.2771,
+   "r2": -0.07931,
+   "gene_target": "TACR2"
+  },
+  {
+   "N": 441,
+   "m": 0.3943,
+   "rho2": 0.03,
+   "pred_slope": 273.878394,
+   "fit_slope": 52.265569,
+   "ratio": 0.1908,
+   "r2": -0.43006,
+   "gene_target": "TAFA4"
+  },
+  {
+   "N": 432,
+   "m": 0.364,
+   "rho2": 0.04,
+   "pred_slope": 300.497876,
+   "fit_slope": 52.622786,
+   "ratio": 0.1751,
+   "r2": -0.62057,
+   "gene_target": "TANK"
+  },
+  {
+   "N": 478,
+   "m": 0.2921,
+   "rho2": 0.03,
+   "pred_slope": 511.659791,
+   "fit_slope": 58.676282,
+   "ratio": 0.1147,
+   "r2": -1.57356,
+   "gene_target": "TAOK3"
+  },
+  {
+   "N": 573,
+   "m": 0.3396,
+   "rho2": 0.01,
+   "pred_slope": 300.153077,
+   "fit_slope": 59.709401,
+   "ratio": 0.1989,
+   "r2": -0.41116,
+   "gene_target": "TARM1"
+  },
+  {
+   "N": 671,
+   "m": 0.1798,
+   "rho2": 0.03,
+   "pred_slope": 1320.551445,
+   "fit_slope": 65.321817,
+   "ratio": 0.0495,
+   "r2": -4.51593,
+   "gene_target": "TAS2R4"
+  },
+  {
+   "N": 532,
+   "m": 0.2759,
+   "rho2": 0.01,
+   "pred_slope": 488.605247,
+   "fit_slope": 63.101693,
+   "ratio": 0.1291,
+   "r2": -2.14104,
+   "gene_target": "TATDN3"
+  },
+  {
+   "N": 461,
+   "m": 0.5991,
+   "rho2": 0.13,
+   "pred_slope": 118.100794,
+   "fit_slope": 37.234327,
+   "ratio": 0.3153,
+   "r2": 0.50501,
+   "gene_target": "TBL1XR1"
+  },
+  {
+   "N": 486,
+   "m": 0.7823,
+   "rho2": 0.06,
+   "pred_slope": 65.296029,
+   "fit_slope": 33.705063,
+   "ratio": 0.5162,
+   "r2": 0.80049,
+   "gene_target": "TBP"
+  },
+  {
+   "N": 496,
+   "m": 0.3797,
+   "rho2": 0.05,
+   "pred_slope": 286.188592,
+   "fit_slope": 51.496338,
+   "ratio": 0.1799,
+   "r2": -0.14804,
+   "gene_target": "TBX4"
+  },
+  {
+   "N": 804,
+   "m": 0.2264,
+   "rho2": 0.01,
+   "pred_slope": 786.101101,
+   "fit_slope": 66.913326,
+   "ratio": 0.0851,
+   "r2": -2.10604,
+   "gene_target": "TBX5"
+  },
+  {
+   "N": 609,
+   "m": 0.2851,
+   "rho2": 0.01,
+   "pred_slope": 494.777233,
+   "fit_slope": 60.793161,
+   "ratio": 0.1229,
+   "r2": -1.20927,
+   "gene_target": "TCAIM"
+  },
+  {
+   "N": 410,
+   "m": 0.3939,
+   "rho2": 0.01,
+   "pred_slope": 230.38851,
+   "fit_slope": 58.582773,
+   "ratio": 0.2543,
+   "r2": -0.31732,
+   "gene_target": "TCAP"
+  },
+  {
+   "N": 412,
+   "m": 0.3002,
+   "rho2": 0.08,
+   "pred_slope": 484.866242,
+   "fit_slope": 57.346096,
+   "ratio": 0.1183,
+   "r2": -1.26206,
+   "gene_target": "TCEAL2"
+  },
+  {
+   "N": 414,
+   "m": 0.2989,
+   "rho2": 0.03,
+   "pred_slope": 482.378471,
+   "fit_slope": 58.709064,
+   "ratio": 0.1217,
+   "r2": -1.50922,
+   "gene_target": "TCN2"
+  },
+  {
+   "N": 477,
+   "m": 0.3116,
+   "rho2": 0.02,
+   "pred_slope": 388.395356,
+   "fit_slope": 58.669416,
+   "ratio": 0.1511,
+   "r2": -0.85918,
+   "gene_target": "TCP10L"
+  },
+  {
+   "N": 433,
+   "m": 0.3433,
+   "rho2": 0.06,
+   "pred_slope": 362.296663,
+   "fit_slope": 53.577602,
+   "ratio": 0.1479,
+   "r2": -0.78785,
+   "gene_target": "TCP10L3"
+  },
+  {
+   "N": 458,
+   "m": 0.4384,
+   "rho2": 0.03,
+   "pred_slope": 203.725877,
+   "fit_slope": 50.371087,
+   "ratio": 0.2472,
+   "r2": -0.02748,
+   "gene_target": "TECTA"
+  },
+  {
+   "N": 417,
+   "m": 0.4054,
+   "rho2": 0.02,
+   "pred_slope": 225.30194,
+   "fit_slope": 52.917406,
+   "ratio": 0.2349,
+   "r2": -0.28324,
+   "gene_target": "TEKT1"
+  },
+  {
+   "N": 497,
+   "m": 0.2693,
+   "rho2": 0.01,
+   "pred_slope": 586.895885,
+   "fit_slope": 60.540778,
+   "ratio": 0.1032,
+   "r2": -2.39892,
+   "gene_target": "TESPA1"
+  },
+  {
+   "N": 544,
+   "m": 0.2752,
+   "rho2": 0.02,
+   "pred_slope": 544.786734,
+   "fit_slope": 58.074897,
+   "ratio": 0.1066,
+   "r2": -1.6505,
+   "gene_target": "TFEC"
+  },
+  {
+   "N": 435,
+   "m": 0.3956,
+   "rho2": 0.03,
+   "pred_slope": 242.55665,
+   "fit_slope": 52.48761,
+   "ratio": 0.2164,
+   "r2": -0.0801,
+   "gene_target": "TFPI"
+  },
+  {
+   "N": 525,
+   "m": 0.2185,
+   "rho2": 0.05,
+   "pred_slope": 936.506776,
+   "fit_slope": 63.023034,
+   "ratio": 0.0673,
+   "r2": -3.16014,
+   "gene_target": "TG"
+  },
+  {
+   "N": 417,
+   "m": 0.4407,
+   "rho2": 0.03,
+   "pred_slope": 192.023495,
+   "fit_slope": 50.713568,
+   "ratio": 0.2641,
+   "r2": 0.1419,
+   "gene_target": "TGFB1"
+  },
+  {
+   "N": 875,
+   "m": 0.2049,
+   "rho2": 0.01,
+   "pred_slope": 958.001971,
+   "fit_slope": 63.26698,
+   "ratio": 0.066,
+   "r2": -2.87179,
+   "gene_target": "TGFB2"
+  },
+  {
+   "N": 515,
+   "m": 0.3079,
+   "rho2": 0.05,
+   "pred_slope": 440.185918,
+   "fit_slope": 56.384172,
+   "ratio": 0.1281,
+   "r2": -0.91112,
+   "gene_target": "TGM5"
+  },
+  {
+   "N": 487,
+   "m": 0.3718,
+   "rho2": 0.02,
+   "pred_slope": 287.647799,
+   "fit_slope": 53.543273,
+   "ratio": 0.1861,
+   "r2": -0.45421,
+   "gene_target": "TH"
+  },
+  {
+   "N": 537,
+   "m": 0.2315,
+   "rho2": 0.04,
+   "pred_slope": 823.806407,
+   "fit_slope": 61.681749,
+   "ratio": 0.0749,
+   "r2": -2.94122,
+   "gene_target": "THBD"
+  },
+  {
+   "N": 447,
+   "m": 0.3755,
+   "rho2": 0.02,
+   "pred_slope": 310.012989,
+   "fit_slope": 55.570625,
+   "ratio": 0.1793,
+   "r2": -0.56791,
+   "gene_target": "THEMIS"
+  },
+  {
+   "N": 648,
+   "m": 0.5054,
+   "rho2": 0.02,
+   "pred_slope": 118.383923,
+   "fit_slope": 49.713276,
+   "ratio": 0.4199,
+   "r2": 0.56071,
+   "gene_target": "TIMD4"
+  },
+  {
+   "N": 401,
+   "m": 0.4001,
+   "rho2": 0.14,
+   "pred_slope": 284.907402,
+   "fit_slope": 49.467093,
+   "ratio": 0.1736,
+   "r2": -0.45771,
+   "gene_target": "TIMP1"
+  },
+  {
+   "N": 478,
+   "m": 0.2665,
+   "rho2": 0.03,
+   "pred_slope": 590.867827,
+   "fit_slope": 59.011191,
+   "ratio": 0.0999,
+   "r2": -2.02119,
+   "gene_target": "TJP2"
+  },
+  {
+   "N": 536,
+   "m": 0.4295,
+   "rho2": 0.03,
+   "pred_slope": 210.752371,
+   "fit_slope": 48.33381,
+   "ratio": 0.2293,
+   "r2": 0.04322,
+   "gene_target": "TK1"
+  },
+  {
+   "N": 400,
+   "m": 0.3186,
+   "rho2": 0.04,
+   "pred_slope": 450.09905,
+   "fit_slope": 57.103666,
+   "ratio": 0.1269,
+   "r2": -1.305,
+   "gene_target": "TLN2"
+  },
+  {
+   "N": 451,
+   "m": 0.2994,
+   "rho2": 0.03,
+   "pred_slope": 481.257775,
+   "fit_slope": 58.163967,
+   "ratio": 0.1209,
+   "r2": -1.34237,
+   "gene_target": "TMC1"
+  },
+  {
+   "N": 667,
+   "m": 0.3508,
+   "rho2": 0.02,
+   "pred_slope": 350.596236,
+   "fit_slope": 55.129569,
+   "ratio": 0.1572,
+   "r2": -0.4075,
+   "gene_target": "TMC8"
+  },
+  {
+   "N": 407,
+   "m": 0.53,
+   "rho2": 0.04,
+   "pred_slope": 139.67878,
+   "fit_slope": 46.156668,
+   "ratio": 0.3304,
+   "r2": 0.31641,
+   "gene_target": "TMED10"
+  },
+  {
+   "N": 561,
+   "m": 0.2701,
+   "rho2": 0.02,
+   "pred_slope": 566.935089,
+   "fit_slope": 59.929902,
+   "ratio": 0.1057,
+   "r2": -1.66427,
+   "gene_target": "TMEM100"
+  },
+  {
+   "N": 423,
+   "m": 0.2871,
+   "rho2": 0.05,
+   "pred_slope": 532.670384,
+   "fit_slope": 58.152403,
+   "ratio": 0.1092,
+   "r2": -1.72986,
+   "gene_target": "TMEM126B"
+  },
+  {
+   "N": 434,
+   "m": 0.4404,
+   "rho2": 0.02,
+   "pred_slope": 192.509066,
+   "fit_slope": 55.071925,
+   "ratio": 0.2861,
+   "r2": -0.0429,
+   "gene_target": "TMEM127"
+  },
+  {
+   "N": 471,
+   "m": 0.2939,
+   "rho2": 0.05,
+   "pred_slope": 470.641105,
+   "fit_slope": 56.451219,
+   "ratio": 0.1199,
+   "r2": -1.52142,
+   "gene_target": "TMEM150B"
+  },
+  {
+   "N": 413,
+   "m": 0.3729,
+   "rho2": 0.02,
+   "pred_slope": 246.482821,
+   "fit_slope": 54.0752,
+   "ratio": 0.2194,
+   "r2": -0.36945,
+   "gene_target": "TMEM183A"
+  },
+  {
+   "N": 565,
+   "m": 0.3123,
+   "rho2": 0.03,
+   "pred_slope": 448.394139,
+   "fit_slope": 56.906666,
+   "ratio": 0.1269,
+   "r2": -1.01999,
+   "gene_target": "TMEM191B"
+  },
+  {
+   "N": 498,
+   "m": 0.3222,
+   "rho2": 0.04,
+   "pred_slope": 393.692793,
+   "fit_slope": 55.046933,
+   "ratio": 0.1398,
+   "r2": -0.89885,
+   "gene_target": "TMEM229B"
+  },
+  {
+   "N": 410,
+   "m": 0.2895,
+   "rho2": 0.02,
+   "pred_slope": 478.195111,
+   "fit_slope": 60.29252,
+   "ratio": 0.1261,
+   "r2": -1.70339,
+   "gene_target": "TMEM230"
+  },
+  {
+   "N": 436,
+   "m": 0.4584,
+   "rho2": 0.03,
+   "pred_slope": 198.381539,
+   "fit_slope": 49.155876,
+   "ratio": 0.2478,
+   "r2": 0.08655,
+   "gene_target": "TMEM61"
+  },
+  {
+   "N": 444,
+   "m": 0.2685,
+   "rho2": 0.02,
+   "pred_slope": 567.230796,
+   "fit_slope": 60.080387,
+   "ratio": 0.1059,
+   "r2": -2.47318,
+   "gene_target": "TMEM63A"
+  },
+  {
+   "N": 437,
+   "m": 0.4284,
+   "rho2": 0.09,
+   "pred_slope": 246.953707,
+   "fit_slope": 48.809946,
+   "ratio": 0.1976,
+   "r2": 0.0146,
+   "gene_target": "TMOD1"
+  },
+  {
+   "N": 456,
+   "m": 0.2892,
+   "rho2": 0.05,
+   "pred_slope": 517.17342,
+   "fit_slope": 57.861532,
+   "ratio": 0.1119,
+   "r2": -1.53916,
+   "gene_target": "TMPRSS12"
+  },
+  {
+   "N": 489,
+   "m": 0.3198,
+   "rho2": 0.01,
+   "pred_slope": 346.780133,
+   "fit_slope": 59.135439,
+   "ratio": 0.1705,
+   "r2": -1.08713,
+   "gene_target": "TNFAIP8L2"
+  },
+  {
+   "N": 443,
+   "m": 0.3141,
+   "rho2": 0.02,
+   "pred_slope": 414.843381,
+   "fit_slope": 58.733863,
+   "ratio": 0.1416,
+   "r2": -1.16311,
+   "gene_target": "TNFRSF10A"
+  },
+  {
+   "N": 436,
+   "m": 0.4148,
+   "rho2": 0.02,
+   "pred_slope": 235.202484,
+   "fit_slope": 54.141125,
+   "ratio": 0.2302,
+   "r2": -0.30299,
+   "gene_target": "TNFRSF13B"
+  },
+  {
+   "N": 568,
+   "m": 0.3765,
+   "rho2": 0.01,
+   "pred_slope": 238.548643,
+   "fit_slope": 55.515833,
+   "ratio": 0.2327,
+   "r2": -0.30662,
+   "gene_target": "TNFSF4"
+  },
+  {
+   "N": 568,
+   "m": 0.3286,
+   "rho2": 0.01,
+   "pred_slope": 354.831628,
+   "fit_slope": 57.699902,
+   "ratio": 0.1626,
+   "r2": -0.64719,
+   "gene_target": "TNNT1"
+  },
+  {
+   "N": 428,
+   "m": 0.2218,
+   "rho2": 0.06,
+   "pred_slope": 951.306392,
+   "fit_slope": 63.144904,
+   "ratio": 0.0664,
+   "r2": -4.38072,
+   "gene_target": "TNPO2"
+  },
+  {
+   "N": 484,
+   "m": 0.2599,
+   "rho2": 0.03,
+   "pred_slope": 620.149341,
+   "fit_slope": 59.052104,
+   "ratio": 0.0952,
+   "r2": -2.33605,
+   "gene_target": "TOP3A"
+  },
+  {
+   "N": 503,
+   "m": 0.8639,
+   "rho2": 0.05,
+   "pred_slope": 47.373593,
+   "fit_slope": 33.975393,
+   "ratio": 0.7172,
+   "r2": 0.90556,
+   "gene_target": "TOPBP1"
+  },
+  {
+   "N": 428,
+   "m": 0.3593,
+   "rho2": 0.01,
+   "pred_slope": 262.703207,
+   "fit_slope": 57.645535,
+   "ratio": 0.2194,
+   "r2": -0.81863,
+   "gene_target": "TP53BP1"
+  },
+  {
+   "N": 458,
+   "m": 0.2687,
+   "rho2": 0.02,
+   "pred_slope": 545.856527,
+   "fit_slope": 61.21205,
+   "ratio": 0.1121,
+   "r2": -1.94464,
+   "gene_target": "TP53INP2"
+  },
+  {
+   "N": 577,
+   "m": 0.3031,
+   "rho2": 0.05,
+   "pred_slope": 485.798772,
+   "fit_slope": 56.662,
+   "ratio": 0.1166,
+   "r2": -0.90869,
+   "gene_target": "TPO"
+  },
+  {
+   "N": 402,
+   "m": 0.3734,
+   "rho2": 0.2,
+   "pred_slope": 310.594791,
+   "fit_slope": 50.978732,
+   "ratio": 0.1641,
+   "r2": -0.43022,
+   "gene_target": "TPRG1"
+  },
+  {
+   "N": 522,
+   "m": 0.3289,
+   "rho2": 0.03,
+   "pred_slope": 435.567769,
+   "fit_slope": 55.792052,
+   "ratio": 0.1281,
+   "r2": -1.02545,
+   "gene_target": "TRA2A"
+  },
+  {
+   "N": 457,
+   "m": 0.516,
+   "rho2": 0.05,
+   "pred_slope": 146.005578,
+   "fit_slope": 44.591199,
+   "ratio": 0.3054,
+   "r2": 0.47083,
+   "gene_target": "TRARG1"
+  },
+  {
+   "N": 450,
+   "m": 0.2634,
+   "rho2": 0.01,
+   "pred_slope": 596.823627,
+   "fit_slope": 66.239378,
+   "ratio": 0.111,
+   "r2": -2.3351,
+   "gene_target": "TRIM16L"
+  },
+  {
+   "N": 464,
+   "m": 0.248,
+   "rho2": 0.01,
+   "pred_slope": 651.522066,
+   "fit_slope": 61.392839,
+   "ratio": 0.0942,
+   "r2": -3.36127,
+   "gene_target": "TRIM22"
+  },
+  {
+   "N": 633,
+   "m": 0.2071,
+   "rho2": 0.02,
+   "pred_slope": 988.249062,
+   "fit_slope": 64.905616,
+   "ratio": 0.0657,
+   "r2": -3.07234,
+   "gene_target": "TRIM29"
+  },
+  {
+   "N": 641,
+   "m": 0.1634,
+   "rho2": 0.01,
+   "pred_slope": 1611.307369,
+   "fit_slope": 68.398542,
+   "ratio": 0.0424,
+   "r2": -6.7383,
+   "gene_target": "TRIM36"
+  },
+  {
+   "N": 419,
+   "m": 0.3304,
+   "rho2": 0.04,
+   "pred_slope": 376.17303,
+   "fit_slope": 54.676311,
+   "ratio": 0.1453,
+   "r2": -1.044,
+   "gene_target": "TRIM51"
+  },
+  {
+   "N": 441,
+   "m": 0.2352,
+   "rho2": 0.02,
+   "pred_slope": 776.783469,
+   "fit_slope": 61.940409,
+   "ratio": 0.0797,
+   "r2": -4.21719,
+   "gene_target": "TRIM66"
+  },
+  {
+   "N": 715,
+   "m": 0.2592,
+   "rho2": 0.01,
+   "pred_slope": 593.864521,
+   "fit_slope": 60.296812,
+   "ratio": 0.1015,
+   "r2": -1.5658,
+   "gene_target": "TRIM73"
+  },
+  {
+   "N": 429,
+   "m": 0.3736,
+   "rho2": 0.03,
+   "pred_slope": 307.542512,
+   "fit_slope": 54.315019,
+   "ratio": 0.1766,
+   "r2": -0.41759,
+   "gene_target": "TRMT6"
+  },
+  {
+   "N": 541,
+   "m": 0.2384,
+   "rho2": 0.03,
+   "pred_slope": 762.503631,
+   "fit_slope": 61.703499,
+   "ratio": 0.0809,
+   "r2": -2.6916,
+   "gene_target": "TRO"
+  },
+  {
+   "N": 550,
+   "m": 0.2914,
+   "rho2": 0.06,
+   "pred_slope": 531.574322,
+   "fit_slope": 56.293748,
+   "ratio": 0.1059,
+   "r2": -1.26427,
+   "gene_target": "TRPM2"
+  },
+  {
+   "N": 581,
+   "m": 0.2179,
+   "rho2": 0.01,
+   "pred_slope": 911.225665,
+   "fit_slope": 64.863606,
+   "ratio": 0.0712,
+   "r2": -3.59352,
+   "gene_target": "TRPV3"
+  },
+  {
+   "N": 455,
+   "m": 0.2603,
+   "rho2": 0.06,
+   "pred_slope": 674.050345,
+   "fit_slope": 60.205353,
+   "ratio": 0.0893,
+   "r2": -2.07613,
+   "gene_target": "TSHZ1"
+  },
+  {
+   "N": 688,
+   "m": 0.3107,
+   "rho2": 0.05,
+   "pred_slope": 439.678935,
+   "fit_slope": 54.846889,
+   "ratio": 0.1247,
+   "r2": -0.69064,
+   "gene_target": "TSPAN1"
+  },
+  {
+   "N": 540,
+   "m": 0.5135,
+   "rho2": 0.03,
+   "pred_slope": 145.952596,
+   "fit_slope": 45.680663,
+   "ratio": 0.313,
+   "r2": 0.37629,
+   "gene_target": "TSPYL4"
+  },
+  {
+   "N": 502,
+   "m": 0.4576,
+   "rho2": 0.02,
+   "pred_slope": 185.211088,
+   "fit_slope": 52.527004,
+   "ratio": 0.2836,
+   "r2": 0.13195,
+   "gene_target": "TSR1"
+  },
+  {
+   "N": 433,
+   "m": 0.4233,
+   "rho2": 0.02,
+   "pred_slope": 183.646967,
+   "fit_slope": 53.169333,
+   "ratio": 0.2895,
+   "r2": -0.21849,
+   "gene_target": "TTC21A"
+  },
+  {
+   "N": 440,
+   "m": 0.298,
+   "rho2": 0.02,
+   "pred_slope": 453.632786,
+   "fit_slope": 57.144171,
+   "ratio": 0.126,
+   "r2": -1.81097,
+   "gene_target": "TTC9C"
+  },
+  {
+   "N": 505,
+   "m": 0.6277,
+   "rho2": 0.12,
+   "pred_slope": 116.63182,
+   "fit_slope": 38.236544,
+   "ratio": 0.3278,
+   "r2": 0.55217,
+   "gene_target": "TTLL8"
+  },
+  {
+   "N": 528,
+   "m": 0.3089,
+   "rho2": 0.01,
+   "pred_slope": 403.716182,
+   "fit_slope": 60.154639,
+   "ratio": 0.149,
+   "r2": -1.06429,
+   "gene_target": "TTLL9"
+  },
+  {
+   "N": 525,
+   "m": 0.2426,
+   "rho2": 0.02,
+   "pred_slope": 743.893446,
+   "fit_slope": 61.123502,
+   "ratio": 0.0822,
+   "r2": -2.76828,
+   "gene_target": "TTR"
+  },
+  {
+   "N": 458,
+   "m": 0.2896,
+   "rho2": 0.01,
+   "pred_slope": 513.947718,
+   "fit_slope": 61.695304,
+   "ratio": 0.12,
+   "r2": -1.60933,
+   "gene_target": "TUBD1"
+  },
+  {
+   "N": 419,
+   "m": 0.7217,
+   "rho2": 0.04,
+   "pred_slope": 61.799789,
+   "fit_slope": 36.146789,
+   "ratio": 0.5849,
+   "r2": 0.71358,
+   "gene_target": "TXK"
+  },
+  {
+   "N": 549,
+   "m": 0.6165,
+   "rho2": 0.02,
+   "pred_slope": 89.748888,
+   "fit_slope": 46.358128,
+   "ratio": 0.5165,
+   "r2": 0.44415,
+   "gene_target": "TXNDC8"
+  },
+  {
+   "N": 732,
+   "m": 0.2291,
+   "rho2": 0.02,
+   "pred_slope": 855.52136,
+   "fit_slope": 61.931278,
+   "ratio": 0.0724,
+   "r2": -2.24321,
+   "gene_target": "TXNIP"
+  },
+  {
+   "N": 452,
+   "m": 0.329,
+   "rho2": 0.02,
+   "pred_slope": 351.605701,
+   "fit_slope": 54.882226,
+   "ratio": 0.1561,
+   "r2": -0.86448,
+   "gene_target": "TXNRD3"
+  },
+  {
+   "N": 581,
+   "m": 0.825,
+   "rho2": 0.04,
+   "pred_slope": 47.802574,
+   "fit_slope": 38.138644,
+   "ratio": 0.7978,
+   "r2": 0.86048,
+   "gene_target": "TYMP"
+  },
+  {
+   "N": 440,
+   "m": 0.5856,
+   "rho2": 0.05,
+   "pred_slope": 121.911032,
+   "fit_slope": 42.550056,
+   "ratio": 0.349,
+   "r2": 0.45049,
+   "gene_target": "UBA6"
+  },
+  {
+   "N": 463,
+   "m": 0.5255,
+   "rho2": 0.18,
+   "pred_slope": 159.28647,
+   "fit_slope": 42.159192,
+   "ratio": 0.2647,
+   "r2": 0.41485,
+   "gene_target": "UBA7"
+  },
+  {
+   "N": 437,
+   "m": 0.2674,
+   "rho2": 0.03,
+   "pred_slope": 615.757548,
+   "fit_slope": 60.187851,
+   "ratio": 0.0977,
+   "r2": -2.18423,
+   "gene_target": "UBE2G2"
+  },
+  {
+   "N": 510,
+   "m": 0.2443,
+   "rho2": 0.02,
+   "pred_slope": 700.363507,
+   "fit_slope": 61.920965,
+   "ratio": 0.0884,
+   "r2": -2.78572,
+   "gene_target": "UBE2Q2"
+  },
+  {
+   "N": 452,
+   "m": 0.3582,
+   "rho2": 0.02,
+   "pred_slope": 296.871925,
+   "fit_slope": 56.226446,
+   "ratio": 0.1894,
+   "r2": -0.40003,
+   "gene_target": "UBXN2A"
+  },
+  {
+   "N": 428,
+   "m": 0.3182,
+   "rho2": 0.05,
+   "pred_slope": 440.387836,
+   "fit_slope": 55.977675,
+   "ratio": 0.1271,
+   "r2": -1.15502,
+   "gene_target": "UBXN6"
+  },
+  {
+   "N": 402,
+   "m": 0.326,
+   "rho2": 0.03,
+   "pred_slope": 406.139037,
+   "fit_slope": 58.243748,
+   "ratio": 0.1434,
+   "r2": -1.06875,
+   "gene_target": "UBXN8"
+  },
+  {
+   "N": 512,
+   "m": 0.3973,
+   "rho2": 0.02,
+   "pred_slope": 214.635231,
+   "fit_slope": 53.269523,
+   "ratio": 0.2482,
+   "r2": -0.21259,
+   "gene_target": "UNC119"
+  },
+  {
+   "N": 402,
+   "m": 0.3811,
+   "rho2": 0.02,
+   "pred_slope": 260.491516,
+   "fit_slope": 57.631515,
+   "ratio": 0.2212,
+   "r2": -0.2976,
+   "gene_target": "UPK1B"
+  },
+  {
+   "N": 400,
+   "m": 0.3428,
+   "rho2": 0.01,
+   "pred_slope": 336.397731,
+   "fit_slope": 61.055104,
+   "ratio": 0.1815,
+   "r2": -0.89308,
+   "gene_target": "UQCC3"
+  },
+  {
+   "N": 480,
+   "m": 0.468,
+   "rho2": 0.01,
+   "pred_slope": 155.398365,
+   "fit_slope": 55.679604,
+   "ratio": 0.3583,
+   "r2": 0.12862,
+   "gene_target": "UQCC4"
+  },
+  {
+   "N": 471,
+   "m": 0.257,
+   "rho2": 0.01,
+   "pred_slope": 597.037227,
+   "fit_slope": 63.385783,
+   "ratio": 0.1062,
+   "r2": -2.7218,
+   "gene_target": "UQCC6"
+  },
+  {
+   "N": 462,
+   "m": 0.3749,
+   "rho2": 0.01,
+   "pred_slope": 263.891451,
+   "fit_slope": 58.649715,
+   "ratio": 0.2222,
+   "r2": -0.26584,
+   "gene_target": "URAD"
+  },
+  {
+   "N": 589,
+   "m": 0.3065,
+   "rho2": 0.05,
+   "pred_slope": 460.16359,
+   "fit_slope": 56.638405,
+   "ratio": 0.1231,
+   "r2": -0.75389,
+   "gene_target": "URGCP"
+  },
+  {
+   "N": 418,
+   "m": 0.6559,
+   "rho2": 0.09,
+   "pred_slope": 101.688993,
+   "fit_slope": 36.813141,
+   "ratio": 0.362,
+   "r2": 0.56512,
+   "gene_target": "USP11"
+  },
+  {
+   "N": 667,
+   "m": 0.2279,
+   "rho2": 0.03,
+   "pred_slope": 854.513267,
+   "fit_slope": 62.165028,
+   "ratio": 0.0727,
+   "r2": -2.61967,
+   "gene_target": "USP30"
+  },
+  {
+   "N": 503,
+   "m": 0.4908,
+   "rho2": 0.03,
+   "pred_slope": 149.166985,
+   "fit_slope": 45.578724,
+   "ratio": 0.3056,
+   "r2": 0.32786,
+   "gene_target": "USP34"
+  },
+  {
+   "N": 410,
+   "m": 0.3198,
+   "rho2": 0.02,
+   "pred_slope": 382.463314,
+   "fit_slope": 55.663195,
+   "ratio": 0.1455,
+   "r2": -1.85876,
+   "gene_target": "USP38"
+  },
+  {
+   "N": 560,
+   "m": 0.282,
+   "rho2": 0.05,
+   "pred_slope": 557.096845,
+   "fit_slope": 57.118563,
+   "ratio": 0.1025,
+   "r2": -1.35756,
+   "gene_target": "USP44"
+  },
+  {
+   "N": 406,
+   "m": 0.3417,
+   "rho2": 0.02,
+   "pred_slope": 324.70295,
+   "fit_slope": 58.849448,
+   "ratio": 0.1812,
+   "r2": -0.80461,
+   "gene_target": "USP47"
+  },
+  {
+   "N": 640,
+   "m": 0.1913,
+   "rho2": 0.04,
+   "pred_slope": 1179.109897,
+   "fit_slope": 65.373397,
+   "ratio": 0.0554,
+   "r2": -3.67347,
+   "gene_target": "USP54"
+  },
+  {
+   "N": 442,
+   "m": 0.5062,
+   "rho2": 0.04,
+   "pred_slope": 140.822242,
+   "fit_slope": 45.703307,
+   "ratio": 0.3245,
+   "r2": 0.27231,
+   "gene_target": "VAMP7"
+  },
+  {
+   "N": 467,
+   "m": 0.3813,
+   "rho2": 0.02,
+   "pred_slope": 265.471698,
+   "fit_slope": 57.417603,
+   "ratio": 0.2163,
+   "r2": -0.3049,
+   "gene_target": "VAMP8"
+  },
+  {
+   "N": 566,
+   "m": 0.294,
+   "rho2": 0.02,
+   "pred_slope": 476.834851,
+   "fit_slope": 59.225096,
+   "ratio": 0.1242,
+   "r2": -1.2769,
+   "gene_target": "VAT1L"
+  },
+  {
+   "N": 447,
+   "m": 0.3704,
+   "rho2": 0.01,
+   "pred_slope": 275.18864,
+   "fit_slope": 57.649054,
+   "ratio": 0.2095,
+   "r2": -0.73174,
+   "gene_target": "VCAM1"
+  },
+  {
+   "N": 572,
+   "m": 0.2782,
+   "rho2": 0.03,
+   "pred_slope": 546.580405,
+   "fit_slope": 59.066229,
+   "ratio": 0.1081,
+   "r2": -1.35839,
+   "gene_target": "VCPKMT"
+  },
+  {
+   "N": 538,
+   "m": 0.4987,
+   "rho2": 0.27,
+   "pred_slope": 182.611538,
+   "fit_slope": 42.660923,
+   "ratio": 0.2336,
+   "r2": 0.34844,
+   "gene_target": "VEZF1"
+  },
+  {
+   "N": 625,
+   "m": 0.2396,
+   "rho2": 0.01,
+   "pred_slope": 696.047211,
+   "fit_slope": 62.636604,
+   "ratio": 0.09,
+   "r2": -2.25401,
+   "gene_target": "VN1R1"
+  },
+  {
+   "N": 605,
+   "m": 0.2254,
+   "rho2": 0.03,
+   "pred_slope": 834.267134,
+   "fit_slope": 61.75251,
+   "ratio": 0.074,
+   "r2": -2.74874,
+   "gene_target": "VNN1"
+  },
+  {
+   "N": 740,
+   "m": 0.3048,
+   "rho2": 0.02,
+   "pred_slope": 451.097643,
+   "fit_slope": 59.692123,
+   "ratio": 0.1323,
+   "r2": -0.47008,
+   "gene_target": "VPS41"
+  },
+  {
+   "N": 495,
+   "m": 0.2902,
+   "rho2": 0.01,
+   "pred_slope": 495.966008,
+   "fit_slope": 61.663003,
+   "ratio": 0.1243,
+   "r2": -1.3643,
+   "gene_target": "VTA1"
+  },
+  {
+   "N": 486,
+   "m": 0.336,
+   "rho2": 0.07,
+   "pred_slope": 388.692795,
+   "fit_slope": 53.6624,
+   "ratio": 0.1381,
+   "r2": -0.76768,
+   "gene_target": "VTI1A"
+  },
+  {
+   "N": 402,
+   "m": 0.5979,
+   "rho2": 0.07,
+   "pred_slope": 101.053106,
+   "fit_slope": 38.914801,
+   "ratio": 0.3851,
+   "r2": 0.61365,
+   "gene_target": "VWA3A"
+  },
+  {
+   "N": 422,
+   "m": 0.4133,
+   "rho2": 0.02,
+   "pred_slope": 247.173938,
+   "fit_slope": 53.743203,
+   "ratio": 0.2174,
+   "r2": -0.33567,
+   "gene_target": "WDR20"
+  },
+  {
+   "N": 692,
+   "m": 0.8833,
+   "rho2": 0.13,
+   "pred_slope": 56.243264,
+   "fit_slope": 29.151309,
+   "ratio": 0.5183,
+   "r2": 0.87213,
+   "gene_target": "WDR74"
+  },
+  {
+   "N": 424,
+   "m": 0.329,
+   "rho2": 0.11,
+   "pred_slope": 407.433597,
+   "fit_slope": 53.493589,
+   "ratio": 0.1313,
+   "r2": -1.13933,
+   "gene_target": "WFDC10B"
+  },
+  {
+   "N": 693,
+   "m": 0.3049,
+   "rho2": 0.01,
+   "pred_slope": 379.522181,
+   "fit_slope": 56.933628,
+   "ratio": 0.15,
+   "r2": -1.31012,
+   "gene_target": "WNT1"
+  },
+  {
+   "N": 731,
+   "m": 0.2244,
+   "rho2": 0.02,
+   "pred_slope": 902.9076,
+   "fit_slope": 63.288084,
+   "ratio": 0.0701,
+   "r2": -2.49681,
+   "gene_target": "WNT2"
+  },
+  {
+   "N": 496,
+   "m": 0.2111,
+   "rho2": 0.01,
+   "pred_slope": 894.336795,
+   "fit_slope": 65.382492,
+   "ratio": 0.0731,
+   "r2": -3.64918,
+   "gene_target": "WSCD1"
+  },
+  {
+   "N": 558,
+   "m": 0.2158,
+   "rho2": 0.03,
+   "pred_slope": 895.009843,
+   "fit_slope": 62.84155,
+   "ratio": 0.0702,
+   "r2": -3.01257,
+   "gene_target": "XAGE5"
+  },
+  {
+   "N": 537,
+   "m": 0.4467,
+   "rho2": 0.02,
+   "pred_slope": 179.521592,
+   "fit_slope": 49.716556,
+   "ratio": 0.2769,
+   "r2": 0.07125,
+   "gene_target": "XIAP"
+  },
+  {
+   "N": 441,
+   "m": 0.4435,
+   "rho2": 0.02,
+   "pred_slope": 186.366596,
+   "fit_slope": 50.473985,
+   "ratio": 0.2708,
+   "r2": -0.0867,
+   "gene_target": "XRCC2"
+  },
+  {
+   "N": 478,
+   "m": 0.3365,
+   "rho2": 0.02,
+   "pred_slope": 361.671889,
+   "fit_slope": 54.438693,
+   "ratio": 0.1505,
+   "r2": -0.8452,
+   "gene_target": "ZBTB21"
+  },
+  {
+   "N": 444,
+   "m": 0.5736,
+   "rho2": 0.03,
+   "pred_slope": 91.527204,
+   "fit_slope": 43.802734,
+   "ratio": 0.4786,
+   "r2": 0.56345,
+   "gene_target": "ZBTB38"
+  },
+  {
+   "N": 538,
+   "m": 0.2417,
+   "rho2": 0.06,
+   "pred_slope": 735.002404,
+   "fit_slope": 60.551611,
+   "ratio": 0.0824,
+   "r2": -2.48309,
+   "gene_target": "ZBTB7C"
+  },
+  {
+   "N": 427,
+   "m": 0.6175,
+   "rho2": 0.06,
+   "pred_slope": 86.016517,
+   "fit_slope": 39.555554,
+   "ratio": 0.4599,
+   "r2": 0.70551,
+   "gene_target": "ZBTB8OS"
+  },
+  {
+   "N": 436,
+   "m": 0.5586,
+   "rho2": 0.02,
+   "pred_slope": 107.030808,
+   "fit_slope": 50.021281,
+   "ratio": 0.4674,
+   "r2": 0.40468,
+   "gene_target": "ZDHHC17"
+  },
+  {
+   "N": 474,
+   "m": 0.4915,
+   "rho2": 0.02,
+   "pred_slope": 137.859798,
+   "fit_slope": 52.228354,
+   "ratio": 0.3789,
+   "r2": 0.32671,
+   "gene_target": "ZFHX2"
+  },
+  {
+   "N": 529,
+   "m": 0.2962,
+   "rho2": 0.01,
+   "pred_slope": 423.973767,
+   "fit_slope": 59.068137,
+   "ratio": 0.1393,
+   "r2": -1.72864,
+   "gene_target": "ZG16"
+  },
+  {
+   "N": 527,
+   "m": 0.2935,
+   "rho2": 0.03,
+   "pred_slope": 467.684849,
+   "fit_slope": 56.329036,
+   "ratio": 0.1204,
+   "r2": -1.47403,
+   "gene_target": "ZIC5"
+  },
+  {
+   "N": 607,
+   "m": 0.6131,
+   "rho2": 0.3,
+   "pred_slope": 121.140829,
+   "fit_slope": 36.775028,
+   "ratio": 0.3036,
+   "r2": 0.60017,
+   "gene_target": "ZMYM3"
+  },
+  {
+   "N": 447,
+   "m": 0.3177,
+   "rho2": 0.06,
+   "pred_slope": 418.220973,
+   "fit_slope": 55.03685,
+   "ratio": 0.1316,
+   "r2": -0.93915,
+   "gene_target": "ZNF177"
+  },
+  {
+   "N": 544,
+   "m": 0.5434,
+   "rho2": 0.04,
+   "pred_slope": 117.06499,
+   "fit_slope": 44.463811,
+   "ratio": 0.3798,
+   "r2": 0.63206,
+   "gene_target": "ZNF225"
+  },
+  {
+   "N": 413,
+   "m": 0.2615,
+   "rho2": 0.04,
+   "pred_slope": 605.365485,
+   "fit_slope": 60.548359,
+   "ratio": 0.1,
+   "r2": -2.28362,
+   "gene_target": "ZNF227"
+  },
+  {
+   "N": 482,
+   "m": 0.2632,
+   "rho2": 0.02,
+   "pred_slope": 608.122311,
+   "fit_slope": 61.043971,
+   "ratio": 0.1004,
+   "r2": -2.11453,
+   "gene_target": "ZNF23"
+  },
+  {
+   "N": 491,
+   "m": 0.3966,
+   "rho2": 0.07,
+   "pred_slope": 272.767748,
+   "fit_slope": 49.31928,
+   "ratio": 0.1808,
+   "r2": -0.28012,
+   "gene_target": "ZNF235"
+  },
+  {
+   "N": 469,
+   "m": 0.2862,
+   "rho2": 0.01,
+   "pred_slope": 543.616348,
+   "fit_slope": 62.941813,
+   "ratio": 0.1158,
+   "r2": -2.1204,
+   "gene_target": "ZNF250"
+  },
+  {
+   "N": 619,
+   "m": 0.4227,
+   "rho2": 0.02,
+   "pred_slope": 207.119016,
+   "fit_slope": 53.775031,
+   "ratio": 0.2596,
+   "r2": 0.15926,
+   "gene_target": "ZNF263"
+  },
+  {
+   "N": 501,
+   "m": 0.2127,
+   "rho2": 0.01,
+   "pred_slope": 934.83122,
+   "fit_slope": 65.503238,
+   "ratio": 0.0701,
+   "r2": -4.28752,
+   "gene_target": "ZNF329"
+  },
+  {
+   "N": 435,
+   "m": 0.4655,
+   "rho2": 0.02,
+   "pred_slope": 145.229863,
+   "fit_slope": 53.518831,
+   "ratio": 0.3685,
+   "r2": 0.35864,
+   "gene_target": "ZNF417"
+  },
+  {
+   "N": 411,
+   "m": 0.2634,
+   "rho2": 0.03,
+   "pred_slope": 592.944703,
+   "fit_slope": 60.249932,
+   "ratio": 0.1016,
+   "r2": -2.01757,
+   "gene_target": "ZNF43"
+  },
+  {
+   "N": 610,
+   "m": 0.2648,
+   "rho2": 0.02,
+   "pred_slope": 545.36797,
+   "fit_slope": 60.355251,
+   "ratio": 0.1107,
+   "r2": -1.62059,
+   "gene_target": "ZNF438"
+  },
+  {
+   "N": 919,
+   "m": 0.212,
+   "rho2": 0.01,
+   "pred_slope": 935.160065,
+   "fit_slope": 65.385361,
+   "ratio": 0.0699,
+   "r2": -3.19948,
+   "gene_target": "ZNF439"
+  },
+  {
+   "N": 515,
+   "m": 0.3822,
+   "rho2": 0.04,
+   "pred_slope": 259.570854,
+   "fit_slope": 51.435162,
+   "ratio": 0.1982,
+   "r2": -0.13401,
+   "gene_target": "ZNF479"
+  },
+  {
+   "N": 408,
+   "m": 0.3401,
+   "rho2": 0.07,
+   "pred_slope": 378.133714,
+   "fit_slope": 54.63149,
+   "ratio": 0.1445,
+   "r2": -0.85899,
+   "gene_target": "ZNF488"
+  },
+  {
+   "N": 645,
+   "m": 0.2858,
+   "rho2": 0.05,
+   "pred_slope": 529.124322,
+   "fit_slope": 58.255754,
+   "ratio": 0.1101,
+   "r2": -0.83916,
+   "gene_target": "ZNF563"
+  },
+  {
+   "N": 475,
+   "m": 0.3411,
+   "rho2": 0.03,
+   "pred_slope": 334.28532,
+   "fit_slope": 53.466294,
+   "ratio": 0.1599,
+   "r2": -0.96806,
+   "gene_target": "ZNF595"
+  },
+  {
+   "N": 482,
+   "m": 0.3099,
+   "rho2": 0.02,
+   "pred_slope": 385.158656,
+   "fit_slope": 57.337907,
+   "ratio": 0.1489,
+   "r2": -1.17491,
+   "gene_target": "ZNF599"
+  },
+  {
+   "N": 438,
+   "m": 0.2934,
+   "rho2": 0.05,
+   "pred_slope": 540.339726,
+   "fit_slope": 58.465085,
+   "ratio": 0.1082,
+   "r2": -1.65533,
+   "gene_target": "ZNF605"
+  },
+  {
+   "N": 434,
+   "m": 0.3538,
+   "rho2": 0.05,
+   "pred_slope": 344.233339,
+   "fit_slope": 53.089962,
+   "ratio": 0.1542,
+   "r2": -0.57423,
+   "gene_target": "ZNF627"
+  },
+  {
+   "N": 721,
+   "m": 0.2569,
+   "rho2": 0.01,
+   "pred_slope": 608.682645,
+   "fit_slope": 64.577244,
+   "ratio": 0.1061,
+   "r2": -1.60826,
+   "gene_target": "ZNF664"
+  },
+  {
+   "N": 455,
+   "m": 0.2101,
+   "rho2": 0.03,
+   "pred_slope": 1015.153331,
+   "fit_slope": 64.664338,
+   "ratio": 0.0637,
+   "r2": -4.44566,
+   "gene_target": "ZNF683"
+  },
+  {
+   "N": 571,
+   "m": 0.3164,
+   "rho2": 0.01,
+   "pred_slope": 395.461103,
+   "fit_slope": 59.308233,
+   "ratio": 0.15,
+   "r2": -1.06715,
+   "gene_target": "ZNF705G"
+  },
+  {
+   "N": 433,
+   "m": 0.3306,
+   "rho2": 0.01,
+   "pred_slope": 334.953839,
+   "fit_slope": 58.751041,
+   "ratio": 0.1754,
+   "r2": -1.28109,
+   "gene_target": "ZNF736"
+  },
+  {
+   "N": 485,
+   "m": 0.4608,
+   "rho2": 0.02,
+   "pred_slope": 169.545147,
+   "fit_slope": 52.818475,
+   "ratio": 0.3115,
+   "r2": 0.0363,
+   "gene_target": "ZNF775"
+  },
+  {
+   "N": 407,
+   "m": 0.5202,
+   "rho2": 0.05,
+   "pred_slope": 150.10339,
+   "fit_slope": 45.010418,
+   "ratio": 0.2999,
+   "r2": 0.38399,
+   "gene_target": "ZNF804A"
+  },
+  {
+   "N": 418,
+   "m": 0.2458,
+   "rho2": 0.04,
+   "pred_slope": 758.906204,
+   "fit_slope": 61.773278,
+   "ratio": 0.0814,
+   "r2": -3.43152,
+   "gene_target": "ZNF813"
+  },
+  {
+   "N": 406,
+   "m": 0.3266,
+   "rho2": 0.05,
+   "pred_slope": 412.798097,
+   "fit_slope": 56.196123,
+   "ratio": 0.1361,
+   "r2": -0.81643,
+   "gene_target": "ZNF829"
+  },
+  {
+   "N": 834,
+   "m": 0.2216,
+   "rho2": 0.01,
+   "pred_slope": 806.667879,
+   "fit_slope": 66.514524,
+   "ratio": 0.0825,
+   "r2": -1.99552,
+   "gene_target": "ZNF83"
+  },
+  {
+   "N": 495,
+   "m": 0.4817,
+   "rho2": 0.02,
+   "pred_slope": 158.206909,
+   "fit_slope": 51.805349,
+   "ratio": 0.3275,
+   "r2": 0.24837,
+   "gene_target": "ZNF875"
+  },
+  {
+   "N": 495,
+   "m": 0.2341,
+   "rho2": 0.04,
+   "pred_slope": 810.283955,
+   "fit_slope": 62.086832,
+   "ratio": 0.0766,
+   "r2": -2.77985,
+   "gene_target": "ZNF888"
+  },
+  {
+   "N": 446,
+   "m": 0.4404,
+   "rho2": 0.02,
+   "pred_slope": 182.613838,
+   "fit_slope": 52.990675,
+   "ratio": 0.2902,
+   "r2": 0.19469,
+   "gene_target": "ZSCAN5A"
+  },
+  {
+   "N": 620,
+   "m": 0.2876,
+   "rho2": 0.01,
+   "pred_slope": 513.27204,
+   "fit_slope": 62.486284,
+   "ratio": 0.1217,
+   "r2": -1.0491,
+   "gene_target": "ZSCAN5B"
+  },
+  {
+   "N": 460,
+   "m": 0.2494,
+   "rho2": 0.01,
+   "pred_slope": 666.225455,
+   "fit_slope": 63.392289,
+   "ratio": 0.0952,
+   "r2": -3.25755,
+   "gene_target": "ZSWIM8"
+  }
+ ]
+}

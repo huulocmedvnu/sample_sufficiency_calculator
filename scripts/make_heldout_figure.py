@@ -62,20 +62,22 @@ for ax, (kind, title) in zip(axes.ravel(), PANELS):
     ax.axvline(1 / 3, color=GREY, lw=0.8, ls=":", zorder=1)   # rho2 = 3 boundary
     ax.scatter(x[inr], ratio[inr], s=14, c=GREEN, alpha=0.6, edgecolor="none", label="ρ²≥3 (in-regime)", zorder=3)
     ax.scatter(x[~inr], ratio[~inr], s=10, c=VERM, alpha=0.35, edgecolor="none", label="ρ²<3", zorder=2)
-    med_in = np.median(ratio[inr]) if inr.any() else np.nan
     sp = spearmanr(x, 1 - ratio).correlation if len(rows) > 2 else np.nan
+    if inr.any():
+        reg = f"ρ²≥3 median {np.median(ratio[inr]):.2f} (n={int(inr.sum())})"
+    else:
+        reg = f"all ρ²<3: max ρ²={rho2.max():.1f}"    # no group reaches the first-order regime
     ax.set_xscale("log"); ax.set_ylim(-0.05, 1.5)
-    ax.set_title(f"{title}\nn={len(rows):,}, in-regime median ratio {med_in:.2f}, "
-                 f"Spearman[1−ratio,1/ρ²]={sp:.2f}", fontsize=7.6)
+    ax.set_title(f"{title}   (n={len(rows):,})\n{reg},  Spearman={sp:.2f}", fontsize=7.4, pad=3)
     ax.set_xlabel("1 / ρ²  (low SNR →)", fontsize=8)
     ax.set_ylabel("realized / predicted slope", fontsize=8)
     if kind == "tahoe":
         ax.legend(fontsize=6.5, loc="lower left", framealpha=0.9)
 
 fig.suptitle("Held-out falsification, each dataset independently on all its N≥400 groups: the parameter-free "
-             "slope\nratio → 1 at high signal-to-noise and falls off monotonically with 1/ρ² (the predicted "
-             "low-SNR breakdown)", fontsize=9.5, y=1.02)
-fig.tight_layout()
+             "slope ratio → 1\nat high signal-to-noise, and the genome-wide Orion screens are entirely below "
+             "the first-order regime (all ρ²<3)", fontsize=9.5, y=1.03)
+fig.tight_layout(rect=(0, 0, 1, 0.99))
 for ext in ("pdf", "png"):
     fig.savefig(os.path.join(FIG, f"fig4_heldout_per_dataset.{ext}"))
 print("wrote figures/fig4_heldout_per_dataset.{pdf,png}")
