@@ -47,16 +47,17 @@ def add(target, nid, kind, title, rows=(), sharp=False):
                 fillcolor=FILL, color=BORDER[kind], penwidth="1.5")
 
 
-def header(cluster, text):
-    """Borderless cluster: a clean bold header label, no bounding box, no fill."""
-    cluster.attr(label=f'<<B>{text}</B>>', labeljust="l", peripheries="0",
-                 fontname="Helvetica", fontsize="11", fontcolor=TITLE, margin="10")
+def header(cluster, text, color="#CBD5E1"):
+    """Clean minimalist cluster: a thin rounded border, no fill, bold header label."""
+    cluster.attr(label=f'<<B>{text}</B>>', labeljust="l",
+                 style="rounded", color=color, penwidth="1.5",
+                 fontname="Helvetica", fontsize="11", fontcolor=TITLE, margin="14")
 
 
 def build():
     g = graphviz.Digraph("study")
     g.attr(rankdir="TB", splines="true", compound="true", newrank="true",
-           bgcolor="transparent", nodesep="0.45", ranksep="0.6", pad="0.3")
+           bgcolor="#FFFFFF", nodesep="0.45", ranksep="0.6", pad="0.3")
     g.attr("node", fontname="Helvetica")
     g.attr("edge", fontname="Helvetica", fontsize="10", fontcolor=SLATE,
            color="#64748B", arrowsize="0.8", penwidth="1.5")
@@ -86,14 +87,14 @@ def build():
     with g.subgraph(name="cluster_emp") as emp:
         header(emp, "Cross-Modality Empirical Validation")
         with emp.subgraph(name="cluster_chem") as ch:
-            header(ch, "Chemical modality")
+            header(ch, "Chemical modality", BLUE)
             add(ch, "TA", "chem", "Tahoe-100M",
                 ["&#963;&#178; = 0.96", "in-regime slope 0.94 &#183; R&#178; &#8776; 0.999"], sharp=True)
             add(ch, "EB", "chem", "EmeraldBay",
                 ["&#963;&#178; &#8776; 0.94", "held-out slope 0.98 &#183; R&#178; &#8776; 0.999"], sharp=True)
             ch.edge("TA", "EB", label="  &#963;&#178; transfers &#8776; 0.94&#8211;0.96")
         with emp.subgraph(name="cluster_gen") as ge:
-            header(ge, "Genetic modality")
+            header(ge, "Genetic modality", GREEN)
             add(ge, "OR", "gen", "X-Atlas/Orion",
                 ["&#963;&#178; = 0.91 / 1.03", "n* &#8776; 9,000 / m&#178; &#183; &#963;&#178; transfers"], sharp=True)
             add(ge, "TR", "gen", "TRADE",
