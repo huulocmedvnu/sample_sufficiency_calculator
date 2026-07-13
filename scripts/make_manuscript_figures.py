@@ -124,10 +124,23 @@ def fig4_emeraldbay():
     save(fig, "fig4_emeraldbay_validation")
 
 
-def _regime_counts(df, col_ns, col_dep, ghost=50000):
-    ns = df[col_ns].values; dep = df[col_dep].values
-    over = (ns < dep).mean() * 100; gh = (ns > ghost).mean() * 100
-    return over, 100 - over - gh, gh
+def _regime_counts(df, col_ns, col_dep, ghost=50000, n_ntc=None):
+    """4-class split. n_ntc=None -> equal-arm (chemical), col_ns is the quota directly, no pool
+    limit. n_ntc set (genetic) -> exact two-arm from base=col_ns/2 (=tr(PSP)/(m^2 th^2)); a
+    knockdown is POOL-LIMITED (n*=inf) when base>=n_ntc."""
+    dep = df[col_dep].values.astype(float)
+    if n_ntc is None:
+        ns = df[col_ns].values.astype(float)
+        over = (ns < dep).mean() * 100; gh = (ns > ghost).mean() * 100
+        return over, 100 - over - gh, gh, 0.0
+    base = df[col_ns].values.astype(float) / 2.0
+    inv = 1.0 / base - 1.0 / n_ntc
+    ns = np.where(inv > 0, 1.0 / np.where(inv > 0, inv, np.nan), np.inf)
+    fin = np.isfinite(ns)
+    over = (fin & (ns < dep)).mean() * 100
+    gh = (fin & (ns > ghost)).mean() * 100
+    pool = (~fin).mean() * 100
+    return over, 100 - over - gh - pool, gh, pool
 
 
 def fig5_crossmodality():
@@ -159,26 +172,29 @@ def fig5_crossmodality():
     ax = axs[1]
     rows = [("Tahoe", *_regime_counts(tahoe, "n_star", "N0")),
             ("Emerald\nBay", *_regime_counts(emb_reg, "n_star", "n_cells")),
-            ("Orion\nHCT116", *_regime_counts(hct, "n_star_aniso", "n_cells")),
-            ("Orion\nHEK293T", *_regime_counts(hek, "n_star_aniso", "n_cells")),
-            ("TRADE\nJurkat", *_regime_counts(jur, "n_star_aniso", "n_cells")),
-            ("TRADE\nHepG2", *_regime_counts(hep, "n_star_aniso", "n_cells"))]
-    labels = [r[0] for r in rows]; ov = np.array([r[1] for r in rows]); un = np.array([r[2] for r in rows]); gh = np.array([r[3] for r in rows])
+            ("Orion\nHCT116", *_regime_counts(hct, "n_star_aniso", "n_cells", n_ntc=165562)),
+            ("Orion\nHEK293T", *_regime_counts(hek, "n_star_aniso", "n_cells", n_ntc=218838)),
+            ("TRADE\nJurkat", *_regime_counts(jur, "n_star_aniso", "n_cells", n_ntc=11514)),
+            ("TRADE\nHepG2", *_regime_counts(hep, "n_star_aniso", "n_cells", n_ntc=4380))]
+    labels = [r[0] for r in rows]
+    ov = np.array([r[1] for r in rows]); un = np.array([r[2] for r in rows])
+    gh = np.array([r[3] for r in rows]); pl = np.array([r[4] for r in rows])
     x = np.arange(len(rows))
     ax.bar(x, ov, color=REG["OVER"], label="OVER (resolvable)", edgecolor="white", linewidth=1.2)
     ax.bar(x, un, bottom=ov, color=REG["UNDER"], label="UNDER", edgecolor="white", linewidth=1.2)
     ax.bar(x, gh, bottom=ov + un, color=REG["Ghost"], label="Ghost (n*>50k)", edgecolor="white", linewidth=1.2)
-    for i, (o, gv) in enumerate(zip(ov, gh)):
+    ax.bar(x, pl, bottom=ov + un + gh, color="#3A3A3A", label="Control-pool-limited (n*=∞)", edgecolor="white", linewidth=1.2)
+    for i, (o, pv) in enumerate(zip(ov, pl)):
         ax.text(i, 101.5, f"{o:.1f}% over", ha="center", va="bottom", fontsize=6.8, color=GREEN)
-        if gv > 6:
-            ax.text(i, 100 - gv / 2, f"{gv:.0f}%", ha="center", va="center", fontsize=7, color="white")
+        if pv > 6:
+            ax.text(i, 100 - pv / 2, f"{pv:.0f}%", ha="center", va="center", fontsize=7, color="white")
     ax.set_xticks(x); ax.set_xticklabels(labels, fontsize=7.5)
     ax.set_ylabel("% of perturbations"); ax.set_ylim(0, 108); ax.grid(axis="x", visible=False)
     ax.set_title(r"(b) Sufficiency regime ($\theta_\star$=0.1 rad)", fontsize=9)
     ax.legend(frameon=True, facecolor="white", edgecolor="none", framealpha=0.9,
               fontsize=7, loc="upper left", bbox_to_anchor=(1.01, 1.0))
-    fig.suptitle("Across chemical and genetic modalities: essentially nothing over-sampled once magnitudes are small "
-                 "or depth is low", fontsize=9.5, y=1.02)
+    fig.suptitle("Across chemical and genetic modalities: essentially nothing over-sampled, and a large genetic "
+                 "fraction is control-pool-limited (n*=∞, enlarge the NTC pool)", fontsize=9.5, y=1.02)
     save(fig, "fig5_crossmodality_summary")
 
 
