@@ -628,6 +628,38 @@ scripts/verify_references.py` (32/32 DOIs).
     Self-contained (standard pandoc command unchanged); DOCX was already correct; pipe-table captions
     unaffected. Rebuilt PDF/DOCX, 0 unresolved citations, 13/13 tests pass.
 
+52. **Study-overview flowchart as Figure 1, manuscript em-dash purge, and a Times-New-Roman font detour**
+    (this session, `547b257` → `9057a90`).
+    **(a) Em-dashes purged** (`547b257`): the author flagged em-dashes as an AI-writing tell. Replaced all
+    **287** markdown `---` + 2 literal `—` in `MANUSCRIPT_DEEPSEEK.md` with context-appropriate
+    punctuation (commas for appositives, periods where the dash joined two independent clauses to avoid comma
+    splices, parentheses for asides carrying internal commas, colons for lists), avoiding semicolons per the
+    style rule. Numeric-range en-dashes (`48--85`, `EXOSC2--9`) and named-bound en-dashes (Laurent–Massart)
+    kept. Audited byte-identical numeric tokens + citation keys; rendered PDF has 0 em-dashes. **New standing
+    rule: no em-dashes anywhere, prose or figures.**
+    **(b) Figure 1 = study flowchart** (`4d5cbfe`, rename `da07906`): new `scripts/make_study_flowchart.py`
+    (Graphviz) mapping question → closed-form quota → airtight 4-way proof → shared embedding
+    engine → two parallel validation columns (chemical Tahoe→EmeraldBay, genetic Orion→TRADE).
+    Embedded at the start of Results after the six-part roadmap; existing Figs 1–5 renumbered to 2–6
+    via a single-pass `Figure\s+\d+`→N+1 regex over captions + in-text refs; figure files renamed so
+    basenames match numbers (`fig1_study_flowchart` … `fig6_trade_validation`). Rewrote the generator to
+    the `graphviz` Python API with HTML-`<table>` labels (`19c90f5`).
+    **(c) Restyle iterations** (`b9c1f44`, `157a3fd`, `4b72859`, `3800e5d`, `aa7dabf`, `5201d30`): container
+    redesign → high-contrast → ruthless minimalist (transparent containers) → restored thin
+    grouping boxes → Okabe-Ito accents + italic-variable typography → **final classic monochrome**
+    (black on white, serif, sharp black boxes, no colour) per author preference. Node content trimmed to
+    name + σ² + validation result per dataset; downstream/ledger section dropped.
+    **(d) Mermaid added then removed** (`b9c1f44` → `536c746`): a `docs/study_flowchart.mmd` twin was kept
+    briefly for web/GitHub viewing, then deleted per author ("we don't use it"). Graphviz is the sole source.
+    **(e) Font detour** (`9057a90`): installed genuine Microsoft Times New Roman (msttcorefonts, extracted from
+    `times32.exe` with `bsdtar` into `~/.local/share/fonts/`, no root/apt) — `fc-match` resolves it, but
+    this box's graphviz/pango cannot embed it (substitutes DejaVu Sans; also fails the system "Nimbus Roman", a
+    local pango defect unfixed by a full fontconfig-cache rebuild or a fresh conda graphviz 14). Figure renders
+    in **Liberation Serif** (Red Hat's metric/shape-identical TNR clone; author accepted "it looks the same");
+    one-line switch to `"Times New Roman"` on a box with working pango. Every step rebuilt PDF/DOCX (now
+    **31 pp**, six figures, captions 1–6, 52 refs, 0 unresolved cites, 0 em-dashes); no src/theory
+    touched, 13/13 tests unaffected. New tooling dep for regenerating Figure 1: `pip install graphviz` + `dot`.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The three high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
