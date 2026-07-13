@@ -201,6 +201,51 @@ denominator of a headline comparison.
 
 ---
 
+## Finding 6 — the chemical spectrum is computed ISOTROPICALLY, not with the anisotropic rule the paper is named for
+
+**What.** Tahoe's per-condition quota in the spectrum is the **global isotropic** constant: `n* = 9,376/m²`
+exactly (`fixtures/tahoe_quota_per_condition.csv`; `9376/m²` reproduces the `n_star` column to median
+relative error **0.0000**). `9,376 = 2(d-1)σ²/θ²` with the single global `σ² = 0.9567` — the **isotropic**
+form, **not** the per-condition anisotropic `2·tr(PΣP)/(m²θ²)`.
+
+**Why it matters — it contradicts the paper's own thesis.** The paper is framed as an **"anisotropic
+sample-size rule"**; the Abstract states the rule as `n* = 2 tr(PΣP)/(m²θ²)`; the Discussion explicitly
+argues the isotropic form is wrong ("over-provisions saturated directions and under-provisions those with
+weak transverse signal"). Yet the headline **10.6%** is produced by the isotropic constant, not by the
+anisotropic formula the paper is named for. Meanwhile **Table 4 (genetic) DOES use the anisotropic quota**
+— it reports "HEK293T's anisotropic/isotropic ratio is 0.66, so its quota is 34% below the isotropic
+value". So the two modalities are computed by **different formulas** (chemical isotropic, genetic
+anisotropic), never declared.
+
+**Measurement (isotropic vs anisotropic on the SAME conditions; measured only, Tahoe not changed).** Using
+the per-condition `tr(PΣP)/m²` available for the 56,195 held-out Tahoe conditions
+(`tahoe_direct_curves_full.json`), on that same set:
+
+| n* method | over | under | ghost |
+|---|--:|--:|--:|
+| isotropic `9,376/m²` (what the spectrum uses) | 9.6 | 89.7 | 0.7 |
+| anisotropic `2·tr(PΣP)/(m²θ²)` (the paper's named rule) | 11.4 | 88.3 | 0.3 |
+
+The anisotropic `n*` is a median **0.88×** the isotropic (IQR 0.75–1.04), because the tangent-space trace
+discards the along-signal variance, so the anisotropic over-sampled fraction is **higher** (11.4 vs 9.6 on
+this subset). Extrapolated to the full panel, the isotropic **10.6%** headline **understates** the
+anisotropic over-fraction by roughly two points (~12%).
+
+**Possibly intentional, but undeclared.** The isotropic form may be a deliberate "collapsed" presentation
+(the manuscript does present `9,376/m²` as a single collapsed constant), but the choice — and the
+chemical-isotropic / genetic-anisotropic split — is **never stated**. Author confirmation needed. (Note:
+the EmeraldBay unit fix on branch `fix/emeraldbay-condition-unit` uses the isotropic `9,192/m²` precisely
+to **match Tahoe's actual isotropic method** and EmeraldBay's own Table 1 `C` column, so the two chemical
+rows are computed consistently; both still differ from the genetic anisotropic quota.)
+
+**Where affected:** the headline 10.6% (Abstract, Figure 3, Table 1, Results, Summary, Discussion); the
+chemical-vs-genetic method split (Table 1 vs Table 4).
+
+**Severity: HIGH.** The paper's single most-cited number is produced by a formula the paper elsewhere calls
+wrong, and the two modalities silently use different formulas.
+
+---
+
 ## Cross-reference: the 6,018 vs 5,503 gap (checked, not a denominator finding)
 
 For completeness, the ~515-condition gap between the spectrum's OVER count (6,018 matched-vehicle
