@@ -2,7 +2,7 @@
 %% The manuscript embeds a Graphviz render of the same design
 %% (scripts/make_study_flowchart.py -> figures/fig1_study_flowchart.pdf), because the
 %% pandoc/tectonic PDF build has no Mermaid renderer. Keep the two in sync by hand.
-%%{init: {'theme':'base','themeVariables':{'fontFamily':'Inter, Segoe UI, Helvetica, sans-serif','fontSize':'13px','lineColor':'#8894a3'},'flowchart':{'curve':'basis','nodeSpacing':45,'rankSpacing':60,'padding':10}}}%%
+%%{init: {'theme':'base','themeVariables':{'fontFamily':'Inter, Segoe UI, Helvetica, sans-serif','fontSize':'13px','lineColor':'#64748B'},'flowchart':{'curve':'basis','nodeSpacing':45,'rankSpacing':60,'padding':10}}}%%
 graph TD
     Q(["`**Core research question**
     How many cells per arm resolve a perturbation's *direction* (mechanism) to an angular tolerance θ?`"])
@@ -79,26 +79,29 @@ graph TD
     HUB --> WET
     HUB --> DRY
 
-    classDef question fill:#eef1f4,stroke:#7d8b9a,stroke-width:1px,color:#26313d;
-    classDef theory fill:#e6eef6,stroke:#5b7a9d,stroke-width:1px,color:#1f2d3d;
-    classDef proof fill:#eceef1,stroke:#95a0ad,stroke-width:1px,color:#2b333c;
-    classDef engine fill:#dfece9,stroke:#5f9a90,stroke-width:1px,color:#22322f;
-    classDef data fill:#eaf1f7,stroke:#6f8caa,stroke-width:1px,color:#22303d;
-    classDef hub fill:#e6eef6,stroke:#5b7a9d,stroke-width:1.4px,color:#1f2d3d;
-    classDef wet fill:#e4eef2,stroke:#5f8aa0,stroke-width:1px,color:#1f2f38;
-    classDef dry fill:#eceef1,stroke:#8a97a6,stroke-width:1px,color:#2b333c;
+    %% high-contrast: white fills, thick semantic strokes, dark charcoal text
+    classDef question fill:#FFFFFF,stroke:#334155,stroke-width:2px,color:#0F172A;
+    classDef theory fill:#FFFFFF,stroke:#334155,stroke-width:2px,color:#0F172A;
+    classDef proof fill:#FFFFFF,stroke:#334155,stroke-width:2px,color:#0F172A;
+    classDef engine fill:#FFFFFF,stroke:#16A34A,stroke-width:2px,color:#0F172A;
+    classDef chem fill:#FFFFFF,stroke:#2563EB,stroke-width:2px,color:#0F172A;
+    classDef gen fill:#FFFFFF,stroke:#16A34A,stroke-width:2px,color:#0F172A;
+    classDef hub fill:#FFFFFF,stroke:#334155,stroke-width:2.5px,color:#0F172A;
+    classDef wet fill:#FFFFFF,stroke:#334155,stroke-width:2px,color:#0F172A;
+    classDef dry fill:#FFFFFF,stroke:#334155,stroke-width:2px,color:#0F172A;
 
     class Q question;
     class TH theory;
     class P1,P2,P3,P4 proof;
     class PIPE engine;
-    class TA,EB,OR,TR data;
+    class TA,EB chem;
+    class OR,TR gen;
     class HUB hub;
     class WET wet;
     class DRY dry;
 
-    style PROOF fill:#f4f6f8,stroke:#b7c0ca,color:#3a444e;
-    style EMP fill:#f5f7f9,stroke:#aeb9c4,color:#33404b;
-    style CHEM fill:#eef3f8,stroke:#8ea6bd,color:#2a3a49;
-    style GEN fill:#f0f2ee,stroke:#a3b39b,color:#333a2c;
-    style OUT fill:#f4f6f8,stroke:#b7c0ca,color:#3a444e;
+    style PROOF fill:#FFFFFF,stroke:#94A3B8,stroke-width:1.4px,color:#0F172A;
+    style EMP fill:transparent,stroke:#94A3B8,stroke-width:1.5px,stroke-dasharray:6 4,color:#0F172A;
+    style CHEM fill:#EFF6FF,stroke:#2563EB,stroke-width:1.5px,color:#0F172A;
+    style GEN fill:#F0FDF4,stroke:#16A34A,stroke-width:1.5px,color:#0F172A;
+    style OUT fill:#FFFFFF,stroke:#94A3B8,stroke-width:1.4px,color:#0F172A;
