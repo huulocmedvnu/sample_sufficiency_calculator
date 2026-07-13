@@ -660,6 +660,58 @@ scripts/verify_references.py` (32/32 DOIs).
     **31 pp**, six figures, captions 1–6, 52 refs, 0 unresolved cites, 0 em-dashes); no src/theory
     touched, 13/13 tests unaffected. New tooling dep for regenerating Figure 1: `pip install graphviz` + `dot`.
 
+53. **Scientific-review overhaul: exact two-arm quota, one canonical σ², the detection floor, a
+    detectable-only genetic headline, a readability restructure, and three stacked audits** (this session,
+    `3888dcf` → `9a7172c`). A rigorous multi-round review raised four defects; all were fixed at the root,
+    every number regenerated from committed fixtures (no hand-calculation), and every change grepped
+    document-wide for derived values.
+    **(a) Exact two-arm quota** (`3888dcf`, `src/quota_arm.py`): the manuscript had used an ad-hoc factor
+    of 2 (equal-arm) in some places and 1 (large-pool) in others for the same quantity. Replaced with the
+    exact two-arm form \(n_t^\star = 1/(m^2\theta^2/\operatorname{tr}(P\Sigma P) - 1/n_c)\), which
+    **auto-reduces** to factor-2 when \(n_c=n_t\) and factor-1 as \(n_c\to\infty\), and returns
+    \(\infty\) (control-pool-limited) when the base quota \(\ge n_c\). Chemical atlases use the equal-arm
+    reduction, genetic screens the finite-NTC-pool form. `orion_recompute/pass3` and `trade_recompute/pass1`
+    were parameterized to import it; the misleadingly named `quota_const_iso_largepool` was deleted (renamed
+    `quota_const_largepool_limit`, a labelled LOWER bound). **Checkpoint 2:** chemical numbers reproduced
+    byte-for-byte (equal-arm is the exact-form's \(n_c=n_t\) special case).
+    **(b) One canonical σ²** (`3888dcf`, `src/sigma2_canonical.py` + `tests/test_sigma2_golden.py`): three
+    slightly different within-condition σ² definitions had coexisted. Unified to a single per-cell,
+    variance-pooled-over-(cell-line × condition) function; a golden test locks 7 scoped values. The historic
+    EmeraldBay 0.9174-vs-0.938 discrepancy was diagnosed as a **grouping difference, not** a per-cell-vs-moments
+    bug; the 5-shared-line slice is 0.867. Test suite grew 13 → **16** (12 unit/property + 1 integration + 3 golden).
+    **(c) Detection floor — the hard gate** (`13ea612`, `scripts/recompute_genetic_arm.py`): the old genetic
+    headline reported a "control-pool-limited" fraction of 22–51%. Restricting to **detectable** knockdowns
+    (snr_floor \(=m/\sqrt{\operatorname{tr}S}>1.5\)) showed pool-limited collapses to **0–2%** among them:
+    the detection floor sits *above* the pool floor \(m_{\min}\), so those 22–51% were almost entirely
+    sub-detection-floor genes for which a detailed regime is meaningless. **Demoted** control-pool-limited to
+    a conditional caveat (removed from Abstract, Figure titles, the "three regularities", and dropped the 205k
+    action number). New genetic headline = **detectable fraction** (Orion 14.7 / 35.3%, TRADE 70.6 / 60.9%)
+    then **over / under among detectable** (0.0 / 0.1 / 1.2 / 4.4% over), with a separate NOT-DETECTABLE bucket.
+    **Ghost** (\(n^\star>50{,}000\)) kept for **chemical only** and relabelled a *practical feasibility
+    convention, not a derived constant*; genetic screens use the not-detectable bucket, never "ghost".
+    Genetic C-constants are now the large-pool bound \((d-1)\sigma^2/\theta^2\) = **4,475 / 5,064 / 7,338 /
+    9,147** (was a stale 9,000-ish isotropic shortcut).
+    **(d) Unified calibration table** (`fc2d381`, `scripts/make_unified_calibration_table.py`): Table 1
+    regenerated from the *same* fixtures as Table 4 (genetic spectrum) so the two cannot disagree — a
+    detectable column plus over/under, chemical detectable reconstructed from the SNR floor.
+    **(e) Readability restructure** (`42045c2`, `9122b11`, Pass 3a via subagents): three data tables moved to
+    Supplementary; terminology gated (every term defined before first use); repeated numbers de-duplicated;
+    question-then-answer subsection openers; long sentences broken. Two serial one-mind checks closed a
+    modality-independence framing gap and stated the TRADE \(m>4\) rationale (strong knockdowns are exactly
+    the first-order regime where the rule declares itself valid, and lie necessarily inside the detectable set).
+    **(f) Three stacked audits.** A subagent **fresh-eyes provenance audit** caught M1 (an EmeraldBay
+    population-scale Spearman printed 0.79, a TRADE-HepG2 value mis-copied → 0.82). The author then found
+    three more stale spots the provenance audit passed *because they matched an OLD fixture value* (a
+    pre-Task-1 Summary paragraph, a four-regime Table 1 split, and two smaller residues). That motivated a
+    distinct **cross-section consistency audit** (`9a7172c`): for every quantity, check it against every
+    *other* place it appears, not just against a fixture. It confirmed agreement on all headline numbers and
+    surfaced four minor table-vs-prose discrepancies, all fixed — HepG2 depth 45→48, EmeraldBay detectable
+    "100"→99.9 (chemical detectable now 1-decimal so it never rounds to a false 100; Tahoe 98.4%), a stale
+    "13-test" in the non-rendered provenance banner → 16, and Orion depth "≈150"→"≈155–204". **Final:**
+    **32 pp**, 52 refs, **16/16 tests**, 0 em-dashes, 0 unresolved citations. **New standing rule:** after any
+    number change, grep the whole manuscript for derived values AND run a consistency (cross-agreement) pass,
+    not only a provenance (vs-fixture) pass.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The three high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
