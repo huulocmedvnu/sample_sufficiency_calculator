@@ -7,7 +7,7 @@ predicts ratio -> 1 at high signal-to-noise (small 1/rho^2) and a monotone defic
 Reads the committed per-group held-out fixtures (see make_heldout_summary.py). Orion panels render only
 after scripts/orion_recompute/pass4_heldout_stream.py has written orion_<LINE>_heldout.json.
 
-Output -> figures/fig4_heldout_per_dataset.{pdf,png}
+Output -> figures/fig5_heldout_per_dataset.{pdf,png}
 """
 import os, json, numpy as np
 import matplotlib
@@ -79,5 +79,5 @@ fig.suptitle("Held-out falsification, each dataset independently on all its N≥
              "the first-order regime (all ρ²<3)", fontsize=9.5, y=1.03)
 fig.tight_layout(rect=(0, 0, 1, 0.99))
 for ext in ("pdf", "png"):
-    fig.savefig(os.path.join(FIG, f"fig4_heldout_per_dataset.{ext}"))
-print("wrote figures/fig4_heldout_per_dataset.{pdf,png}")
+    fig.savefig(os.path.join(FIG, f"fig5_heldout_per_dataset.{ext}"))
+print("wrote figures/fig5_heldout_per_dataset.{pdf,png}")
