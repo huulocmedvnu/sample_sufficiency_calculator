@@ -1,0 +1,104 @@
+%% Study overview flowchart (Mermaid.js source, for web / GitHub rendering).
+%% The manuscript embeds a Graphviz render of the same design
+%% (scripts/make_study_flowchart.py -> figures/fig1_study_flowchart.pdf), because the
+%% pandoc/tectonic PDF build has no Mermaid renderer. Keep the two in sync by hand.
+%%{init: {'theme':'base','themeVariables':{'fontFamily':'Inter, Segoe UI, Helvetica, sans-serif','fontSize':'13px','lineColor':'#8894a3'},'flowchart':{'curve':'basis','nodeSpacing':45,'rankSpacing':60,'padding':10}}}%%
+graph TD
+    Q(["`**Core research question**
+    How many cells per arm resolve a perturbation's *direction* (mechanism) to an angular tolerance θ?`"])
+
+    TH("`**Closed-form cell quota**
+    n★ = 2·tr(PΣP) / (m²θ²),  P = I − uuᵀ
+    only noise ⊥ to the effect rotates the direction
+    calibrated → n★ ≈ 9,376 / m²  at θ = 0.1 rad`")
+
+    subgraph PROOF["Airtight foundation · proven four independent ways"]
+        direction LR
+        P1("`**Lean 4 / Mathlib**
+        deterministic core, no *sorry*`")
+        P2("`**SymPy**
+        symbolic Jacobian`")
+        P3("`**Monte-Carlo**
+        < 0.13% error`")
+        P4("`**Independent impl.**
+        cross-check`")
+    end
+
+    PIPE{{"`**Shared embedding pipeline**
+    Normalize → log1p → HVG 2000 → PCA 50
+    within-condition Σ → σ²   ·   centroids → magnitude m`"}}
+
+    subgraph EMP["Cross-Modality Empirical Validation"]
+        direction LR
+        subgraph CHEM["Chemical modality · Vevo Mosaic"]
+            direction TB
+            TA["`**Tahoe-100M · calibration anchor**
+            100.6M cells · 56,827 conditions
+            σ² = 0.96 → n★ = 9,376 / m²
+            spectrum: 10.6% over / 89.0% under / 0.4% ghost`"]
+            EB["`**EmeraldBay · out-of-distribution validation**
+            1.83M cells · 52 lines
+            σ² ≈ 0.94 · held-out slope R² ≈ 0.999
+            gating 347 / 347 met`"]
+            TA -->|"σ² transfers ≈ 0.94–0.96"| EB
+        end
+        subgraph GEN["Genetic modality · CRISPRi Perturb-seq"]
+            direction TB
+            OR["`**X-Atlas/Orion · cross-modality transfer**
+            genome-wide CRISPRi · ~8M cells
+            18,903 knockdowns × 2 lines
+            σ² = 0.91 / 1.03 · median m 0.14–0.35
+            0% over-sampled (magnitude-limited)`"]
+            TR["`**TRADE · validated genetic falsification**
+            essential-gene CRISPRi · Jurkat + HepG2
+            2,393 genes/line · slope 1.02 / 0.96 · R² = 0.996
+            median 45–85 cells/gene → depth-limited`"]
+            OR -->|"direct falsification"| TR
+        end
+    end
+
+    HUB("`**One threshold n★, two ledgers**`")
+
+    subgraph OUT["Downstream Value"]
+        direction LR
+        WET("`**Wet-lab**
+        magnitude-adaptive budgeting
+        ~3.1× fewer cells · triage / multiplex`")
+        DRY("`**Dry-lab**
+        provably-safe downsampling
+        triage of low-SNR similarity edges`")
+    end
+
+    Q --> TH
+    TH -->|"proven"| PROOF
+    PROOF --> PIPE
+    PIPE --> TA
+    PIPE --> OR
+    EB --> HUB
+    TR --> HUB
+    HUB --> WET
+    HUB --> DRY
+
+    classDef question fill:#eef1f4,stroke:#7d8b9a,stroke-width:1px,color:#26313d;
+    classDef theory fill:#e6eef6,stroke:#5b7a9d,stroke-width:1px,color:#1f2d3d;
+    classDef proof fill:#eceef1,stroke:#95a0ad,stroke-width:1px,color:#2b333c;
+    classDef engine fill:#dfece9,stroke:#5f9a90,stroke-width:1px,color:#22322f;
+    classDef data fill:#eaf1f7,stroke:#6f8caa,stroke-width:1px,color:#22303d;
+    classDef hub fill:#e6eef6,stroke:#5b7a9d,stroke-width:1.4px,color:#1f2d3d;
+    classDef wet fill:#e4eef2,stroke:#5f8aa0,stroke-width:1px,color:#1f2f38;
+    classDef dry fill:#eceef1,stroke:#8a97a6,stroke-width:1px,color:#2b333c;
+
+    class Q question;
+    class TH theory;
+    class P1,P2,P3,P4 proof;
+    class PIPE engine;
+    class TA,EB,OR,TR data;
+    class HUB hub;
+    class WET wet;
+    class DRY dry;
+
+    style PROOF fill:#f4f6f8,stroke:#b7c0ca,color:#3a444e;
+    style EMP fill:#f5f7f9,stroke:#aeb9c4,color:#33404b;
+    style CHEM fill:#eef3f8,stroke:#8ea6bd,color:#2a3a49;
+    style GEN fill:#f0f2ee,stroke:#a3b39b,color:#333a2c;
+    style OUT fill:#f4f6f8,stroke:#b7c0ca,color:#3a444e;
