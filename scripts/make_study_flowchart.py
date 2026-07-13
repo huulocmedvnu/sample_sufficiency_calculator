@@ -88,16 +88,16 @@ def build():
         with emp.subgraph(name="cluster_chem") as ch:
             header(ch, "Chemical modality")
             add(ch, "TA", "Tahoe-100M",
-                [f"{S2} = 0.96", f"in-regime slope 0.94 &#183; {R2} &#8776; 0.999"])
+                [f"{S2} = 0.957", f"in-regime slope 0.94 &#183; {R2} &#8776; 0.999"])
             add(ch, "EB", "EmeraldBay",
-                [f"{S2} &#8776; 0.94", f"held-out slope 0.98 &#183; {R2} &#8776; 0.999"])
+                [f"{S2} = 0.938", f"held-out slope 0.98 &#183; {R2} &#8776; 0.999"])
             ch.edge("TA", "EB", label="  &#963;&#178; transfers &#8776; 0.94&#8211;0.96")
         with emp.subgraph(name="cluster_gen") as ge:
             header(ge, "Genetic modality")
             add(ge, "OR", "X-Atlas/Orion",
                 [f"{S2} = 0.91 / 1.03", f"{N} &#8776; 4,475 / 5,064 / {M2}"])
             add(ge, "TR", "TRADE",
-                [f"{S2} = 1.5 / 1.9", f"slope 1.02 / 0.96 &#183; {R2} = 0.996"])
+                [f"{S2} = 1.50 / 1.87", f"slope 1.02 / 0.96 &#183; {R2} = 0.996"])
             ge.edge("OR", "TR", label="  direct falsification")
 
     # ---- strict horizontal alignment of the two columns ---------------------

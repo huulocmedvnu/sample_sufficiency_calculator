@@ -64,11 +64,11 @@ for ax, (kind, title) in zip(axes.ravel(), PANELS):
     ax.scatter(x[~inr], ratio[~inr], s=10, c=VERM, alpha=0.35, edgecolor="none", label="ρ²<3", zorder=2)
     sp = spearmanr(x, 1 - ratio).correlation if len(rows) > 2 else np.nan
     if inr.any():
-        reg = f"ρ²≥3 median {np.median(ratio[inr]):.2f} (n={int(inr.sum())})"
+        reg = f"ρ²≥3 median {np.median(ratio[inr]):.2f} ({int(inr.sum())} in regime)"
     else:
         reg = f"all ρ²<3: max ρ²={rho2.max():.1f}"    # no group reaches the first-order regime
     ax.set_xscale("log"); ax.set_ylim(-0.05, 1.5)
-    ax.set_title(f"{title}   (n={len(rows):,})\n{reg},  Spearman={sp:.2f}", fontsize=7.4, pad=3)
+    ax.set_title(f"{title}   ({len(rows):,} groups N≥400)\n{reg},  Spearman={sp:.2f}", fontsize=7.4, pad=3)
     ax.set_xlabel("1 / ρ²  (low SNR →)", fontsize=8)
     ax.set_ylabel("realized / predicted slope", fontsize=8)
     if kind == "tahoe":
