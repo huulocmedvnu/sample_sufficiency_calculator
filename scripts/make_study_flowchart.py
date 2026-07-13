@@ -14,8 +14,11 @@ Run:       python scripts/make_study_flowchart.py  ->  figures/fig1_study_flowch
 import os
 import graphviz
 
-# Times New Roman is not installed on this box; Liberation Serif is its metric-identical
-# open substitute (fc-match "Times New Roman" -> Liberation Serif) and renders as a serif.
+# Real Microsoft Times New Roman IS installed (msttcorefonts, ~/.local/share/fonts/), but this
+# build box's graphviz/pango cannot embed it -- it substitutes DejaVu Sans for "Times New Roman"
+# (and even for the system "Nimbus Roman"), a local pango font-matching defect. "Liberation Serif"
+# is Red Hat's metric- and shape-identical open clone of Times New Roman and DOES embed here, so we
+# render with it (visually indistinguishable). On a machine with working pango, set "Times New Roman".
 FONT = "Liberation Serif"
 BLACK, WHITE = "#000000", "#FFFFFF"
 
