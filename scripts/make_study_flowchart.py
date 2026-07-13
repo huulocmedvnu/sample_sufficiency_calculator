@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
 """
-Publication-ready study flowchart (Graphviz Python API, HTML-table node labels).
-
-Minimalist, high-contrast overview that ends at the experimental validations:
+Study flowchart (Graphviz Python API, HTML-table node labels) — classic monochrome style.
 
     question -> closed-form quota -> airtight 4-way proof -> shared embedding engine
-    -> two clean parallel columns (chemical: Tahoe-100M -> EmeraldBay ; genetic: Orion -> TRADE)
+    -> two parallel columns (chemical: Tahoe-100M -> EmeraldBay ; genetic: Orion -> TRADE)
 
-Typography/colour tuned for print: Helvetica, italic scalar variables, white node fills,
-thin semantic borders in the Okabe-Ito palette shared with the paper's other figures,
-light-gray rounded grouping boxes. Numbers mirror the manuscript constants of record.
+Black-and-white, print-classic: white background, black text and borders, Times New Roman,
+italic scalar variables. Numbers mirror the manuscript constants of record.
 
 Requires:  pip install graphviz   +   the Graphviz `dot` binary on PATH.
 Run:       python scripts/make_study_flowchart.py  ->  figures/fig1_study_flowchart.{pdf,png}
@@ -17,59 +14,54 @@ Run:       python scripts/make_study_flowchart.py  ->  figures/fig1_study_flowch
 import os
 import graphviz
 
-# ---- palette (Okabe-Ito accents, matching scripts/make_manuscript_figures.py) ----
-INK, META, FILL = "#0F172A", "#475569", "#FFFFFF"   # title / metric / node fill
-SLATE = "#334155"                                    # theory & foundation (neutral)
-BLUE  = "#0072B2"                                    # chemical modality
-GREEN = "#009E73"                                    # infrastructure + genetic modality
-LGRAY = "#CBD5E1"                                    # grouping-box borders
-BORDER = {"question": SLATE, "theory": SLATE, "proof": SLATE,
-          "engine": GREEN, "chem": BLUE, "gen": GREEN}
+# Times New Roman is not installed on this box; Liberation Serif is its metric-identical
+# open substitute (fc-match "Times New Roman" -> Liberation Serif) and renders as a serif.
+FONT = "Liberation Serif"
+BLACK, WHITE = "#000000", "#FFFFFF"
 
-# italic scalar variables (proper math typography); Greek/entities render in labels
+# italic scalar variables (classic math typography); Greek/entities render in labels
 N, M2, S2, R2, THETA = ("<I>n</I>*", "<I>m</I>&#178;", "<I>&#963;</I>&#178;",
                         "<I>R</I>&#178;", "<I>&#952;</I>")
 
 
-def html(title, rows=(), title_pt=13, meta_pt=10):
-    """HTML-like label: bold dark title, a hairline of space, then dark-slate metric rows."""
-    cells = [f'<TR><TD ALIGN="CENTER"><FONT POINT-SIZE="{title_pt}" COLOR="{INK}">'
-             f'<B>{title}</B></FONT></TD></TR>']
+def html(title, rows=(), title_pt=14, meta_pt=11):
+    """HTML-like label: bold title, a hairline of space, then metric rows. All black text."""
+    cells = [f'<TR><TD ALIGN="CENTER"><FONT FACE="{FONT}" POINT-SIZE="{title_pt}" '
+             f'COLOR="{BLACK}"><B>{title}</B></FONT></TD></TR>']
     if rows:
-        cells.append('<TR><TD HEIGHT="5"></TD></TR>')          # title/metric separation
+        cells.append('<TR><TD HEIGHT="5"></TD></TR>')
     for r in rows:
-        cells.append(f'<TR><TD ALIGN="CENTER"><FONT POINT-SIZE="{meta_pt}" COLOR="{META}">'
-                     f'{r}</FONT></TD></TR>')
+        cells.append(f'<TR><TD ALIGN="CENTER"><FONT FACE="{FONT}" POINT-SIZE="{meta_pt}" '
+                     f'COLOR="{BLACK}">{r}</FONT></TD></TR>')
     return (f'<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3">'
             f'{"".join(cells)}</TABLE>>')
 
 
-def add(target, nid, kind, title, rows=(), sharp=False):
-    """White node with a thin coloured border. sharp=True -> data rectangle, else rounded step."""
-    target.node(nid, label=html(title, rows), shape="box",
-                style="filled" if sharp else "rounded,filled",
-                fillcolor=FILL, color=BORDER[kind], penwidth="1.7")
+def add(target, nid, title, rows=()):
+    """Plain rectangular box: white fill, thin black border, black text."""
+    target.node(nid, label=html(title, rows), shape="box", style="filled",
+                fillcolor=WHITE, color=BLACK, penwidth="1")
 
 
-def header(cluster, text, color=LGRAY, pen="1.3"):
-    """Clean grouping box: thin rounded border, no fill, bold header label."""
-    cluster.attr(label=f'<<B>{text}</B>>', labeljust="l", style="rounded",
-                 color=color, penwidth=pen, fontname="Helvetica",
-                 fontsize="10.5", fontcolor=INK, margin="14")
+def header(cluster, text):
+    """Grouping box: thin black rectangular border, bold black header label."""
+    cluster.attr(label=f'<<FONT FACE="{FONT}"><B>{text}</B></FONT>>', labeljust="l",
+                 style="solid", color=BLACK, penwidth="1", fontname=FONT, fontsize="11",
+                 fontcolor=BLACK, margin="14")
 
 
 def build():
     g = graphviz.Digraph("study")
     g.attr(rankdir="TB", splines="true", compound="true", newrank="true",
-           bgcolor="#FFFFFF", nodesep="0.5", ranksep="0.62", pad="0.35")
-    g.attr("node", fontname="Helvetica", margin="0.20,0.13")
-    g.attr("edge", fontname="Helvetica-Oblique", fontsize="9.5", fontcolor=META,
-           color="#64748B", arrowsize="0.85", penwidth="1.4")
+           bgcolor=WHITE, nodesep="0.5", ranksep="0.62", pad="0.35")
+    g.attr("node", fontname=FONT, margin="0.20,0.13")
+    g.attr("edge", fontname=FONT, fontsize="10", fontcolor=BLACK,
+           color=BLACK, arrowsize="0.85", penwidth="1")
 
     # ---- linear spine: question -> quota ------------------------------------
-    add(g, "Q", "question", "Core research question",
+    add(g, "Q", "Core research question",
         [f"How many cells resolve a perturbation's <I>direction</I> to tolerance {THETA}?"])
-    add(g, "TH", "theory", "Closed-form cell quota",
+    add(g, "TH", "Closed-form cell quota",
         [f"{N} = 2&#183;tr(P&#931;P) / ({M2} {THETA}&#178;)",
          f"calibrated &#8594; {N} &#8776; 9,376 / {M2}"])
 
@@ -77,32 +69,32 @@ def build():
     with g.subgraph(name="cluster_proof") as c:
         header(c, "Airtight foundation  &#183;  proven four independent ways")
         c.attr(rank="same")
-        add(c, "P1", "proof", "Independent impl.")
-        add(c, "P2", "proof", "Monte-Carlo")
-        add(c, "P3", "proof", "SymPy")
-        add(c, "P4", "proof", "Lean 4 / Mathlib")
+        add(c, "P1", "Independent impl.")
+        add(c, "P2", "Monte-Carlo")
+        add(c, "P3", "SymPy")
+        add(c, "P4", "Lean 4 / Mathlib")
         for a, b in (("P1", "P2"), ("P2", "P3"), ("P3", "P4")):  # lock left-to-right order
             c.edge(a, b, style="invis")
 
-    # ---- shared embedding engine (infrastructure) ---------------------------
-    add(g, "ENG", "engine", "Shared embedding engine", [f"Estimates within-condition {S2}"])
+    # ---- shared embedding engine --------------------------------------------
+    add(g, "ENG", "Shared embedding engine", [f"Estimates within-condition {S2}"])
 
-    # ---- two parallel columns inside a light-gray grouping box --------------
+    # ---- two parallel columns inside a grouping box -------------------------
     with g.subgraph(name="cluster_emp") as emp:
         header(emp, "Cross-Modality Empirical Validation")
         with emp.subgraph(name="cluster_chem") as ch:
-            header(ch, "Chemical modality", BLUE, pen="1.5")
-            add(ch, "TA", "chem", "Tahoe-100M",
-                [f"{S2} = 0.96", f"in-regime slope 0.94 &#183; {R2} &#8776; 0.999"], sharp=True)
-            add(ch, "EB", "chem", "EmeraldBay",
-                [f"{S2} &#8776; 0.94", f"held-out slope 0.98 &#183; {R2} &#8776; 0.999"], sharp=True)
+            header(ch, "Chemical modality")
+            add(ch, "TA", "Tahoe-100M",
+                [f"{S2} = 0.96", f"in-regime slope 0.94 &#183; {R2} &#8776; 0.999"])
+            add(ch, "EB", "EmeraldBay",
+                [f"{S2} &#8776; 0.94", f"held-out slope 0.98 &#183; {R2} &#8776; 0.999"])
             ch.edge("TA", "EB", label="  &#963;&#178; transfers &#8776; 0.94&#8211;0.96")
         with emp.subgraph(name="cluster_gen") as ge:
-            header(ge, "Genetic modality", GREEN, pen="1.5")
-            add(ge, "OR", "gen", "X-Atlas/Orion",
-                [f"{S2} = 0.91 / 1.03", f"{N} &#8776; 9,000 / {M2} &#183; &#963;&#178; transfers"], sharp=True)
-            add(ge, "TR", "gen", "TRADE",
-                [f"{S2} = 1.5 / 1.9", f"slope 1.02 / 0.96 &#183; {R2} = 0.996"], sharp=True)
+            header(ge, "Genetic modality")
+            add(ge, "OR", "X-Atlas/Orion",
+                [f"{S2} = 0.91 / 1.03", f"{N} &#8776; 9,000 / {M2} &#183; &#963;&#178; transfers"])
+            add(ge, "TR", "TRADE",
+                [f"{S2} = 1.5 / 1.9", f"slope 1.02 / 0.96 &#183; {R2} = 0.996"])
             ge.edge("OR", "TR", label="  direct falsification")
 
     # ---- strict horizontal alignment of the two columns ---------------------
@@ -112,7 +104,7 @@ def build():
             s.node(a)
             s.node(b)
 
-    # ---- clean, cluster-aware edges (spine ends at the validations) ---------
+    # ---- edges (spine ends at the validations) ------------------------------
     g.edge("Q", "TH")
     g.edge("TH", "P3", label="  proven", lhead="cluster_proof")
     g.edge("P3", "ENG", ltail="cluster_proof")
