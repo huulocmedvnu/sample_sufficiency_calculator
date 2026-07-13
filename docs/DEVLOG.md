@@ -712,6 +712,34 @@ scripts/verify_references.py` (32/32 DOIs).
     number change, grep the whole manuscript for derived values AND run a consistency (cross-agreement) pass,
     not only a provenance (vs-fixture) pass.
 
+54. **Per-dataset independent restructure: held-out on every atlas over all N≥400 groups, Orion
+    re-streamed, shared-cell-line dropped** (this session, `768d131` → `c992748`). Per author direction,
+    each dataset now stands on its own: (1) its sufficiency spectrum, then (2) its held-out falsification
+    on **all its groups with N≥400 cells**, with no cross-atlas comparison. **(a) Orion held-out re-stream**
+    (`scripts/orion_recompute/pass4_heldout_stream.py`, ~2 h/line): the streamed atlas kept only per-gene
+    summaries, so held-out was impossible before. Re-streamed both lines (17.4 B expression rows each),
+    retaining per-cell PCA(50) coordinates for every knockdown with N≥400 (HCT116 1,059 genes, HEK293T
+    2,670), ran the identical downsample-and-measure test as EmeraldBay against the pooled-NTC centroid.
+    **Honest result:** every genome-wide knockdown is weak (HCT116 max ρ²=1.3, HEK293T max ρ²=2.0, not one
+    reaches ρ²≥3), so the held-out lands ENTIRELY in the low-SNR breakdown (median ratio 0.15 and 0.30). This
+    is the effect-size domain limit, not a failure; the clean parameter-free validation is carried by the
+    strong essential-gene TRADE knockdowns (m>4 → 1.02/0.96). **(b) Unified held-out** across all six screens
+    (`scripts/make_heldout_summary.py` + `make_heldout_figure.py` → `fixtures/heldout_summary.*`, new Figure
+    with one panel per screen): Tahoe 56,195 conditions, EmeraldBay 958 N≥400 groups, TRADE 38/9, Orion
+    1,059/2,670. The scale-free signature is Spearman[1−ratio, 1/ρ²] = **0.57–0.95** on every dataset (ρ²
+    scales differ ~4 orders, so no fixed threshold is comparable, but the rank correlation is); the ratio → 1
+    at each dataset's high-SNR tail. Running "all N≥400" (a cell-count, not SNR, threshold) gives a low raw
+    median ratio (0.15–0.80) because most eligible groups are weak — reported honestly, not SNR-filtered.
+    **(c) Shared-cell-line removed** end-to-end: the old EmeraldBay showcase (4 hand-picked DMSO_T0/Irinotecan
+    curves on the 5 lines shared with Tahoe, old Table 2 + Figure 4), the "five shared cell lines" Methods
+    language, the 141,720-cell 5-line slice, and old Figure 6 (TRADE showcase) all deleted. Abstract, Summary,
+    Limitations (2/3/11), the Methods integration test, and the Orion/TRADE sections rewritten to the new
+    framing. **(d) Reorder + renumber:** the unified held-out section moved to AFTER all spectrum sections
+    (spectra-first, per author); figures renumbered **Figure 4 = cross-modality spectrum, Figure 5 = per-dataset
+    held-out** (files renamed, both figure scripts updated), old Figure 6 and fig4_emeraldbay retired. Rebuilt
+    **31 pp**, Figures 1–5, 0 em-dashes, 0 unresolved cites, 16/16 tests. Memory (`data-environment`,
+    `manuscript-state`) updated to the per-dataset direction and de-shared-lined.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The three high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
