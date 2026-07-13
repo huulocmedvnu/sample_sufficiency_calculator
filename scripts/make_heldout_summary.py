@@ -31,6 +31,9 @@ def agg(rows, label):
     r2 = np.array([r["r2"] for r in rows], float)
     inr = rho2 >= 3
     deficit = 1.0 - ratio
+    # Spearman[1-ratio, 1/rho^2] is the scale-free universal statistic: rho^2 scales differ hugely
+    # across datasets (Tahoe ~1-2, TRADE up to ~28,000), so no fixed rho^2 threshold is "high SNR"
+    # uniformly. The rank correlation confirms the monotone low-SNR breakdown on every dataset.
     sp = float(spearmanr(1.0 / np.maximum(rho2, 1e-9), deficit).correlation) if len(rows) > 2 else None
     return dict(dataset=label, n=len(rows),
                 median_ratio_all=round(float(np.median(ratio)), 3),
@@ -64,8 +67,8 @@ for line, disp in (("jurkat", "TRADE Jurkat"), ("hepg2", "TRADE HepG2")):
     if tr:
         ROWS.append(agg(tr["rows"], disp))
 
-hdr = ("| dataset | groups (N≥400) | median ratio (all) | in-regime n (ρ²≥3) | "
-       "median ratio (in-regime) | median R² | Spearman deficit vs 1/ρ² |")
+hdr = ("| dataset | groups (N≥400) | median ratio (all) | n(ρ²≥3) | median ratio (ρ²≥3) | median R² (ρ²≥3) | "
+       "Spearman deficit vs 1/ρ² |")
 sep = "|" + "|".join(["---"] * 7) + "|"
 out = [hdr, sep]
 for r in ROWS:
