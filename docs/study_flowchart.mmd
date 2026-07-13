@@ -2,93 +2,63 @@
 %% The manuscript embeds a Graphviz render of the same design
 %% (scripts/make_study_flowchart.py -> figures/fig1_study_flowchart.pdf), because the
 %% pandoc/tectonic PDF build has no Mermaid renderer. Keep the two in sync by hand.
-%%{init: {'theme':'base','themeVariables':{'fontFamily':'Inter, Segoe UI, Helvetica, sans-serif','fontSize':'13px','lineColor':'#64748B'},'flowchart':{'curve':'basis','nodeSpacing':45,'rankSpacing':60,'padding':10}}}%%
+%%{init: {'theme':'base','themeVariables':{'fontFamily':'Inter, Segoe UI, Helvetica, sans-serif','fontSize':'13px','lineColor':'#64748B'},'flowchart':{'curve':'basis','nodeSpacing':45,'rankSpacing':55,'padding':8}}}%%
 graph TD
     Q(["`**Core research question**
-    How many cells per arm resolve a perturbation's *direction* (mechanism) to an angular tolerance θ?`"])
+    How many cells resolve a perturbation's *direction* to tolerance θ?`"])
 
     TH("`**Closed-form cell quota**
-    n★ = 2·tr(PΣP) / (m²θ²),  P = I − uuᵀ
-    only noise ⊥ to the effect rotates the direction
-    calibrated → n★ ≈ 9,376 / m²  at θ = 0.1 rad`")
+    n★ = 2·tr(PΣP) / (m²θ²)
+    calibrated → n★ ≈ 9,376 / m²`")
 
     subgraph PROOF["Airtight foundation · proven four independent ways"]
         direction LR
-        P1("`**Lean 4 / Mathlib**
-        deterministic core, no *sorry*`")
-        P2("`**SymPy**
-        symbolic Jacobian`")
-        P3("`**Monte-Carlo**
-        < 0.13% error`")
-        P4("`**Independent impl.**
-        cross-check`")
+        P1("`**Independent impl.**`")
+        P2("`**Monte-Carlo**`")
+        P3("`**SymPy**`")
+        P4("`**Lean 4 / Mathlib**`")
     end
 
-    PIPE{{"`**Shared embedding pipeline**
-    Normalize → log1p → HVG 2000 → PCA 50
-    within-condition Σ → σ²   ·   centroids → magnitude m`"}}
+    PIPE("`**Shared embedding engine**
+    Estimates within-condition σ²`")
 
     subgraph EMP["Cross-Modality Empirical Validation"]
         direction LR
-        subgraph CHEM["Chemical modality · Vevo Mosaic"]
+        subgraph CHEM["Chemical modality"]
             direction TB
-            TA["`**Tahoe-100M · calibration anchor**
-            100.6M cells · 56,827 conditions
-            σ² = 0.96 → n★ = 9,376 / m²
-            spectrum: 10.6% over / 89.0% under / 0.4% ghost`"]
-            EB["`**EmeraldBay · out-of-distribution validation**
-            1.83M cells · 52 lines
-            σ² ≈ 0.94 · held-out slope R² ≈ 0.999
-            gating 347 / 347 met`"]
+            TA["`**Tahoe-100M**
+            σ² = 0.96
+            in-regime slope 0.94 · R² ≈ 0.999`"]
+            EB["`**EmeraldBay**
+            σ² ≈ 0.94
+            held-out slope 0.98 · R² ≈ 0.999`"]
             TA -->|"σ² transfers ≈ 0.94–0.96"| EB
         end
-        subgraph GEN["Genetic modality · CRISPRi Perturb-seq"]
+        subgraph GEN["Genetic modality"]
             direction TB
-            OR["`**X-Atlas/Orion · cross-modality transfer**
-            genome-wide CRISPRi · ~8M cells
-            18,903 knockdowns × 2 lines
-            σ² = 0.91 / 1.03 · median m 0.14–0.35
-            0% over-sampled (magnitude-limited)`"]
-            TR["`**TRADE · validated genetic falsification**
-            essential-gene CRISPRi · Jurkat + HepG2
-            2,393 genes/line · slope 1.02 / 0.96 · R² = 0.996
-            median 45–85 cells/gene → depth-limited`"]
+            OR["`**X-Atlas/Orion**
+            σ² = 0.91 / 1.03
+            n★ ≈ 9,000 / m² · σ² transfers`"]
+            TR["`**TRADE**
+            σ² = 1.5 / 1.9
+            slope 1.02 / 0.96 · R² = 0.996`"]
             OR -->|"direct falsification"| TR
         end
-    end
-
-    HUB("`**One threshold n★, two ledgers**`")
-
-    subgraph OUT["Downstream Value"]
-        direction LR
-        WET("`**Wet-lab**
-        magnitude-adaptive budgeting
-        ~3.1× fewer cells · triage / multiplex`")
-        DRY("`**Dry-lab**
-        provably-safe downsampling
-        triage of low-SNR similarity edges`")
     end
 
     Q --> TH
     TH -->|"proven"| PROOF
     PROOF --> PIPE
-    PIPE --> TA
-    PIPE --> OR
-    EB --> HUB
-    TR --> HUB
-    HUB --> WET
-    HUB --> DRY
+    PIPE -->|"calibrate"| TA
+    PIPE -->|"transfer"| OR
 
-    %% high-contrast: white fills, thick semantic strokes, dark charcoal text
-    classDef question fill:#FFFFFF,stroke:#334155,stroke-width:2px,color:#0F172A;
-    classDef theory fill:#FFFFFF,stroke:#334155,stroke-width:2px,color:#0F172A;
-    classDef proof fill:#FFFFFF,stroke:#334155,stroke-width:2px,color:#0F172A;
-    classDef engine fill:#FFFFFF,stroke:#16A34A,stroke-width:2px,color:#0F172A;
-    classDef chem fill:#FFFFFF,stroke:#2563EB,stroke-width:2px,color:#0F172A;
-    classDef gen fill:#FFFFFF,stroke:#16A34A,stroke-width:2px,color:#0F172A;
-    classDef hub fill:#FFFFFF,stroke:#334155,stroke-width:2.5px,color:#0F172A;
-    classDef wet fill:#FFFFFF,stroke:#334155,stroke-width:2px,color:#0F172A;
-    classDef dry fill:#FFFFFF,stroke:#334155,stroke-width:2px,color:#0F172A;
+    %% high-contrast: white fills, thin semantic strokes, dark charcoal text
+    classDef question fill:#FFFFFF,stroke:#334155,stroke-width:1.5px,color:#0F172A;
+    classDef theory fill:#FFFFFF,stroke:#334155,stroke-width:1.5px,color:#0F172A;
+    classDef proof fill:#FFFFFF,stroke:#334155,stroke-width:1.5px,color:#0F172A;
+    classDef engine fill:#FFFFFF,stroke:#065F46,stroke-width:1.5px,color:#0F172A;
+    classDef chem fill:#FFFFFF,stroke:#1E40AF,stroke-width:1.5px,color:#0F172A;
+    classDef gen fill:#FFFFFF,stroke:#065F46,stroke-width:1.5px,color:#0F172A;
 
     class Q question;
     class TH theory;
@@ -96,12 +66,9 @@ graph TD
     class PIPE engine;
     class TA,EB chem;
     class OR,TR gen;
-    class HUB hub;
-    class WET wet;
-    class DRY dry;
 
-    style PROOF fill:#FFFFFF,stroke:#94A3B8,stroke-width:1.4px,color:#0F172A;
-    style EMP fill:transparent,stroke:#94A3B8,stroke-width:1.5px,stroke-dasharray:6 4,color:#0F172A;
-    style CHEM fill:#EFF6FF,stroke:#2563EB,stroke-width:1.5px,color:#0F172A;
-    style GEN fill:#F0FDF4,stroke:#16A34A,stroke-width:1.5px,color:#0F172A;
-    style OUT fill:#FFFFFF,stroke:#94A3B8,stroke-width:1.4px,color:#0F172A;
+    %% borderless, transparent containers — label-only headers
+    style PROOF fill:transparent,stroke:transparent,color:#0F172A;
+    style EMP fill:transparent,stroke:transparent,color:#0F172A;
+    style CHEM fill:transparent,stroke:transparent,color:#0F172A;
+    style GEN fill:transparent,stroke:transparent,color:#0F172A;
