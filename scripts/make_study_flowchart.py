@@ -6,6 +6,7 @@ Publication-ready study flowchart (Graphviz Python API, HTML-table node labels).
     -> cross-modality validation (chemical | genetic columns) -> one threshold, two ledgers
     -> wet-lab / dry-lab downstream utility.
 
+High-contrast profile: white node fills, thick semantic-colored borders, dark text.
 Numbers mirror the manuscript headline constants of record. The equivalent Mermaid.js source
 (for web / GitHub rendering) lives at docs/study_flowchart.mmd.
 
@@ -15,30 +16,29 @@ Run:       python scripts/make_study_flowchart.py  ->  figures/fig1_study_flowch
 import os
 import graphviz
 
-# ---- modern academic palette: muted slates, corporate grays, soft green/blue ----
-INK, MUTE = "#1f2933", "#5b6875"          # primary title / metadata text
-PAL = {                                    # (fill, border)
-    "question": ("#eef1f4", "#8a97a6"),
-    "theory":   ("#e8eef5", "#5b7a9d"),
-    "proof":    ("#eef0f2", "#98a3b0"),
-    "engine":   ("#e7efe9", "#6f9a80"),
-    "chem":     ("#e9f0f7", "#6f8caa"),
-    "gen":      ("#e9f1ec", "#6f9a84"),
-    "hub":      ("#e8eef5", "#5b7a9d"),
-    "wet":      ("#e7eef3", "#5f8aa0"),
-    "dry":      ("#eef0f2", "#8a97a6"),
+# ---- high-contrast text + border palette -------------------------------------
+TITLE = "#0F172A"     # titles/headers: pure dark charcoal (bold)
+META  = "#334155"     # secondary text / statistical metrics: solid dark slate
+FILL  = "#FFFFFF"     # all node fills: clean white so text pops
+SLATE, BLUE, GREEN = "#334155", "#2563EB", "#16A34A"
+BORDER = {            # node border colour by role
+    "question": SLATE, "theory": SLATE, "proof": SLATE,
+    "engine":   GREEN,                       # infrastructure
+    "chem":     BLUE,                         # chemical modality
+    "gen":      GREEN,                        # genetic modality
+    "hub":      SLATE, "wet": SLATE, "dry": SLATE,
 }
 
 
-def html(title, subtitle=None, rows=(), title_pt=12, meta_pt=9):
-    """Build an HTML-like label: bold title, optional muted subtitle, muted metadata rows."""
-    tr = [f'<TR><TD ALIGN="CENTER"><FONT POINT-SIZE="{title_pt}" COLOR="{INK}">'
+def html(title, subtitle=None, rows=(), title_pt=13, meta_pt=10):
+    """HTML-like label: bold dark title, optional bold subtitle, dark metadata rows."""
+    tr = [f'<TR><TD ALIGN="CENTER"><FONT POINT-SIZE="{title_pt}" COLOR="{TITLE}">'
           f'<B>{title}</B></FONT></TD></TR>']
     if subtitle:
-        tr.append(f'<TR><TD ALIGN="CENTER"><FONT POINT-SIZE="{meta_pt + 0.5}" COLOR="{MUTE}">'
+        tr.append(f'<TR><TD ALIGN="CENTER"><FONT POINT-SIZE="{meta_pt}" COLOR="{META}">'
                   f'<B>{subtitle}</B></FONT></TD></TR>')
     for r in rows:
-        tr.append(f'<TR><TD ALIGN="CENTER"><FONT POINT-SIZE="{meta_pt}" COLOR="{MUTE}">'
+        tr.append(f'<TR><TD ALIGN="CENTER"><FONT POINT-SIZE="{meta_pt}" COLOR="{META}">'
                   f'{r}</FONT></TD></TR>')
     body = "".join(tr)
     return (f'<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="2">'
@@ -46,20 +46,19 @@ def html(title, subtitle=None, rows=(), title_pt=12, meta_pt=9):
 
 
 def add(target, nid, kind, title, subtitle=None, rows=(), sharp=False):
-    """Add a styled node. sharp=True -> data-table rectangle; else rounded step."""
-    fill, border = PAL[kind]
+    """White-filled node with a thick coloured border. sharp=True -> data-table rectangle."""
     target.node(nid, label=html(title, subtitle, rows),
                 shape="box", style="filled" if sharp else "rounded,filled",
-                fillcolor=fill, color=border)
+                fillcolor=FILL, color=BORDER[kind], penwidth="2")
 
 
 def build():
     g = graphviz.Digraph("study")
     g.attr(rankdir="TB", splines="true", compound="true", newrank="true",
-           bgcolor="white", nodesep="0.4", ranksep="0.55", pad="0.3")
-    g.attr("node", fontname="Helvetica", penwidth="1.1")
-    g.attr("edge", fontname="Helvetica", fontsize="9", fontcolor="#4a545e",
-           color="#69747f", arrowsize="0.7", penwidth="1.1")
+           bgcolor="#FFFFFF", nodesep="0.42", ranksep="0.58", pad="0.3")
+    g.attr("node", fontname="Helvetica")
+    g.attr("edge", fontname="Helvetica", fontsize="10", fontcolor=META,
+           color="#64748B", arrowsize="0.8", penwidth="1.5")
 
     # ---- top anchor + theory ------------------------------------------------
     add(g, "Q", "question", "Core research question",
@@ -73,8 +72,8 @@ def build():
     # ---- airtight proof foundation (4 aligned boxes) ------------------------
     with g.subgraph(name="cluster_proof") as c:
         c.attr(label='<<B>Airtight foundation</B>  &#183;  proven four independent ways>',
-               labeljust="l", style="rounded,filled", color="#c2cad3",
-               fillcolor="#f4f6f8", fontname="Helvetica", fontsize="10", margin="12")
+               labeljust="l", style="rounded", color="#94A3B8", penwidth="1.4",
+               fontname="Helvetica", fontsize="11", fontcolor=TITLE, margin="12")
         c.attr(rank="same")
         add(c, "P1", "proof", "Independent impl.", rows=["cross-check"])
         add(c, "P2", "proof", "Monte-Carlo", rows=["&lt; 0.13% error"])
@@ -88,15 +87,15 @@ def build():
         rows=["Normalize &#8594; log1p &#8594; HVG 2000 &#8594; PCA 50",
               "within-condition &#931; &#8594; &#963;&#178;   &#183;   centroids &#8594; magnitude m"])
 
-    # ---- cross-modality validation: dashed container, two strict columns ----
+    # ---- cross-modality validation: transparent dashed container ------------
     with g.subgraph(name="cluster_emp") as emp:
         emp.attr(label='<<B>Cross-Modality Empirical Validation</B>>', labeljust="l",
-                 style="rounded,dashed,filled", color="#b3bcc6", fillcolor="#fbfcfd",
-                 fontname="Helvetica", fontsize="11", margin="16")
+                 style="rounded,dashed", color="#94A3B8", penwidth="1.5",
+                 fontname="Helvetica", fontsize="11", fontcolor=TITLE, margin="16")
         with emp.subgraph(name="cluster_chem") as ch:
             ch.attr(label='<<B>Chemical modality</B>  &#183;  Vevo Mosaic>', labeljust="l",
-                    style="rounded,filled", color="#9cb2c6", fillcolor="#eef3f8",
-                    fontname="Helvetica", fontsize="10", margin="12")
+                    style="rounded,filled", color=BLUE, fillcolor="#EFF6FF", penwidth="1.5",
+                    fontname="Helvetica", fontsize="11", fontcolor=TITLE, margin="12")
             add(ch, "TA", "chem", "Tahoe-100M", "Calibration anchor",
                 ["100.6M cells &#183; 56,827 conditions",
                  "&#963;&#178; = 0.96 &#8594; n* = 9,376 / m&#178;",
@@ -108,8 +107,8 @@ def build():
             ch.edge("TA", "EB", label="  &#963;&#178; transfers &#8776; 0.94&#8211;0.96")
         with emp.subgraph(name="cluster_gen") as ge:
             ge.attr(label='<<B>Genetic modality</B>  &#183;  CRISPRi Perturb-seq>', labeljust="l",
-                    style="rounded,filled", color="#8fb0a0", fillcolor="#eef4f1",
-                    fontname="Helvetica", fontsize="10", margin="12")
+                    style="rounded,filled", color=GREEN, fillcolor="#F0FDF4", penwidth="1.5",
+                    fontname="Helvetica", fontsize="11", fontcolor=TITLE, margin="12")
             add(ge, "OR", "gen", "X-Atlas/Orion", "Cross-modality transfer",
                 ["genome-wide CRISPRi &#183; ~8M cells",
                  "18,903 knockdowns &#215; 2 lines",
@@ -125,8 +124,8 @@ def build():
     add(g, "HUB", "hub", "One threshold n*, two ledgers")
     with g.subgraph(name="cluster_out") as out:
         out.attr(label='<<B>Downstream utility</B>>', labeljust="l",
-                 style="rounded,filled", color="#c2cad3", fillcolor="#f4f6f8",
-                 fontname="Helvetica", fontsize="11", margin="14")
+                 style="rounded", color="#94A3B8", penwidth="1.4",
+                 fontname="Helvetica", fontsize="11", fontcolor=TITLE, margin="14")
         out.attr(rank="same")
         add(out, "WET", "wet", "Wet-lab",
             rows=["magnitude-adaptive budgeting", "~3.1&#215; fewer cells &#183; triage / multiplex"])
