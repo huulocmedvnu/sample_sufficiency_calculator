@@ -1,0 +1,51 @@
+{
+ "min_cells": 400,
+ "rows": [
+  {
+   "dataset": "Tahoe-100M",
+   "n": 56195,
+   "median_ratio_all": 0.679,
+   "n_in_regime": 1790,
+   "median_ratio_in_regime": 0.942,
+   "median_r2_in_regime": 0.9987,
+   "spearman_deficit_vs_inv_rho2": 0.567
+  },
+  {
+   "dataset": "EmeraldBay",
+   "n": 958,
+   "median_ratio_all": 0.406,
+   "n_in_regime": 25,
+   "median_ratio_in_regime": 0.98,
+   "median_r2_in_regime": 0.9993,
+   "spearman_deficit_vs_inv_rho2": 0.814
+  },
+  {
+   "dataset": "Orion HCT116",
+   "n": 0,
+   "pending": true
+  },
+  {
+   "dataset": "Orion HEK293T",
+   "n": 0,
+   "pending": true
+  },
+  {
+   "dataset": "TRADE Jurkat",
+   "n": 38,
+   "median_ratio_all": 0.502,
+   "n_in_regime": 35,
+   "median_ratio_in_regime": 0.555,
+   "median_r2_in_regime": 0.9324,
+   "spearman_deficit_vs_inv_rho2": 0.872
+  },
+  {
+   "dataset": "TRADE HepG2",
+   "n": 9,
+   "median_ratio_all": 0.8,
+   "n_in_regime": 8,
+   "median_ratio_in_regime": 0.819,
+   "median_r2_in_regime": 0.9895,
+   "spearman_deficit_vs_inv_rho2": 0.95
+  }
+ ]
+}
