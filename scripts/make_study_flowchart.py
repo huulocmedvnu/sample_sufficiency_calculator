@@ -8,8 +8,7 @@ Minimalist, high-contrast overview that ends at the experimental validations:
     -> two clean parallel columns (chemical: Tahoe-100M -> EmeraldBay ; genetic: Orion -> TRADE)
 
 White node fills, thin semantic-coloured borders, dark text, borderless (label-only) containers.
-Numbers mirror the manuscript headline constants of record. The equivalent Mermaid.js source
-(for web / GitHub rendering) lives at docs/study_flowchart.mmd.
+Numbers mirror the manuscript headline constants of record.
 
 Requires:  pip install graphviz   +   the Graphviz `dot` binary on PATH.
 Run:       python scripts/make_study_flowchart.py  ->  figures/fig1_study_flowchart.{pdf,png}
