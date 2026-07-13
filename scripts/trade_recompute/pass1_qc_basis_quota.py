@@ -25,8 +25,10 @@ halve it -- reported in the summary as the large-control-pool variant.)
 Outputs -> $OUT/<line>/{basis.npz, quota.csv, summary.json}
   basis.npz keeps per-cell PCA coords + gene labels so pass2 (falsification) needs no re-embed.
 """
-import os, re, json, argparse, numpy as np, scipy.sparse as sp
+import os, sys, re, json, argparse, numpy as np, scipy.sparse as sp
 import scanpy as sc, anndata as ad, pandas as pd
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "src"))
+from quota_arm import quota_two_arm, classify   # explicit two-arm quota + 4-class regime
 
 # per-line QC constants (TRADE)
 LINE_QC = {
@@ -179,11 +181,13 @@ def main():
         u = v / m_raw
         trPSP = float(trSig - u @ Sig @ u)                   # full-Sigma anisotropic functional
         n_iso = 2 * (N_COMPS - 1) * sigma2_within / (m2 * th ** 2)
-        n_ani = 2 * trPSP / (m2 * th ** 2)
+        n_ani = 2 * trPSP / (m2 * th ** 2)                       # equal-arm (matched-vehicle) reference
+        # EXACT two-arm quota using the pooled NTC size n_ntc (see src/quota_arm.py)
+        n_two = quota_two_arm(trPSP, m, th, float(n_ntc))
         rows.append(dict(gene_target=g, n_cells=int(n_g), m=m, m_raw=m_raw,
-                         n_star_iso=n_iso, n_star_aniso=n_ani, trPSP=trPSP,
+                         n_star_iso=n_iso, n_star_aniso=n_ani, n_star_two_arm=float(n_two), trPSP=trPSP,
                          snr_floor=m_raw / np.sqrt(trS),
-                         regime=("OVER" if n_ani < n_g else ("Ghost" if n_ani > args.ghost else "UNDER"))))
+                         regime=classify(n_two, n_g, args.ghost)))
     df = pd.DataFrame(rows).sort_values("m", ascending=False).reset_index(drop=True)
     df.to_csv(os.path.join(d, "quota.csv"), index=False)
 
@@ -196,7 +200,7 @@ def main():
         n_knockdowns_scored=len(df), n_ntc_cells=int(n_ntc),
         sigma2_within=round(sigma2_within, 4), sigma2_marginal=round(sigma2_marg, 4),
         quota_const_iso=round(2 * (N_COMPS - 1) * sigma2_within / th ** 2, 1),
-        quota_const_iso_largepool=round((N_COMPS - 1) * sigma2_within / th ** 2, 1),
+        quota_const_largepool_limit=round((N_COMPS - 1) * sigma2_within / th ** 2, 1),  # n_c->inf LOWER BOUND, not the operational quota
         m_median=round(float(np.median(df.m)), 3), m_p90=round(float(np.percentile(df.m, 90)), 3),
         m_max=round(float(df.m.max()), 3),
         n_star_median=int(np.median(ns)),

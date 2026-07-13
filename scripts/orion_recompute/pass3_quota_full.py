@@ -11,7 +11,9 @@ Regime vs the perturbation's TRUE acquired cell count n_g (= full pseudobulk cou
 
 Outputs -> fixtures/orion_<LINE>_quota.csv (per gene) and fixtures/orion_<LINE>_summary.json.
 """
-import os, argparse, json, numpy as np, pandas as pd
+import os, sys, argparse, json, numpy as np, pandas as pd
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "src"))
+from quota_arm import quota_two_arm, classify   # explicit two-arm quota + 4-class regime
 
 NTC = "Non-Targeting"
 
@@ -57,11 +59,14 @@ def main():
         u = v / m_raw
         trPSP = float(ell.sum() - (u**2 * ell).sum())
         n_iso = 2 * (D - 1) * sigma2_within / (m2 * th**2)
-        n_ani = 2 * trPSP / (m2 * th**2)
+        n_ani = 2 * trPSP / (m2 * th**2)                       # equal-arm (matched-vehicle) reference
+        # EXACT two-arm quota: uses the large pooled NTC (n_ntc) consistently with the trS above,
+        # instead of discarding it. n_c -> inf gives factor 1; n_c = n_t gives the equal-arm value.
+        n_two = quota_two_arm(trPSP, m, th, float(n_ntc))
         rows.append(dict(gene_target=g, n_cells=int(n_g), m=m, m_raw=m_raw,
-                         n_star_iso=n_iso, n_star_aniso=n_ani,
+                         n_star_iso=n_iso, n_star_aniso=n_ani, n_star_two_arm=float(n_two),
                          snr_floor=m_raw / np.sqrt(trS),
-                         regime=("OVER" if n_ani < n_g else ("Ghost" if n_ani > args.ghost else "UNDER"))))
+                         regime=classify(n_two, n_g, args.ghost)))
     df = pd.DataFrame(rows).sort_values("m", ascending=False).reset_index(drop=True)
     os.makedirs(args.out_fixtures, exist_ok=True)
     df.to_csv(os.path.join(args.out_fixtures, f"orion_{args.line}_quota.csv"), index=False)

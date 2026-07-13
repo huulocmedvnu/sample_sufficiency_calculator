@@ -53,7 +53,7 @@
   0.60175,
   0.58343
  ],
- "sigma2_mean": 0.9174,
+ "sigma2_mean": 0.8673,
  "heldout_curves": {
   "DMSO_T0|HS-578T": {
    "N": 1067,
@@ -290,5 +290,6 @@
  "gating_n_over": 347,
  "gating_pct_over": 8.7,
  "gating_over_accuracy": 1.0,
- "gating_accuracy_scope": "downsample-and-measure verified over the FULL atlas (all 52 lines): 347 predicted OVER, 347 met tolerance"
+ "gating_accuracy_scope": "downsample-and-measure verified over the FULL atlas (all 52 lines): 347 predicted OVER, 347 met tolerance",
+ "sigma2_scope": "5-shared-line slice, canonical within-condition (per-cell, line x condition); full-52-line = 0.938"
 }

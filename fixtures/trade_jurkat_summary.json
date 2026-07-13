@@ -14,7 +14,6 @@
  "sigma2_within": 1.4975,
  "sigma2_marginal": 1.6148,
  "quota_const_iso": 14675.7,
- "quota_const_iso_largepool": 7337.8,
  "m_median": 1.841,
  "m_p90": 4.715,
  "m_max": 10.344,
@@ -112,5 +111,22 @@
    "n_cells": 58,
    "regime": "UNDER"
   }
- ]
+ ],
+ "two_arm": {
+  "n_perturbations": 2187,
+  "n_ntc_cells": 11514,
+  "theta": 0.1,
+  "C_largepool_limit": 6967.9,
+  "pct_over": 0.82,
+  "pct_under": 74.67,
+  "pct_ghost": 2.74,
+  "pct_pool_limited": 21.76,
+  "n_star_median_resolvable": 1375,
+  "median_deficit_resolvable": 18.0,
+  "median_n_star_all": 1375,
+  "m_min_median_trPSP": 0.784,
+  "ntc_to_unlimit_median_gene": 2056,
+  "ntc_shortfall_for_median": 0,
+  "sigma2_within": 1.4975
+ }
 }
