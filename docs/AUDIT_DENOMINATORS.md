@@ -1,7 +1,8 @@
 # Audit: denominators of the sufficiency-regime spectrum
 
-**Status:** findings only. No manuscript text, fixture, script or figure is changed by this document.
-No fixes are proposed. This is a record for the author to decide on.
+**Status:** RESOLVED on branch `fix/audit-round-1` (see the *Resolution* section at the end).
+Findings 1-7 below are the original record for the author to decide on; the author approved all of them
+and the fixes were applied in four commits. The finding text is kept as-written for provenance.
 
 **Scope:** how the over / under / ghost / detectable percentages (Table 1, Table 4, Figure 3, Figure 4)
 are counted — specifically, *which conditions each percentage is computed over*. Four independent
@@ -246,6 +247,32 @@ wrong, and the two modalities silently use different formulas.
 
 ---
 
+## Finding 7 — the manuscript claims a tr(S) bias-correction the chemical spectrum does not perform
+
+**Claim in the manuscript (two places).** Statistical analysis: "each squared magnitude is bias-corrected
+for the finite-sample floor by subtracting tr(S)." Discussion: "Our quota performs the geometric version
+of that deconvolution, subtracting the sampling-floor term tr(S) from the squared magnitude before
+computing n*. Without it, shallow conditions would masquerade as strong."
+
+**What the code does.** The chemical spectrum (Tahoe, EmeraldBay) uses the RAW centroid displacement
+`m = ||treat - ctrl||`: `scripts/tahoe_recompute/pass3_quota.py` L65 computes `m` with no tr(S)
+subtraction, and `nstar = const/m**2` (L68); the isotropic reproduction (Finding 6) confirms it to
+0 relative error. Only the GENETIC recompute bias-corrects: `scripts/orion_recompute/pass3_quota_full.py`
+L58 does `m2 = max(m_raw**2 - trS, 1e-6)`. So the blanket claim is false for the two chemical atlases and
+true only for the genetic screens.
+
+**Options.** (i) There is no chemical bias-correction; the manuscript describes it wrongly — delete the two
+passages, numbers unchanged. (ii) Add the correction to the code and recompute (numbers would change).
+
+**Where affected:** Statistical analysis; Discussion; the chemical-vs-genetic method split (overlaps
+Finding 6).
+
+**Severity: MEDIUM.** No number changes, but the manuscript described a computation it does not perform.
+
+**Current number:** unaffected (a text-only claim).
+
+---
+
 ## Cross-reference: the 6,018 vs 5,503 gap (checked, not a denominator finding)
 
 For completeness, the ~515-condition gap between the spectrum's OVER count (6,018 matched-vehicle
@@ -255,3 +282,44 @@ two tests using different baselines (spectrum = matched vehicle; gating = per-li
 the two counts are not in a subset relationship. The broader "counted in the spectrum but excluded from
 validation" concern is real but lives at the dataset level (the spectrum's 56,827 conditions include 8,681
 with N0 < 400 that the N>=400 held-out excludes), not in the 6,018/5,503 pair.
+
+---
+
+## Resolution (branch `fix/audit-round-1`, four commits)
+
+The author (paper author) reviewed all seven findings, approved every fix, and directed a full correction.
+Applied in four commits. Numbers are the source of truth; prose was made to match.
+
+**Author decisions.** Finding 7 -> option (i) (no chemical bias-correction; delete the two passages, no
+number change). Finding 1 -> EmeraldBay condition unit is `(sample x line) = (drug x dose x line)`, all
+4,912 non-empty groups, spectrum built from `eb_work/out/pseudobulk.npz`; the `per_group_slope` basis
+(dose-pooled `drug-name x line`) is retained for the held-out test only, never the spectrum. Finding 2 ->
+declare all denominators: chemical spectra over all conditions with no cell-count filter, genetic over the
+N>=25 QC set with over/under among detectable. Finding 6 -> keep chemical isotropic / genetic anisotropic
+two-arm, but DECLARE it. Finding 3 -> 4,992 = 52 x 96 full cross, 4,912 non-empty (80 empty). Finding 4 ->
+drop the N>=300 threshold from the spectrum; held-out keeps N>=400.
+
+**Effect on the numbers.** Correcting the EmeraldBay unit + denominator moved its spectrum from the
+dose-pooled `4.6 / 84.0 / 11.4` (over / under / ghost, `N>=300`, drug-name x line) to
+**`1.0 / 98.8 / 0.2`** over all 4,912 (sample x line) conditions, isotropic C = 9,192/m^2, median m 1.29,
+median depth 240, 96.8% detectable. Qualitatively EmeraldBay is now ~99% under-sampled (was ~84%), i.e.
+almost nothing is over-sampled, consistent with its shallow 5-day depth. **Tahoe is unchanged
+(10.6 / 89.0 / 0.4)** and every genetic number is unchanged.
+
+**Finding-by-finding status.**
+- **#1 (unit)** RESOLVED — `scripts/make_spectrum_unified.py` builds the spectrum on `(sample x line)`;
+  Methods "Units and denominators" + the EmeraldBay paragraph declare the unit; golden test
+  `tests/test_regime_table_golden.py` locks 4,912 and the per-group reproduction.
+- **#2 (denominators)** RESOLVED — Methods "Units and denominators" states the chemical no-filter and
+  genetic N>=25 rules; Table 5 carries a `denom.` column.
+- **#3 (4,992 vs 4,912)** RESOLVED — EmeraldBay paragraph states 4,992 combinations, 4,912 non-empty.
+- **#4 (N>=300)** RESOLVED — the spectrum uses no cell-count filter; the N>=400 threshold is declared as a
+  held-out-only requirement.
+- **#6 (isotropic vs anisotropic)** RESOLVED — "Units and denominators" declares chemical isotropic /
+  genetic anisotropic two-arm; the isotropic reproduction is noted.
+- **#7 (bias-correction claim)** RESOLVED — the two false passages were deleted; the honest
+  chemical-raw / genetic-bias-corrected split is stated in Methods and Discussion.
+
+**Verification.** `tests/test_regime_table_golden.py` (golden aggregates, per-row percent-sum,
+per-group reproduction of the EmeraldBay aggregate, manuscript-matches-fixture); full `pytest` suite green;
+`manuscript.pdf` rebuilds clean.
