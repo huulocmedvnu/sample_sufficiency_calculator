@@ -125,22 +125,23 @@ def fig4_emeraldbay():
 
 
 def _regime_counts(df, col_ns, col_dep, ghost=50000, n_ntc=None):
-    """4-class split. n_ntc=None -> equal-arm (chemical), col_ns is the quota directly, no pool
-    limit. n_ntc set (genetic) -> exact two-arm from base=col_ns/2 (=tr(PSP)/(m^2 th^2)); a
-    knockdown is POOL-LIMITED (n*=inf) when base>=n_ntc."""
+    """Returns (over, under, ghost, not_detectable). Chemical (n_ntc=None): screens are ~fully
+    detectable, so over/under/ghost among all conditions, not-detectable ~ 0. Genetic (n_ntc set):
+    filter to DETECTABLE (snr_floor>1.5); over/under among detectable, with the NOT-DETECTABLE
+    bucket (m below the sampling floor) shown separately. Ghost and control-pool-limited are
+    negligible among detectable and folded into under."""
     dep = df[col_dep].values.astype(float)
     if n_ntc is None:
         ns = df[col_ns].values.astype(float)
         over = (ns < dep).mean() * 100; gh = (ns > ghost).mean() * 100
         return over, 100 - over - gh, gh, 0.0
+    det = df["snr_floor"].values > 1.5
     base = df[col_ns].values.astype(float) / 2.0
     inv = 1.0 / base - 1.0 / n_ntc
     ns = np.where(inv > 0, 1.0 / np.where(inv > 0, inv, np.nan), np.inf)
-    fin = np.isfinite(ns)
-    over = (fin & (ns < dep)).mean() * 100
-    gh = (fin & (ns > ghost)).mean() * 100
-    pool = (~fin).mean() * 100
-    return over, 100 - over - gh - pool, gh, pool
+    notdet = (~det).mean() * 100
+    over = (det & np.isfinite(ns) & (ns < dep)).mean() * 100
+    return over, 100 - notdet - over, 0.0, notdet
 
 
 def fig5_crossmodality():
@@ -183,7 +184,7 @@ def fig5_crossmodality():
     ax.bar(x, ov, color=REG["OVER"], label="OVER (resolvable)", edgecolor="white", linewidth=1.2)
     ax.bar(x, un, bottom=ov, color=REG["UNDER"], label="UNDER", edgecolor="white", linewidth=1.2)
     ax.bar(x, gh, bottom=ov + un, color=REG["Ghost"], label="Ghost (n*>50k)", edgecolor="white", linewidth=1.2)
-    ax.bar(x, pl, bottom=ov + un + gh, color="#3A3A3A", label="Control-pool-limited (n*=∞)", edgecolor="white", linewidth=1.2)
+    ax.bar(x, pl, bottom=ov + un + gh, color="#3A3A3A", label="Not detectable (m below floor)", edgecolor="white", linewidth=1.2)
     for i, (o, pv) in enumerate(zip(ov, pl)):
         ax.text(i, 101.5, f"{o:.1f}% over", ha="center", va="bottom", fontsize=6.8, color=GREEN)
         if pv > 6:
@@ -193,8 +194,8 @@ def fig5_crossmodality():
     ax.set_title(r"(b) Sufficiency regime ($\theta_\star$=0.1 rad)", fontsize=9)
     ax.legend(frameon=True, facecolor="white", edgecolor="none", framealpha=0.9,
               fontsize=7, loc="upper left", bbox_to_anchor=(1.01, 1.0))
-    fig.suptitle("Across chemical and genetic modalities: essentially nothing over-sampled, and a large genetic "
-                 "fraction is control-pool-limited (n*=∞, enlarge the NTC pool)", fontsize=9.5, y=1.02)
+    fig.suptitle("Among knockdowns with a measurable signal, essentially nothing is over-sampled; most genetic "
+                 "knockdowns fall below the detection floor (m indistinguishable from sampling noise)", fontsize=9.5, y=1.02)
     save(fig, "fig5_crossmodality_summary")
 
 

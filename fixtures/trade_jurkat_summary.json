@@ -115,18 +115,18 @@
  "two_arm": {
   "n_perturbations": 2187,
   "n_ntc_cells": 11514,
+  "sigma2_within": 1.4975,
   "theta": 0.1,
-  "C_largepool_limit": 6967.9,
-  "pct_over": 0.82,
-  "pct_under": 74.67,
-  "pct_ghost": 2.74,
-  "pct_pool_limited": 21.76,
-  "n_star_median_resolvable": 1375,
-  "median_deficit_resolvable": 18.0,
-  "median_n_star_all": 1375,
-  "m_min_median_trPSP": 0.784,
-  "ntc_to_unlimit_median_gene": 2056,
-  "ntc_shortfall_for_median": 0,
-  "sigma2_within": 1.4975
+  "C_largepool_limit": 7338.0,
+  "pct_detectable": 70.6,
+  "pct_not_detectable": 29.4,
+  "det_pct_over": 1.2,
+  "det_pct_under": 98.8,
+  "det_median_nstar": 1115,
+  "det_median_deficit": 15.3,
+  "pct_pool_limited_among_detectable": 1.0,
+  "pct_pool_limited_among_all": 21.8,
+  "m_min": 0.78,
+  "min_detectable_m": 0.37
  }
 }

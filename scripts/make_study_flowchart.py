@@ -95,7 +95,7 @@ def build():
         with emp.subgraph(name="cluster_gen") as ge:
             header(ge, "Genetic modality")
             add(ge, "OR", "X-Atlas/Orion",
-                [f"{S2} = 0.91 / 1.03", f"{N} &#8776; 9,000 / {M2} &#183; &#963;&#178; transfers"])
+                [f"{S2} = 0.91 / 1.03", f"{N} &#8776; 4,475 / 5,064 / {M2}"])
             add(ge, "TR", "TRADE",
                 [f"{S2} = 1.5 / 1.9", f"slope 1.02 / 0.96 &#183; {R2} = 0.996"])
             ge.edge("OR", "TR", label="  direct falsification")
