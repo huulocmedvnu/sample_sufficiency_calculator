@@ -34,12 +34,7 @@ def tahoe_row():
 
 
 def emeraldbay_row():
-    # Filter to N>=400, the SAME held-out eligibility threshold used everywhere else (Table 2,
-    # Figure 5). The fixture's native min_cells_slope=300 was an internal "room to subsample"
-    # threshold of the slope test, never a stated spectrum choice; N>=400 makes the EmeraldBay
-    # spectrum denominator (958 groups) consistent with the rest of the manuscript.
-    D = [r for r in load("emeraldbay_falsification_full.json")["per_group_slope"] if r["N"] >= 400]
-    s2 = 0.938
+    D = load("emeraldbay_falsification_full.json")["per_group_slope"]; s2 = 0.938
     m = np.array([r["m"] for r in D]); N = np.array([r["N"] for r in D]).astype(float)
     ps = np.array([r["pred_slope"] for r in D]); nstar = 2 * ps / TH ** 2
     over = 100 * np.mean(nstar < N); ghost = 100 * np.mean(nstar > 50000); under = 100 - over - ghost

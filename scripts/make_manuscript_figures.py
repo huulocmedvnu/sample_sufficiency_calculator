@@ -149,10 +149,8 @@ def fig5_crossmodality():
     tahoe = pd.read_csv(f"{FX}/tahoe_quota_per_condition.csv")
     hct = pd.read_csv(f"{FX}/orion_HCT116_quota.csv"); hek = pd.read_csv(f"{FX}/orion_HEK293T_quota.csv")
     jur = pd.read_csv(f"{FX}/trade_jurkat_quota.csv"); hep = pd.read_csv(f"{FX}/trade_hepg2_quota.csv")
-    # EmeraldBay: per-group m, N, and slope from the population-scale test (per-line-mean baseline),
-    # filtered to N>=400 (the held-out eligibility threshold used throughout; the fixture's native
-    # min_cells=300 was a slope-test artifact, not a spectrum choice).
-    ebrows = [r for r in json.load(open(f"{FX}/emeraldbay_falsification_full.json"))["per_group_slope"] if r["N"] >= 400]
+    # EmeraldBay: per-group m, N, and slope from the population-scale test (per-line-mean baseline)
+    ebrows = json.load(open(f"{FX}/emeraldbay_falsification_full.json"))["per_group_slope"]
     eb_m = np.array([r["m"] for r in ebrows]); eb_N = np.array([r["N"] for r in ebrows])
     eb_nstar = 2.0 * np.array([r["pred_slope"] for r in ebrows]) / 0.1 ** 2   # equal-arm quota at theta=0.1
     emb = pd.DataFrame({"m": eb_m}); emb_reg = pd.DataFrame({"n_star": eb_nstar, "n_cells": eb_N})
