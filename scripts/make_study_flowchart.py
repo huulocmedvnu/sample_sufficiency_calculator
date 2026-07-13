@@ -5,7 +5,7 @@ Generate the study flowchart (Graphviz) summarizing the whole pipeline:
   -> genetic transfer/falsification (X-Atlas/Orion, TRADE) -> two-ledger applications.
 
 Numbers mirror the manuscript headline constants of record (within-condition calibration).
-Writes figures/fig0_study_flowchart.{pdf,png} and figures/study_flowchart.dot.
+Writes figures/fig1_study_flowchart.{pdf,png} and figures/study_flowchart.dot.
 
 Run:  python scripts/make_study_flowchart.py     (needs the `dot` CLI on PATH)
 """
@@ -122,7 +122,7 @@ if not shutil.which("dot"):
     sys.exit("graphviz `dot` not found on PATH")
 
 for ext, args in (("pdf", ["-Tpdf"]), ("png", ["-Tpng", "-Gdpi=200"])):
-    out = os.path.join(FIG, f"fig0_study_flowchart.{ext}")
+    out = os.path.join(FIG, f"fig1_study_flowchart.{ext}")
     subprocess.run(["dot", *args, dot_path, "-o", out], check=True)
     print(f"  wrote {out}")
 print(f"  wrote {dot_path}")

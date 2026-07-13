@@ -3,11 +3,11 @@ Generate the manuscript figures from committed fixtures. Vector PDF (for the pap
 written to figures/. Palette: Okabe-Ito (the field-standard colourblind-safe qualitative set); series also
 carry distinct markers/linestyles and direct labels, so identity is never colour-alone.
 
-  Fig 1  geometry schematic (angular error: along- vs across-signal noise; 1/sqrt(n) shrinkage)
-  Fig 2  Tahoe-100M n* sufficiency spectrum (Phase B)
-  Fig 3  EmeraldBay held-out angular-error validation (Phase C)
-  Fig 4  cross-modality summary: magnitude distributions + OVER/UNDER/Ghost across all datasets (B/E/F)
-  Fig 5  TRADE validated falsification (Phase F): a-priori vs realized slope + showcase downsample curves
+  Fig 2  geometry schematic (angular error: along- vs across-signal noise; 1/sqrt(n) shrinkage)
+  Fig 3  Tahoe-100M n* sufficiency spectrum (Phase B)
+  Fig 4  EmeraldBay held-out angular-error validation (Phase C)
+  Fig 5  cross-modality summary: magnitude distributions + OVER/UNDER/Ghost across all datasets (B/E/F)
+  Fig 6  TRADE validated falsification (Phase F): a-priori vs realized slope + showcase downsample curves
 
 Run:  python scripts/make_manuscript_figures.py
 """
@@ -38,7 +38,7 @@ def save(fig, name):
     plt.close(fig); print(f"  wrote {FIG}/{name}.pdf/.png")
 
 
-def fig1_geometry():
+def fig2_geometry():
     fig, axs = plt.subplots(1, 2, figsize=(7.6, 3.5))
     v = np.array([3.2, 0.0]); m = np.linalg.norm(v); u = v / m
     for ax, n, ttl, draw_decomp in [(axs[0], 12, "few cells", True), (axs[1], 200, "many cells", False)]:
@@ -69,10 +69,10 @@ def fig1_geometry():
         for s in ("left", "bottom"): ax.spines[s].set_visible(False)
     fig.suptitle("Only noise perpendicular to the effect rotates the estimated direction --- "
                  r"the scatter shrinks as $1/\sqrt{n}$", fontsize=9.5, y=1.01)
-    save(fig, "fig1_geometry")
+    save(fig, "fig2_geometry")
 
 
-def fig2_tahoe_spectrum():
+def fig3_tahoe_spectrum():
     df = pd.read_csv(f"{FX}/tahoe_quota_per_condition.csv")
     ns = df["n_star"].values; N0 = 1296; ghost = 50000
     fig, ax = plt.subplots(figsize=(6.4, 3.6))
@@ -92,10 +92,10 @@ def fig2_tahoe_spectrum():
     ax.set_ylabel("number of (drug $\\times$ dose $\\times$ line) conditions")
     ax.set_title(f"Tahoe-100M sufficiency spectrum: median $n^\\star$ = {np.median(ns):,.0f}, "
                  f"{over:.1f}% over / {under:.1f}% under / {gh:.1f}% ghost", fontsize=9)
-    save(fig, "fig2_tahoe_spectrum")
+    save(fig, "fig3_tahoe_spectrum")
 
 
-def fig3_emeraldbay():
+def fig4_emeraldbay():
     d = json.load(open(f"{FX}/emeraldbay_calibration.json"))
     cur = d["heldout_curves"]
     # DMSO_T0 reference groups first (by descending m), then the single non-DMSO drug group; keys are
@@ -121,7 +121,7 @@ def fig3_emeraldbay():
     ax.set_title("EmeraldBay held-out validation: realized $\\theta^2$ vs the parameter-free\n"
                  r"prediction $\mathrm{tr}(P\Sigma P)/m^2\cdot(1/n-1/N)$ (lines), no fitted parameter", fontsize=9)
     ax.legend(loc="upper left", frameon=False, fontsize=6.6)
-    save(fig, "fig3_emeraldbay_validation")
+    save(fig, "fig4_emeraldbay_validation")
 
 
 def _regime_counts(df, col_ns, col_dep, ghost=50000):
@@ -130,7 +130,7 @@ def _regime_counts(df, col_ns, col_dep, ghost=50000):
     return over, 100 - over - gh, gh
 
 
-def fig4_crossmodality():
+def fig5_crossmodality():
     tahoe = pd.read_csv(f"{FX}/tahoe_quota_per_condition.csv")
     hct = pd.read_csv(f"{FX}/orion_HCT116_quota.csv"); hek = pd.read_csv(f"{FX}/orion_HEK293T_quota.csv")
     jur = pd.read_csv(f"{FX}/trade_jurkat_quota.csv"); hep = pd.read_csv(f"{FX}/trade_hepg2_quota.csv")
@@ -179,7 +179,7 @@ def fig4_crossmodality():
               fontsize=7, loc="upper left", bbox_to_anchor=(1.01, 1.0))
     fig.suptitle("Across chemical and genetic modalities: essentially nothing over-sampled once magnitudes are small "
                  "or depth is low", fontsize=9.5, y=1.02)
-    save(fig, "fig4_crossmodality_summary")
+    save(fig, "fig5_crossmodality_summary")
 
 
 def _showcase_curves(line, genes, reps=200, seed=0):
@@ -206,7 +206,7 @@ def _showcase_curves(line, genes, reps=200, seed=0):
     return out
 
 
-def fig5_trade_validation():
+def fig6_trade_validation():
     fig, axs = plt.subplots(1, 2, figsize=(9.2, 4.0))
     # (a) a-priori vs realized slope scatter, both lines
     ax = axs[0]
@@ -243,14 +243,14 @@ def fig5_trade_validation():
     ax.legend(frameon=False, fontsize=6.4, loc="upper left", ncol=2)
     fig.suptitle("TRADE Phase F: the angular-error law validated directly in the genetic modality "
                  "(strong-knockdown slope 0.96-1.02, $R^2$=0.996)", fontsize=9.5, y=1.02)
-    save(fig, "fig5_trade_validation")
+    save(fig, "fig6_trade_validation")
 
 
 if __name__ == "__main__":
     print("Generating manuscript figures from fixtures ->", FIG)
-    fig1_geometry()
-    fig2_tahoe_spectrum()
-    fig3_emeraldbay()
-    fig4_crossmodality()
-    fig5_trade_validation()
+    fig2_geometry()
+    fig3_tahoe_spectrum()
+    fig4_emeraldbay()
+    fig5_crossmodality()
+    fig6_trade_validation()
     print("done.")
