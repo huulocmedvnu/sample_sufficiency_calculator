@@ -149,10 +149,11 @@ def fig5_crossmodality():
     tahoe = pd.read_csv(f"{FX}/tahoe_quota_per_condition.csv")
     hct = pd.read_csv(f"{FX}/orion_HCT116_quota.csv"); hek = pd.read_csv(f"{FX}/orion_HEK293T_quota.csv")
     jur = pd.read_csv(f"{FX}/trade_jurkat_quota.csv"); hep = pd.read_csv(f"{FX}/trade_hepg2_quota.csv")
-    # EmeraldBay: per-group m, N, and slope from the population-scale test (per-line-mean baseline)
-    ebrows = json.load(open(f"{FX}/emeraldbay_falsification_full.json"))["per_group_slope"]
-    eb_m = np.array([r["m"] for r in ebrows]); eb_N = np.array([r["N"] for r in ebrows])
-    eb_nstar = 2.0 * np.array([r["pred_slope"] for r in ebrows]) / 0.1 ** 2   # equal-arm quota at theta=0.1
+    # EmeraldBay spectrum: (sample x line) = (treatment x line) unit, all 4,912 groups, isotropic
+    # n*=9,192/m^2 (fixtures/emeraldbay_spectrum.json, scripts/make_spectrum_unified.py). NOT
+    # per_group_slope (drug-name x line, dose-pooled, held-out-test only).
+    ebs = json.load(open(f"{FX}/emeraldbay_spectrum.json"))["per_group"]
+    eb_m = np.array(ebs["m"]); eb_N = np.array(ebs["N"]); eb_nstar = np.array(ebs["nstar"])
     emb = pd.DataFrame({"m": eb_m}); emb_reg = pd.DataFrame({"n_star": eb_nstar, "n_cells": eb_N})
     sets = [("Tahoe (chem)", tahoe, BLUE, "-"), ("EmeraldBay (chem)", emb, SKY, "-"),
             ("Orion HCT116", hct, GREEN, "--"), ("Orion HEK293T", hek, ORANGE, "--"),
