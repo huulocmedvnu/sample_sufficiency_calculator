@@ -740,6 +740,28 @@ scripts/verify_references.py` (32/32 DOIs).
     **31 pp**, Figures 1–5, 0 em-dashes, 0 unresolved cites, 16/16 tests. Memory (`data-environment`,
     `manuscript-state`) updated to the per-dataset direction and de-shared-lined.
 
+55. **Table 5 (cross-screen regime summary) + EmeraldBay spectrum re-based to N≥400** (this session).
+    Added a new **Table 5** placing all six per-line screens on one row each, so the over/under/ghost/
+    detectable numbers previously scattered across Table 1, Table 4 and Figure 4 can be read side by side
+    (`scripts/make_regime_summary_table.py` → `fixtures/regime_summary_table.md`; golden-locked by
+    `tests/test_regime_table_golden.py`, suite 16 → **19**). The table carries **two independent partitions**,
+    each summing to 100 within its own denominator: *detectability* (detectable / not-detectable) over all
+    scored conditions, and the *sufficiency spectrum* (over / under / ghost) over the denominator column
+    (chemical = all conditions, genetic = detectable only, ghost n/a for genetic) — so the columns never
+    add to a spurious 101.6%. Rendered `\footnotesize` with proportional column widths (12 columns).
+    **Traced and fixed a real denominator defect:** the EmeraldBay over/under/ghost in Table 1 was computed
+    over the falsification fixture's native 1,064 groups at **N≥300** — a `MIN_CELLS_SLOPE = 300` "room to
+    subsample" threshold of the slope test (commit `c4118da`), never a stated spectrum choice and absent from
+    every doc. Re-based the EmeraldBay spectrum to **N≥400** (958 groups, the held-out eligibility threshold
+    used everywhere), which also moved the EmeraldBay row's median m (0.79→**0.75**), median depth
+    (970→**1078**) and detection-floor prose threshold (0.25→**0.23**); regime **4.6/84.0/11.4 → 4.5/82.9/12.6**.
+    Updated `make_unified_calibration_table.py` + `make_manuscript_figures.py` (both now filter N≥400), Table 1,
+    the L305 detection-floor sentence, Figure 4, and the HANDOFF. Rebuilt **32 pp**, 0 em-dashes, 0 unresolved
+    cites, 19/19 tests. **Documented discrepancies** (Table 5 caption, not silently changed elsewhere): genetic
+    n is the SCORED count (≥25 acquired cells; 17,585/17,856/2,187/1,883 vs targeted 18,903/2,393); and even at
+    N≥400 EmeraldBay's spectrum is depth-filtered on the same quantity that decides OVER/UNDER, so its 4.5% and
+    Tahoe's unfiltered 10.6% are **not directly comparable**.
+
 ## Honesty ledger (carried in the manuscript banner + `SUPPLEMENT.md`)
 
 - The three high-magnitude validation groups are DMSO time-zero populations, not drug effects; only one
