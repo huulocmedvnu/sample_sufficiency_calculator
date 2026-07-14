@@ -64,9 +64,9 @@ def build():
     # ---- linear spine: question -> quota ------------------------------------
     add(g, "Q", "Core research question",
         [f"How many cells resolve a perturbation's <I>direction</I> to tolerance {THETA}?"])
-    add(g, "TH", "Closed-form cell quota",
-        [f"{N} = 2&#183;tr(P&#931;P) / ({M2} {THETA}&#178;)",
-         f"calibrated &#8594; {N} &#8776; 9,376 / {M2}"])
+    add(g, "TH", "Closed-form cell quota (two-arm)",
+        [f"{N}_t = 1 / ({M2}{THETA}&#178; / tr(P&#931;P) &#8722; 1/n_c)",
+         f"Tahoe real vehicle &#8594; 69% control-pool-limited"])
 
     # ---- airtight proof foundation (grouping box + aligned name chips) ------
     with g.subgraph(name="cluster_proof") as c:
