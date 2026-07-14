@@ -1,3 +1,5 @@
+> ⚠️ **SUPERSEDED.** Numbers here predate the audit (findings #1-#9, gaps 1-3). The authoritative source is `docs/MANUSCRIPT_DEEPSEEK.md` + `src/engine.py`. See `docs/AUDIT_DENOMINATORS.md` and `docs/ARCHITECTURE.md`.
+
 # Technical Blueprint & Data Supplement
 ### Anisotropic Sample-Sufficiency for Single-Cell Perturbation-Direction Screens
 **Status:** frozen source-of-truth for manuscript drafting, reconciled to the dose-resolved from-raw

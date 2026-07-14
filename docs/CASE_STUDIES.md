@@ -1,3 +1,5 @@
+> ⚠️ **SUPERSEDED.** Numbers here predate the audit (findings #1-#9, gaps 1-3). The authoritative source is `docs/MANUSCRIPT_DEEPSEEK.md` + `src/engine.py`. See `docs/AUDIT_DENOMINATORS.md` and `docs/ARCHITECTURE.md`.
+
 # Empirical Case Studies — Sample-Sufficiency Spectrum (frozen source-of-truth)
 
 **Configuration (Tahoe-100M, from-raw recompute; `scripts/tahoe_recompute/`).** σ² = 0.9567

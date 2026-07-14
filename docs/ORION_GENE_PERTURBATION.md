@@ -1,3 +1,5 @@
+> ⚠️ **SUPERSEDED.** Numbers here predate the audit (findings #1-#9, gaps 1-3). The authoritative source is `docs/MANUSCRIPT_DEEPSEEK.md` + `src/engine.py`. See `docs/AUDIT_DENOMINATORS.md` and `docs/ARCHITECTURE.md`.
+
 # Cross-modality scale-up: genome-wide gene perturbation (X-Atlas/Orion)
 
 **Question.** The sample-sufficiency quota `n★ = 2·tr(PΣP)/(m²θ★²)` was derived and calibrated on *chemical*
