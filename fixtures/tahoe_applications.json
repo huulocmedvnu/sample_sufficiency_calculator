@@ -1,31 +1,29 @@
 {
  "reliability_audit": {
   "0.1": {
-   "pct_resolved": 10.59,
-   "pct_graph_edges_both_resolved": 9.96,
-   "pct_conditions_resolved_5uM": 14.83
+   "pct_resolved": 10.3,
+   "pct_graph_edges_both_resolved": 7.0
   },
   "0.2": {
-   "pct_resolved": 42.38,
-   "pct_graph_edges_both_resolved": 39.19,
-   "pct_conditions_resolved_5uM": 47.12
+   "pct_resolved": 41.9,
+   "pct_graph_edges_both_resolved": 36.5
   },
   "0.3": {
-   "pct_resolved": 67.07,
-   "pct_graph_edges_both_resolved": 65.01,
-   "pct_conditions_resolved_5uM": 70.81
+   "pct_resolved": 65.9,
+   "pct_graph_edges_both_resolved": 61.7
   }
  },
  "cost": {
   "cost_per_cell_usd": 0.3,
   "screen": "100 drugs x 3 doses x 2 lines = 600 conditions",
-  "flat_p90_cells": 10887714,
-  "flat_p90_cost_usd": 3266314,
-  "adaptive_cap10k_cells": 3523312,
-  "adaptive_cap10k_cost_usd": 1056994,
-  "cell_savings_factor": 3.09,
-  "dollars_saved": 2209321,
-  "pct_conditions_over_sampled": 10.59,
-  "median_multiplex_gain_over": 1.6
+  "control": "per-line mean (large pool), within-condition sigma^2",
+  "flat_p90_quota": 10973,
+  "flat_p90_cells": 6583838,
+  "flat_p90_cost_usd": 1975152,
+  "adaptive_cap10k_cells": 2387900,
+  "adaptive_cap10k_cost_usd": 716370,
+  "cell_savings_factor": 2.76,
+  "flat_M": 6.6,
+  "adaptive_M": 2.4
  }
 }

@@ -136,3 +136,65 @@ goes 0.10 -> 0.15 -> 0.20 -> 0.25 -> 0.30 rad (Table 6).
 - **The per-line-mean sensitivity uses a grand-mean baseline** (average over ~94 treatments), which is
   a biased reference; it is reported only as a sensitivity, not the headline.
 - **Historical/auxiliary docs** carry pre-audit numbers behind SUPERSEDED banners (not the manuscript).
+
+## 8. Round 2 audit: purge of legacy quota math (branch `rewrite/purge-legacy-math`)
+
+**Trigger.** `scripts/emeraldbay_recompute/pass6_invariance.py` computed the downsampling-invariance
+quota with a LOCAL equal-arm formula `2 tr(P.Sigma.P)/(m^2 theta^2)` -- not the engine -- and fed the
+result (`n* = 184`, exemplar Galunisertib x AN3-CA) straight into manuscript Table S3 / the
+"Downsampling stability" paragraph. `test_no_duplicate_math.py` never caught it: it (a) scanned only
+`src/`, never `scripts/`, and (b) matched two exact engine substrings, not the equal-arm spelling.
+
+**New guard.** `tests/test_no_duplicate_math.py` rewritten to scan `src/` AND `scripts/` (every `.py`
+except `src/engine.py`) and to flag by MEANING, not spelling: the quota formula (tr(P.Sigma.P) divided
+by m^2 theta^2 -- solving for n*, distinct from the held-out measurement law tr/m^2*(1/n-1/N) which is
+allowed), the bias-correction `m^2 - tr(S)`, the detection floor `snr > const`, and the dead constants
+9376/9192/4688/4495/4475 and the 1.25/2.25/300 thresholds. First run flagged 10 violations in 6 files.
+
+**Migrated to the engine (local quota/bias/detection removed):**
+- `scripts/emeraldbay_recompute/pass6_invariance.py` -- now calls `engine.compute` (verified: re-run).
+- `scripts/orion_recompute/pass3_quota_full.py` -- re-run on both lines, reproduces the genetic golden
+  EXACTLY (sigma^2 0.9133/1.0334, detectable 14.7/35.3, over(det) 0.0/0.1, median n* 21376/7592).
+- `scripts/trade_recompute/pass2_falsification.py` -- re-run, reproduces the held-out slopes EXACTLY
+  (strong 1.0203 Jurkat / 0.9607 HepG2, R^2 0.996).
+- `scripts/trade_recompute/pass1_qc_basis_quota.py` -- quota routed through the engine; streaming/QC/
+  basis.npz untouched (needs the raw h5ad to run, so migrated + syntax-checked, not re-run here).
+- `scripts/applications/reliability_and_cost.py` -- rewritten engine-based (no atlas cache); reproduces
+  reliability 10.3/7.0, 41.9/36.5, 65.9/61.7 and budget 6.6M/2.4M/2.76x.
+- `scripts/make_manuscript_figures.py` -- deleted the retired dead functions (`fig4_emeraldbay`,
+  `fig6_trade_validation`, `_showcase_curves`) that carried an inline bias-correction.
+
+**Deleted (superseded, outputs unconsumed):** `src/quota_arm.py`,
+`scripts/orion_recompute/pass2_quota.py` (pilot), `scripts/recompute_genetic_arm.py` (post-processor;
+`genetic_two_arm.json` unconsumed).
+
+**Numbers that were legacy-fed and are now engine-corrected:**
+| item | legacy (equal-arm/raw) | engine (two-arm, bias-corrected) |
+|---|---|---|
+| invariance OVER quota / depth n_d | 184 (130 in one stale spot) | **92** |
+| invariance UNDER exemplar | Galunisertib x AN3-CA (n*=22,475) -- now POOL-LIMITED, invalid | **Gemcitabine x MIA PaCa-2**, n*=42,666, UNDER |
+| invariance OVER metrics | drift <=0.2%, cos SD 0.005 | drift <=0.6%, cos SD 0.008 |
+| invariance UNDER metrics | +11% (0.57->0.63), cos 0.08-0.09, SD 0.047 | +19% (0.78->0.93), cos 0.10-0.12, SD 0.10 |
+| Table S1 median m | raw (5.88, 4.24, ...) | bias-corrected (5.79, 4.14, ...); Crizotinib row was stale -> (S)-Crizotinib |
+| Table S1 counts | 330 pool-maj / 316 median-below-floor | **331 / 327** |
+| Table S2 median m | raw (1.27/1.20/1.35) | bias-corrected (1.213/1.143/1.296) |
+| homoharringtonine NCI-H460 5uM n* | 20 | **19** (multiplex ~300 -> ~320-fold) |
+| homoharringtonine NCI-H661 5uM | n*=476, UNDER | **POOL-LIMITED** (that line's DMSO pool = 112 cells, m_min=6.5) |
+| 90th-pct budget quota | 11,013 | 10,973 (flat/adaptive 6.6M/2.4M unchanged) |
+
+**Fixtures regenerated from the engine:** `orion_{HCT116,HEK293T}_quota.csv` + `_summary.json`,
+`trade_{jurkat,hepg2}_falsification.json`, `tahoe_per_dose.csv` (median_m now bias-corrected),
+`tahoe_quota_per_condition.csv`, `tahoe_applications.json`, `outputs/emeraldbay_invariance.json`.
+
+**Unchanged (verified NO drift):** `fixtures/unified_spectrum.json` -- every headline conclusion
+intact (69.2% pool-limited, 10.3% over, sigma^2 transfer, held-out slopes). Genetic numbers unchanged.
+
+**Verification:** new guard 0 violations; 21 tests green; PDF ~1.15 MB / 35 pp / 5 figures; DOCX built.
+Every manuscript number re-derived from a live `engine.compute` stdout (theta-lever Table 6, Table S1/
+S2/S3, budget, k-NN edges, resolved fractions, homoharringtonine all reproduced).
+
+**Residual (not blocking):** `fixtures/tahoe_constants.json` still carries pre-audit *thesis* fields
+(pct_OVER 10.6, `n*=9,376/m^2`, median 5794) but only its `sigma2=0.9567` is read (by
+`test_sigma2_golden`); `scripts/tahoe_recompute/{pass5_within_sigma,pass6_within_recalibrate}.py` are the
+old 3-regime tahoe passes (need the 18 GB coords cache to run) and are superseded for the per-condition
+CSV by the engine -- they carry no quota formula, so the guard passes them.

@@ -287,9 +287,9 @@
  "gating_tolerance": 0.2,
  "gating_scope": "full atlas: 52 cell lines, condition-line groups with >=100 cells",
  "gating_n_groups": 3971,
- "gating_n_over": 347,
- "gating_pct_over": 8.7,
+ "gating_n_over": 706,
+ "gating_pct_over": 17.8,
  "gating_over_accuracy": 1.0,
- "gating_accuracy_scope": "downsample-and-measure verified over the FULL atlas (all 52 lines): 347 predicted OVER, 347 met tolerance",
+ "gating_accuracy_scope": "downsample-and-measure verified over the FULL atlas (all 52 lines): 706 predicted OVER, 706 met tolerance",
  "sigma2_scope": "5-shared-line slice, canonical within-condition (per-cell, line x condition); full-52-line = 0.938"
 }

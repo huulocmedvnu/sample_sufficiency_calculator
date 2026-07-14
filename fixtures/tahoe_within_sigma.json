@@ -4,14 +4,7 @@
  "scale_factor": 0.3976,
  "n_cells": 95624334,
  "n_conditions_used": 66905,
- "quota_const_new": 9375.8,
- "quota_const_old": 23577,
- "per_pc_min": 0.693,
- "per_pc_max": 2.469,
- "pct_over": 10.6,
- "pct_under": 89.0,
- "pct_ghost": 0.4,
- "median_nstar": 5794,
- "boundary_m": 2.69,
- "note": "within-condition per-cell variance over all cells (sample x line groups); m and N0 unchanged, n* rescaled by sigma2_within/2.406"
+ "C_within_largepool": 4688,
+ "C_marginal_largepool": 11789,
+ "note": "within-condition residual per-cell variance (headline) vs marginal (conservative bound). Quota constants are the large-control bounds; the operational quota is the two-arm engine form."
 }

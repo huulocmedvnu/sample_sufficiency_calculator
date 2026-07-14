@@ -12,7 +12,9 @@ predicted OVER, downsample to n* and check the realized RMS angle meets 1.05*the
 Writes the full-atlas result back into fixtures/emeraldbay_calibration.json (gating_over_accuracy +
 gating_accuracy_scope). Run: python scripts/emeraldbay_recompute/pass5_gating_full.py
 """
-import os, json, numpy as np
+import os, sys, json, numpy as np
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "src"))
+from engine import compute   # OVER classification + n* via the single engine (two-arm, real per-line pool)
 OUT = os.environ.get("OUT_EB", "/mnt/hdd2/loc-tran/eb_work/out")
 # EB_CALIB_FIX must point at the SAME fixture pass3 wrote (this pass updates it in place with the
 # full-atlas gating result). Default: the committed fixtures/emeraldbay_calibration.json.
@@ -28,6 +30,7 @@ coords = z["coords"].astype(np.float64); samp = z["sample"].astype(str); line = 
 print(f"[gating-full] {len(coords):,} cells, {len(np.unique(line))} lines", flush=True)
 
 line_base = {l: coords[line == l].mean(0) for l in np.unique(line)}
+line_n = {l: int((line == l).sum()) for l in np.unique(line)}        # per-line control-pool size = n_c
 grp = np.char.add(np.char.add(samp, "|"), line)                      # (sample x line) unit, as pseudobulk
 uniq = np.unique(grp)
 
@@ -44,10 +47,11 @@ for g in uniq:
         continue
     u = v / m
     ell = C.var(0)                                                   # PCA-diagonal plug-in (per-PC var)
-    trPSP = float(((1.0 - u ** 2) * ell).sum())
-    nstar = 2.0 * trPSP / (m ** 2 * THETA_GATE ** 2)
-    if N < nstar:                                                    # UNDER
+    res = compute(C.mean(0)[None, :], base[None, :], np.array([N], float),
+                  np.array([float(line_n[l])], float), np.diag(ell), theta=THETA_GATE)
+    if res["regime"][0] != "OVER":                                  # engine: two-arm quota, real n_c
         continue
+    nstar = float(res["n_star"][0])
     n_over += 1
     n = int(min(max(np.ceil(nstar), 5), N - 1))
     th2 = np.empty(REPS)

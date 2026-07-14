@@ -14,7 +14,9 @@ theory's validity criterion rho^2 = m^2/(u^T Sigma u) >= 3 (first-order regime),
 
 Outputs -> fixtures/trade_<line>_falsification.json  (+ per-knockdown rows).
 """
-import os, json, argparse, numpy as np
+import os, sys, json, argparse, numpy as np
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "src"))
+from engine import compute
 
 def main():
     ap = argparse.ArgumentParser()
@@ -48,11 +50,11 @@ def main():
         if m_raw == 0:
             continue
         u = v / m_raw
-        trPSP = float(trSig - u @ Sig @ u)
-        uSu = float(u @ Sig @ u)
-        # bias-correct m (full-N centroid vs large NTC pool)
-        trS_full = trSig * (1.0 / N + 1.0 / n_ntc)
-        m2 = max(m_raw ** 2 - trS_full, 1e-6)
+        # bias-corrected magnitude and tr(P Sigma P) from the SINGLE engine (no local formula):
+        # the a-priori slope tr(P Sigma P)/m^2 is the measurement-law prediction this test falsifies.
+        e = compute(muN[None, :], mu_ntc[None, :], np.array([N], float), np.array([n_ntc], float), Sig)
+        trPSP = float(e["trPSP"][0]); uSu = trSig - trPSP
+        m2 = max(float(e["m_corr"][0]) ** 2, 1e-6)
         rho2 = m2 / (uSu * (1.0 / N))          # along-signal SNR at depth N (uses S=Sigma/N ref scale)
         pred_slope = trPSP / m2
 

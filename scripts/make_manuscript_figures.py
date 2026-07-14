@@ -100,53 +100,6 @@ def fig3_tahoe_spectrum():
     save(fig, "fig3_tahoe_spectrum")
 
 
-def fig4_emeraldbay():
-    d = json.load(open(f"{FX}/emeraldbay_calibration.json"))
-    cur = d["heldout_curves"]
-    # DMSO_T0 reference groups first (by descending m), then the single non-DMSO drug group; keys are
-    # read from the fixture so the figure follows whichever groups the recompute selected.
-    dmso = sorted([g for g in cur if g.startswith("DMSO_T0")], key=lambda g: -cur[g]["m"])
-    drugg = [g for g in cur if not g.startswith("DMSO_T0")]
-    order = dmso + drugg
-    palette = [BLUE, GREEN, SKY, VERM]; markers = ["o", "s", "^", "D"]
-    cols = {g: palette[i % len(palette)] for i, g in enumerate(order)}
-    mk = {g: markers[i % len(markers)] for i, g in enumerate(order)}
-    fig, ax = plt.subplots(figsize=(6.2, 4.2))
-    for g, c in cols.items():
-        rows = np.array(cur[g]["rows"], dtype=float)   # [n, realized_theta_RMS, predicted_theta_RMS]
-        N = cur[g]["N"]; x = 1.0 / rows[:, 0] - 1.0 / N; y = rows[:, 1] ** 2   # RMS angle -> theta^2
-        slope = cur[g]["slope"]; exp = cur[g]["expected_slope"]; r2 = cur[g]["r2"]
-        lab = g.replace("|", " x ")
-        drug = "vehicle" if g.startswith("DMSO_T0") else "drug"
-        ax.scatter(x, y, s=26, color=c, marker=mk[g], edgecolor="white", linewidth=0.4, zorder=3,
-                   label=f"{lab} ({drug}, m={cur[g]['m']:.1f}): slope {slope:.2f} vs {exp:.2f}, $R^2$={r2:.4f}")
-        xs = np.linspace(0, x.max(), 20); ax.plot(xs, exp * xs, color=c, lw=1.3, alpha=0.8)
-    ax.set_xlabel(r"$1/n - 1/N$  (finite-population sampling axis)")
-    ax.set_ylabel(r"realized mean squared angular error  $\theta^2(n)$")
-    ax.set_title("EmeraldBay held-out validation: realized $\\theta^2$ vs the parameter-free\n"
-                 r"prediction $\mathrm{tr}(P\Sigma P)/m^2\cdot(1/n-1/N)$ (lines), no fitted parameter", fontsize=9)
-    ax.legend(loc="upper left", frameon=False, fontsize=6.6)
-    save(fig, "fig4_emeraldbay_validation")
-
-
-def _regime_counts(df, col_ns, col_dep, ghost=50000, n_ntc=None):
-    """Returns (over, under, ghost, not_detectable). Chemical (n_ntc=None): screens are ~fully
-    detectable, so over/under/ghost among all conditions, not-detectable ~ 0. Genetic (n_ntc set):
-    filter to DETECTABLE (snr_floor>1.5); over/under among detectable, with the NOT-DETECTABLE
-    bucket (m below the sampling floor) shown separately. Ghost and control-pool-limited are
-    negligible among detectable and folded into under."""
-    dep = df[col_dep].values.astype(float)
-    if n_ntc is None:
-        ns = df[col_ns].values.astype(float)
-        over = (ns < dep).mean() * 100; gh = (ns > ghost).mean() * 100
-        return over, 100 - over - gh, gh, 0.0
-    det = df["snr_floor"].values > 1.5
-    base = df[col_ns].values.astype(float) / 2.0
-    inv = 1.0 / base - 1.0 / n_ntc
-    ns = np.where(inv > 0, 1.0 / np.where(inv > 0, inv, np.nan), np.inf)
-    notdet = (~det).mean() * 100
-    over = (det & np.isfinite(ns) & (ns < dep)).mean() * 100
-    return over, 100 - notdet - over, 0.0, notdet
 
 
 def fig5_crossmodality():
@@ -210,68 +163,6 @@ def fig5_crossmodality():
     save(fig, "fig4_crossmodality_summary")
 
 
-def _showcase_curves(line, genes, reps=200, seed=0):
-    b = np.load(f"/mnt/hdd2/loc-tran/trade_work/out/{line}/basis.npz", allow_pickle=True)
-    coords = b["coords"].astype(np.float64); gene = b["gene"].astype(str); Sig = b["Sigma"]; ntc = str(b["ntc_label"])
-    trSig = float(np.trace(Sig)); rng = np.random.default_rng(seed)
-    idx = {g: np.where(gene == g)[0] for g in set(list(genes) + [ntc])}
-    mu_ntc = coords[idx[ntc]].mean(0); n_ntc = idx[ntc].size
-    out = []
-    for g in genes:
-        ii = idx[g]; N = ii.size; C = coords[ii]; muN = C.mean(0)
-        v = muN - mu_ntc; m_raw = np.linalg.norm(v); u = v / m_raw
-        trPSP = float(trSig - u @ Sig @ u); m2 = max(m_raw**2 - trSig*(1/N+1/n_ntc), 1e-6)
-        grid = np.unique(np.geomspace(20, max(21, N // 2), 8).astype(int)); grid = grid[grid < N]
-        xs, ys = [], []
-        for n in grid:
-            a = np.empty(reps)
-            for r in range(reps):
-                mu = coords[ii[rng.choice(N, n, replace=False)]].mean(0)
-                w = mu - mu_ntc; nw = np.linalg.norm(w)
-                a[r] = np.arccos(np.clip((w/nw) @ u, -1, 1))**2 if nw else 0
-            xs.append(1/n - 1/N); ys.append(a.mean())
-        out.append(dict(g=g, N=N, m=np.sqrt(m2), x=np.array(xs), y=np.array(ys), pred=trPSP/m2))
-    return out
-
-
-def fig6_trade_validation():
-    fig, axs = plt.subplots(1, 2, figsize=(9.2, 4.0))
-    # (a) a-priori vs realized slope scatter, both lines
-    ax = axs[0]
-    for line, c, mk in [("jurkat", VERM, "o"), ("hepg2", PURPLE, "s")]:
-        R = json.load(open(f"{FX}/trade_{line}_falsification.json"))["rows"]
-        pred = np.array([r["pred_slope"] for r in R]); fit = np.array([r["fit_slope"] for r in R])
-        strong = np.array([r["m"] > 4 for r in R])
-        ax.scatter(pred[~strong], fit[~strong], s=10, color=c, alpha=0.20, edgecolor="none")
-        ax.scatter(pred[strong], fit[strong], s=26, color=c, marker=mk, edgecolor="white", linewidth=0.4,
-                   label=f"{line.capitalize()} (strong m>4: ratio {np.median(fit[strong]/pred[strong]):.2f})")
-    lim = ax.get_xlim(); hi = min(lim[1], 30)
-    ax.plot([0, hi], [0, hi], color=BLACK, lw=1.2, ls="--", label="a-priori = realized")
-    ax.set_xlim(0, hi); ax.set_ylim(0, hi)
-    ax.set_xlabel(r"a-priori slope  $\mathrm{tr}(P\Sigma P)/m^2$")
-    ax.set_ylabel("realized downsampling slope")
-    ax.set_title("(a) Parameter-free slope, per knockdown\n(faded = weak/low-SNR, solid = strong)", fontsize=9)
-    ax.legend(frameon=False, fontsize=7, loc="upper left")
-    # (b) showcase downsample curves
-    ax = axs[1]
-    show = {"jurkat": ["EXOSC4", "RPS27A", "RPS13"], "hepg2": ["RPL23", "PSMA4", "PDCD11"]}
-    cmap = {"jurkat": VERM, "hepg2": PURPLE}; mks = ["o", "s", "^"]
-    for line in ("jurkat", "hepg2"):
-        try:
-            curves = _showcase_curves(line, show[line])
-        except Exception as e:
-            print(f"  (skip {line} curves: {e})"); continue
-        for k, cu in enumerate(curves):
-            ax.scatter(cu["x"], cu["y"], s=22, color=cmap[line], marker=mks[k], edgecolor="white",
-                       linewidth=0.3, zorder=3,
-                       label=f"{line[:3].capitalize()} {cu['g']} (m={cu['m']:.1f})")
-            xs = np.linspace(0, cu["x"].max(), 20); ax.plot(xs, cu["pred"] * xs, color=cmap[line], lw=1.0, alpha=0.7)
-    ax.set_xlabel(r"$1/n - 1/N$"); ax.set_ylabel(r"realized  $\theta^2(n)$")
-    ax.set_title("(b) Held-out downsampling: strong essential genes\n(lines = a-priori prediction)", fontsize=9)
-    ax.legend(frameon=False, fontsize=6.4, loc="upper left", ncol=2)
-    fig.suptitle("TRADE Phase F: the angular-error law validated directly in the genetic modality "
-                 "(strong-knockdown slope 0.96-1.02, $R^2$=0.996)", fontsize=9.5, y=1.02)
-    save(fig, "fig6_trade_validation")
 
 
 if __name__ == "__main__":

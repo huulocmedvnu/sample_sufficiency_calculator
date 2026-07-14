@@ -11,7 +11,9 @@ Classification (n*) is read from pass4b's per-condition records (cheap); only th
 gathered from the 20 GB memmap and downsampled. Writes the result into fixtures/tahoe_direct_curves_full.json.
 Env: THETA(0.1), MIN_CELLS(400), REPS(200).
 """
-import os, json, numpy as np
+import os, sys, json, numpy as np
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "src"))
+from engine import compute   # quota + OVER classification: two-arm engine, real per-line pool n_c
 BASE = "/mnt/hdd2/loc-tran/tahoe_work/pass4"
 _dose = "/mnt/hdd2/loc-tran/tahoe_work/out_dose"
 BASIS = _dose if os.path.exists(os.path.join(_dose, "basis.npz")) else "/mnt/hdd2/loc-tran/tahoe_work/out"
@@ -27,9 +29,10 @@ cursor = int(z["cursor"]); cond_keys = list(z["cond_keys"])
 line_sum = dict(z["line_sum"].item()); line_cnt = dict(z["line_cnt"].item())
 baseline = {l: line_sum[l] / line_cnt[l] for l in line_sum}
 
-# n* / OVER classification from pass4b records: pred_slope = tr(PSP)/m^2  =>  n* = 2*pred_slope/theta^2
+# candidates = every condition with enough cells; the ENGINE (below) makes the OVER/UNDER call.
+# (No quota math here -- classification is engine.compute's job, per the single-source-of-truth rule.)
 recs = json.load(open(os.path.join(BASE, "curves_progress.json")))["records"]
-over = [r for r in recs if r["N"] >= MIN_CELLS and r["N"] >= 2.0 * r["pred_slope"] / THETA ** 2]
+over = [r for r in recs if r["N"] >= MIN_CELLS]
 lines_over = sorted(set(r["line"] for r in over))
 print(f"[gating-tahoe] {len(recs)} conditions; predicted OVER at theta={THETA}: {len(over)} "
       f"across {len(lines_over)} lines", flush=True)
@@ -51,9 +54,12 @@ for r in over:
     base = baseline[line]; v = C.mean(0) - base; m = float(np.linalg.norm(v))
     if m <= 0:
         continue
-    u = v / m; ell = C.var(0); trPSP = float(((1.0 - u ** 2) * ell).sum())
-    nstar = 2.0 * trPSP / (m ** 2 * THETA ** 2)
-    if N < nstar:                          # re-check with exact per-cell diagonal (record used same)
+    u = v / m; ell = C.var(0)
+    # exact quota + regime via the single engine (two-arm form, real per-line control pool n_c)
+    res = compute(C.mean(0)[None, :], base[None, :], np.array([N], float),
+                  np.array([float(line_cnt[line])], float), np.diag(ell), theta=THETA)
+    nstar = float(res["n_star"][0])
+    if res["regime"][0] != "OVER":         # engine says N < n* (or not detectable) -> not predicted-over
         continue
     checked += 1
     n = int(min(max(np.ceil(nstar), 5), N - 1))

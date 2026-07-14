@@ -31,6 +31,29 @@ GHOST = 50_000.0
 SNR_DETECT = 1.5
 
 
+def quota_two_arm(trPSP, m2, n_c, theta):
+    """THE cell quota (the only place it is defined). Treated-arm cells n* to hold the RMS angular error
+    at `theta`, given the perpendicular-noise trace tr(P.Sigma.P), the squared effect magnitude `m2`
+    (bias-corrected where the caller has finite samples), the REAL control-pool size `n_c`, and `theta`:
+
+        n_t* = 1 / ( m2 * theta^2 / tr(P.Sigma.P)  -  1/n_c )
+
+    Returns +inf (CONTROL-POOL-LIMITED) when m2 <= tr(P.Sigma.P)/(n_c*theta^2), i.e. below the floor
+    m_min: no treated depth resolves the direction. Reduces to the equal-arm value 2*tr/(m2*theta^2)
+    when n_c = n_t and to the large-pool limit tr/(m2*theta^2) as n_c -> inf. Scalar or array inputs."""
+    trPSP = np.asarray(trPSP, float); m2 = np.asarray(m2, float); n_c = np.asarray(n_c, float)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        denom = m2 * theta ** 2 / trPSP - 1.0 / n_c
+        out = np.where(denom > 0, 1.0 / denom, np.inf)
+    return out if out.ndim else float(out)
+
+
+def m_min_floor(trPSP, n_c, theta):
+    """Smallest magnitude resolvable at all given this control pool: m_min = sqrt(tr(P.Sigma.P)/(n_c theta^2)).
+    m <= m_min  =>  quota_two_arm returns +inf (control-pool-limited)."""
+    return np.sqrt(np.asarray(trPSP, float) / (np.asarray(n_c, float) * theta ** 2))
+
+
 def compute(mu_t, mu_c, n_t, n_c, Sigma, theta=THETA_DEFAULT, ghost=GHOST, snr_detect=SNR_DETECT):
     """Per-condition sufficiency spectrum. All inputs come from a pipeline; no dataset knowledge here.
 
@@ -61,10 +84,8 @@ def compute(mu_t, mu_c, n_t, n_c, Sigma, theta=THETA_DEFAULT, ghost=GHOST, snr_d
     m2_corr = np.maximum(m_raw ** 2 - trS, 0.0)           # bias-correction (every dataset)
     m_corr = np.sqrt(m2_corr)
 
-    denom = m2_corr * theta ** 2 / trPSP - 1.0 / n_c      # full two-arm quota denominator
-    with np.errstate(divide='ignore', invalid='ignore'):
-        nstar = np.where(denom > 0, 1.0 / denom, np.inf)  # denom<=0 => control pool can't resolve => inf
-    m_min = np.sqrt(trPSP / (n_c * theta ** 2))           # control-pool floor
+    nstar = quota_two_arm(trPSP, m2_corr, n_c, theta)     # THE quota (defined once, above)
+    m_min = m_min_floor(trPSP, n_c, theta)                # control-pool floor
 
     # regime, precedence: not-detectable -> pool-limited -> ghost -> over -> under
     regime = np.empty(len(m_raw), dtype=object)

@@ -22,8 +22,10 @@ Sigma = diag(per-PC variance) (the committed global sigma^2). Data: the from-raw
 (dose = 5 uM, strongest signal). (We also report full-depth k-NN accuracy for the annotated moa-fine
 label as an honest aside: it is near chance, because most single-condition directions are weak.)
 """
-import os, json, ast, numpy as np, pandas as pd
+import os, sys, json, ast, numpy as np, pandas as pd
 import pyarrow.parquet as pq
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "src"))
+from engine import compute   # the per-condition quota n* comes from the single engine (two-arm, real n_c)
 
 TW = "/mnt/hdd2/loc-tran/tahoe_work"
 OUT = os.path.join(TW, "out_dose"); META = os.path.join(TW, "meta/metadata")
@@ -34,7 +36,7 @@ rng = np.random.default_rng(0)
 b = np.load(os.path.join(OUT, "basis.npz"))
 comps = b["components"].astype(np.float64); pca_mean = b["pca_mean"].astype(np.float64)
 ppv = b["per_pc_var"].astype(np.float64); d = int(b["n_comps"]); sig = float(b["sigma2"])
-const = 2 * (d - 1) * sig / THETA**2
+Sigma = np.diag(ppv)                                      # global within-condition per-PC variance (diagonal)
 pb = np.load(os.path.join(OUT, "pseudobulk.npz"), allow_pickle=True)
 keys = [str(k) for k in pb["cond_keys"]]; sums = pb["sums"].astype(np.float64); counts = pb["counts"].astype(np.float64)
 sm = pq.read_table(f"{META}/sample_metadata.parquet").to_pandas()
@@ -60,11 +62,15 @@ rows = []
 for (drug, dose, line), sm_ in cond_sum.items():
     if abs(dose - DOSE) > 1e-9:
         continue
-    cen = (sm_ / cond_cnt[(drug, dose, line)] - pca_mean) @ comps.T
+    N = cond_cnt[(drug, dose, line)]
+    cen = (sm_ / N - pca_mean) @ comps.T
     v = cen - base_pca[line]; m = float(np.linalg.norm(v))
     if m <= 0:
         continue
-    rows.append((drug, line, str(moa.get(drug, "unclear")), v, m, const / m**2))
+    # per-condition quota n* from the engine (two-arm; n_c = the per-line control pool); inf -> cap by min() below
+    res = compute(cen[None, :], base_pca[line][None, :], np.array([N], float),
+                  np.array([float(line_cnt[line])], float), Sigma, theta=THETA)
+    rows.append((drug, line, str(moa.get(drug, "unclear")), v, m, float(res["n_star"][0])))
 drugs = np.array([r[0] for r in rows]); labels = np.array([r[2] for r in rows])
 V = np.stack([r[3] for r in rows]); mags = np.array([r[4] for r in rows]); nstar = np.array([r[5] for r in rows])
 if len(rows) > MAXNODES:

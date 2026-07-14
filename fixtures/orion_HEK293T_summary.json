@@ -1,128 +1,109 @@
 {
  "line": "HEK293T",
  "theta": 0.1,
- "format_version": "full-atlas",
+ "format_version": "engine-unified",
  "n_cells_total": 4534299,
- "n_gene_targets": 17857,
  "n_perturbations_scored": 17856,
  "min_cells": 25,
  "n_ntc_cells": 218838,
  "sigma2_within": 1.0334,
  "sigma2_marginal": 1.0396,
- "quota_const_iso": 10126.9,
+ "C_largepool": 5063,
  "m_median": 0.351,
- "m_p90": 1.19,
- "m_max": 6.081,
- "n_star_median": 52908,
+ "detectable_pct": 35.3,
+ "not_detectable_pct": 64.7,
+ "det_pct_over": 0.1,
+ "det_pct_under": 99.9,
  "pct_over": 0.0,
- "pct_under": 49.4,
- "pct_ghost": 50.6,
- "pct_detectable": 35.3,
- "detectable_pct_over": 0.0,
- "aniso_iso_ratio_median": 0.6596,
+ "pct_under": 35.3,
+ "pct_ghost": 0.0,
+ "pct_pool_limited": 0.0,
+ "median_n_star": 7592,
  "median_true_N0": 204,
- "median_deficit_x": 248.02,
  "top_strong": [
   {
    "gene_target": "RPL38",
-   "m": 6.081248682074499,
-   "n_star_aniso": 119.27079925253133,
+   "m_corr": 6.0812,
+   "n_star": 59.65165525965557,
    "n_cells": 43,
    "regime": "UNDER"
   },
   {
    "gene_target": "NUP93",
-   "m": 5.766588822679991,
-   "n_star_aniso": 177.264483022152,
+   "m_corr": 5.7666,
+   "n_star": 88.66815326851683,
    "n_cells": 28,
    "regime": "UNDER"
   },
   {
    "gene_target": "ITGB1",
-   "m": 5.096004395428526,
-   "n_star_aniso": 178.64874030514306,
+   "m_corr": 5.096,
+   "n_star": 89.36084508472909,
    "n_cells": 39,
    "regime": "UNDER"
   },
   {
    "gene_target": "POLR2C",
-   "m": 4.543596485354763,
-   "n_star_aniso": 245.1885798867749,
+   "m_corr": 4.5436,
+   "n_star": 122.66300645596199,
    "n_cells": 42,
    "regime": "UNDER"
   },
   {
    "gene_target": "ZNF671",
-   "m": 4.476850941575999,
-   "n_star_aniso": 209.47164788830472,
+   "m_corr": 4.4769,
+   "n_star": 104.78597449102311,
    "n_cells": 41,
    "regime": "UNDER"
   },
   {
    "gene_target": "PGAM2",
-   "m": 4.20459325374364,
-   "n_star_aniso": 249.17780680017026,
+   "m_corr": 4.2046,
+   "n_star": 124.65987479032867,
    "n_cells": 57,
    "regime": "UNDER"
   },
   {
    "gene_target": "POLR2I",
-   "m": 4.148406841137419,
-   "n_star_aniso": 390.1833602593389,
+   "m_corr": 4.1484,
+   "n_star": 195.26575741371352,
    "n_cells": 32,
    "regime": "UNDER"
   },
   {
    "gene_target": "RPS20",
-   "m": 3.851603556979532,
-   "n_star_aniso": 361.1166923342307,
+   "m_corr": 3.8516,
+   "n_star": 180.70744384302344,
    "n_cells": 34,
    "regime": "UNDER"
   },
   {
    "gene_target": "SF3B5",
-   "m": 3.8512765548364545,
-   "n_star_aniso": 337.7929217285048,
+   "m_corr": 3.8513,
+   "n_star": 169.02691374502413,
    "n_cells": 37,
    "regime": "UNDER"
   },
   {
    "gene_target": "USPL1",
-   "m": 3.8214736637599804,
-   "n_star_aniso": 344.68129436232937,
+   "m_corr": 3.8215,
+   "n_star": 172.4764769166555,
    "n_cells": 57,
    "regime": "UNDER"
   },
   {
    "gene_target": "SNIP1",
-   "m": 3.532861041896374,
-   "n_star_aniso": 370.5211524156461,
+   "m_corr": 3.5329,
+   "n_star": 185.41754419819577,
    "n_cells": 43,
    "regime": "UNDER"
   },
   {
    "gene_target": "CPSF4",
-   "m": 3.5056491962783465,
-   "n_star_aniso": 409.5220736163244,
+   "m_corr": 3.5056,
+   "n_star": 204.9528058291654,
    "n_cells": 63,
    "regime": "UNDER"
   }
- ],
- "two_arm": {
-  "n_perturbations": 17856,
-  "n_ntc_cells": 218838,
-  "sigma2_within": 1.0334,
-  "theta": 0.1,
-  "C_largepool_limit": 5064.0,
-  "pct_detectable": 35.3,
-  "pct_not_detectable": 64.7,
-  "det_pct_over": 0.1,
-  "det_pct_under": 99.9,
-  "det_median_nstar": 3258,
-  "det_median_deficit": 17.5,
-  "pct_pool_limited_among_detectable": 0.0,
-  "pct_pool_limited_among_all": 36.3,
-  "m_min": 0.12,
-  "min_detectable_m": 0.28
- }
+ ]
 }

@@ -2,6 +2,7 @@
  "theta": 0.1,
  "reps": 300,
  "basis": "frozen-HVG (committed)",
+ "quota_source": "src/engine.py (two-arm, real n_c)",
  "graph_scope": {
   "source": "all_cells.npz",
   "n_lines": 52,
@@ -10,13 +11,22 @@
  },
  "over": {
   "key": "DMSO_T0|HS-578T",
-  "m": 5.89,
-  "nstar": 184,
+  "nstar": 92,
+  "engine": {
+   "n_star": 92.19207612347087,
+   "trPSP": 31.866783367786667,
+   "m_raw": 5.890347887710067,
+   "m_corr": 5.887394924241997,
+   "m_min": 0.30947791360408267,
+   "snr": 31.58499953946321,
+   "detectable": true,
+   "regime": "OVER"
+  },
   "N0": 1067,
-  "n_d": 184,
+  "n_d": 92,
   "full_dist": 5.8903478877100675,
-  "dist_rel_drift": 0.0014814919025723993,
-  "dist_sd": 0.13428372772395336,
+  "dist_rel_drift": 0.0063298821689698834,
+  "dist_sd": 0.21208675198989785,
   "neighbours": [
    "DMSO_T0|hTERT-HPNE",
    "DMSO_T0|SW 1088",
@@ -28,36 +38,45 @@
    "DMSO_T0|RPMI-7951": 0.8824
   },
   "cos_drift": {
-   "DMSO_T0|hTERT-HPNE": 0.0015,
-   "DMSO_T0|SW 1088": 0.0014,
-   "DMSO_T0|RPMI-7951": 0.0016
+   "DMSO_T0|hTERT-HPNE": 0.0044,
+   "DMSO_T0|SW 1088": 0.0046,
+   "DMSO_T0|RPMI-7951": 0.0048
   },
-  "cos_sd": 0.0053
+  "cos_sd": 0.0082
  },
  "under": {
-  "key": "Galunisertib|AN3 CA",
-  "m": 0.57,
-  "nstar": 22475,
-  "N0": 305,
-  "n_d": 184,
-  "full_dist": 0.570061680445822,
-  "dist_rel_drift": 0.10483274516671716,
-  "dist_sd": 0.0516976997749291,
+  "key": "Gemcitabine|MIA PaCa-2",
+  "nstar": 42666,
+  "engine": {
+   "n_star": 42665.9701526681,
+   "trPSP": 34.549195027466446,
+   "m_raw": 0.7787471839340182,
+   "m_corr": 0.6891795227097325,
+   "m_min": 0.6276881524931963,
+   "snr": 2.1476756153374206,
+   "detectable": true,
+   "regime": "UNDER"
+  },
+  "N0": 280,
+  "n_d": 92,
+  "full_dist": 0.7787471839340181,
+  "dist_rel_drift": 0.19417137703418816,
+  "dist_sd": 0.08627347394956707,
   "neighbours": [
-   "Fluorouracil|LS 174T",
-   "Fluorouracil|SW 1088",
-   "Oxaliplatin|LoVo"
+   "Encorafenib|MIA PaCa-2",
+   "Capecitabine|MIA PaCa-2",
+   "Paclitaxel|MIA PaCa-2"
   ],
   "cos_full": {
-   "Fluorouracil|LS 174T": 0.8061,
-   "Fluorouracil|SW 1088": 0.754,
-   "Oxaliplatin|LoVo": 0.7477
+   "Encorafenib|MIA PaCa-2": 0.7404,
+   "Capecitabine|MIA PaCa-2": 0.6064,
+   "Paclitaxel|MIA PaCa-2": 0.5936
   },
   "cos_drift": {
-   "Fluorouracil|LS 174T": 0.0859,
-   "Fluorouracil|SW 1088": 0.0773,
-   "Oxaliplatin|LoVo": 0.0787
+   "Encorafenib|MIA PaCa-2": 0.124,
+   "Capecitabine|MIA PaCa-2": 0.0981,
+   "Paclitaxel|MIA PaCa-2": 0.0979
   },
-  "cos_sd": 0.0467
+  "cos_sd": 0.1029
  }
 }

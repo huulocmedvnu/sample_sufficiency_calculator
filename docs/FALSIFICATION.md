@@ -1,4 +1,7 @@
-> ⚠️ **SUPERSEDED.** Numbers here predate the audit (findings #1-#9, gaps 1-3). The authoritative source is `docs/MANUSCRIPT_DEEPSEEK.md` + `src/engine.py`. See `docs/AUDIT_DENOMINATORS.md` and `docs/ARCHITECTURE.md`.
+> **Current.** This is the held-out full-atlas falsification behind the manuscript's slope test; its
+> in-regime slopes (0.94 Tahoe / 0.98 EmeraldBay) and the marginal-σ² re-stream (2.4158) are the values
+> the paper cites. It is an independent test of the *measurement law* `tr(PΣP)/m²·(1/n−1/N)`, distinct
+> from the quota/regime spectrum (which is the engine's job; `src/engine.py`, `docs/AUDIT_LOG.md`).
 
 # Full-atlas falsification of the angular-error law
 
@@ -46,12 +49,14 @@ validates that conservative bound directly:
 | atlas | quantity | full-atlas value | calibration | Δ |
 |:--|:--|--:|--:|--:|
 | Tahoe-100M | marginal σ² — conservative bound (mean over 50 PCs, all 95.6 M cells) | **2.4158** | 2.406 | +0.4 % |
-| EmeraldBay | within-condition σ² (all 1.83 M cells, 52 lines) | **0.938** | 0.938 | 0 % |
+| EmeraldBay | within-condition σ² (all 1.83 M cells, 52 lines, this re-stream's pooling) | **0.938** | 0.938 | 0 % |
 
 Both land within rounding of the calibrated values; the calibration fit on a fraction of a percent of the
-data reproduces on the whole atlas. Note that EmeraldBay's full-atlas within-condition σ² ≈ 0.938 is a
-like-for-like match to the Tahoe within-condition headline σ² = 0.9567 — the two platforms agree on the
-quantity that actually sets the quota.
+data reproduces on the whole atlas. This full-atlas re-stream pools EmeraldBay's within-condition variance
+to σ² ≈ 0.938; the manuscript's spectrum instead pools at (sample × line) granularity and uses **σ² =
+0.9174** (a ~2 % grouping difference, `docs/AUDIT_LOG.md` §7). Either way EmeraldBay's within-condition σ²
+is a like-for-like match to the Tahoe within-condition headline σ² = 0.9567 — the two platforms agree on
+the quantity that actually sets the quota.
 
 ## Result 2 — the parameter-free law is confirmed in-regime, on both atlases
 

@@ -62,3 +62,36 @@ control pool, not treated depth.
   (`fixtures/chemical_within_cov.json`) from the cached memmap; `scripts/orion_recompute` and
   `scripts/trade_recompute` remain the streaming + original genetic implementation the engine
   reproduces (the engine-vs-genetic gate in `tests/test_engine_golden.py`).
+
+## Retired artifacts (deleted in the legacy-purge cleanup)
+
+These files were **deleted** because they carried retired-thesis numbers/logic and were not consumed by
+the engine, manuscript, tests, or figures. They are listed so that anyone who encounters a copy (in an
+old checkout, a cache, or an AI's memory) recognises it as stale. The current story is in
+`docs/MANUSCRIPT_DEEPSEEK.md`, `docs/SUPPLEMENT.md`, and `src/engine.py`.
+
+**Retired-thesis fingerprints** (appear now only in AUDIT_LOG / AUDIT_DENOMINATORS / this file / README):
+`n★ = 9,376/m²` (equal-arm headline), `10.6% over / 89.0% under / 0.4% ghost` (retired within-condition
+spectrum), marginal `σ²=2.406 → 23,577/m²` used as a quota with spectrum `2.5% over / 89.3% under /
+8.2% ghost`, median n★ `5,794`, boundary `m=2.69`, budget `18,146` / `10.9M / 3.5M / 3.1×`, multiplex
+`~156×`, EmeraldBay `4.6/84.0/11.4`, invariance exemplar `Galunisertib × AN3-CA` with `n★=184` (or
+`130`) / `22,475` / `13,800`. The equal-arm form `2·tr(PΣP)/(m²θ²)` is a legitimate *special case*
+(matched vehicle) but was retired **as a headline**; the headline is the two-arm engine quota.
+
+**Deleted docs:** `DEVLOG.md`, `CASE_STUDIES.md`, `INVARIANCE.md`, `TECHNICAL_BLUEPRINT.md`,
+`THEORY_PRIMER.md`, `EXECUTIVE_SUMMARY.md`, `SCALE_AUDIT.md`, `ORION_GENE_PERTURBATION.md`,
+`TRADE_EXTENSION_PLAN.md` (orphan history; superseded by the manuscript + AUDIT_LOG).
+
+**Deleted fixtures:** `unified_calibration_table.md`, `genetic_two_arm.json`, `emeraldbay_spectrum.json`,
+`heldout_summary.{json,md}`, `tahoe_condition_counts.csv`, `tahoe_layout_summary.json`,
+`tahoe_per_drug.csv`, `tahoe_per_cell_line.csv` (unconsumed old-thesis artifacts).
+
+**Deleted code:** `src/quota_arm.py`, `scripts/orion_recompute/pass2_quota.py`,
+`scripts/recompute_genetic_arm.py`, `scripts/tahoe_recompute/{pass3_quota,pass5_within_sigma,pass6_within_recalibrate}.py`,
+`figures/study_flowchart.dot` (duplicated-quota-math or superseded old-tahoe passes).
+
+**Regenerated clean from the engine:** `docs/SUPPLEMENT.md` (constants of record),
+`fixtures/tahoe_{constants,calibration,within_sigma}.json`, `fixtures/{orion,trade}_*_quota.csv`,
+`fixtures/tahoe_{per_dose,quota_per_condition,applications}.json/.csv`. A guard
+(`tests/test_no_duplicate_math.py::test_no_retired_thesis_constants_in_prose_or_code`) fails CI if any of
+the fingerprints above reappear in a `.md`/`.py` outside the four exempt docs.

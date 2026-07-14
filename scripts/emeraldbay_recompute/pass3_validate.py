@@ -12,8 +12,10 @@ shared cell lines), this computes:
 
 Writes fixtures/emeraldbay_calibration.json (schema consumed by tests/test_emeraldbay_integration.py).
 """
-import os, json, numpy as np
+import os, sys, json, numpy as np
 import pyarrow.parquet as pq
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "src"))
+from engine import compute   # OVER classification + n* via the single engine (two-arm, real per-line pool)
 
 OUT = os.environ.get("OUT_EB", "/mnt/hdd2/loc-tran/eb_work/out")
 META = "/mnt/hdd2/loc-tran/eb_work/meta/metadata"
@@ -49,6 +51,7 @@ def cond_name(s):
         return s2cond.get(s, "?")
 cond_cell = np.array([cond_name(s) for s in samp])
 baseline = {l: coords[cline == l].mean(0) for l in np.unique(cline)}
+line_n = {l: int((cline == l).sum()) for l in np.unique(cline)}       # per-line control-pool size = n_c
 
 
 def curve(mask, line):
@@ -115,9 +118,11 @@ for l in np.unique(cline):
         C = coords[mask]; base = baseline[l]; v = C.mean(0) - base; m = np.linalg.norm(v)
         if m <= 0:
             continue
-        u = v / m; P = np.eye(d) - np.outer(u, u); trPSP = np.trace(P @ np.cov(C.T) @ P)
-        nstar = 2.0 * trPSP / (m**2 * THETA_GATE**2)
-        if N >= nstar:                                       # predicted OVER
+        u = v / m
+        res = compute(C.mean(0)[None, :], base[None, :], np.array([N], float),
+                      np.array([float(line_n[l])], float), np.cov(C.T), theta=THETA_GATE)
+        if res["regime"][0] == "OVER":                       # engine: two-arm quota, real n_c
+            nstar = float(res["n_star"][0])
             n_over += 1
             n = int(min(max(np.ceil(nstar), 5), N - 1))
             th2 = np.empty(200)
@@ -144,8 +149,10 @@ for i in range(len(counts)):
     v = cent[i] - line_base[pb_line[i]]; m = np.linalg.norm(v)
     if m <= 0:
         continue
-    u = v / m; trPSP = float(((1 - u**2) * ell[i]).sum())
-    if counts[i] >= 2 * trPSP / (m**2 * THETA_GATE**2):
+    lp = float(counts[pb_line == pb_line[i]].sum())          # per-line control-pool size = n_c
+    res = compute(cent[i][None, :], line_base[pb_line[i]][None, :], np.array([float(counts[i])]),
+                  np.array([lp]), np.diag(ell[i]), theta=THETA_GATE)
+    if res["regime"][0] == "OVER":                           # engine: two-arm quota, real n_c
         n_over_all += 1
 pct_over_all = round(100 * n_over_all / n_groups_all, 1)
 print(f"[gating:full-atlas] 52 lines; groups>=100: {n_groups_all}; OVER: {n_over_all} ({pct_over_all}%)")

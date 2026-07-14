@@ -127,11 +127,11 @@ def monte_carlo_verification(d: int = 50, n: int = 50_000, K: int = 50_000,
     try:
         import os, sys
         sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
-        from calculator import calculate_cell_quota_anisotropic
+        from calculator import cell_quota_equal_arm
         theta_star = float(np.sqrt(theo))                       # tolerance s.t. n* should return n
-        r = calculate_cell_quota_anisotropic(Sigma, v, tolerance=theta_star)
-        impl_rel = abs(r["required_cells_per_arm"] - n) / n
-        print(f"LAYER 3 (implementation cross-check): calculator returns n*={r['required_cells_per_arm']:.1f} "
+        n_calc = cell_quota_equal_arm(v, Sigma, theta_star)     # equal-arm form (matches E[theta^2] above)
+        impl_rel = abs(n_calc - n) / n
+        print(f"LAYER 3 (implementation cross-check): calculator returns n*={n_calc:.1f} "
               f"for tolerance=sqrt(E[theta^2]); target n={n} -> rel. error {impl_rel*100:.4f}%")
         assert impl_rel < 1e-6, "IMPLEMENTATION MISMATCH vs analytical n*"
         print(">>> LAYER 3 PASSED: src/calculator.py matches the analytical formula exactly.\n")

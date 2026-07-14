@@ -28,7 +28,7 @@ Outputs -> $OUT/<line>/{basis.npz, quota.csv, summary.json}
 import os, sys, re, json, argparse, numpy as np, scipy.sparse as sp
 import scanpy as sc, anndata as ad, pandas as pd
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "src"))
-from quota_arm import quota_two_arm, classify   # explicit two-arm quota + 4-class regime
+from engine import compute, summarize   # the SINGLE owner of the quota / bias / detection / regime
 
 # per-line QC constants (TRADE)
 LINE_QC = {
@@ -164,53 +164,36 @@ def main():
     gsum = coords.sum(0); gsq = (coords * coords).sum(0); N = coords.shape[0]
     sigma2_marg = float((gsq / N - (gsum / N) ** 2).mean())
     print(f"[pass1:{args.line}] sigma^2 within={sigma2_within:.4f} marginal={sigma2_marg:.4f}  "
-          f"tr(Sigma)={trSig:.2f}  n* = {2*(N_COMPS-1)*sigma2_within/th**2:,.0f}/m^2", flush=True)
+          f"tr(Sigma)={trSig:.2f}  (quota via src/engine.py)", flush=True)
 
-    # --- (iii) late pseudobulk quota ---
-    mu_ntc = cent_sums[ntc_label] / cent_cnt[ntc_label]; n_ntc = cent_cnt[ntc_label]
-    rows = []
-    for g in gs:
-        if g == ntc_label or cent_cnt[g] < args.min_cells:
-            continue
-        n_g = cent_cnt[g]; mu = cent_sums[g] / n_g
-        v = mu - mu_ntc; m_raw = float(np.linalg.norm(v))
-        if m_raw == 0:
-            continue
-        trS = trSig * (1.0 / n_g + 1.0 / n_ntc)              # equal-arm sampling-noise floor
-        m2 = max(m_raw ** 2 - trS, 1e-6); m = float(np.sqrt(m2))
-        u = v / m_raw
-        trPSP = float(trSig - u @ Sig @ u)                   # full-Sigma anisotropic functional
-        n_iso = 2 * (N_COMPS - 1) * sigma2_within / (m2 * th ** 2)
-        n_ani = 2 * trPSP / (m2 * th ** 2)                       # equal-arm (matched-vehicle) reference
-        # EXACT two-arm quota using the pooled NTC size n_ntc (see src/quota_arm.py)
-        n_two = quota_two_arm(trPSP, m, th, float(n_ntc))
-        rows.append(dict(gene_target=g, n_cells=int(n_g), m=m, m_raw=m_raw,
-                         n_star_iso=n_iso, n_star_aniso=n_ani, n_star_two_arm=float(n_two), trPSP=trPSP,
-                         snr_floor=m_raw / np.sqrt(trS),
-                         regime=classify(n_two, n_g, args.ghost)))
-    df = pd.DataFrame(rows).sort_values("m", ascending=False).reset_index(drop=True)
+    # --- (iii) late pseudobulk: assemble the standard structure, hand it to the SINGLE engine ---
+    mu_ntc = cent_sums[ntc_label] / cent_cnt[ntc_label]; n_ntc = float(cent_cnt[ntc_label])
+    sel = [g for g in gs if g != ntc_label and cent_cnt[g] >= args.min_cells]
+    mu_t = np.array([cent_sums[g] / cent_cnt[g] for g in sel])
+    n_t = np.array([cent_cnt[g] for g in sel], float)
+    r = compute(mu_t, np.tile(mu_ntc, (len(sel), 1)), n_t, np.full(len(sel), n_ntc), Sig,
+                theta=th, ghost=args.ghost)                  # bias / detection / quota / regime all engine
+    s = summarize(r)
+    df = pd.DataFrame(dict(
+        gene_target=sel, n_cells=n_t.astype(int),
+        m_raw=np.round(r["m_raw"], 4), m_corr=np.round(r["m_corr"], 4), snr=np.round(r["snr"], 4),
+        detectable=r["detectable"], n_star=r["n_star"], regime=r["regime"],
+    )).sort_values("m_corr", ascending=False).reset_index(drop=True)
     df.to_csv(os.path.join(d, "quota.csv"), index=False)
 
-    ns = df["n_star_aniso"].values; ncell = df["n_cells"].values
-    det = df["snr_floor"].values > 1.5
-    over = float((ns < ncell).mean() * 100); ghost = float((ns > args.ghost).mean() * 100)
     summ = dict(
         line=args.line, theta=th, qc=qc, ntc_label=str(ntc_label),
         n_cells_qc=int(N), n_cells_raw=int(keep.size), qc_pass_frac=round(float(keep.mean()), 4),
         n_knockdowns_scored=len(df), n_ntc_cells=int(n_ntc),
         sigma2_within=round(sigma2_within, 4), sigma2_marginal=round(sigma2_marg, 4),
-        quota_const_iso=round(2 * (N_COMPS - 1) * sigma2_within / th ** 2, 1),
-        quota_const_largepool_limit=round((N_COMPS - 1) * sigma2_within / th ** 2, 1),  # n_c->inf LOWER BOUND, not the operational quota
-        m_median=round(float(np.median(df.m)), 3), m_p90=round(float(np.percentile(df.m, 90)), 3),
-        m_max=round(float(df.m.max()), 3),
-        n_star_median=int(np.median(ns)),
-        pct_over=round(over, 1), pct_under=round(100 - over - ghost, 1), pct_ghost=round(ghost, 1),
-        pct_detectable=round(100 * float(det.mean()), 1),
-        detectable_pct_over=round(100 * float((ns[det] < ncell[det]).mean()), 1) if det.any() else None,
-        median_deficit_x=round(float(np.median(ns / ncell)), 1),
-        aniso_iso_ratio_median=round(float(np.median(df.n_star_aniso / df.n_star_iso)), 4),
-        median_N0=int(np.median(ncell)),
-        top_strong=df.head(12)[["gene_target", "m", "n_star_aniso", "n_cells", "regime"]].to_dict("records"),
+        C_largepool=s["C_largepool"],
+        m_median=round(float(np.median(r["m_corr"])), 3),
+        detectable_pct=s["detectable_pct"], not_detectable_pct=s["not_detectable_pct"],
+        det_pct_over=s["det_pct_over"], det_pct_under=s["det_pct_under"],
+        pct_over=s["pct_over"], pct_under=s["pct_under"], pct_ghost=s["pct_ghost"],
+        pct_pool_limited=s["pct_pool_limited"],
+        median_n_star=s["median_n_star"], median_N0=int(np.median(n_t)),
+        top_strong=df.head(12)[["gene_target", "m_corr", "n_star", "n_cells", "regime"]].to_dict("records"),
     )
     json.dump(summ, open(os.path.join(d, "summary.json"), "w"), indent=1)
     np.savez(os.path.join(d, "basis.npz"),
@@ -218,17 +201,13 @@ def main():
              Sigma=Sig, ell=ell, sigma2_within=sigma2_within, sigma2_marginal=sigma2_marg,
              ntc_label=str(ntc_label), n_comps=N_COMPS, evr=evr)
 
-    print(f"\n=== TRADE QUOTA SPECTRUM: {args.line} (theta={th}) ===")
-    print(f"QC-passed {N:,} cells; {len(df):,} knockdowns; NTC {n_ntc:,}")
-    print(f"sigma^2 within={sigma2_within:.4f} -> n* = {2*(N_COMPS-1)*sigma2_within/th**2:,.0f}/m^2  "
-          f"(large-NTC-pool variant {(N_COMPS-1)*sigma2_within/th**2:,.0f}/m^2)")
-    print(f"m median {np.median(df.m):.3f} (p90 {np.percentile(df.m,90):.2f}, max {df.m.max():.2f})")
-    print(f"SPECTRUM: {over:.1f}% OVER / {100-over-ghost:.1f}% UNDER / {ghost:.1f}% Ghost  "
-          f"(median n* {np.median(ns):,.0f} vs median depth {np.median(ncell):.0f}; "
-          f"deficit {np.median(ns/ncell):.1f}x; detectable {100*det.mean():.0f}%, OVER {100*(ns[det]<ncell[det]).mean():.0f}%)")
-    print(f"aniso/iso ratio median {np.median(df.n_star_aniso/df.n_star_iso):.3f}")
+    print(f"\n=== TRADE SPECTRUM (engine): {args.line} (theta={th}) ===")
+    print(f"QC-passed {N:,} cells; {len(df):,} knockdowns; NTC {int(n_ntc):,}  "
+          f"sigma^2 within={sigma2_within:.4f}  C={s['C_largepool']:,}")
+    print(f"detectable {s['detectable_pct']}%  over(det) {s['det_pct_over']}%  under(det) {s['det_pct_under']}%  "
+          f"median n* {s['median_n_star']}")
     print("top strong knockdowns:")
-    print(df.head(12)[["gene_target", "n_cells", "m", "n_star_aniso", "regime"]].to_string(index=False))
+    print(df.head(12)[["gene_target", "n_cells", "m_corr", "n_star", "regime"]].to_string(index=False))
     print(f"wrote {d}/quota.csv + summary.json + basis.npz")
 
 

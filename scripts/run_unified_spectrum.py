@@ -36,7 +36,7 @@ def main():
     specs = [chemical.load("Tahoe-100M", control="shared-dmso"), chemical.load("EmeraldBay"),
              genetic.load("orion_HCT116"), genetic.load("orion_HEK293T"),
              genetic.load("trade_jurkat"), genetic.load("trade_hepg2")]
-    summaries = []; percond = {}
+    summaries = []; percond = {}; tahoe = None
     for d in specs:
         s, r = run(d); summaries.append(s)
         key = s["name"].replace(" ", "_")
@@ -44,6 +44,21 @@ def main():
         percond[f"{key}_n_t"] = r["n_t"]; percond[f"{key}_n_c"] = r["n_c"]
         percond[f"{key}_n_star"] = np.where(np.isfinite(r["n_star"]), r["n_star"], -1.0)
         percond[f"{key}_regime"] = np.array([str(x) for x in r["regime"]])
+        if d["dataset"] == "Tahoe-100M":
+            tahoe = (d["cond_id"], r)
+
+    # per-dose breakdown for Tahoe (Supplementary Table S2). median_m is the bias-corrected magnitude,
+    # matching Table 5 (median_m_raw is emitted alongside for transparency); regime over ALL conditions.
+    cond_id, r = tahoe
+    dose = np.array([c.split("|")[1] for c in cond_id], float); reg = r["regime"]
+    pd_rows = ["dose_uM,n,pct_OVER,pct_UNDER,pct_GHOST,pct_POOL,pct_NOTDET,median_m,median_m_raw"]
+    for dz in sorted(set(dose)):
+        mask = dose == dz; N = int(mask.sum())
+        pc = lambda k: round(100.0 * np.count_nonzero(reg[mask] == k) / N, 1)
+        pd_rows.append(f"{dz},{N},{pc('OVER')},{pc('UNDER')},{pc('GHOST')},{pc('POOL-LIMITED')},"
+                       f"{pc('NOT-DETECTABLE')},{round(float(np.median(r['m_corr'][mask])),3)},"
+                       f"{round(float(np.median(r['m_raw'][mask])),3)}")
+    open(os.path.join(FX, "tahoe_per_dose.csv"), "w").write("\n".join(pd_rows) + "\n")
 
     # sensitivity: Tahoe referenced to the per-line mean (large pool) instead of the true vehicle
     ssens, _ = run(chemical.load("Tahoe-100M", control="per-line-mean"))
@@ -72,6 +87,8 @@ def main():
     print("\n=== Tahoe per-line-mean sensitivity ===")
     print(f"  det {ssens['detectable_pct']}%  over {ssens['pct_over']}  under {ssens['pct_under']}  "
           f"ghost {ssens['pct_ghost']}  pool {ssens['pct_pool_limited']}")
+    print("\n=== per-dose (Table S2), median_m = bias-corrected (median_m_raw alongside) ===")
+    print("\n".join(pd_rows))
 
 
 if __name__ == "__main__":

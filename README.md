@@ -1,4 +1,16 @@
-> ⚠️ **SUPERSEDED.** Numbers here predate the audit (findings #1-#9, gaps 1-3). The authoritative source is `docs/MANUSCRIPT_DEEPSEEK.md` + `src/engine.py`. See `docs/AUDIT_DENOMINATORS.md` and `docs/ARCHITECTURE.md`.
+> # ⚠️ Single source of truth
+> **Every number in the study is produced by `src/engine.py`** (via `scripts/run_unified_spectrum.py` →
+> `fixtures/unified_spectrum.json`). Any number not produced by it is stale. The authoritative narrative
+> is `docs/MANUSCRIPT_DEEPSEEK.md`; the current constants of record are `docs/SUPPLEMENT.md`.
+>
+> **A retired thesis was removed by the control-pool audit.** The numbers `n★ = 9,376/m²`,
+> `10.6% over`, `89% under`, `0.4% ghost`, the equal-arm `2·tr(PΣP)/(m²θ²)` used as a headline, and
+> the marginal-σ² spectrum (`2.5/89.3/8.2`, `23,577`) all belong to that retired thesis and appear now
+> **only** inside `docs/AUDIT_LOG.md` / `docs/AUDIT_DENOMINATORS.md` / `docs/ARCHITECTURE.md`. If you
+> see them anywhere else, treat them as stale — do not quote them.
+>
+> **This README's body predates the audit** and is kept for orientation only; trust the manuscript,
+> `src/engine.py`, and `docs/SUPPLEMENT.md` over anything below. Retired-artifact list: `docs/ARCHITECTURE.md`.
 
 # Dual-Sided Sample-Sufficiency Calculator for Single-Cell Perturbation Screens
 
@@ -306,11 +318,22 @@ DATA=/path/to/reference_perturbations.npz python src/calibrate.py
 python src/calculator.py                # self-check
 ```
 
+> **API note (current).** `n_c` is REQUIRED. Ignoring the control-pool size is exactly the error this
+> paper documents: against the largest atlas's real shared DMSO pool, ~69% of conditions are
+> control-pool-limited (`n* = inf`, unresolvable at any treated depth) — invisible to any equal-arm
+> formula. The library calls `src/engine.py`; it never re-implements the quota. (The old
+> `calculate_experimental_cell_quota(...)` equal-arm entry point is superseded by the functions below.)
+
 ```python
-from src.calculator import calculate_experimental_cell_quota
-n = calculate_experimental_cell_quota(single_cell_variance=0.9567, num_dimensions=50,
-                                      perturbation_magnitude=2.97, tolerance=0.1)
-# -> ~1063 cells per arm
+import math, numpy as np
+from src.calculator import cell_quota, cell_quota_large_pool, cell_quota_equal_arm
+v = np.zeros(50); v[0] = 2.97                    # perturbation vector (m = ||v||); Sigma may be diagonal
+Sigma = 0.9567 * np.ones(50)                     # within-condition per-cell variance
+
+cell_quota(v, Sigma, tolerance=0.1, control_pool_size=1_500_000)  # RECOMMENDED two-arm; n_c REQUIRED
+cell_quota(v, Sigma, tolerance=0.1, control_pool_size=1514)       # small shared vehicle -> may be math.inf (POOL-LIMITED)
+cell_quota_large_pool(v, Sigma, tolerance=0.1)                    # n_c -> inf limit  (= (d-1)sigma^2/(m^2 t^2))
+cell_quota_equal_arm(v, Sigma, tolerance=0.1)                     # matched 1:1 vehicle only (= 2x large-pool)
 ```
 
 ## Layout
