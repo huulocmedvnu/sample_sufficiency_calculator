@@ -79,8 +79,9 @@ spectrum), marginal `σ²=2.406 → 23,577/m²` used as a quota with spectrum `2
 (matched vehicle) but was retired **as a headline**; the headline is the two-arm engine quota.
 
 **Deleted docs:** `DEVLOG.md`, `CASE_STUDIES.md`, `INVARIANCE.md`, `TECHNICAL_BLUEPRINT.md`,
-`THEORY_PRIMER.md`, `EXECUTIVE_SUMMARY.md`, `SCALE_AUDIT.md`, `ORION_GENE_PERTURBATION.md`,
-`TRADE_EXTENSION_PLAN.md` (orphan history; superseded by the manuscript + AUDIT_LOG).
+`EXECUTIVE_SUMMARY.md`, `SCALE_AUDIT.md`, `ORION_GENE_PERTURBATION.md`,
+`TRADE_EXTENSION_PLAN.md` (orphan history; superseded by the manuscript + AUDIT_LOG). (`THEORY_PRIMER.md`
+was later restored and rewritten to the current two-arm thesis; it builds `theory_primer.pdf`.)
 
 **Deleted fixtures:** `unified_calibration_table.md`, `genetic_two_arm.json`, `emeraldbay_spectrum.json`,
 `heldout_summary.{json,md}`, `tahoe_condition_counts.csv`, `tahoe_layout_summary.json`,
