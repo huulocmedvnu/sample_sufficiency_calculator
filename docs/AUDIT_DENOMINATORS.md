@@ -1,7 +1,8 @@
 # Audit: denominators of the sufficiency-regime spectrum
 
-**Status:** findings only. No manuscript text, fixture, script or figure is changed by this document.
-No fixes are proposed. This is a record for the author to decide on.
+**Status:** RESOLVED on branch `fix/audit-round-1` (see the *Resolution* section at the end).
+Findings 1-7 below are the original record for the author to decide on; the author approved all of them
+and the fixes were applied in four commits. The finding text is kept as-written for provenance.
 
 **Scope:** how the over / under / ghost / detectable percentages (Table 1, Table 4, Figure 3, Figure 4)
 are counted — specifically, *which conditions each percentage is computed over*. Four independent
@@ -201,6 +202,77 @@ denominator of a headline comparison.
 
 ---
 
+## Finding 6 — the chemical spectrum is computed ISOTROPICALLY, not with the anisotropic rule the paper is named for
+
+**What.** Tahoe's per-condition quota in the spectrum is the **global isotropic** constant: `n* = 9,376/m²`
+exactly (`fixtures/tahoe_quota_per_condition.csv`; `9376/m²` reproduces the `n_star` column to median
+relative error **0.0000**). `9,376 = 2(d-1)σ²/θ²` with the single global `σ² = 0.9567` — the **isotropic**
+form, **not** the per-condition anisotropic `2·tr(PΣP)/(m²θ²)`.
+
+**Why it matters — it contradicts the paper's own thesis.** The paper is framed as an **"anisotropic
+sample-size rule"**; the Abstract states the rule as `n* = 2 tr(PΣP)/(m²θ²)`; the Discussion explicitly
+argues the isotropic form is wrong ("over-provisions saturated directions and under-provisions those with
+weak transverse signal"). Yet the headline **10.6%** is produced by the isotropic constant, not by the
+anisotropic formula the paper is named for. Meanwhile **Table 4 (genetic) DOES use the anisotropic quota**
+— it reports "HEK293T's anisotropic/isotropic ratio is 0.66, so its quota is 34% below the isotropic
+value". So the two modalities are computed by **different formulas** (chemical isotropic, genetic
+anisotropic), never declared.
+
+**Measurement (isotropic vs anisotropic on the SAME conditions; measured only, Tahoe not changed).** Using
+the per-condition `tr(PΣP)/m²` available for the 56,195 held-out Tahoe conditions
+(`tahoe_direct_curves_full.json`), on that same set:
+
+| n* method | over | under | ghost |
+|---|--:|--:|--:|
+| isotropic `9,376/m²` (what the spectrum uses) | 9.6 | 89.7 | 0.7 |
+| anisotropic `2·tr(PΣP)/(m²θ²)` (the paper's named rule) | 11.4 | 88.3 | 0.3 |
+
+The anisotropic `n*` is a median **0.88×** the isotropic (IQR 0.75–1.04), because the tangent-space trace
+discards the along-signal variance, so the anisotropic over-sampled fraction is **higher** (11.4 vs 9.6 on
+this subset). Extrapolated to the full panel, the isotropic **10.6%** headline **understates** the
+anisotropic over-fraction by roughly two points (~12%).
+
+**Possibly intentional, but undeclared.** The isotropic form may be a deliberate "collapsed" presentation
+(the manuscript does present `9,376/m²` as a single collapsed constant), but the choice — and the
+chemical-isotropic / genetic-anisotropic split — is **never stated**. Author confirmation needed. (Note:
+the EmeraldBay unit fix on branch `fix/emeraldbay-condition-unit` uses the isotropic `9,192/m²` precisely
+to **match Tahoe's actual isotropic method** and EmeraldBay's own Table 1 `C` column, so the two chemical
+rows are computed consistently; both still differ from the genetic anisotropic quota.)
+
+**Where affected:** the headline 10.6% (Abstract, Figure 3, Table 1, Results, Summary, Discussion); the
+chemical-vs-genetic method split (Table 1 vs Table 4).
+
+**Severity: HIGH.** The paper's single most-cited number is produced by a formula the paper elsewhere calls
+wrong, and the two modalities silently use different formulas.
+
+---
+
+## Finding 7 — the manuscript claims a tr(S) bias-correction the chemical spectrum does not perform
+
+**Claim in the manuscript (two places).** Statistical analysis: "each squared magnitude is bias-corrected
+for the finite-sample floor by subtracting tr(S)." Discussion: "Our quota performs the geometric version
+of that deconvolution, subtracting the sampling-floor term tr(S) from the squared magnitude before
+computing n*. Without it, shallow conditions would masquerade as strong."
+
+**What the code does.** The chemical spectrum (Tahoe, EmeraldBay) uses the RAW centroid displacement
+`m = ||treat - ctrl||`: `scripts/tahoe_recompute/pass3_quota.py` L65 computes `m` with no tr(S)
+subtraction, and `nstar = const/m**2` (L68); the isotropic reproduction (Finding 6) confirms it to
+0 relative error. Only the GENETIC recompute bias-corrects: `scripts/orion_recompute/pass3_quota_full.py`
+L58 does `m2 = max(m_raw**2 - trS, 1e-6)`. So the blanket claim is false for the two chemical atlases and
+true only for the genetic screens.
+
+**Options.** (i) There is no chemical bias-correction; the manuscript describes it wrongly — delete the two
+passages, numbers unchanged. (ii) Add the correction to the code and recompute (numbers would change).
+
+**Where affected:** Statistical analysis; Discussion; the chemical-vs-genetic method split (overlaps
+Finding 6).
+
+**Severity: MEDIUM.** No number changes, but the manuscript described a computation it does not perform.
+
+**Current number:** unaffected (a text-only claim).
+
+---
+
 ## Cross-reference: the 6,018 vs 5,503 gap (checked, not a denominator finding)
 
 For completeness, the ~515-condition gap between the spectrum's OVER count (6,018 matched-vehicle
@@ -210,3 +282,116 @@ two tests using different baselines (spectrum = matched vehicle; gating = per-li
 the two counts are not in a subset relationship. The broader "counted in the spectrum but excluded from
 validation" concern is real but lives at the dataset level (the spectrum's 56,827 conditions include 8,681
 with N0 < 400 that the N>=400 held-out excludes), not in the 6,018/5,503 pair.
+
+---
+
+## Resolution (branch `fix/audit-round-1`, four commits)
+
+The author (paper author) reviewed all seven findings, approved every fix, and directed a full correction.
+Applied in four commits. Numbers are the source of truth; prose was made to match.
+
+**Author decisions.** Finding 7 -> option (i) (no chemical bias-correction; delete the two passages, no
+number change). Finding 1 -> EmeraldBay condition unit is `(sample x line) = (drug x dose x line)`, all
+4,912 non-empty groups, spectrum built from `eb_work/out/pseudobulk.npz`; the `per_group_slope` basis
+(dose-pooled `drug-name x line`) is retained for the held-out test only, never the spectrum. Finding 2 ->
+declare all denominators: chemical spectra over all conditions with no cell-count filter, genetic over the
+N>=25 QC set with over/under among detectable. Finding 6 -> keep chemical isotropic / genetic anisotropic
+two-arm, but DECLARE it. Finding 3 -> 4,992 = 52 x 96 full cross, 4,912 non-empty (80 empty). Finding 4 ->
+drop the N>=300 threshold from the spectrum; held-out keeps N>=400.
+
+**Effect on the numbers.** Correcting the EmeraldBay unit + denominator moved its spectrum from the
+dose-pooled `4.6 / 84.0 / 11.4` (over / under / ghost, `N>=300`, drug-name x line) to
+**`1.0 / 98.8 / 0.2`** over all 4,912 (sample x line) conditions, isotropic C = 9,192/m^2, median m 1.29,
+median depth 240, 96.8% detectable. Qualitatively EmeraldBay is now ~99% under-sampled (was ~84%), i.e.
+almost nothing is over-sampled, consistent with its shallow 5-day depth. **Tahoe is unchanged
+(10.6 / 89.0 / 0.4)** and every genetic number is unchanged.
+
+**Finding-by-finding status.**
+- **#1 (unit)** RESOLVED — `scripts/make_spectrum_unified.py` builds the spectrum on `(sample x line)`;
+  Methods "Units and denominators" + the EmeraldBay paragraph declare the unit; golden test
+  `tests/test_regime_table_golden.py` locks 4,912 and the per-group reproduction.
+- **#2 (denominators)** RESOLVED — Methods "Units and denominators" states the chemical no-filter and
+  genetic N>=25 rules; Table 5 carries a `denom.` column.
+- **#3 (4,992 vs 4,912)** RESOLVED — EmeraldBay paragraph states 4,992 combinations, 4,912 non-empty.
+- **#4 (N>=300)** RESOLVED — the spectrum uses no cell-count filter; the N>=400 threshold is declared as a
+  held-out-only requirement.
+- **#6 (isotropic vs anisotropic)** RESOLVED — "Units and denominators" declares chemical isotropic /
+  genetic anisotropic two-arm; the isotropic reproduction is noted.
+- **#7 (bias-correction claim)** RESOLVED — the two false passages were deleted; the honest
+  chemical-raw / genetic-bias-corrected split is stated in Methods and Discussion.
+
+**Verification.** `tests/test_regime_table_golden.py` (golden aggregates, per-row percent-sum,
+per-group reproduction of the EmeraldBay aggregate, manuscript-matches-fixture); full `pytest` suite green;
+`manuscript.pdf` rebuilds clean.
+
+---
+
+## Round 2/3 resolution: the unified engine (branch `rewrite/unified-engine`) + finding #9
+
+**Root cause of #1-#8.** The sufficiency calculation was duplicated across a chemical branch and a
+genetic branch that drifted apart. Genetic was the only branch that was right. All eight findings are
+symptoms: #7 (genetic bias-corrected, chemical did not), #8 (genetic snr>1.5, chemical a baseless
+factor 1.25 = snr 1.118), n_c (genetic used the real pool, chemical hardcoded a factor of 2), quota
+(genetic used the full two-arm form, chemical hardcoded equal-arm), plus the EmeraldBay unit/denominator
+issues (#1-#4).
+
+**Fix.** One engine (`src/engine.py`), two data pipelines (`src/pipelines/{chemical,genetic}.py`). The
+engine computes sigma2, m_raw, tr(S)=tr(Sigma)(1/n_t+1/n_c) with the REAL n_c, bias-corrects every
+magnitude, applies snr>1.5 detection to every dataset, uses the full two-arm quota (no hardcoded arm
+factor), and reports the spectrum over ALL conditions. It reproduces the genetic ground truth exactly
+(sigma2 0.913/1.033/1.50/1.87; detectable 14.7/35.3/70.6/60.9; over-among-detectable 0.0/0.1/1.2/4.4),
+which validates the rewrite. `scripts/run_unified_spectrum.py` runs all six screens.
+
+**Finding #9 (CRITICAL) -- Tahoe's vehicle is a small shared pool, not matched vehicle.** Phase-0 data:
+each DMSO_TF centroid is shared by a median of 94 (drug,dose) conditions (min 83, max 94) at n_c~1,514
+cells. Structurally this is Orion's shared-NTC design but small. Under the real vehicle-matched control,
+m_min median = 1.76 > median m 1.27, so 69% of Tahoe conditions are control-pool-limited (n*=inf) and a
+further 6% fall below the detection floor: ~75% cannot be resolved at theta*=0.1 by any treated depth.
+The equal-arm C=9,376 and the 10.6%/89% headline were therefore built on an invalid matched-vehicle
+assumption. Resolution (author decision): the HEADLINE references each condition to the per-line mean
+(a large pool, the same control the held-out test and EmeraldBay use), giving the large-control limit
+C=4,688/m^2 and the spectrum 21.6/75.3/0.2 (detectable 97.0); the shared-DMSO result is reported as a
+new Results finding ("Control-pool design is binding in practice").
+
+**Status of every finding.**
+- #1 EmeraldBay unit -> engine uses (sample x line)=(drug x dose x line), 4,912 groups.
+- #2 denominators -> spectrum over ALL conditions for every dataset (genetic keeps a >=25-cell
+  measurement QC), declared in "Units, denominators, and control design".
+- #3 4,992 vs 4,912 -> stated (4,992 = 52x96 cross, 80 empty).
+- #4/#5 N>=300 threshold -> gone; N>=400 is held-out only.
+- #6 isotropic vs anisotropic -> the engine uses tr(P.Sigma.P) uniformly (isotropic Sigma for the
+  chemical sufficient-stat atlases, full Sigma for genetic), declared.
+- #7 bias-correction -> applied to EVERY dataset; the Statistical-analysis and Discussion sentences
+  restored and now correct.
+- #8 detection floor -> one criterion, snr>1.5 two-arm, for every dataset; the 1.25 constant removed.
+- #9 control-pool design -> new finding; headline on per-line mean, shared-DMSO reported separately.
+
+**Headline change.** Tahoe 10.6/89.0/0.4 at 9,376/m^2 -> 21.6/75.3/0.2 at 4,688/m^2 (large-pool). This
+exceeds the old +/-3pt guard, but is the direct consequence of the author-chosen control-model fix; the
+sigma^2-transfer and held-out-slope arguments still stand, so no other headline conclusion reversed.
+
+---
+
+## Round 3 (gap 1/2/3): real Sigma + shared-DMSO headline
+
+**gap 1 (chemical Sigma isotropic) + gap 3 (sigma2 hardcoded)** RESOLVED: chemical.py builds the REAL
+diagonal within-Sigma diag(ell_within) from per-condition sufficient statistics
+(fixtures/chemical_within_cov.json, via scripts/tahoe_recompute/pass7_within_cov.py streaming the cached
+per-cell PCA-coord memmap; no raw re-stream). sigma2 recomputes to 0.9567 (Tahoe, matches committed
+exactly) and 0.9174 (EmeraldBay). Measured result: Sigma is anisotropic (per-PC variance spans 3.6-5x)
+but tr(P.Sigma.P) varies only +-1.5-3% across conditions (drug displacements do not align with the
+high-variance axes); on genetic it varies 30-45 and bites. Near-isotropic chemical quota is thus a
+measured property, not an assumption.
+
+**gap 2 (Tahoe control estimand)** RESOLVED -> shared DMSO vehicle is the HEADLINE (the estimand
+v = mu_t - mu_vehicle that the direction rule names). Real vehicle = plate-shared DMSO_TF pool, n_c~1,514
+shared across ~94 conditions, so m_min median 1.75 > median m 1.27 and 69.2% of conditions are
+control-pool-limited (n*=inf), 5.8% not detectable, 10.3% over, 13.8% treated-depth-limited, 1.0% ghost.
+The per-line-mean reference (21.7% over, 0 pool-limited) is reported as a sensitivity analysis; it measures
+a different estimand (difference from the ~94-drug line average) and its m_min~0.05 claims a near-noiseless
+control no real experiment has. HEADLINE thesis: on the largest atlas the binding constraint is the shared
+control-pool size, not treated depth; a 100M-cell atlas does not rescue a 1,514-cell control pool.
+
+OVER/UNDER verification (downsample-and-measure on the predicted-OVER set, shared DMSO): 5,824/5,851
+(99.5%); the 27 exceptions are the strong-effect aggressive-downsampling cases where the Note-S1
+arc-vs-tangent curvature appears (realized <= 7.0 deg), matching its predicted sign and magnitude.

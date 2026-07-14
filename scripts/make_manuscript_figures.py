@@ -74,8 +74,14 @@ def fig2_geometry():
 
 
 def fig3_tahoe_spectrum():
-    df = pd.read_csv(f"{FX}/tahoe_quota_per_condition.csv")
-    ns = df["n_star"].values; N0 = 1296; ghost = 50000
+    # unified engine: per-condition n* / regime from the npz, aggregate percentages from the json.
+    z = np.load(f"{FX}/unified_spectrum_per_condition.npz")
+    ns_all = z["Tahoe-100M_n_star"]                                # -1.0 marks infinite/pool-limited
+    ns = ns_all[ns_all > 0]                                        # finite required-cell quotas only
+    summ = {s["name"]: s for s in json.load(open(f"{FX}/unified_spectrum.json"))["headline"]}["Tahoe-100M"]
+    over = summ["pct_over"]; under = summ["pct_under"]; gh = summ["pct_ghost"]; notdet = summ["not_detectable_pct"]
+    C = summ["C_largepool"]; med = summ["median_n_star"]; N0 = summ["median_n_t"]; ghost = 50000
+    cstr = f"{C:,}".replace(",", "{,}")                            # 4,688 -> LaTeX 4{,}688
     fig, ax = plt.subplots(figsize=(6.4, 3.6))
     bins = np.logspace(np.log10(max(ns.min(), 1)), np.log10(ns.max()), 60)
     ax.hist(ns, bins=bins, color=SKY, edgecolor="white", linewidth=0.3)
@@ -85,14 +91,12 @@ def fig3_tahoe_spectrum():
     ymax = ax.get_ylim()[1]
     ax.text(N0 * 0.92, ymax * 0.92, f"median depth\n$N_0$ = {N0:,}", ha="right", va="top", fontsize=7.5)
     ax.text(ghost * 1.1, ymax * 0.92, "ghost\nthreshold", ha="left", va="top", fontsize=7.5, color=VERM)
-    reg = df["regime"].value_counts(normalize=True) * 100          # authoritative per-condition regime
-    over = reg.get("OVER", 0.0); gh = reg.get("Ghost", 0.0); under = reg.get("UNDER", 0.0)
     ax.axvspan(ns.min(), N0, color=GREEN, alpha=0.08)
     ax.text(ns.min() * 1.4, ymax * 0.6, f"over-sampled\n{over:.1f}%", color=GREEN, fontsize=8)
-    ax.set_xlabel(r"required cells per arm  $n^\star = 9{,}376/m^2$   (log scale)")
+    ax.set_xlabel(r"required cells per arm  $n^\star = " + cstr + r"/m^2$   (log scale)")
     ax.set_ylabel("number of (drug $\\times$ dose $\\times$ line) conditions")
-    ax.set_title(f"Tahoe-100M sufficiency spectrum: median $n^\\star$ = {np.median(ns):,.0f}, "
-                 f"{over:.1f}% over / {under:.1f}% under / {gh:.1f}% ghost", fontsize=9)
+    ax.set_title(f"Tahoe-100M sufficiency spectrum: median $n^\\star$ = {med:,.0f}, "
+                 f"{over:.1f}% over / {under:.1f}% under / {gh:.1f}% ghost / {notdet:.1f}% not detectable", fontsize=9)
     save(fig, "fig3_tahoe_spectrum")
 
 
@@ -146,51 +150,57 @@ def _regime_counts(df, col_ns, col_dep, ghost=50000, n_ntc=None):
 
 
 def fig5_crossmodality():
-    tahoe = pd.read_csv(f"{FX}/tahoe_quota_per_condition.csv")
-    hct = pd.read_csv(f"{FX}/orion_HCT116_quota.csv"); hek = pd.read_csv(f"{FX}/orion_HEK293T_quota.csv")
-    jur = pd.read_csv(f"{FX}/trade_jurkat_quota.csv"); hep = pd.read_csv(f"{FX}/trade_hepg2_quota.csv")
-    # EmeraldBay: per-group m, N, and slope from the population-scale test (per-line-mean baseline)
-    ebrows = json.load(open(f"{FX}/emeraldbay_falsification_full.json"))["per_group_slope"]
-    eb_m = np.array([r["m"] for r in ebrows]); eb_N = np.array([r["N"] for r in ebrows])
-    eb_nstar = 2.0 * np.array([r["pred_slope"] for r in ebrows]) / 0.1 ** 2   # equal-arm quota at theta=0.1
-    emb = pd.DataFrame({"m": eb_m}); emb_reg = pd.DataFrame({"n_star": eb_nstar, "n_cells": eb_N})
-    sets = [("Tahoe (chem)", tahoe, BLUE, "-"), ("EmeraldBay (chem)", emb, SKY, "-"),
-            ("Orion HCT116", hct, GREEN, "--"), ("Orion HEK293T", hek, ORANGE, "--"),
-            ("TRADE Jurkat", jur, VERM, "-."), ("TRADE HepG2", hep, PURPLE, "-.")]
+    # unified engine: per-condition magnitudes from the npz, regime percentages from the json headline.
+    summ = {s["name"]: s for s in json.load(open(f"{FX}/unified_spectrum.json"))["headline"]}
+    z = np.load(f"{FX}/unified_spectrum_per_condition.npz")
+    # (json name, npz key, legend label, colour, linestyle, is_chemical, x-tick label)
+    sets = [("Tahoe-100M", "Tahoe-100M", "Tahoe (chem)", BLUE, "-", True, "Tahoe"),
+            ("EmeraldBay", "EmeraldBay", "EmeraldBay (chem)", SKY, "-", True, "Emerald\nBay"),
+            ("Orion HCT116", "Orion_HCT116", "Orion HCT116", GREEN, "--", False, "Orion\nHCT116"),
+            ("Orion HEK293T", "Orion_HEK293T", "Orion HEK293T", ORANGE, "--", False, "Orion\nHEK293T"),
+            ("TRADE Jurkat", "TRADE_Jurkat", "TRADE Jurkat", VERM, "-.", False, "TRADE\nJurkat"),
+            ("TRADE HepG2", "TRADE_HepG2", "TRADE HepG2", PURPLE, "-.", False, "TRADE\nHepG2")]
     fig, axs = plt.subplots(1, 2, figsize=(9.8, 3.8))
-    # (a) magnitude distributions
+    # (a) bias-corrected magnitude distributions
     ax = axs[0]
     bins = np.logspace(np.log10(0.03), np.log10(20), 55)
-    for name, df, c, ls in sets:
-        m = df["m"].values; m = m[m > 0]
+    for jname, zkey, lab, c, ls, is_chem, tick in sets:
+        m = z[zkey + "_m_corr"]; m = m[m > 0]
         h, edg = np.histogram(m, bins=bins, density=True)
         xc = np.sqrt(edg[:-1] * edg[1:])
-        ax.plot(xc, h, color=c, ls=ls, lw=1.8, label=f"{name} (med {np.median(m):.2f})")
+        ax.plot(xc, h, color=c, ls=ls, lw=1.8, label=f"{lab} (med {np.median(m):.2f})")
         ax.axvline(np.median(m), color=c, lw=0.8, alpha=0.5)
     ax.set_xscale("log"); ax.set_xlabel(r"effect magnitude  $m$  (log scale)")
     ax.set_ylabel("density"); ax.set_title("(a) Magnitude distributions by dataset", fontsize=9)
     ax.legend(frameon=False, fontsize=6.8, loc="upper right")
-    # (b) OVER/UNDER/Ghost stacked bars
+    # (b) sufficiency-regime stacked bars. Chemical screens: over/under/ghost/pool-limited/not-detectable
+    # over ALL conditions. Genetic screens: over/under split among the DETECTABLE fraction (ghost and
+    # pool-limited folded into under), with the not-detectable bucket (m below the sampling floor) on top.
     ax = axs[1]
-    rows = [("Tahoe", *_regime_counts(tahoe, "n_star", "N0")),
-            ("Emerald\nBay", *_regime_counts(emb_reg, "n_star", "n_cells")),
-            ("Orion\nHCT116", *_regime_counts(hct, "n_star_aniso", "n_cells", n_ntc=165562)),
-            ("Orion\nHEK293T", *_regime_counts(hek, "n_star_aniso", "n_cells", n_ntc=218838)),
-            ("TRADE\nJurkat", *_regime_counts(jur, "n_star_aniso", "n_cells", n_ntc=11514)),
-            ("TRADE\nHepG2", *_regime_counts(hep, "n_star_aniso", "n_cells", n_ntc=4380))]
-    labels = [r[0] for r in rows]
+    rows = []
+    for jname, zkey, lab, c, ls, is_chem, tick in sets:
+        s = summ[jname]; notdet = s["not_detectable_pct"]
+        if is_chem:
+            over = s["pct_over"]; under = s["pct_under"]; gh = s["pct_ghost"]; pl = s["pct_pool_limited"]
+        else:
+            over = round(s["detectable_pct"] * s["det_pct_over"] / 100.0, 1)   # over among detectable -> % of all
+            gh = 0.0; pl = 0.0
+            under = round(100.0 - notdet - over, 1)
+        rows.append((tick, over, under, gh, pl, notdet))
+    ticks = [r[0] for r in rows]
     ov = np.array([r[1] for r in rows]); un = np.array([r[2] for r in rows])
-    gh = np.array([r[3] for r in rows]); pl = np.array([r[4] for r in rows])
+    gh = np.array([r[3] for r in rows]); pl = np.array([r[4] for r in rows]); nd = np.array([r[5] for r in rows])
     x = np.arange(len(rows))
     ax.bar(x, ov, color=REG["OVER"], label="OVER (resolvable)", edgecolor="white", linewidth=1.2)
     ax.bar(x, un, bottom=ov, color=REG["UNDER"], label="UNDER", edgecolor="white", linewidth=1.2)
-    ax.bar(x, gh, bottom=ov + un, color=REG["Ghost"], label="Ghost (n*>50k)", edgecolor="white", linewidth=1.2)
-    ax.bar(x, pl, bottom=ov + un + gh, color="#3A3A3A", label="Not detectable (m below floor)", edgecolor="white", linewidth=1.2)
-    for i, (o, pv) in enumerate(zip(ov, pl)):
+    ax.bar(x, gh, bottom=ov + un, color=REG["Ghost"], label=r"Ghost ($n^\star$>50k)", edgecolor="white", linewidth=1.2)
+    ax.bar(x, pl, bottom=ov + un + gh, color="#B0B0B0", label=r"Pool-limited ($n^\star=\infty$)", edgecolor="white", linewidth=1.2)
+    ax.bar(x, nd, bottom=ov + un + gh + pl, color="#3A3A3A", label="Not detectable (m below floor)", edgecolor="white", linewidth=1.2)
+    for i, (o, ndv) in enumerate(zip(ov, nd)):
         ax.text(i, 101.5, f"{o:.1f}% over", ha="center", va="bottom", fontsize=6.8, color=GREEN)
-        if pv > 6:
-            ax.text(i, 100 - pv / 2, f"{pv:.0f}%", ha="center", va="center", fontsize=7, color="white")
-    ax.set_xticks(x); ax.set_xticklabels(labels, fontsize=7.5)
+        if ndv > 6:
+            ax.text(i, 100 - ndv / 2, f"{ndv:.0f}%", ha="center", va="center", fontsize=7, color="white")
+    ax.set_xticks(x); ax.set_xticklabels(ticks, fontsize=7.5)
     ax.set_ylabel("% of perturbations"); ax.set_ylim(0, 108); ax.grid(axis="x", visible=False)
     ax.set_title(r"(b) Sufficiency regime ($\theta_\star$=0.1 rad)", fontsize=9)
     ax.legend(frameon=True, facecolor="white", edgecolor="none", framealpha=0.9,

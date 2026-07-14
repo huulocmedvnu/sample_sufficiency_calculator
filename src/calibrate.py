@@ -6,11 +6,14 @@ recipe: normalize_total(1e4) -> log1p -> HVG(2000) -> PCA(50); see scripts/tahoe
 committed fixtures carry the per-cell PCA variance sigma^2, the per-component variances (anisotropic
 Sigma diagonal), and example per-drug perturbation vectors (in the NCI-H460 line).
 
-Calibrated constants (fixtures/tahoe_constants.json):
-    sigma^2 = 0.9567 (within-condition residual; headline)   d = 50   ->   n* = 9,376 / m^2   (theta = 0.1 rad)
-    (the marginal per-cell variance 2.406 -> n* = 23,577 / m^2 is retained only as a conservative bound.)
-Median across 56,827 (drug x dose x line) conditions: m ~ 1.27, n* ~ 5,794 cells/arm; N0 ~ 1,296 cells
-per condition -> 89.4% of conditions are UNDER-sampled or Ghost at 0.1 rad.
+Calibrated constants (fixtures/chemical_within_cov.json): sigma^2 = 0.9567 (within-condition residual,
+real diagonal Sigma; reproduces from the cached per-cell PCA coords). The quota is the two-arm form
+n_t* = 1 / (m^2 theta^2 / tr(P Sigma P) - 1/n_c); with a large control pool it approaches the large-pool
+bound (d-1) sigma^2 / theta^2 = 4,688 / m^2. Against Tahoe's REAL shared DMSO vehicle (n_c ~ 1,514 cells
+shared by ~94 conditions), the magnitude floor m_min = 1.75 exceeds the median magnitude 1.27, so of the
+56,827 (drug x dose x line) conditions at 0.1 rad 69% are control-pool-limited (unresolvable at any
+treated depth), 10% over-sampled, 14% treated-depth-limited; referencing the per-line mean instead gives
+22% over-sampled and is reported as a sensitivity. The single computation lives in src/engine.py.
 
 Run:  python src/calibrate.py
 """

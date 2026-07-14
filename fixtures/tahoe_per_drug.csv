@@ -1,380 +1,380 @@
-drug,median_m,median_nstar,n_conditions,OVER,UNDER,Ghost
-Panobinostat,4.24,523,150,120,30,0
-Homoharringtonine,5.88,271,150,100,50,0
-Binimetinib,2.11,2109,150,93,57,0
-Ouabain (Octahydrate),3.28,873,150,88,62,0
-Trametinib,2.29,1789,150,86,64,0
-Digitoxin,3.48,772,150,85,65,0
-Harringtonine,3.67,697,150,78,72,0
-Bortezomib,4.02,580,150,76,74,0
-Idarubicin (hydrochloride),2.93,1091,150,70,80,0
-Sapanisertib,2.36,1689,150,63,87,0
-Ixazomib citrate,2.76,1232,150,60,90,0
-Brivudine,2.46,1554,150,60,90,0
-Trametinib (DMSO_TF solvate),2.25,1849,150,60,90,0
-Ponatinib,1.87,2691,150,59,91,0
-Belinostat,2.56,1434,150,58,92,0
-PH-797804,3.11,969,150,58,92,0
-Triamcinolone,2.19,1963,150,56,94,0
-Budesonide,2.41,1611,150,56,94,0
-Dexamethasone,2.08,2169,150,55,95,0
-BAY1125976,2.5,1494,150,55,95,0
-TAK-901,3.03,1021,150,53,97,0
-RMC-6236,1.9,2600,150,53,97,0
-Selinexor ,2.26,1842,150,51,99,0
-Auranofin,2.36,1681,150,51,99,0
-Abemaciclib,2.38,1656,150,49,101,0
-Clobetasol propionate,2.15,2029,150,48,100,2
-Bimiralisib,2.55,1441,150,48,102,0
-Elimusertib hydrochloride,2.69,1299,150,48,102,0
-Tucidinostat,2.02,2288,150,47,103,0
-Dinaciclib,5.14,355,150,46,104,0
-Fedratinib (hydrochloride hydrate),1.92,2555,150,46,104,0
-Pentoxifylline,1.63,3547,150,45,105,0
-Vinblastine (sulfate),2.05,2232,150,45,105,0
-EX229,2.6,1390,150,44,106,0
-Sonidegib,2.36,1687,150,44,106,0
-Medroxyprogesterone acetate,2.04,2255,150,43,107,0
-Tirabrutinib (hydrochloride),1.75,3070,150,42,108,0
-Gemfibrozil,1.61,3620,150,42,108,0
-GSK1059615,2.34,1720,150,42,108,0
-Vandetanib,1.9,2600,150,41,109,0
-Darolutamide,1.7,3252,150,41,109,0
-Ipatasertib,2.01,2327,150,41,109,0
-Tirabrutinib,1.85,2747,150,40,110,0
-BI-3406,1.7,3243,150,39,111,0
-Clopidogrel,1.41,4727,150,39,111,0
-Futibatinib,1.66,3411,150,37,113,0
-Malotilate,1.59,3698,150,37,113,0
-Cyclosporin A,1.45,4435,150,36,114,0
-Paclitaxel,1.52,4076,150,36,114,0
-Lucanthone,1.58,3755,150,36,114,0
-Neratinib (maleate),1.72,3168,150,35,115,0
-Trimetrexate,1.79,2934,150,35,115,0
-venetoclax,1.89,2634,150,34,116,0
-Atazanavir (sulfate),1.65,3427,150,34,116,0
-Glasdegib,1.77,2997,150,33,117,0
-Econazole,1.46,4427,150,32,118,0
-Encorafenib,2.13,2063,136,30,106,0
-Entecavir (monohydrate),1.39,4844,150,30,120,0
-S-Adenosyl-L-methionine (disulfate tosylate),1.58,3754,150,30,120,0
-Vilanterol,1.48,4280,150,30,120,0
-Idoxuridine,1.36,5076,150,29,121,0
-Radotinib,1.5,4183,150,29,121,0
-Tolcapone,1.38,4918,150,29,121,0
-Allopurinol,1.11,7647,150,29,121,0
-L-Eflornithine (monohydrochloride),1.24,6122,150,28,122,0
-Phenylephrine (hydrochloride),1.55,3888,150,28,121,1
-Citalopram (hydrobromide),0.87,12341,150,28,121,1
-Piroxicam,1.12,7437,150,28,122,0
-Resveratrol,1.55,3888,150,28,122,0
-Dabrafenib,1.64,3500,150,27,123,0
-Artesunate,1.11,7604,150,27,123,0
-Aprepitant,1.21,6368,150,27,122,1
-Allantoin,1.76,3041,150,27,123,0
-Tofacitinib,1.53,3998,150,27,123,0
-Gemcitabine,1.25,6005,150,26,124,0
-Crizotinib (hydrochloride),1.39,4847,150,26,124,0
-c-Kit-IN-1,2.06,2211,150,26,124,0
-Ataluren,0.89,11916,150,25,124,1
-Pioglitazone,1.29,5670,150,25,125,0
-Tomivosertib,1.78,2973,150,25,125,0
-Epirubicin (hydrochloride),1.45,4465,150,25,125,0
-Sivelestat (sodium tetrahydrate),1.38,4932,150,25,125,0
-9-ING-41,1.54,3941,150,24,126,0
-Berbamine,1.22,6277,150,24,125,1
-Posaconazole,1.33,5321,150,24,126,0
-Retinoic acid,1.69,3296,150,24,126,0
-Esmolol (hydrochloride),1.18,6733,150,23,127,0
-Estrone sulfate (potassium),1.26,5951,150,23,127,0
-Chlorhexidine (diacetate),1.14,7170,150,23,127,0
-Sunitinib,2.07,2183,150,22,128,0
-Canagliflozin (hemihydrate),1.15,7090,150,22,126,2
-Daptomycin,1.73,3148,150,22,128,0
-Ciclopirox,1.58,3765,150,22,128,0
-Oxaprozin,1.59,3690,150,22,128,0
-HI-TOPK-032,1.98,2393,150,22,128,0
-Lenalidomide (hemihydrate),1.61,3604,150,22,128,0
-Terfenadine,1.3,5562,150,21,129,0
-Methylprednisolone succinate,1.79,2941,150,21,129,0
-Artemether,1.18,6739,150,21,129,0
-Lidocaine (hydrochloride),1.83,2800,150,21,129,0
-Hydroxyfasudil,1.74,3086,150,21,129,0
-Cytarabine,1.18,6740,150,21,125,4
-DTP3,1.57,3801,150,21,129,0
-Bexarotene,1.29,5624,150,21,129,0
-olaparib,1.59,3716,150,21,129,0
-Nafamostat (mesylate),1.3,5557,150,20,130,0
-Everolimus,1.19,6610,150,20,130,0
-Acetazolamide,1.3,5563,150,20,130,0
-Gefitinib,1.07,8244,150,20,130,0
-BI-78D3,1.42,4664,150,20,130,0
-ML264,1.43,4575,150,19,131,0
-Docetaxel,1.67,3366,150,19,131,0
-Sulfisoxazole,1.3,5509,150,19,131,0
-Norepinephrine (hydrochloride),1.46,4383,150,19,131,0
-Tofacitinib (citrate),1.48,4260,150,19,131,0
-Afatinib,0.68,20031,150,19,120,11
-Capmatinib,1.79,2911,150,19,131,0
-Brimonidine,1.0,9395,150,19,129,2
-AZD-8055,1.52,4060,150,19,131,0
-Larotrectinib sulfate,1.6,3654,150,19,131,0
-Methylthiouracil,1.0,9396,150,18,130,2
-Loperamide (hydrochloride),1.15,7129,150,18,132,0
-Pasireotide (acetate),1.34,5234,150,18,132,0
-Ritonavir,1.37,4994,150,18,132,0
-Ropivacaine (hydrochloride monohydrate),1.56,3851,150,18,132,0
-Indacaterol (maleate),1.14,7207,150,18,132,0
-Pexidartinib (hydrochloride),1.49,4218,150,18,132,0
-Bentamapimod,1.62,3573,150,17,133,0
-Daidzin,1.17,6878,150,17,133,0
-ERK5-IN-2,1.67,3345,150,17,133,0
-Rutin (trihydrate),1.18,6749,150,17,130,3
-ULK-101,1.93,2523,150,17,133,0
-Hexylresorcinol,1.2,6540,150,17,133,0
-OTS514,1.63,3541,150,17,133,0
-NG25,1.37,4984,150,17,133,0
-vincristine,2.35,1694,150,17,133,0
-Diammonium Glycyrrhizinate,1.24,6118,150,16,134,0
-Temsirolimus,1.38,4936,150,16,134,0
-5-Azacytidine,1.56,3844,150,16,134,0
-(R)-Verapamil (hydrochloride),1.37,5016,150,16,134,0
-γ-Oryzanol,1.16,7026,150,16,133,1
-Saquinavir,1.77,2987,150,16,134,0
-Delamanid,1.27,5843,150,16,134,0
-Vemurafenib,1.37,5003,150,16,134,0
-Celecoxib,1.26,5953,150,15,135,0
-Amsacrine,1.24,6117,150,15,135,0
-L-Thyroxine (sodium salt pentahydrate),1.41,4713,150,15,134,1
-Adagrasib,0.87,12491,150,15,111,24
-Triclosan,1.28,5725,150,15,135,0
-Azithromycin (hydrate),1.4,4790,150,15,135,0
-Bergenin,1.34,5193,150,15,135,0
-Pimitespib,1.49,4241,150,14,136,0
-Palmatine (chloride),1.33,5275,150,14,136,0
-Fluvoxamine (maleate),1.4,4762,150,14,136,0
-Gallic acid (hydrate),1.4,4751,150,14,136,0
-Tazarotene,1.33,5278,150,14,136,0
-Betamethasone dipropionate,1.76,3036,150,14,136,0
-Asciminib,1.42,4675,150,14,136,0
-PF-06260933,1.9,2609,150,13,137,0
-Tetracycline (hydrochloride),1.32,5391,150,13,137,0
-Riluzole hydrochloride,1.16,6980,150,13,137,0
-XRK3F2,2.0,2343,150,13,137,0
-Ralimetinib dimesylate,1.71,3200,150,13,137,0
-Mitoxantrone (dihydrochloride),1.44,4528,150,13,137,0
-Ornidazole,1.38,4894,150,13,137,0
-Busulfan,1.34,5213,150,12,138,0
-Cabozantinib (S-malate),1.21,6411,150,12,137,1
-Trifluridine,1.23,6170,150,12,138,0
-Elagolix sodium,1.3,5529,150,11,139,0
-18β-Glycyrrhetinic acid,1.55,3905,150,11,139,0
-5-Fluorouracil,1.19,6642,150,11,139,0
-Darinaparsin,1.23,6199,150,11,139,0
-Cloxacillin (sodium),1.06,8276,150,11,139,0
-Doxorubicin (hydrochloride),1.31,5441,150,11,139,0
-Plicamycin,1.19,6618,150,11,139,0
-Flutamide,1.16,7004,150,11,139,0
-Torkinib,1.39,4829,150,11,139,0
-Flumatinib (mesylate),0.9,11598,150,11,136,3
-Fulvestrant,1.03,8837,150,11,138,1
-Niclosamide (olamine),1.41,4724,150,11,139,0
-Regorafenib,0.96,10143,150,10,139,1
-Quinestrol,1.11,7573,150,10,140,0
-Rapamycin,1.33,5288,150,10,140,0
-Topotecan (hydrochloride),0.91,11337,150,10,140,0
-Diphenhydramine,1.39,4871,150,10,140,0
-Irinotecan (hydrochloride),1.0,9286,150,10,139,1
-LJI308,1.97,2406,150,10,140,0
-Berbamine (dihydrochloride),1.11,7629,150,9,140,1
-Baicalin,1.17,6858,150,9,141,0
-Filgotinib,1.05,8572,150,9,138,3
-Mebendazole,1.32,5349,150,9,141,0
-Decitabine,1.32,5344,150,9,141,0
-Raltitrexed,1.09,7945,150,9,141,0
-Edoxaban (tosylate monohydrate),1.31,5469,150,9,141,0
-TAK-733,1.29,5644,150,9,141,0
-Temuterkib,1.47,4325,150,9,141,0
-Aspirin,0.92,11045,150,8,142,0
-Almonertinib (mesylate),0.89,11962,150,8,142,0
-Peretinoin,1.62,3557,150,8,142,0
-Lonafarnib,1.33,5268,150,8,142,0
-Almonertinib (hydrochloride),1.28,5720,150,8,142,0
-Cobimetinib,1.8,2904,150,8,142,0
-Dorzolamide (hydrochloride),1.21,6426,150,7,143,0
-Sinomenine,1.25,6024,150,7,143,0
-APTO-253,1.3,5531,150,7,143,0
-Berberine (chloride hydrate),1.1,7761,150,7,143,0
-Abiraterone acetate,1.19,6581,150,7,143,0
-Sodium Salicylate,1.25,6019,150,7,143,0
-Megestrol,1.52,4067,150,7,143,0
-Belumosudil (mesylate),1.37,5010,150,7,143,0
-Uridine,0.86,12576,150,7,143,0
-Pyridoxine (hydrochloride),1.03,8866,150,7,143,0
-Docetaxel (Trihydrate),1.44,4524,150,6,144,0
-Erlotinib,1.19,6660,150,6,144,0
-DT-061,1.37,5023,150,6,144,0
-NVP-BHG712,1.34,5194,150,6,144,0
-Neratinib,1.6,3656,150,6,144,0
-Meloxicam,1.04,8660,150,6,143,1
-Methyl aminolevulinate (hydrochloride),1.15,7068,150,6,144,0
-Vitamin K4,1.03,8913,150,6,144,0
-Lumateperone (tosylate),1.05,8579,150,6,144,0
-Vortioxetine,1.25,5995,150,6,143,1
-Perindopril (erbumine),0.86,12780,150,6,144,0
-Talc,1.12,7438,150,6,144,0
-Bimatoprost,1.32,5373,150,6,144,0
-8-Hydroxyquinoline,1.02,8937,150,6,144,0
-AZD-7648,1.88,2656,150,6,144,0
-Benztropine (mesylate),1.1,7775,150,5,145,0
-AZD1390,1.46,4420,150,5,145,0
-Sacubitril/Valsartan,1.25,6033,150,5,145,0
-Capivasertib,1.17,6872,150,5,145,0
-Drospirenone,1.09,7913,150,5,144,1
-Entrectinib,1.25,5990,150,5,145,0
-Cytarabine (hydrochloride),1.12,7513,150,5,145,0
-Ranolazine,1.28,5755,150,5,145,0
-Imiquimod (hydrochloride),1.54,3968,150,5,145,0
-Ivermectin,0.92,11093,150,5,140,5
-Isocorydine,1.1,7734,150,5,145,0
-Fenofibrate,0.94,10566,150,5,131,14
-Gallic acid,0.95,10316,150,5,144,1
-ETC-206,0.96,10190,150,5,145,0
-Goserelin (acetate),1.05,8555,150,5,145,0
-Lactate (calcium),1.17,6867,150,5,145,0
-LY-2584702 (tosylate salt),2.18,1965,149,5,144,0
-Osimertinib (mesylate),1.35,5114,150,5,144,1
-Dihydroartemisinin,1.31,5487,150,5,145,0
-Tubulin inhibitor 6,1.04,8595,150,5,145,0
-MK-3903,1.63,3533,150,4,146,0
-Nevirapine,1.02,8979,150,4,146,0
-Tucatinib,1.07,8148,150,4,146,0
-Apalutamide,1.17,6846,150,4,146,0
-Carbamazepine,1.15,7034,150,4,146,0
-Bosentan (hydrate),1.04,8674,150,4,146,0
-4EGI-1,1.34,5250,150,4,146,0
-Cilostazol,1.16,6911,150,4,146,0
-Levobupivacaine (hydrochloride),1.23,6155,150,4,144,2
-Lipoic acid,0.88,12198,150,4,146,0
-Larotrectinib,1.42,4633,150,4,146,0
-Irinotecan,1.34,5250,150,4,146,0
-Pimozide,1.49,4197,150,4,146,0
-Finasteride,1.07,8231,150,4,143,3
-Fingolimod (hydrochloride),1.23,6210,150,4,145,1
-Olanzapine,1.18,6723,150,4,146,0
-Roxadustat,1.24,6053,150,4,146,0
-Rimonabant (Hydrochloride),1.07,8155,150,4,146,0
-Cysteamine (hydrochloride),1.25,5990,150,4,146,0
-Pyridoxine,1.26,5863,150,4,146,0
-palbociclib,1.41,4684,150,4,146,0
-Sildenafil,1.16,6918,150,4,146,0
-Bestatin (hydrochloride),1.16,6992,150,3,146,1
-Aliskiren,1.07,8230,150,3,146,1
-Quinidine (15% dihydroquinidine),1.16,6969,150,3,147,0
-Proglumide,1.05,8434,150,3,146,1
-Carbidopa (monohydrate),1.03,8831,150,3,147,0
-Rucaparib (phosphate),1.14,7193,150,3,147,0
-Fostamatinib (disodium hexahydrate),1.11,7616,150,3,147,0
-Fumaric acid,0.85,12908,150,3,143,4
-Fusidic acid,1.01,9246,150,3,147,0
-Clotrimazole,1.22,6294,150,3,147,0
-IQ 1,1.55,3884,150,3,147,0
-Monocrotaline,0.97,9934,150,3,147,0
-Tranilast,0.89,11743,150,3,147,0
-Pentamidine (isethionate),1.05,8504,150,3,146,1
-Salicylic acid,1.08,8024,150,3,147,0
-Thymol,1.26,5879,150,3,147,0
-Captopril,0.9,11596,150,3,147,0
-Adenosine,1.07,8192,150,2,148,0
-crizotinib,1.16,6989,150,2,147,1
-Alpelisib,1.36,5083,150,2,148,0
-Dexmedetomidine,0.94,10630,150,2,148,0
-Erythromycin,1.15,7049,150,2,148,0
-CP21R7,1.21,6449,150,2,148,0
-Demeclocycline,1.04,8714,150,2,142,6
-Zileuton,1.03,8782,150,2,148,0
-Acetohexamide,1.15,7044,150,2,148,0
-Cepharanthine,1.25,6020,150,2,148,0
-Ribociclib,0.98,9744,150,2,148,0
-Benproperine (phosphate),1.08,7992,150,2,148,0
-Bicalutamide,0.97,9897,150,2,148,0
-Belumosudil,0.85,13019,150,2,144,4
-Clonidine (hydrochloride),0.87,12275,150,2,148,0
-Infigratinib,1.31,5450,150,2,148,0
-Orlistat,1.06,8377,150,2,148,0
-Ligustrazine,0.97,10058,150,2,147,1
-LB-100,1.04,8726,150,2,148,0
-Lapatinib ditosylate,1.02,9060,150,2,148,0
-Anethole trithione,1.0,9324,150,2,148,0
-Tadalafil,1.05,8539,150,2,147,1
-Volasertib,1.11,7652,150,2,148,0
-Lopinavir,1.08,7989,150,2,146,2
-Oxaliplatin,1.08,8028,150,2,148,0
-Tolmetin,0.96,10127,150,1,149,0
-Voriconazole,0.97,10065,150,1,149,0
-Altretamine,1.04,8723,150,1,148,1
-Verteporfin,1.34,5189,150,1,149,0
-(S)-Crizotinib,0.99,9632,150,1,146,3
-Hesperidin,1.0,9451,150,1,148,1
-Thymopentin,0.97,9960,150,1,149,0
-AT7519,1.03,8803,150,1,149,0
-"Dapagliflozin ((2S)-1,2-propanediol, hydrate)",0.97,9930,150,1,149,0
-Dapagliflozin,0.81,14295,150,1,148,1
-Cinacalcet,0.85,12848,150,1,149,0
-Clofarabine,1.09,7861,150,1,149,0
-Pitavastatin (Calcium),1.41,4720,150,1,149,0
-Pralsetinib,1.28,5766,150,1,149,0
-Eplerenone,0.79,14966,150,1,144,5
-Rosiglitazone,0.92,11118,150,1,147,2
-Rimonabant,0.98,9789,150,1,149,0
-Rifaximin,0.93,10852,150,1,148,1
-Relugolix,0.89,11758,150,1,148,1
-Dimethyl fumarate,1.05,8479,150,1,148,1
-Hydroxyurea,0.88,11997,150,1,146,3
-Mifepristone,0.89,11863,150,1,146,3
-Macitentan,0.95,10354,150,1,141,8
-Minodronic acid,1.06,8410,150,1,149,0
-Verapamil,1.02,9082,150,1,147,2
-Pentagastrin,1.01,9242,150,1,149,0
-Ferulic acid,1.14,7209,150,1,149,0
-Phenytoin (sodium),0.96,10089,150,1,147,2
-Pemigatinib,1.43,4576,150,1,149,0
-Omeprazole,0.86,12559,150,1,149,0
-Ivabradine (hydrochloride),1.0,9413,150,1,149,0
-Ixazomib,1.36,5072,150,1,149,0
-LY2090314,1.13,7342,150,1,149,0
-Fluvoxamine,1.09,7854,150,1,149,0
-Omeprazole (sodium),0.96,10224,150,1,149,0
-Anastrozole,0.99,9580,150,1,149,0
-Belzutifan,1.75,3061,148,1,147,0
-Sulfatinib,0.86,12696,150,1,146,3
-Bestatin,1.02,9014,150,1,148,1
-Canagliflozin,1.12,7507,150,1,149,0
-Adenine,0.92,11177,150,0,150,0
-Valdecoxib,0.92,11049,150,0,147,3
-Balsalazide (sodium hydrate),0.99,9625,150,0,150,0
-Arbutin,0.71,18631,150,0,142,8
-Vismodegib,0.79,15072,150,0,147,3
-Menadione,0.84,13270,150,0,147,3
-MK-8353,1.04,8601,150,0,150,0
-Methotrexate,0.98,9672,150,0,150,0
-Naproxen,0.65,22203,150,0,124,26
-Mozavaptan,0.91,11436,150,0,149,1
-Nimesulide,0.96,10103,150,0,150,0
-Imiquimod (maleate),0.86,12652,150,0,149,1
-Furosemide,0.95,10379,150,0,150,0
-Folic acid,0.83,13460,150,0,150,0
-Penfluridol,1.15,7110,150,0,150,0
-Pemetrexed,1.0,9286,150,0,150,0
-Oleic acid,1.08,8022,150,0,150,0
-Procainamide (hydrochloride),0.8,14741,150,0,147,3
-Pravastatin (sodium),0.75,16651,150,0,147,3
-Glycyrrhizic acid,1.07,8237,150,0,150,0
-Erdafitinib ,1.38,4890,146,0,146,0
-Doxycycline (monohydrate),0.99,9623,150,0,145,5
-Bendamustine,0.81,14337,150,0,148,2
-Bisoprolol (hemifumarate),1.03,8768,150,0,150,0
-SBI-0640756,1.51,4095,148,0,148,0
-Simotinib,0.78,15258,150,0,140,10
-Silodosin,0.72,18260,150,0,133,17
-AZD2858,1.38,4902,150,0,150,0
+drug,n,OVER,UNDER,GHOST,POOL,NOTDET,med_m
+Panobinostat,150,115,12,0,18,5,4.24
+Homoharringtonine,150,108,19,1,21,1,5.88
+Bortezomib,150,91,36,0,21,2,4.02
+Ouabain (Octahydrate),150,90,22,0,36,2,3.28
+Digitoxin,150,90,28,0,30,2,3.48
+Trametinib,150,90,22,0,34,4,2.29
+Binimetinib,150,83,25,1,38,3,2.11
+Harringtonine,150,78,16,0,50,6,3.67
+Idarubicin (hydrochloride),150,75,25,0,46,4,2.93
+Dinaciclib,150,70,58,0,20,2,5.14
+Ixazomib citrate,150,68,25,3,49,5,2.76
+PH-797804,150,66,20,0,60,4,3.11
+TAK-901,150,65,50,1,32,2,3.03
+Brivudine,150,60,16,0,72,2,2.46
+Budesonide,150,60,27,2,58,3,2.41
+Triamcinolone,150,59,29,1,60,1,2.19
+Selinexor ,150,59,32,0,56,3,2.26
+Belinostat,150,56,43,0,48,3,2.56
+Clobetasol propionate,150,55,22,0,69,4,2.15
+Dexamethasone,150,55,22,1,66,6,2.08
+Auranofin,150,53,21,0,73,3,2.36
+Vinblastine (sulfate),150,53,40,0,55,2,2.05
+Elimusertib hydrochloride,150,51,50,0,46,3,2.69
+Medroxyprogesterone acetate,150,51,43,0,54,2,2.04
+Tucidinostat,150,50,34,0,62,4,2.02
+Sapanisertib,150,50,30,2,66,2,2.36
+Bimiralisib,150,49,36,1,61,3,2.55
+Ponatinib,150,49,25,1,69,6,1.87
+EX229,150,48,38,1,60,3,2.6
+BAY1125976,150,47,26,1,73,3,2.5
+Trametinib (DMSO_TF solvate),150,46,39,1,57,7,2.25
+Fedratinib (hydrochloride hydrate),150,46,20,2,76,6,1.92
+Trimetrexate,150,41,43,2,62,2,1.79
+Ipatasertib,150,41,26,0,81,2,2.01
+Gemfibrozil,150,40,33,1,73,3,1.61
+GSK1059615,150,39,34,2,72,3,2.34
+Sonidegib,150,39,36,1,70,4,2.36
+RMC-6236,150,38,27,0,82,3,1.9
+Vandetanib,150,38,33,2,71,6,1.9
+Pentoxifylline,150,38,23,1,81,7,1.63
+Neratinib (maleate),150,38,45,0,64,3,1.72
+Tofacitinib,150,37,30,0,80,3,1.53
+Abemaciclib,150,37,41,1,68,3,2.38
+Tirabrutinib (hydrochloride),150,37,24,1,80,8,1.75
+Futibatinib,150,36,18,2,87,7,1.66
+Sunitinib,150,36,37,1,72,4,2.07
+venetoclax,150,35,48,2,63,2,1.89
+vincristine,150,34,34,3,76,3,2.35
+Darolutamide,150,34,25,2,86,3,1.7
+Resveratrol,150,33,31,1,80,5,1.55
+Atazanavir (sulfate),150,32,24,1,88,5,1.65
+Malotilate,150,32,31,2,82,3,1.59
+9-ING-41,150,31,14,2,96,7,1.54
+Docetaxel,150,31,35,0,82,2,1.67
+Vilanterol,150,30,33,1,77,9,1.48
+S-Adenosyl-L-methionine (disulfate tosylate),150,30,39,5,73,3,1.58
+Clopidogrel,150,30,19,2,91,8,1.41
+Tirabrutinib,150,30,33,2,76,9,1.85
+Radotinib,150,30,30,3,81,6,1.5
+Saquinavir,150,29,48,6,63,4,1.77
+BI-3406,150,29,26,4,89,2,1.7
+Allantoin,150,28,55,2,62,3,1.76
+Tolcapone,150,28,31,2,86,3,1.38
+Idoxuridine,150,28,18,1,97,6,1.36
+Lidocaine (hydrochloride),150,27,50,5,62,6,1.83
+Artesunate,150,27,18,2,98,5,1.11
+HI-TOPK-032,150,27,50,0,68,5,1.98
+Gemcitabine,150,27,28,5,88,2,1.25
+Retinoic acid,150,27,44,1,76,2,1.69
+Methylprednisolone succinate,150,27,25,0,93,5,1.79
+Cyclosporin A,150,27,20,1,96,6,1.45
+Ciclopirox,150,26,39,0,81,4,1.58
+Epirubicin (hydrochloride),150,26,28,0,84,12,1.45
+BI-78D3,150,26,19,1,99,5,1.42
+Lenalidomide (hemihydrate),150,26,47,0,73,4,1.61
+Oxaprozin,150,26,27,1,92,4,1.59
+LJI308,150,25,49,2,67,7,1.97
+ULK-101,150,25,39,1,79,6,1.93
+L-Eflornithine (monohydrochloride),150,25,14,0,104,7,1.24
+Phenylephrine (hydrochloride),150,24,25,0,92,9,1.55
+Estrone sulfate (potassium),150,24,12,3,105,6,1.26
+Tofacitinib (citrate),150,23,40,0,83,4,1.48
+Tomivosertib,150,23,29,1,91,6,1.78
+Norepinephrine (hydrochloride),150,23,34,0,91,2,1.46
+Econazole,150,23,24,1,95,7,1.46
+Everolimus,150,23,26,6,92,3,1.19
+Aprepitant,150,22,20,2,97,9,1.21
+Celecoxib,150,22,22,0,93,13,1.26
+Terfenadine,150,22,27,3,95,3,1.3
+Ritonavir,150,21,36,3,84,6,1.37
+Lucanthone,150,21,16,1,103,9,1.58
+Citalopram (hydrobromide),150,21,5,1,115,8,0.87
+Capmatinib,150,21,36,2,87,4,1.79
+Bentamapimod,150,21,29,2,93,5,1.62
+Pasireotide (acetate),150,21,29,3,94,3,1.34
+Piroxicam,150,21,14,1,102,12,1.12
+Hydroxyfasudil,150,20,30,0,92,8,1.74
+Berbamine,150,20,25,1,101,3,1.22
+XRK3F2,150,20,39,1,85,5,2.0
+Chlorhexidine (diacetate),150,20,20,2,103,5,1.14
+Sulfisoxazole,150,20,35,1,91,3,1.3
+Diammonium Glycyrrhizinate,150,20,27,6,95,2,1.24
+(R)-Verapamil (hydrochloride),150,19,31,6,92,2,1.37
+Allopurinol,150,19,11,1,109,10,1.11
+OTS514,150,19,31,0,92,8,1.63
+Bergenin,150,19,30,4,95,2,1.34
+Betamethasone dipropionate,150,19,34,1,85,11,1.76
+Ropivacaine (hydrochloride monohydrate),150,19,54,3,68,6,1.56
+Ralimetinib dimesylate,150,19,26,0,101,4,1.71
+Loperamide (hydrochloride),150,18,20,0,105,7,1.15
+Pimitespib,150,18,23,2,101,6,1.49
+Pioglitazone,150,18,18,1,103,10,1.29
+ML264,150,18,20,2,107,3,1.43
+Doxorubicin (hydrochloride),150,18,27,0,96,9,1.31
+Crizotinib (hydrochloride),150,18,23,2,99,8,1.39
+5-Azacytidine,150,18,30,1,93,8,1.56
+Canagliflozin (hemihydrate),150,18,19,0,103,10,1.15
+Gallic acid (hydrate),150,17,39,2,89,3,1.4
+NG25,150,17,27,0,98,8,1.37
+Paclitaxel,150,17,18,2,109,4,1.52
+Peretinoin,150,17,38,0,82,13,1.62
+Amsacrine,150,17,26,2,100,5,1.24
+Cobimetinib,150,17,45,0,77,11,1.8
+Temsirolimus,150,17,41,3,84,5,1.38
+Bexarotene,150,17,15,0,110,8,1.29
+Busulfan,150,17,38,2,91,2,1.34
+L-Thyroxine (sodium salt pentahydrate),150,17,40,3,84,6,1.41
+Nafamostat (mesylate),150,16,16,3,106,9,1.3
+Acetazolamide,150,16,24,3,98,9,1.3
+c-Kit-IN-1,150,16,43,3,86,2,2.06
+Dabrafenib,150,16,29,2,99,4,1.64
+Entecavir (monohydrate),150,16,14,3,110,7,1.39
+Azithromycin (hydrate),150,16,36,2,91,5,1.4
+Triclosan,150,16,27,3,100,4,1.28
+Sivelestat (sodium tetrahydrate),150,15,20,1,105,9,1.38
+Decitabine,150,15,26,1,95,13,1.32
+Mitoxantrone (dihydrochloride),150,15,38,2,91,4,1.44
+LY-2584702 (tosylate salt),149,15,50,2,78,4,2.18
+Esmolol (hydrochloride),150,15,13,1,110,11,1.18
+Pexidartinib (hydrochloride),150,15,20,2,102,11,1.49
+NVP-BHG712,150,15,26,0,102,7,1.34
+Darinaparsin,150,14,28,3,97,8,1.23
+Temuterkib,150,14,29,2,100,5,1.47
+AZD-8055,150,14,24,3,105,4,1.52
+Rapamycin,150,14,41,0,91,4,1.33
+Docetaxel (Trihydrate),150,14,29,0,98,9,1.44
+Hexylresorcinol,150,14,27,2,104,3,1.2
+Gefitinib,150,14,5,3,120,8,1.07
+Fluvoxamine (maleate),150,14,45,2,85,4,1.4
+Glasdegib,150,14,15,4,113,4,1.77
+Artemether,150,14,14,0,114,8,1.18
+Brimonidine,150,13,8,1,115,13,1.0
+18β-Glycyrrhetinic acid,150,13,41,4,90,2,1.55
+Tazarotene,150,13,17,3,111,6,1.33
+Afatinib,150,13,6,1,121,9,0.68
+Asciminib,150,13,32,2,97,6,1.42
+Ataluren,150,13,11,2,111,13,0.89
+Trifluridine,150,13,29,3,100,5,1.23
+Niclosamide (olamine),150,13,37,2,90,8,1.41
+Indacaterol (maleate),150,13,21,2,104,10,1.14
+Adagrasib,150,13,11,7,109,10,0.87
+Palmatine (chloride),150,13,42,2,89,4,1.33
+Encorafenib,136,13,18,3,72,30,2.13
+Elagolix sodium,150,13,42,1,89,5,1.3
+olaparib,150,12,19,1,115,3,1.59
+DTP3,150,12,16,1,115,6,1.57
+AZD-7648,150,12,49,2,84,3,1.88
+Torkinib,150,11,21,1,110,7,1.39
+PF-06260933,150,11,37,3,91,8,1.9
+Almonertinib (hydrochloride),150,11,35,2,97,5,1.28
+Cytarabine,150,11,10,3,119,7,1.18
+5-Fluorouracil,150,11,21,0,111,7,1.19
+Posaconazole,150,11,19,2,107,11,1.33
+Osimertinib (mesylate),150,11,22,2,106,9,1.35
+Daptomycin,150,11,11,3,120,5,1.73
+Sinomenine,150,10,30,4,101,5,1.25
+Cabozantinib (S-malate),150,10,25,2,106,7,1.21
+Rutin (trihydrate),150,10,13,1,116,10,1.18
+Mebendazole,150,10,24,1,104,11,1.32
+Lonafarnib,150,10,37,1,98,4,1.33
+Neratinib,150,10,37,2,91,10,1.6
+Daidzin,150,10,15,5,112,8,1.17
+Megestrol,150,10,45,5,88,2,1.52
+Bimatoprost,150,9,37,2,99,3,1.32
+γ-Oryzanol,150,9,17,2,113,9,1.16
+Thymol,150,9,35,3,96,7,1.26
+Dorzolamide (hydrochloride),150,9,22,1,109,9,1.21
+Belumosudil (mesylate),150,9,24,2,107,8,1.37
+ERK5-IN-2,150,9,43,2,91,5,1.67
+Raltitrexed,150,9,23,2,112,4,1.09
+Delamanid,150,9,22,0,111,8,1.27
+Diphenhydramine,150,8,20,0,112,10,1.39
+Larotrectinib,150,8,33,5,103,1,1.42
+Vemurafenib,150,8,16,4,118,4,1.37
+Cloxacillin (sodium),150,8,18,1,119,4,1.06
+TAK-733,150,8,35,0,101,6,1.29
+Riluzole hydrochloride,150,8,28,3,107,4,1.16
+Quinestrol,150,8,21,2,115,4,1.11
+Larotrectinib sulfate,150,8,12,3,121,6,1.6
+Baicalin,150,8,21,3,114,4,1.17
+APTO-253,150,7,22,3,114,4,1.3
+8-Hydroxyquinoline,150,7,15,2,122,4,1.02
+Flutamide,150,7,14,0,119,10,1.16
+Pyridoxine (hydrochloride),150,7,22,6,110,5,1.03
+Abiraterone acetate,150,7,9,4,123,7,1.19
+AZD1390,150,7,25,0,110,8,1.46
+Talc,150,6,25,0,112,7,1.12
+Roxadustat,150,6,28,0,105,11,1.24
+DT-061,150,6,20,1,115,8,1.37
+Berberine (chloride hydrate),150,6,20,4,115,5,1.1
+Pyridoxine,150,6,28,1,108,7,1.26
+Fulvestrant,150,6,16,1,119,8,1.03
+Pralsetinib,150,6,27,1,110,6,1.28
+Dihydroartemisinin,150,6,17,1,115,11,1.31
+Vitamin K4,150,6,7,1,128,8,1.03
+MK-3903,150,6,37,2,99,6,1.63
+Lumateperone (tosylate),150,6,14,3,123,4,1.05
+Isocorydine,150,6,21,4,117,2,1.1
+Apalutamide,150,5,22,3,105,15,1.17
+Vortioxetine,150,5,18,1,115,11,1.25
+Meloxicam,150,5,9,1,121,14,1.04
+Methyl aminolevulinate (hydrochloride),150,5,24,2,111,8,1.15
+Tucatinib,150,5,8,1,128,8,1.07
+Sodium Salicylate,150,5,21,4,118,2,1.25
+Entrectinib,150,5,15,3,117,10,1.25
+Olanzapine,150,5,28,0,114,3,1.18
+Pimozide,150,5,37,3,100,5,1.49
+Goserelin (acetate),150,5,19,3,118,5,1.05
+Gallic acid,150,5,13,1,124,7,0.95
+Finasteride,150,5,13,2,117,13,1.07
+Flumatinib (mesylate),150,5,9,1,124,11,0.9
+Levobupivacaine (hydrochloride),150,5,13,2,118,12,1.23
+IQ 1,150,5,39,3,93,10,1.55
+Irinotecan (hydrochloride),150,5,8,1,125,11,1.0
+Capivasertib,150,5,14,1,120,10,1.17
+Ranolazine,150,5,19,2,119,5,1.28
+Cysteamine (hydrochloride),150,5,26,3,111,5,1.25
+Berbamine (dihydrochloride),150,5,12,4,117,12,1.11
+Benztropine (mesylate),150,5,8,1,127,9,1.1
+Imiquimod (hydrochloride),150,5,36,1,105,3,1.54
+Tubulin inhibitor 6,150,4,5,1,126,14,1.04
+Verteporfin,150,4,17,6,115,8,1.34
+Aspirin,150,4,11,2,124,9,0.92
+Bestatin (hydrochloride),150,4,9,3,125,9,1.16
+Carbamazepine,150,4,12,1,124,9,1.15
+Sacubitril/Valsartan,150,4,18,1,117,10,1.25
+Salicylic acid,150,4,12,0,130,4,1.08
+Belzutifan,148,4,30,0,76,38,1.75
+Pentamidine (isethionate),150,4,16,3,122,5,1.05
+palbociclib,150,4,21,3,114,8,1.41
+Regorafenib,150,4,12,2,122,10,0.96
+Tetracycline (hydrochloride),150,4,23,1,113,9,1.32
+Bosentan (hydrate),150,4,14,1,116,15,1.04
+Demeclocycline,150,4,15,2,122,7,1.04
+ETC-206,150,4,6,1,123,16,0.96
+Lipoic acid,150,4,13,1,126,6,0.88
+Filgotinib,150,4,8,0,128,10,1.05
+Lactate (calcium),150,4,20,0,117,9,1.17
+Nevirapine,150,4,8,0,127,11,1.02
+Cilostazol,150,4,10,2,120,14,1.16
+Proglumide,150,3,11,0,122,14,1.05
+Ixazomib,150,3,28,2,110,7,1.36
+LB-100,150,3,11,1,122,13,1.04
+Infigratinib,150,3,15,1,126,5,1.31
+Cytarabine (hydrochloride),150,3,12,2,119,14,1.12
+Benproperine (phosphate),150,3,7,2,123,15,1.08
+Ivermectin,150,3,11,1,118,17,0.92
+Fusidic acid,150,3,19,2,120,6,1.01
+Fingolimod (hydrochloride),150,3,26,0,112,9,1.23
+Monocrotaline,150,3,19,0,110,18,0.97
+Ornidazole,150,3,9,0,133,5,1.38
+Methylthiouracil,150,3,5,2,129,11,1.0
+Aliskiren,150,3,15,1,126,5,1.07
+Uridine,150,3,3,1,130,13,0.86
+Volasertib,150,3,10,3,124,10,1.11
+Topotecan (hydrochloride),150,3,7,1,126,13,0.91
+Erlotinib,150,3,17,1,117,12,1.19
+4EGI-1,150,3,20,3,116,8,1.34
+Captopril,150,3,9,0,129,9,0.9
+Acetohexamide,150,3,22,3,114,8,1.15
+CP21R7,150,3,26,2,110,9,1.21
+Rimonabant,150,3,11,0,129,7,0.98
+Clotrimazole,150,3,34,0,108,5,1.22
+Canagliflozin,150,2,17,1,116,14,1.12
+crizotinib,150,2,8,1,127,12,1.16
+Tadalafil,150,2,10,3,118,17,1.05
+Rucaparib (phosphate),150,2,4,2,131,11,1.14
+Cepharanthine,150,2,21,2,122,3,1.25
+Erythromycin,150,2,16,3,123,6,1.15
+Plicamycin,150,2,7,0,132,9,1.19
+Rimonabant (Hydrochloride),150,2,7,0,126,15,1.07
+Orlistat,150,2,10,1,122,15,1.06
+Pitavastatin (Calcium),150,2,39,2,93,14,1.41
+Lapatinib ditosylate,150,2,7,0,130,11,1.02
+Irinotecan,150,2,21,1,117,9,1.34
+Drospirenone,150,2,11,2,127,8,1.09
+Dexmedetomidine,150,2,3,0,132,13,0.94
+Edoxaban (tosylate monohydrate),150,2,4,1,133,10,1.31
+Lopinavir,150,2,17,0,118,13,1.08
+Adenosine,150,2,7,0,135,6,1.07
+Almonertinib (mesylate),150,2,4,2,130,12,0.89
+Alpelisib,150,2,23,4,112,9,1.36
+Anethole trithione,150,2,10,0,131,7,1.0
+Tranilast,150,2,8,0,125,15,0.89
+Quinidine (15% dihydroquinidine),150,2,16,2,118,12,1.16
+Ligustrazine,150,2,5,0,125,18,0.97
+MK-8353,150,1,11,2,128,8,1.04
+Tolmetin,150,1,5,2,126,16,0.96
+Valdecoxib,150,1,4,0,130,15,0.92
+Altretamine,150,1,10,2,119,18,1.04
+Anastrozole,150,1,3,0,133,13,0.99
+Voriconazole,150,1,6,1,132,10,0.97
+Macitentan,150,1,8,0,124,17,0.95
+Adenine,150,1,10,4,127,8,0.92
+Menadione,150,1,2,0,123,24,0.84
+(S)-Crizotinib,150,1,3,0,132,14,0.99
+Thymopentin,150,1,12,0,123,14,0.97
+AT7519,150,1,6,1,135,7,1.03
+Sildenafil,150,1,6,3,128,12,1.16
+Bicalutamide,150,1,1,1,139,8,0.97
+Verapamil,150,1,8,0,125,16,1.02
+AZD2858,150,1,35,0,103,11,1.38
+"Dapagliflozin ((2S)-1,2-propanediol, hydrate)",150,1,4,0,130,15,0.97
+Rosiglitazone,150,1,2,1,127,19,0.92
+Cinacalcet,150,1,7,0,130,12,0.85
+Rifaximin,150,1,8,1,126,14,0.93
+Eplerenone,150,1,1,0,131,17,0.79
+Pemigatinib,150,1,27,1,79,42,1.43
+Oxaliplatin,150,1,2,2,137,8,1.08
+Hesperidin,150,1,13,1,116,19,1.0
+Bestatin,150,1,5,3,121,20,1.02
+Fostamatinib (disodium hexahydrate),150,1,1,1,133,14,1.11
+Fumaric acid,150,1,3,2,131,13,0.85
+Omeprazole (sodium),150,1,3,3,134,9,0.96
+Fluvoxamine,150,1,14,3,115,17,1.09
+Minodronic acid,150,1,8,3,129,9,1.06
+Ivabradine (hydrochloride),150,1,0,0,133,16,1.0
+Hydroxyurea,150,1,9,1,113,26,0.88
+Mifepristone,150,1,3,0,128,18,0.89
+LY2090314,150,1,10,2,132,5,1.13
+Fenofibrate,150,1,8,0,119,22,0.94
+Ferulic acid,150,1,20,1,118,10,1.14
+Penfluridol,150,1,12,1,124,12,1.15
+Perindopril (erbumine),150,1,5,2,132,10,0.86
+Pentagastrin,150,1,15,3,126,5,1.01
+Phenytoin (sodium),150,1,6,0,126,17,0.96
+Dimethyl fumarate,150,1,2,3,127,17,1.05
+Clofarabine,150,1,18,1,113,17,1.09
+Clonidine (hydrochloride),150,1,6,3,134,6,0.87
+Relugolix,150,1,2,2,137,8,0.89
+Carbidopa (monohydrate),150,1,0,1,133,15,1.03
+Dapagliflozin,150,1,0,2,133,14,0.81
+Zileuton,150,1,9,0,129,11,1.03
+Belumosudil,150,0,2,0,139,9,0.85
+Balsalazide (sodium hydrate),150,0,8,1,136,5,0.99
+Methotrexate,150,0,6,1,132,11,0.98
+Vismodegib,150,0,2,0,131,17,0.79
+Arbutin,150,0,0,0,123,27,0.71
+Naproxen,150,0,0,0,130,20,0.65
+Imiquimod (maleate),150,0,4,0,120,26,0.86
+Mozavaptan,150,0,1,0,129,20,0.91
+Oleic acid,150,0,9,1,132,8,1.08
+Nimesulide,150,0,0,0,132,18,0.96
+Doxycycline (monohydrate),150,0,7,0,128,15,0.99
+Pemetrexed,150,0,7,3,121,19,1.0
+Omeprazole,150,0,3,0,133,14,0.86
+Folic acid,150,0,6,3,134,7,0.83
+Glycyrrhizic acid,150,0,8,1,125,16,1.07
+Furosemide,150,0,10,0,133,7,0.95
+Procainamide (hydrochloride),150,0,0,0,128,22,0.8
+Ribociclib,150,0,0,0,139,11,0.98
+Bendamustine,150,0,0,0,128,22,0.81
+Pravastatin (sodium),150,0,0,0,136,14,0.75
+Erdafitinib ,146,0,11,0,89,46,1.38
+Bisoprolol (hemifumarate),150,0,5,2,131,12,1.03
+SBI-0640756,148,0,25,2,85,36,1.51
+Sulfatinib,150,0,4,0,127,19,0.86
+Silodosin,150,0,0,0,121,29,0.72
+Simotinib,150,0,1,0,125,24,0.78

@@ -1,0 +1,14 @@
+{
+ "note": "OVER/UNDER downsample-and-measure verification on the predicted-OVER set (Tahoe, shared DMSO vehicle, real Sigma, theta=0.1). Downsample treated cells to n*, RMS angle vs full-depth direction.",
+ "tahoe_shared_dmso_theta0.1": {
+  "predicted_over": 5851,
+  "verified": 5824,
+  "pass_fraction": 0.9954,
+  "gate": "RMS angle <= 1.05*theta",
+  "median_rms": 0.0581,
+  "p95_rms": 0.0931,
+  "max_rms": 0.1228,
+  "exceptions": 27,
+  "exception_note": "the 27 are aggressive-downsampling curvature cases (arc-vs-tangent, Note S1); realized angle <= 7.0 deg, direction still resolved"
+ }
+}
