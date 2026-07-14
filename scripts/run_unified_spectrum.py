@@ -32,7 +32,8 @@ def run(d):
 
 
 def main():
-    specs = [chemical.load("Tahoe-100M", control="per-line-mean"), chemical.load("EmeraldBay"),
+    # HEADLINE: Tahoe references its REAL vehicle-matched shared DMSO pool (gap 2 decision).
+    specs = [chemical.load("Tahoe-100M", control="shared-dmso"), chemical.load("EmeraldBay"),
              genetic.load("orion_HCT116"), genetic.load("orion_HEK293T"),
              genetic.load("trade_jurkat"), genetic.load("trade_hepg2")]
     summaries = []; percond = {}
@@ -44,12 +45,13 @@ def main():
         percond[f"{key}_n_star"] = np.where(np.isfinite(r["n_star"]), r["n_star"], -1.0)
         percond[f"{key}_regime"] = np.array([str(x) for x in r["regime"]])
 
-    # finding #9: Tahoe under its real vehicle-matched shared DMSO control
-    s9, _ = run(chemical.load("Tahoe-100M", control="shared-dmso")); s9["name"] = "Tahoe-100M (shared DMSO, finding #9)"
+    # sensitivity: Tahoe referenced to the per-line mean (large pool) instead of the true vehicle
+    ssens, _ = run(chemical.load("Tahoe-100M", control="per-line-mean"))
+    ssens["name"] = "Tahoe-100M (per-line-mean sensitivity)"
 
-    out = dict(headline=summaries, finding9=s9,
-               note="Unified engine; chemical control = per-line mean (large pool); finding9 = Tahoe real "
-                    "vehicle-matched shared DMSO (control-pool-limited).")
+    out = dict(headline=summaries, sensitivity=ssens,
+               note="Unified engine, REAL diagonal within-Sigma. HEADLINE Tahoe control = real shared "
+                    "DMSO vehicle (n_c~1,500, control-pool-limited); sensitivity = per-line mean (large pool).")
     json.dump(out, open(os.path.join(FX, "unified_spectrum.json"), "w"), indent=1)
     np.savez_compressed(os.path.join(FX, "unified_spectrum_per_condition.npz"), **percond)
 
@@ -67,9 +69,9 @@ def main():
     md = "\n".join(lines)
     open(os.path.join(FX, "spectrum_summary.md"), "w").write(md + "\n")
     print(md)
-    print("\n=== finding #9 (Tahoe shared DMSO) ===")
-    print(f"  det {s9['detectable_pct']}%  over {s9['pct_over']}  under {s9['pct_under']}  ghost {s9['pct_ghost']}  "
-          f"POOL-LIMITED {s9['pct_pool_limited']}  not-det {s9['not_detectable_pct']}  m_min {s9['median_m_min']}")
+    print("\n=== Tahoe per-line-mean sensitivity ===")
+    print(f"  det {ssens['detectable_pct']}%  over {ssens['pct_over']}  under {ssens['pct_under']}  "
+          f"ghost {ssens['pct_ghost']}  pool {ssens['pct_pool_limited']}")
 
 
 if __name__ == "__main__":

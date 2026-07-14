@@ -40,9 +40,10 @@ def test_engine_reproduces_genetic():
 # ---- 2. committed spectrum fixtures locked ----
 def test_headline_spectrum_golden():
     js = json.load(open(US)); by = _by_name(js)
-    gold = {  # detectable, over, under, ghost, pool-limited, C bound
-        "Tahoe-100M":   (97.0, 21.6, 75.3, 0.2, 0.0, 4688),
-        "EmeraldBay":   (87.3, 2.6, 81.9, 2.1, 0.6, 4596),
+    gold = {  # detectable, over, under, ghost, pool-limited, C bound  (real diagonal Sigma)
+        # HEADLINE: Tahoe on its real shared DMSO vehicle -> control-pool-limited majority
+        "Tahoe-100M":   (94.2, 10.3, 13.8, 1.0, 69.2, 4688),
+        "EmeraldBay":   (87.6, 2.7, 82.5, 2.0, 0.5, 4495),
         "Orion HCT116": (14.7, 0.0, 14.7, 0.0, 0.0, 4475),
         "Orion HEK293T": (35.3, 0.0, 35.3, 0.0, 0.0, 5063),
         "TRADE Jurkat": (70.6, 0.8, 68.3, 0.8, 0.7, 7338),
@@ -55,11 +56,10 @@ def test_headline_spectrum_golden():
         assert s["C_largepool"] == C, f"{name} C {s['C_largepool']} != {C}"
 
 
-def test_finding9_tahoe_shared_dmso_golden():
-    s = json.load(open(US))["finding9"]
-    # Tahoe's real shared vehicle control makes most conditions control-pool-limited
-    assert s["pct_pool_limited"] == 69.3 and s["pct_over"] == 10.2
-    assert s["not_detectable_pct"] == 5.8 and s["median_m_min"] == 1.76
+def test_tahoe_per_line_mean_sensitivity_golden():
+    s = json.load(open(US))["sensitivity"]
+    # referencing the per-line mean (large pool) instead of the real vehicle removes the pool limit
+    assert s["pct_pool_limited"] == 0.0 and s["pct_over"] == 21.7 and s["detectable_pct"] == 97.0
 
 
 # ---- 3. self-consistency ----

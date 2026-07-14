@@ -8,29 +8,34 @@ re-stream):
                projected through the committed PCA basis; pooled over plate-replicates)
   EmeraldBay:  <eb_work>/out/pseudobulk.npz                                     (already in PCA space)
 
-Control design (finding #9): the HEADLINE control is the per-line mean pool (the same reference the
-held-out falsification and EmeraldBay already use; n_c = all cells in the line, a large pool). Tahoe
-ALSO exposes its real vehicle-matched control (shared DMSO_TF per plate x line, n_c ~ 1,500 shared by
-~94 conditions) so the engine can report the control-pool-limited spectrum as a separate finding.
+Control design (finding #9, gap 2): the Tahoe HEADLINE control is its real vehicle-matched shared
+DMSO_TF pool (n_c ~ 1,500 cells, shared across ~94 conditions), which is control-pool-limited for most
+conditions. The per-line mean (a large pool, n_c = all cells in the line) is reported as a sensitivity
+analysis. EmeraldBay references the per-line mean.
 
 No cell-count filter on the spectrum (finding #2/#4): every non-empty condition is included.
-Within-condition Sigma is the committed isotropic scalar sigma^2 * I (chemical sufficient statistics
-do not store per-condition PCA covariance; declared in Methods).
+Within-condition Sigma is the REAL diagonal covariance diag(ell_within) computed from per-condition
+sufficient statistics (fixtures/chemical_within_cov.json; gap 1/3), not an isotropic scalar. The
+per-PC variance spans 3.6-5x but tr(P.Sigma.P) varies only +-1.5-3% across conditions.
 """
-import os, ast, numpy as np, pyarrow.parquet as pq
+import os, ast, json, numpy as np, pyarrow.parquet as pq
 
 TAHOE = "/mnt/hdd2/loc-tran/tahoe_work/out_dose"
 TAHOE_META = "/mnt/hdd2/loc-tran/tahoe_work/meta/metadata"
 EB = "/mnt/hdd2/loc-tran/eb_work/out"
-SIGMA2 = {"Tahoe-100M": 0.9567, "EmeraldBay": 0.938}
 CTRL = "DMSO_TF"
 
+# REAL within-condition covariance (diagonal), computed from per-condition sufficient statistics
+# (fixtures/chemical_within_cov.json). No hardcoded scalar sigma2; the engine derives sigma2 = tr(Sigma)/d.
+_COV = json.load(open(os.path.join(os.path.dirname(__file__), "..", "..", "fixtures", "chemical_within_cov.json")))
+ELL = {"Tahoe-100M": np.array(_COV["tahoe"]["ell"]), "EmeraldBay": np.array(_COV["emeraldbay"]["ell"])}
 
-def _std(name, cond_id, mu_t, mu_c, n_t, n_c, sigma2, control_type):
+
+def _std(name, cond_id, mu_t, mu_c, n_t, n_c, ell, control_type):
     return dict(dataset=name, modality="chemical", control_type=control_type,
                 cond_id=np.asarray(cond_id, dtype=object), mu_t=np.asarray(mu_t, float),
                 mu_c=np.asarray(mu_c, float), n_t=np.asarray(n_t, float), n_c=np.asarray(n_c, float),
-                Sigma=sigma2 * np.eye(mu_t.shape[1]))
+                Sigma=np.diag(np.asarray(ell, float)))          # REAL diagonal within-Sigma (anisotropic)
 
 
 def load_tahoe(control="per-line-mean"):
@@ -68,7 +73,7 @@ def load_tahoe(control="per-line-mean"):
         cid.append(f"{drug}|{ds}|{line}"); mu_t.append(cen); mu_c.append(mc); n_t.append(tot); n_c.append(nc)
     ct = "per-line mean (large pool)" if control == "per-line-mean" else "shared vehicle DMSO_TF pool"
     return _std("Tahoe-100M", cid, np.array(mu_t), np.array(mu_c), np.array(n_t), np.array(n_c),
-                SIGMA2["Tahoe-100M"], ct)
+                ELL["Tahoe-100M"], ct)
 
 
 def load_emeraldbay():
@@ -78,7 +83,7 @@ def load_emeraldbay():
     lsum = {}; lcnt = {}
     for i, l in enumerate(line): lsum[l] = lsum.get(l, 0) + sums[i]; lcnt[l] = lcnt.get(l, 0) + cnt[i]
     base = np.array([lsum[l] / lcnt[l] for l in line]); nc = np.array([lcnt[l] for l in line])
-    return _std("EmeraldBay", list(ck), mu, base, cnt, nc, SIGMA2["EmeraldBay"], "per-line mean (large pool)")
+    return _std("EmeraldBay", list(ck), mu, base, cnt, nc, ELL["EmeraldBay"], "per-line mean (large pool)")
 
 
 DATASETS = {"Tahoe-100M": load_tahoe, "EmeraldBay": load_emeraldbay}
