@@ -198,3 +198,48 @@ S2/S3, budget, k-NN edges, resolved fractions, homoharringtonine all reproduced)
 `test_sigma2_golden`); `scripts/tahoe_recompute/{pass5_within_sigma,pass6_within_recalibrate}.py` are the
 old 3-regime tahoe passes (need the 18 GB coords cache to run) and are superseded for the per-condition
 CSV by the engine -- they carry no quota formula, so the guard passes them.
+
+## 9. Round 3 audit: the equal-arm recurrence, the AST guard, and the public API
+
+After §8, tightening the (still string-based) guard kept surfacing MORE files that computed the quota
+locally -- the same equal-arm `2*tr(PSP)/(m^2 theta^2)`, just spelled `THETA` (uppercase) so the
+lowercase-only regex missed it. Rather than patch regexes, a **manual AST-level read of every `.py`**
+(src/ + scripts/) found the true set. Six files self-computed the quota/regime outside `engine.py`:
+`tahoe_recompute/pass4c_gating`, `emeraldbay_recompute/{pass5_gating_full,pass3_validate}`,
+`applications/moa_recovery`, `trade_recompute/pass1` (a diagnostic print), and a dead `_regime_counts`
+in `make_manuscript_figures`. All migrated to the engine (or deleted) and re-run where the cache exists.
+
+**Two manuscript numbers were equal-arm-stale** and are now engine-computed (two-arm, real per-line pool):
+
+| gating | old (equal-arm) | new (engine) |
+|--------|-----------------|--------------|
+| Tahoe full-atlas OVER, downsample-verified (theta=0.1, per-line-mean, N>=400) | 5,503/5,503 | **13,964/13,964 (100%)** |
+| EmeraldBay full-atlas OVER, downsample-verified (theta=0.20) | 347/347 | **706/706 (100%)** |
+
+The count roughly doubled because the correct large-pool quota is half the equal-arm one (more
+conditions are over-sampled) -- and every one still meets tolerance when downsampled to n*. The paper's
+central evidence (predicted-OVER conditions are downsample-stable) holds; only the count changed.
+Also updated: k-NN Jaccard null 0.005 -> 0.006 (adaptive vs flat, re-run via engine); "roughly
+sixteen-fold" -> "twenty-fold"; EmeraldBay §365 8.7% -> 17.8% OVER.
+
+**Single-owner refactor.** `src/engine.py` now exposes `quota_two_arm(trPSP, m2, n_c, theta)` and
+`m_min_floor(...)`; `engine.compute` and `src/calculator.py` both call them (spectrum unchanged, golden
+test passes). A second guard, `tests/test_only_engine_imports_math.py`, reasons over the parse tree
+(AST) and fails if any src/ or scripts/ file except `engine.py` computes a quota formula locally. The
+first guard was made case-insensitive and given the retired-constant check.
+
+**Public API fixed (`src/calculator.py`).** It used to default to the equal-arm quota, so a README user
+who omitted the control-pool size silently got a retired number. Now `cell_quota(v, Sigma, tolerance,
+control_pool_size)` REQUIRES `n_c`, returns `math.inf` for control-pool-limited, and provides
+`cell_quota_equal_arm` / `cell_quota_large_pool` as explicitly-named limits; it delegates to the engine.
+Tests, `calibrate.py`, `verify_theory.py`, and the README example were updated to the new signatures.
+
+**Cleanup.** Deleted the retired-thesis hallucination sources -- 9 orphan docs, ~10 stale fixtures,
+`agents/` and `dataset_inventory.py` (old numbers in prompt/string literals), `quota_arm.py`, three old
+tahoe passes, and figure dead code. Regenerated `docs/SUPPLEMENT.md` (constants of record) and
+`fixtures/tahoe_{constants,calibration,within_sigma}.json` + `{orion,trade}_*_quota.csv` from the engine.
+`docs/ARCHITECTURE.md` has a "Retired artifacts" section listing every deleted file + fingerprint.
+
+**Final state:** 26 tests green; both guards 0; `unified_spectrum.json` unchanged (69.2% pool-limited /
+10.3% over / sigma^2 transfer / held-out slopes 0.94/0.98, 1.02/0.96 all intact); PDF ~1.15 MB / 5
+figures (confirmed by rendering pages) + DOCX. Committed on `master` (HEAD `dbf301c`), pushed to origin.
