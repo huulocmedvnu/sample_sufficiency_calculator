@@ -369,3 +369,29 @@ new Results finding ("Control-pool design is binding in practice").
 **Headline change.** Tahoe 10.6/89.0/0.4 at 9,376/m^2 -> 21.6/75.3/0.2 at 4,688/m^2 (large-pool). This
 exceeds the old +/-3pt guard, but is the direct consequence of the author-chosen control-model fix; the
 sigma^2-transfer and held-out-slope arguments still stand, so no other headline conclusion reversed.
+
+---
+
+## Round 3 (gap 1/2/3): real Sigma + shared-DMSO headline
+
+**gap 1 (chemical Sigma isotropic) + gap 3 (sigma2 hardcoded)** RESOLVED: chemical.py builds the REAL
+diagonal within-Sigma diag(ell_within) from per-condition sufficient statistics
+(fixtures/chemical_within_cov.json, via scripts/tahoe_recompute/pass7_within_cov.py streaming the cached
+per-cell PCA-coord memmap; no raw re-stream). sigma2 recomputes to 0.9567 (Tahoe, matches committed
+exactly) and 0.9174 (EmeraldBay). Measured result: Sigma is anisotropic (per-PC variance spans 3.6-5x)
+but tr(P.Sigma.P) varies only +-1.5-3% across conditions (drug displacements do not align with the
+high-variance axes); on genetic it varies 30-45 and bites. Near-isotropic chemical quota is thus a
+measured property, not an assumption.
+
+**gap 2 (Tahoe control estimand)** RESOLVED -> shared DMSO vehicle is the HEADLINE (the estimand
+v = mu_t - mu_vehicle that the direction rule names). Real vehicle = plate-shared DMSO_TF pool, n_c~1,514
+shared across ~94 conditions, so m_min median 1.75 > median m 1.27 and 69.2% of conditions are
+control-pool-limited (n*=inf), 5.8% not detectable, 10.3% over, 13.8% treated-depth-limited, 1.0% ghost.
+The per-line-mean reference (21.7% over, 0 pool-limited) is reported as a sensitivity analysis; it measures
+a different estimand (difference from the ~94-drug line average) and its m_min~0.05 claims a near-noiseless
+control no real experiment has. HEADLINE thesis: on the largest atlas the binding constraint is the shared
+control-pool size, not treated depth; a 100M-cell atlas does not rescue a 1,514-cell control pool.
+
+OVER/UNDER verification (downsample-and-measure on the predicted-OVER set, shared DMSO): 5,824/5,851
+(99.5%); the 27 exceptions are the strong-effect aggressive-downsampling cases where the Note-S1
+arc-vs-tangent curvature appears (realized <= 7.0 deg), matching its predicted sign and magnitude.
