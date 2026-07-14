@@ -323,3 +323,49 @@ almost nothing is over-sampled, consistent with its shallow 5-day depth. **Tahoe
 **Verification.** `tests/test_regime_table_golden.py` (golden aggregates, per-row percent-sum,
 per-group reproduction of the EmeraldBay aggregate, manuscript-matches-fixture); full `pytest` suite green;
 `manuscript.pdf` rebuilds clean.
+
+---
+
+## Round 2/3 resolution: the unified engine (branch `rewrite/unified-engine`) + finding #9
+
+**Root cause of #1-#8.** The sufficiency calculation was duplicated across a chemical branch and a
+genetic branch that drifted apart. Genetic was the only branch that was right. All eight findings are
+symptoms: #7 (genetic bias-corrected, chemical did not), #8 (genetic snr>1.5, chemical a baseless
+factor 1.25 = snr 1.118), n_c (genetic used the real pool, chemical hardcoded a factor of 2), quota
+(genetic used the full two-arm form, chemical hardcoded equal-arm), plus the EmeraldBay unit/denominator
+issues (#1-#4).
+
+**Fix.** One engine (`src/engine.py`), two data pipelines (`src/pipelines/{chemical,genetic}.py`). The
+engine computes sigma2, m_raw, tr(S)=tr(Sigma)(1/n_t+1/n_c) with the REAL n_c, bias-corrects every
+magnitude, applies snr>1.5 detection to every dataset, uses the full two-arm quota (no hardcoded arm
+factor), and reports the spectrum over ALL conditions. It reproduces the genetic ground truth exactly
+(sigma2 0.913/1.033/1.50/1.87; detectable 14.7/35.3/70.6/60.9; over-among-detectable 0.0/0.1/1.2/4.4),
+which validates the rewrite. `scripts/run_unified_spectrum.py` runs all six screens.
+
+**Finding #9 (CRITICAL) -- Tahoe's vehicle is a small shared pool, not matched vehicle.** Phase-0 data:
+each DMSO_TF centroid is shared by a median of 94 (drug,dose) conditions (min 83, max 94) at n_c~1,514
+cells. Structurally this is Orion's shared-NTC design but small. Under the real vehicle-matched control,
+m_min median = 1.76 > median m 1.27, so 69% of Tahoe conditions are control-pool-limited (n*=inf) and a
+further 6% fall below the detection floor: ~75% cannot be resolved at theta*=0.1 by any treated depth.
+The equal-arm C=9,376 and the 10.6%/89% headline were therefore built on an invalid matched-vehicle
+assumption. Resolution (author decision): the HEADLINE references each condition to the per-line mean
+(a large pool, the same control the held-out test and EmeraldBay use), giving the large-control limit
+C=4,688/m^2 and the spectrum 21.6/75.3/0.2 (detectable 97.0); the shared-DMSO result is reported as a
+new Results finding ("Control-pool design is binding in practice").
+
+**Status of every finding.**
+- #1 EmeraldBay unit -> engine uses (sample x line)=(drug x dose x line), 4,912 groups.
+- #2 denominators -> spectrum over ALL conditions for every dataset (genetic keeps a >=25-cell
+  measurement QC), declared in "Units, denominators, and control design".
+- #3 4,992 vs 4,912 -> stated (4,992 = 52x96 cross, 80 empty).
+- #4/#5 N>=300 threshold -> gone; N>=400 is held-out only.
+- #6 isotropic vs anisotropic -> the engine uses tr(P.Sigma.P) uniformly (isotropic Sigma for the
+  chemical sufficient-stat atlases, full Sigma for genetic), declared.
+- #7 bias-correction -> applied to EVERY dataset; the Statistical-analysis and Discussion sentences
+  restored and now correct.
+- #8 detection floor -> one criterion, snr>1.5 two-arm, for every dataset; the 1.25 constant removed.
+- #9 control-pool design -> new finding; headline on per-line mean, shared-DMSO reported separately.
+
+**Headline change.** Tahoe 10.6/89.0/0.4 at 9,376/m^2 -> 21.6/75.3/0.2 at 4,688/m^2 (large-pool). This
+exceeds the old +/-3pt guard, but is the direct consequence of the author-chosen control-model fix; the
+sigma^2-transfer and held-out-slope arguments still stand, so no other headline conclusion reversed.
