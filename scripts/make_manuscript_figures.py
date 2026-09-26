@@ -197,91 +197,95 @@ def fig3_tahoe_spectrum():
 
 
 def fig5_crossmodality():
-    """Cross-modality summary (HANDOFF 6.3 + 6.4). (a) ridgeline of log-magnitude densities, one row per
-    screen, coloured by modality, medians as ticks; (b) stacked regime bars with in-bar numbers and direct
-    labels, no legend, no top-margin labels. Saved as fig4_crossmodality_summary."""
+    """Cross-modality summary (author redesign 2026-09-27: explicit keys for both panels).
+    (a) ridgeline of log-magnitude densities, one row per screen, colour = modality (a palette disjoint
+    from the regime colours so nothing is shared with panel b), medians as ticks, legend in the panel;
+    (b) stacked regime bars for all five regimes straight from the engine headline (same numbers as
+    Table 1), in-bar percentages, over-sampled % above each bar, and a five-entry key with the meaning
+    of every colour. Saved as fig4_crossmodality_summary."""
+    from matplotlib.lines import Line2D
+    from matplotlib.patches import Patch
     fx = f"{FX}/fig4_kde.json"
     if not os.path.exists(fx):
         export_figure_fixtures()
     K = json.load(open(fx)); grid = np.array(K["grid_log10m"])
     summ = {s["name"]: s for s in json.load(open(f"{FX}/unified_spectrum.json"))["headline"]}
-    MODCOL = {"chemical": "#0072B2", "genome-wide": "#009E73", "essential-gene": "#D55E00"}
     screens = K["screens"]                                  # figure order, top to bottom
-    fig, axs = plt.subplots(1, 2, figsize=(7.8, 3.6), gridspec_kw=dict(width_ratios=[1, 1.55], wspace=0.30))
+    MOD = {"chemical": ("#0072B2", "chemical, small-molecule (Vevo Mosaic)"),
+           "genome-wide": ("#CC79A7", "genome-wide CRISPRi (X-Atlas/Orion)"),
+           "essential-gene": ("#56B4E9", "essential-gene CRISPRi (TRADE)")}
+    fig, axs = plt.subplots(1, 2, figsize=(8.0, 3.9), gridspec_kw=dict(width_ratios=[1, 1.12], wspace=0.34))
 
     # ---- (a) ridgeline -----------------------------------------------------------------------------
-    ax = axs[0]; H = 0.85; x = 10 ** grid
+    ax = axs[0]; H = 0.82; x = 10 ** grid
     for i, sc in enumerate(screens):
-        col = MODCOL[sc["modality"]]; y0 = 5 - i
+        col = MOD[sc["modality"]][0]; y0 = 5 - i
         d = np.array(sc["density"]); d = d / d.max() * H
-        ax.fill_between(x, y0, y0 + d, color=col, alpha=0.35, lw=0)
+        ax.fill_between(x, y0, y0 + d, color=col, alpha=0.30, lw=0)
         ax.plot(x, y0 + d, color=col, lw=1.1)
         med = sc["median_m"]
-        ax.plot([med, med], [y0, y0 + H], color=col, lw=1.4)
-        ax.annotate(f"median {med:.2f}", xy=(med, y0), xytext=(4, 1), textcoords="offset points",
-                    ha="left", va="bottom", fontsize=7, color=BLACK)
-    ax.set_xscale("log"); ax.set_xlim(0.03, 30); ax.set_ylim(-0.15, 6.1)
+        ax.plot([med, med], [y0, y0 + H], color=BLACK, lw=1.2)
+        ax.annotate(f"{med:.2f}", xy=(med, y0 + H), xytext=(3, -1), textcoords="offset points",
+                    ha="left", va="top", fontsize=7, color=BLACK)
+    ax.set_xscale("log"); ax.set_xlim(0.03, 30); ax.set_ylim(-0.15, 6.15)
     ax.set_xticks([0.1, 1, 10]); ax.set_xticklabels(["0.1", "1", "10"], fontsize=8)
     ax.set_yticks(range(6)); ax.set_yticklabels([sc["name"] for sc in screens][::-1], fontsize=8)
     ax.spines["left"].set_visible(False); ax.tick_params(axis="y", length=0)
     ax.grid(False, axis="y"); ax.grid(True, axis="x", which="major"); ax.set_axisbelow(True)
-    ax.axhline(3.5, color="#BBBBBB", lw=0.6)
-    ax.text(1.01, 4.75 / 6.25, "chemical", transform=ax.transAxes, rotation=90, fontsize=7, color="#777777",
-            ha="left", va="center")
-    ax.text(1.01, 1.85 / 6.25, "genetic", transform=ax.transAxes, rotation=90, fontsize=7, color="#777777",
-            ha="left", va="center")
-    ax.set_xlabel(r"bias-corrected effect magnitude $m$", fontsize=8.5)
+    for ysep in (3.5, 1.5):
+        ax.axhline(ysep, color="#CCCCCC", lw=0.6, zorder=0)
+    ax.set_xlabel(r"bias-corrected effect magnitude $m$ (log scale)", fontsize=8.5)
     ax.set_title("(a)  Effect magnitude per screen", loc="left", fontsize=9)
+    handles = [Patch(facecolor=c, edgecolor=c, alpha=0.6, label=l) for c, l in MOD.values()]
+    handles.append(Line2D([0], [0], color=BLACK, lw=1.2, label="median $m$"))
+    ax.legend(handles=handles, loc="upper left", bbox_to_anchor=(-0.02, -0.16), ncol=2, fontsize=6.6,
+              frameon=False, handlelength=1.1, handletextpad=0.5, columnspacing=1.2, labelspacing=0.35,
+              borderaxespad=0)
 
-    # ---- (b) stacked bars, in-bar numbers, direct labels ---------------------------------------------
+    # ---- (b) stacked bars: all five regimes, from the engine headline (= Table 1) ------------------
     ax = axs[1]
-    rows = []
-    for sc in screens:
-        s = summ[sc["name"]]; nd = s["not_detectable_pct"]
-        if sc["modality"] == "chemical":
-            ov, un, gh, pl = s["pct_over"], s["pct_under"], s["pct_ghost"], s["pct_pool_limited"]
-        else:
-            ov = round(s["detectable_pct"] * s["det_pct_over"] / 100.0, 1)   # over among detectable -> % of all
-            gh = pl = 0.0; un = round(100.0 - nd - ov, 1)
-        rows.append([ov, un, gh, pl, nd])
-    R = np.array(rows).T                                   # 5 regimes x 6 screens
+    keys = ["pct_over", "pct_under", "pct_ghost", "pct_pool_limited", "not_detectable_pct"]
+    R = np.array([[summ[sc["name"]][k] for sc in screens] for k in keys])     # 5 regimes x 6 screens
     cols = [REG["OVER"], REG["UNDER"], REG["Ghost"], POOL, NOTDET]
-    names = ["over-\nsampled", "treated-depth-\nlimited", "ghost", "control-pool-limited", "not\ndetectable"]
-    x = np.array([0, 1.4, 3.1, 4.6, 6.1, 7.6]); W = 0.72
+    x = np.arange(6, dtype=float); W = 0.62
     base = np.vstack([np.zeros(6), np.cumsum(R, axis=0)[:-1]])
     for k in range(5):
-        ax.bar(x, R[k], bottom=base[k], color=cols[k], edgecolor="none", width=W)
+        ax.bar(x, R[k], bottom=base[k], color=cols[k], edgecolor="none", width=W, zorder=2)
         for i in range(6):
             if R[k, i] < 7:
                 continue
-            if k == 3 and i == 0:                          # pool-limited: name inside the tall grey segment
-                ax.text(x[i], base[k, i] + R[k, i] / 2, f"{R[k, i]:.0f}%\ncontrol-\npool-limited",
-                        ha="center", va="center", fontsize=7, color=BLACK, linespacing=1.15)
-                continue
             txt = f"{R[k, i]:.1f}%" if k == 0 else f"{R[k, i]:.0f}%"
             ax.text(x[i], base[k, i] + R[k, i] / 2, txt, ha="center", va="center", fontsize=7,
-                    color="white" if k == 4 else BLACK)
-    for i in range(6):                                     # headline number once, one height
-        ax.text(x[i], 101.5, f"{R[0, i]:.1f}%", ha="center", va="bottom", fontsize=7.5, fontweight="bold")
-    # direct labels at the right of the last bar; ghost at the left of the Tahoe bar with a leader
-    last = 5; xr = x[last] + W / 2 + 0.11
-    for k in (1, 4):
-        ax.text(xr, base[k, last] + R[k, last] / 2, names[k], ha="left", va="center", fontsize=7, color=cols[k], linespacing=1.1)
-    ax.text(xr, max(base[0, last] + R[0, last] / 2, 4.5), names[0], ha="left", va="center", fontsize=7, color=cols[0], linespacing=1.1)
-    ax.annotate(f"ghost {R[2, 0]:.1f}%", xy=(x[0] - W / 2, base[2, 0] + R[2, 0] / 2), xytext=(-0.42, base[2, 0] + R[2, 0] / 2),
-                ha="right", va="center", fontsize=7, color=cols[2],
-                arrowprops=dict(arrowstyle="-", lw=0.6, color="#777777", relpos=(1, 0.5)))
-    ax.set_xlim(-1.4, 10.4); ax.set_ylim(0, 110); ax.set_yticks([0, 25, 50, 75, 100]); ax.grid(False)
+                    color="white" if k == 4 else BLACK, zorder=3)
+    for i in range(6):                                     # headline number above every bar
+        ax.text(x[i], 101.5, f"{R[0, i]:.1f}%", ha="center", va="bottom", fontsize=7.2, fontweight="bold",
+                color=REG["OVER"])
+    ax.text(-0.55, 101.5, "over-\nsampled", ha="right", va="bottom", fontsize=6.5, color=REG["OVER"],
+            linespacing=1.0)
+    ax.set_xlim(-0.75, 5.55); ax.set_ylim(0, 112)
+    ax.set_yticks([0, 25, 50, 75, 100]); ax.tick_params(axis="y", labelsize=8)
+    ax.grid(False); ax.grid(True, axis="y"); ax.set_axisbelow(True)
     ax.set_xticks(x); ax.set_xticklabels(["Tahoe-\n100M", "Emerald-\nBay", "Orion\nHCT116", "Orion\nHEK293T",
-                                          "TRADE\nJurkat", "TRADE\nHepG2"], fontsize=6.2)
-    ax.tick_params(axis="y", labelsize=8)
+                                          "TRADE\nJurkat", "TRADE\nHepG2"], fontsize=6.8)
     ax.set_ylabel("% of conditions", fontsize=8.5)
     ax.set_title("(b)  Sufficiency regime per screen", loc="left", fontsize=9)
-    fig.canvas.draw(); r = fig.canvas.get_renderer()
-    for kind, arts in (("tick", ax.get_xticklabels()), ("number", [t for t in ax.texts if t.get_fontweight() == "bold"])):
-        bb = [t.get_window_extent(r) for t in arts]
-        gaps = [bb[i + 1].x0 - bb[i].x1 for i in range(len(bb) - 1)]
-        print(f"    fig4(b) {kind} label gaps (px, all must be > 0): {[round(g, 1) for g in gaps]}")
+    # group brackets under the tick labels
+    for (a, b, lab) in ((0, 1, "chemical"), (2, 5, "genetic (CRISPRi)")):
+        ax.annotate("", xy=(a - 0.3, -0.135), xytext=(b + 0.3, -0.135), xycoords=("data", "axes fraction"),
+                    textcoords=("data", "axes fraction"), arrowprops=dict(arrowstyle="-", lw=0.7, color="#888888"))
+        ax.text((a + b) / 2, -0.155, lab, transform=ax.get_xaxis_transform(), ha="center", va="top",
+                fontsize=7, color="#666666")
+    # key: one entry per regime, top-to-bottom in stack order, with the meaning of each colour
+    meaning = [("not detectable", "effect below the sampling floor"),
+               ("control-pool-limited", r"$n^\star=\infty$: control pool too small"),
+               ("ghost", r"$n^\star>50{,}000$ treated cells"),
+               ("treated-depth-limited", r"$n^\star$ above the acquired depth"),
+               ("over-sampled", r"$n^\star$ within the acquired depth")]
+    handles = [Patch(facecolor=cols[k], edgecolor="none", label=f"{n}\n{m}") for k, (n, m) in zip((4, 3, 2, 1, 0), meaning)]
+    leg = ax.legend(handles=handles, loc="upper left", bbox_to_anchor=(1.02, 1.0), fontsize=6.6, frameon=False,
+                    handlelength=1.1, handleheight=1.9, handletextpad=0.6, labelspacing=0.9, borderaxespad=0)
+    for txt in leg.get_texts():
+        txt.set_linespacing(1.15)
     save(fig, "fig4_crossmodality_summary")
 
 
