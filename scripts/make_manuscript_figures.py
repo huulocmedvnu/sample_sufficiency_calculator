@@ -24,7 +24,7 @@ FIG = "figures"; FX = "fixtures"; os.makedirs(FIG, exist_ok=True)
 BLUE, VERM, GREEN, ORANGE, PURPLE, SKY, YELLOW, BLACK, GRAY = (
     "#0072B2", "#D55E00", "#009E73", "#E69F00", "#CC79A7", "#56B4E9", "#F0E442", "#111111", "#9A9A9A")
 REG = {"OVER": GREEN, "UNDER": ORANGE, "Ghost": VERM}   # ordinal good->bad, always labelled
-POOL, NOTDET = "#B8B8B8", "#3A3A3A"                       # neutral greys for the two "no quota" regimes
+POOL, NOTDET = "#BBBBBB", "#333333"                       # neutral greys for the two "no quota" regimes
 
 plt.rcParams.update({
     "figure.dpi": 140, "savefig.dpi": 300, "font.size": 9, "axes.titlesize": 10,
@@ -103,9 +103,9 @@ def fig2_geometry():
 
 
 def fig3_tahoe_spectrum():
-    """Tahoe-100M sufficiency spectrum. (a) all 56,827 conditions split into the five regimes, so the
-    pool-limited majority (n* = inf, absent from any histogram) is visible; (b) the finite quotas of the
-    detectable conditions, stacked by regime, with the median acquired depth and the ghost threshold."""
+    """Tahoe-100M sufficiency spectrum (HANDOFF 6.2 spec). (a) labelled regime strip over all conditions,
+    no axis, no legend; (b) edge-free stacked histogram of the finite quotas of the detectable conditions,
+    reference labels in the top margin, x-axis truncated at 2e6."""
     z = np.load(f"{FX}/unified_spectrum_per_condition.npz")
     ns_all = z["Tahoe-100M_n_star"]; reg = z["Tahoe-100M_regime"]        # -1.0 marks n* = inf
     summ = {s["name"]: s for s in json.load(open(f"{FX}/unified_spectrum.json"))["headline"]}["Tahoe-100M"]
@@ -113,111 +113,139 @@ def fig3_tahoe_spectrum():
     segs = [("OVER", summ["pct_over"], REG["OVER"], "over-sampled"),
             ("UNDER", summ["pct_under"], REG["UNDER"], "treated-depth-limited"),
             ("GHOST", summ["pct_ghost"], REG["Ghost"], "ghost"),
-            ("POOL-LIMITED", summ["pct_pool_limited"], POOL, "control-pool-limited ($n^\\star=\\infty$)"),
+            ("POOL-LIMITED", summ["pct_pool_limited"], POOL, r"control-pool-limited ($n^\star=\infty$)"),
             ("NOT-DETECTABLE", summ["not_detectable_pct"], NOTDET, "not detectable")]
+    dark = {"NOT-DETECTABLE"}
 
-    fig, (ax0, ax1) = plt.subplots(2, 1, figsize=(6.4, 4.8), gridspec_kw=dict(height_ratios=[1, 5.2], hspace=0.78))
-    # (a) one horizontal stacked bar over ALL conditions
+    fig, (ax0, ax1) = plt.subplots(2, 1, figsize=(6.4, 4.4), gridspec_kw=dict(height_ratios=[1.7, 6], hspace=0.45))
+    # ---- (a) labelled strip -------------------------------------------------------------------
+    # names alternate between two rows so neighbours never touch; narrow segments get a leader
+    rows_y = {"OVER": -1.05, "UNDER": -0.55, "GHOST": -1.05, "POOL-LIMITED": -0.55, "NOT-DETECTABLE": -1.05}
     left = 0.0
-    for key, pct, col, lab in segs:
-        ax0.barh(0, pct, left=left, color=col, edgecolor="white", linewidth=1.5, height=0.62)
+    for key, pct, col, name in segs:
+        ax0.barh(0, pct, left=left, color=col, edgecolor="white", linewidth=1, height=0.55)
+        xc = left + pct / 2
         if pct >= 8:
-            ax0.text(left + pct / 2, 0, f"{pct:.1f}%", ha="center", va="center", fontsize=8,
-                     color="white" if key in ("POOL-LIMITED", "NOT-DETECTABLE") else BLACK, fontweight="bold")
+            ax0.text(xc, 0, f"{pct:.1f}%", ha="center", va="center", fontsize=8, fontweight="bold",
+                     color="white" if key in dark else BLACK)
+        else:
+            ax0.annotate(f"{pct:.1f}%", xy=(xc, 0.28), xytext=(xc, 0.62), ha="center", va="bottom", fontsize=7.5,
+                         arrowprops=dict(arrowstyle="-", lw=0.6, color="#777777"))
+        ha = "left" if key == "OVER" else ("right" if key == "NOT-DETECTABLE" else "center")
+        xt = 0 if key == "OVER" else (100 if key == "NOT-DETECTABLE" else xc)
+        if rows_y[key] < -0.6:                            # lower row: connect with a leader
+            ax0.annotate(name, xy=(xc, -0.28), xytext=(xt, rows_y[key]), ha=ha, va="top", fontsize=7.5,
+                         arrowprops=dict(arrowstyle="-", lw=0.6, color="#777777", relpos=(0.5 if ha == "center" else (0.02 if ha == "left" else 0.98), 1)))
+        else:
+            ax0.text(xt, rows_y[key], name, ha=ha, va="top", fontsize=7.5)
         left += pct
-    ax0.set_xlim(0, 100); ax0.set_ylim(-0.5, 0.5); ax0.set_yticks([]); ax0.grid(False)
-    ax0.set_xticks([0, 25, 50, 75, 100]); ax0.set_xlabel("% of all 56,827 conditions", labelpad=2)
-    for sp in ("left", "bottom"): ax0.spines[sp].set_visible(False)
-    ax0.set_title("(a)  Regime of every condition (pooled shared DMSO vehicle, $\\theta_\\star$ = 0.1 rad)",
-                  loc="left", fontsize=9, pad=4)
-    handles = [plt.Rectangle((0, 0), 1, 1, color=col) for _, _, col, _ in segs]
-    ax0.legend(handles, [lab for _, _, _, lab in segs], loc="upper center", bbox_to_anchor=(0.5, -0.78),
-               ncol=3, frameon=False, fontsize=7.4, handlelength=1.2, columnspacing=1.2)
+    ax0.set_xlim(0, 100); ax0.set_ylim(-1.75, 1.25); ax0.axis("off")
+    ax0.set_title("(a)  All 56,827 conditions by regime", loc="left", fontsize=9, pad=6)
 
-    # (b) finite quotas of the detectable conditions, stacked by regime
+    # ---- (b) stacked density of the finite quotas -----------------------------------------------
     fin = (ns_all > 0) & (reg != "NOT-DETECTABLE")
-    bins = np.logspace(np.log10(ns_all[fin].min()), np.log10(ns_all[fin].max()), 60)
+    xmax = 2e6
+    bins = np.logspace(np.log10(20), np.log10(xmax), 37)
     data = [ns_all[fin & (reg == k)] for k in ("OVER", "UNDER", "GHOST")]
-    ax1.hist(data, bins=bins, stacked=True, color=[REG["OVER"], REG["UNDER"], REG["Ghost"]],
-             edgecolor="white", linewidth=0.3)
-    ax1.set_xscale("log"); ax1.set_xlim(bins[0] * 0.8, bins[-1] * 1.4)
-    ymax = ax1.get_ylim()[1] * 1.12; ax1.set_ylim(0, ymax)
-    ax1.axvline(N0, color=BLACK, lw=1.3, ls="--"); ax1.axvline(ghost, color=BLACK, lw=1.0, ls=":")
-    ax1.text(N0 / 1.12, ymax * 0.97, f"median acquired depth\n$N_0$ = {N0:,}", ha="right", va="top", fontsize=7.5)
-    ax1.text(ghost * 1.12, ymax * 0.97, "ghost threshold\n$n^\\star$ = 50,000", ha="left", va="top", fontsize=7.5)
-    ax1.axvline(med, color="#666666", lw=1.0, ls="-")
-    ax1.text(med * 1.12, ymax * 0.80, f"median finite quota\n$n^\\star$ = {med:,.0f}", ha="left", va="center", fontsize=7.5,
-             bbox=dict(fc="white", ec="none", alpha=0.85, pad=1.5))
-    ax1.set_xlabel("required treated cells per condition, two-arm quota $n^\\star$ (log scale)")
-    ax1.set_ylabel("conditions")
-    ax1.set_title(f"(b)  Finite quotas of the detectable conditions ({100 * fin.mean():.1f}% of all), by regime",
-                  loc="left", fontsize=9, pad=4)
+    ax1.hist(data, bins=bins, stacked=True, color=[REG["OVER"], REG["UNDER"], REG["Ghost"]], linewidth=0)
+    ax1.set_xscale("log"); ax1.set_xlim(20, xmax); ax1.set_ylim(0, ax1.get_ylim()[1] * 1.03)
+    ax1.grid(False, axis="x"); ax1.grid(True, axis="y"); ax1.set_axisbelow(True)
+    ax1.tick_params(labelsize=8)
+    ax1.axvline(N0, color=BLACK, lw=1.2, ls="--"); ax1.axvline(med, color="#666666", lw=1.0, ls="-")
+    ax1.axvline(ghost, color=BLACK, lw=1.0, ls=":")
+    lab = dict(xycoords=("data", "axes fraction"), textcoords="offset points", va="bottom", fontsize=7.5)
+    ax1.annotate(f"median depth $N_0$ = {N0:,}", xy=(N0, 1.0), xytext=(-3, 3), ha="right", **lab)
+    ax1.annotate(f"median $n^\\star$ = {med:,.0f}", xy=(med, 1.0), xytext=(3, 3), ha="left", **lab)
+    ax1.annotate(r"ghost $n^\star \geq$ 50,000", xy=(ghost, 1.0), xytext=(3, 3), ha="left", **lab)
+    ax1.set_xlabel(r"required treated cells per condition, two-arm quota $n^\star$", fontsize=8.5)
+    ax1.set_ylabel("number of conditions", fontsize=8.5)
+    ax1.set_title(f"(b)  Finite quotas of the {100 * fin.mean():.1f}% detectable conditions", loc="left", fontsize=9, pad=14)
+    beyond = np.mean(ns_all[fin] > xmax) * 100
+    print(f"    fig3: {beyond:.2f}% of finite quotas beyond the truncated axis (2e6)")
     save(fig, "fig3_tahoe_spectrum")
 
 
 def fig5_crossmodality():
-    """Cross-modality summary. (a) smoothed magnitude densities on a log axis, medians marked on the curves;
-    (b) regime split per screen as fractions of all conditions (genetic: ghost and pool-limited folded
-    into under, over among detectable rescaled to all)."""
+    """Cross-modality summary (HANDOFF 6.3 spec). (a) ridgeline of log-magnitude densities, one row per
+    screen, coloured by modality, medians as ticks; (b) stacked regime bars with in-bar numbers and direct
+    labels, no legend. Saved as fig4_crossmodality_summary."""
     from scipy.stats import gaussian_kde
     summ = {s["name"]: s for s in json.load(open(f"{FX}/unified_spectrum.json"))["headline"]}
     z = np.load(f"{FX}/unified_spectrum_per_condition.npz")
-    # (json name, npz key, legend label, colour, linestyle, is_chemical, x-tick label) -- fixed hue order
-    sets = [("Tahoe-100M", "Tahoe-100M", "Tahoe-100M", BLUE, "-", True, "Tahoe-\n100M"),
-            ("EmeraldBay", "EmeraldBay", "EmeraldBay", SKY, "-", True, "Emerald-\nBay"),
-            ("Orion HCT116", "Orion_HCT116", "Orion HCT116", GREEN, "--", False, "Orion\nHCT116"),
-            ("Orion HEK293T", "Orion_HEK293T", "Orion HEK293T", ORANGE, "--", False, "Orion\nHEK293T"),
-            ("TRADE Jurkat", "TRADE_Jurkat", "TRADE Jurkat", VERM, "-.", False, "TRADE\nJurkat"),
-            ("TRADE HepG2", "TRADE_HepG2", "TRADE HepG2", PURPLE, "-.", False, "TRADE\nHepG2")]
-    fig, axs = plt.subplots(1, 2, figsize=(9.6, 3.7), gridspec_kw=dict(width_ratios=[1.15, 1], wspace=0.28))
+    CHEM, GENW, ESS = "#0072B2", "#009E73", "#D55E00"
+    sets = [("Tahoe-100M", "Tahoe-100M", CHEM, True), ("EmeraldBay", "EmeraldBay", CHEM, True),
+            ("Orion HCT116", "Orion_HCT116", GENW, False), ("Orion HEK293T", "Orion_HEK293T", GENW, False),
+            ("TRADE Jurkat", "TRADE_Jurkat", ESS, False), ("TRADE HepG2", "TRADE_HepG2", ESS, False)]
+    fig, axs = plt.subplots(1, 2, figsize=(7.2, 3.6), gridspec_kw=dict(width_ratios=[1.15, 1], wspace=0.42))
 
-    # (a) magnitude densities (KDE on log10 m), median marked on each curve
+    # ---- (a) ridgeline -----------------------------------------------------------------------------
     ax = axs[0]
-    grid = np.linspace(np.log10(0.03), np.log10(25), 400)
-    for jname, zkey, lab, c, ls, is_chem, tick in sets:
-        m = z[zkey + "_m_corr"]; m = np.log10(m[m > 0])
-        dens = gaussian_kde(m, bw_method=0.12)(grid)
-        ax.plot(10 ** grid, dens, color=c, ls=ls, lw=1.7, label=f"{lab}  (median {10 ** np.median(m):.2f})")
-        mid = np.median(m)
-        ax.plot(10 ** mid, gaussian_kde(m, bw_method=0.12)([mid])[0], marker="o", ms=5, color=c,
-                markeredgecolor="white", markeredgewidth=0.8, zorder=5)
-    ax.set_xscale("log"); ax.set_xlim(0.03, 25); ax.set_ylim(0, 3.0)
-    ax.set_xlabel("bias-corrected effect magnitude $m$ (log scale)"); ax.set_ylabel("density (per log$_{10}$ unit)")
-    ax.set_title("(a)  Effect-magnitude distributions (dots mark medians)", loc="left", fontsize=9, pad=4)
-    ax.legend(frameon=False, fontsize=7.2, loc="upper right", handlelength=2.2)
+    grid = np.linspace(-1.6, 1.5, 400); H = 0.85
+    for i, (name, zkey, col, _) in enumerate(sets):
+        m = z[zkey + "_m_corr"]; lm = np.log10(m[m > 0]); y0 = 5 - i
+        kde = gaussian_kde(lm, bw_method=0.12); d = kde(grid); d = d / d.max() * H
+        x = 10 ** grid
+        ax.fill_between(x, y0, y0 + d, color=col, alpha=0.35, lw=0)
+        ax.plot(x, y0 + d, color=col, lw=1.1)
+        med = 10 ** np.median(lm)
+        ax.plot([med, med], [y0, y0 + H], color=col, lw=1.4)
+        ax.annotate(f"median {med:.2f}", xy=(med, y0), xytext=(4, 1), textcoords="offset points",
+                    ha="left", va="bottom", fontsize=7, color=BLACK)
+    ax.set_xscale("log"); ax.set_xlim(0.03, 30); ax.set_ylim(-0.15, 6.1)
+    ax.set_xticks([0.1, 1, 10]); ax.set_xticklabels(["0.1", "1", "10"], fontsize=8)
+    ax.set_yticks(range(6)); ax.set_yticklabels([s[0] for s in sets][::-1], fontsize=8)
+    ax.spines["left"].set_visible(False); ax.tick_params(axis="y", length=0)
+    ax.grid(False, axis="y"); ax.grid(True, axis="x", which="major"); ax.set_axisbelow(True)
+    ax.axhline(3.5, color="#BBBBBB", lw=0.6)
+    ax.text(1.01, 4.75 / 6.25, "chemical", transform=ax.transAxes, rotation=90, fontsize=7, color="#777777",
+            ha="left", va="center")
+    ax.text(1.01, 1.85 / 6.25, "genetic", transform=ax.transAxes, rotation=90, fontsize=7, color="#777777",
+            ha="left", va="center")
+    ax.set_xlabel(r"bias-corrected effect magnitude $m$", fontsize=8.5)
+    ax.set_title("(a)  Effect magnitude per screen", loc="left", fontsize=9)
 
-    # (b) regime split per screen, as % of all conditions
+    # ---- (b) stacked bars, in-bar numbers, direct labels ---------------------------------------------
     ax = axs[1]
     rows = []
-    for jname, zkey, lab, c, ls, is_chem, tick in sets:
-        s = summ[jname]; notdet = s["not_detectable_pct"]
+    for name, zkey, col, is_chem in sets:
+        s = summ[name]; nd = s["not_detectable_pct"]
         if is_chem:
-            over = s["pct_over"]; under = s["pct_under"]; gh = s["pct_ghost"]; pl = s["pct_pool_limited"]
+            ov, un, gh, pl = s["pct_over"], s["pct_under"], s["pct_ghost"], s["pct_pool_limited"]
         else:
-            over = round(s["detectable_pct"] * s["det_pct_over"] / 100.0, 1)   # over among detectable -> % of all
-            gh = 0.0; pl = 0.0
-            under = round(100.0 - notdet - over, 1)
-        rows.append((tick, over, under, gh, pl, notdet))
-    ticks = [r[0] for r in rows]
-    ov, un, gh, pl, nd = (np.array([r[i] for r in rows]) for i in range(1, 6))
-    x = np.arange(len(rows)); kw = dict(edgecolor="white", linewidth=1.5, width=0.7)
-    ax.bar(x, ov, color=REG["OVER"], label="over-sampled (resolvable)", **kw)
-    ax.bar(x, un, bottom=ov, color=REG["UNDER"], label="treated-depth-limited", **kw)
-    ax.bar(x, gh, bottom=ov + un, color=REG["Ghost"], label="ghost ($n^\\star$ > 50,000)", **kw)
-    ax.bar(x, pl, bottom=ov + un + gh, color=POOL, label="control-pool-limited ($n^\\star=\\infty$)", **kw)
-    ax.bar(x, nd, bottom=ov + un + gh + pl, color=NOTDET, label="not detectable", **kw)
-    for i in range(len(rows)):
-        ax.text(i, 101.5, f"{ov[i]:.1f}%", ha="center", va="bottom", fontsize=7.2, color=BLACK)
-        if nd[i] >= 10:
-            ax.text(i, 100 - nd[i] / 2, f"{nd[i]:.0f}%", ha="center", va="center", fontsize=7.2, color="white")
-        if pl[i] >= 10:
-            ax.text(i, ov[i] + un[i] + gh[i] + pl[i] / 2, f"{pl[i]:.0f}%", ha="center", va="center", fontsize=7.2, color=BLACK)
-    ax.text(-0.55, 109, "over-sampled:", ha="left", va="bottom", fontsize=7.2, color=BLACK)
-    ax.set_xticks(x); ax.set_xticklabels(ticks, fontsize=7.5); ax.set_xlim(-0.6, len(rows) - 0.4)
-    ax.set_ylabel("% of conditions"); ax.set_ylim(0, 116); ax.set_yticks([0, 25, 50, 75, 100]); ax.grid(axis="x", visible=False)
-    ax.set_title("(b)  Sufficiency regime per screen ($\\theta_\\star$ = 0.1 rad)", loc="left", fontsize=9, pad=4)
-    ax.legend(frameon=False, fontsize=7.0, loc="upper center", bbox_to_anchor=(0.5, -0.22), ncol=3,
-              handlelength=1.2, columnspacing=1.0)
+            ov = round(s["detectable_pct"] * s["det_pct_over"] / 100.0, 1)   # over among detectable -> % of all
+            gh = pl = 0.0; un = round(100.0 - nd - ov, 1)
+        rows.append([ov, un, gh, pl, nd])
+    R = np.array(rows).T                                   # 5 regimes x 6 screens
+    cols = [REG["OVER"], REG["UNDER"], REG["Ghost"], POOL, NOTDET]
+    names = ["over-sampled", "treated-depth-limited", "ghost", "control-pool-limited", "not detectable"]
+    x = np.arange(6); bottom = np.zeros(6)
+    for k in range(5):
+        ax.bar(x, R[k], bottom=bottom, color=cols[k], edgecolor="none", width=0.68)
+        for i in range(6):
+            if R[k, i] >= 7:
+                txt = f"{R[k, i]:.1f}%" if k == 0 else f"{R[k, i]:.0f}%"
+                ax.text(i, bottom[i] + R[k, i] / 2, txt, ha="center", va="center", fontsize=7.5,
+                        color="white" if k == 4 else BLACK)
+        bottom += R[k]
+    for i in range(6):                                     # headline number once, above each bar (two heights)
+        ax.text(i, 101 + 7 * ((i + 1) % 2), f"{R[0, i]:.1f}%", ha="center", va="bottom", fontsize=7.2, fontweight="bold")
+    # direct labels: at the right of the last bar for its segments >= 7%, else at the Tahoe bar with a leader
+    last = 5; base = np.vstack([np.zeros(6), np.cumsum(R, axis=0)[:-1]])
+    for k in (1, 4):
+        ax.text(5.5, base[k, last] + R[k, last] / 2, names[k], ha="left", va="center", fontsize=7.5, color=cols[k])
+    ax.annotate(names[0], xy=(5.34, base[0, last] + R[0, last] / 2), xytext=(5.5, 3.5), ha="left", va="center",
+                fontsize=7.5, color=cols[0], arrowprops=dict(arrowstyle="-", lw=0.6, color="#777777", relpos=(0, 0.5)))
+    for k, ytext in ((3, 121), (2, 113)):                  # pool-limited, ghost: Tahoe bar, leader up the gap into the margin
+        ax.annotate(names[k] + (r" ($n^\star=\infty$)" if k == 3 else ""),
+                    xy=(0.36, base[k, 0] + R[k, 0] / 2), xytext=(0.55, ytext), ha="left", va="center",
+                    fontsize=7.5, color=cols[k] if k == 2 else "#666666",
+                    arrowprops=dict(arrowstyle="-", lw=0.6, color="#777777", relpos=(0, 0.5)))
+    ax.axvline(1.5, color="#BBBBBB", lw=0.6)
+    ax.set_xlim(-0.6, 7.6); ax.set_ylim(0, 127); ax.set_yticks([0, 25, 50, 75, 100]); ax.grid(False)
+    ax.set_xticks(x); ax.set_xticklabels([s[0] for s in sets], fontsize=7.5, rotation=30, ha="right")
+    ax.tick_params(axis="y", labelsize=8)
+    ax.set_ylabel("% of conditions", fontsize=8.5)
+    ax.set_title("(b)  Sufficiency regime per screen", loc="left", fontsize=9)
     save(fig, "fig4_crossmodality_summary")
 
 
