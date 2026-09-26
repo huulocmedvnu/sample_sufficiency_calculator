@@ -1,127 +1,156 @@
 #!/usr/bin/env python3
 """
-Study flowchart (Graphviz Python API, HTML-table node labels) — classic monochrome style.
+Figure 1: study overview flowchart (matplotlib, classic monochrome, serif, real math typesetting).
 
-    question -> closed-form quota -> airtight 4-way proof -> shared embedding engine
-    -> two parallel columns (chemical: Tahoe-100M -> EmeraldBay ; genetic: Orion -> TRADE)
+    question -> closed-form two-arm quota -> verified four ways -> one from-raw embedding
+    -> two parallel validation columns (chemical: Tahoe-100M -> EmeraldBay ; genetic: Orion -> TRADE)
 
-Black-and-white, print-classic: white background, black text and borders, Times New Roman,
-italic scalar variables. Numbers mirror the manuscript constants of record.
+Black on white, thin rules, Liberation Serif (metric clone of Times New Roman), italic variables via
+mathtext (STIX). Numbers mirror docs/SUPPLEMENT.md. No Graphviz dependency.
 
-Requires:  pip install graphviz   +   the Graphviz `dot` binary on PATH.
-Run:       python scripts/make_study_flowchart.py  ->  figures/fig1_study_flowchart.{pdf,png}
+Run:  python scripts/make_study_flowchart.py  ->  figures/fig1_study_flowchart.{pdf,png}
 """
 import os
-import graphviz
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+from matplotlib.patches import FancyBboxPatch, Rectangle
 
-# Real Microsoft Times New Roman IS installed (msttcorefonts, ~/.local/share/fonts/), but this
-# build box's graphviz/pango cannot embed it -- it substitutes DejaVu Sans for "Times New Roman"
-# (and even for the system "Nimbus Roman"), a local pango font-matching defect. "Liberation Serif"
-# is Red Hat's metric- and shape-identical open clone of Times New Roman and DOES embed here, so we
-# render with it (visually indistinguishable). On a machine with working pango, set "Times New Roman".
-FONT = "Liberation Serif"
-BLACK, WHITE = "#000000", "#FFFFFF"
+plt.rcParams.update({
+    "font.family": "Liberation Serif",
+    "mathtext.fontset": "stix",
+    "pdf.fonttype": 42, "ps.fonttype": 42,
+    "text.color": "black", "axes.edgecolor": "black",
+})
 
-# italic scalar variables (classic math typography); Greek/entities render in labels
-N, M2, S2, R2, THETA = ("<I>n</I>*", "<I>m</I>&#178;", "<I>&#963;</I>&#178;",
-                        "<I>R</I>&#178;", "<I>&#952;</I>")
-
-
-def html(title, rows=(), title_pt=14, meta_pt=11):
-    """HTML-like label: bold title, a hairline of space, then metric rows. All black text."""
-    cells = [f'<TR><TD ALIGN="CENTER"><FONT FACE="{FONT}" POINT-SIZE="{title_pt}" '
-             f'COLOR="{BLACK}"><B>{title}</B></FONT></TD></TR>']
-    if rows:
-        cells.append('<TR><TD HEIGHT="5"></TD></TR>')
-    for r in rows:
-        cells.append(f'<TR><TD ALIGN="CENTER"><FONT FACE="{FONT}" POINT-SIZE="{meta_pt}" '
-                     f'COLOR="{BLACK}">{r}</FONT></TD></TR>')
-    return (f'<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3">'
-            f'{"".join(cells)}</TABLE>>')
+W, H = 7.2, 8.5                      # inches; axes use inch coordinates directly
+LW = 0.8                              # rule weight
+GAP = 0.06                            # arrowhead standoff
 
 
-def add(target, nid, title, rows=()):
-    """Plain rectangular box: white fill, thin black border, black text."""
-    target.node(nid, label=html(title, rows), shape="box", style="filled",
-                fillcolor=WHITE, color=BLACK, penwidth="1")
+class Canvas:
+    def __init__(self):
+        self.fig = plt.figure(figsize=(W, H))
+        self.ax = self.fig.add_axes([0, 0, 1, 1])
+        self.ax.set_xlim(0, W); self.ax.set_ylim(0, H); self.ax.set_aspect("equal"); self.ax.axis("off")
 
+    # ---- boxes -----------------------------------------------------------------
+    def box(self, cx, cy, w, h, title, lines=(), title_pt=10.5, body_pt=8.6, lw=LW, title_gap=0.155):
+        """Rectangular node: bold title, then centred body lines."""
+        self.ax.add_patch(FancyBboxPatch((cx - w / 2, cy - h / 2), w, h, boxstyle="square,pad=0",
+                                         fc="white", ec="black", lw=lw, zorder=2))
+        n = len(lines)
+        step = 0.155 if body_pt <= 9 else 0.19
+        block = title_gap + step * max(n - 1, 0)      # title baseline to last body baseline
+        y = cy + block / 2
+        self.ax.text(cx, y, title, ha="center", va="center", fontsize=title_pt, fontweight="bold", zorder=3)
+        for i, ln in enumerate(lines):
+            self.ax.text(cx, y - title_gap - step * i, ln, ha="center", va="center", fontsize=body_pt, zorder=3)
+        return dict(cx=cx, cy=cy, w=w, h=h, top=cy + h / 2, bot=cy - h / 2, l=cx - w / 2, r=cx + w / 2)
 
-def header(cluster, text):
-    """Grouping box: thin black rectangular border, bold black header label."""
-    cluster.attr(label=f'<<FONT FACE="{FONT}"><B>{text}</B></FONT>>', labeljust="l",
-                 style="solid", color=BLACK, penwidth="1", fontname=FONT, fontsize="11",
-                 fontcolor=BLACK, margin="14")
+    def group(self, x0, y0, x1, y1, title, pt=8.8, align="left"):
+        """Thin grouping rectangle with a small bold title set into its top rule."""
+        self.ax.add_patch(Rectangle((x0, y0), x1 - x0, y1 - y0, fc="white", ec="black", lw=LW, zorder=1))
+        x = x0 + 0.12 if align == "left" else x1 - 0.12
+        self.ax.text(x, y1, "  " + title + "  ", ha=align, va="center", fontsize=pt, fontweight="bold",
+                     bbox=dict(fc="white", ec="none", pad=1.0), zorder=3)
+
+    # ---- connectors ---------------------------------------------------------------
+    def arrow(self, x0, y0, x1, y1, label=None, lx=0.08, ly=0.0, ha="left"):
+        self.ax.annotate("", xy=(x1, y1 + GAP if y1 < y0 else y1 - GAP), xytext=(x0, y0),
+                         arrowprops=dict(arrowstyle="-|>", lw=LW, color="black", mutation_scale=9,
+                                         shrinkA=0, shrinkB=0), zorder=1)
+        if label:
+            self.ax.text((x0 + x1) / 2 + lx, (y0 + y1) / 2 + ly, label, fontsize=8, ha=ha, va="center", zorder=3)
+
+    def elbow(self, x0, y0, x1, y1, ymid, label=None, side="right"):
+        """Orthogonal route: down from (x0,y0) to ymid, across to x1, down to y1 (arrowhead).
+        The label sits just above the horizontal segment, next to the corner at x1."""
+        self.ax.plot([x0, x0, x1], [y0, ymid, ymid], color="black", lw=LW, zorder=1, solid_capstyle="round")
+        self.arrow(x1, ymid, x1, y1)
+        if label:
+            if side == "right":
+                self.ax.text(x1 + 0.10, ymid + 0.09, label, fontsize=8, ha="left", va="center", zorder=3)
+            else:
+                self.ax.text(x1 - 0.10, ymid + 0.09, label, fontsize=8, ha="right", va="center", zorder=3)
+
+    def save(self, stem):
+        for fmt in ("pdf", "png"):
+            self.fig.savefig(f"{stem}.{fmt}", dpi=600 if fmt == "png" else None, facecolor="white")
+            print(f"wrote {stem}.{fmt}")
 
 
 def build():
-    g = graphviz.Digraph("study")
-    g.attr(rankdir="TB", splines="true", compound="true", newrank="true",
-           bgcolor=WHITE, nodesep="0.5", ranksep="0.62", pad="0.35")
-    g.attr("node", fontname=FONT, margin="0.20,0.13")
-    g.attr("edge", fontname=FONT, fontsize="10", fontcolor=BLACK,
-           color=BLACK, arrowsize="0.85", penwidth="1")
+    c = Canvas()
+    cx = W / 2
 
-    # ---- linear spine: question -> quota ------------------------------------
-    add(g, "Q", "Core research question",
-        [f"How many cells resolve a perturbation's <I>direction</I> to tolerance {THETA}?"])
-    add(g, "TH", "Closed-form cell quota (two-arm)",
-        [f"{N}_t = 1 / ({M2}{THETA}&#178; / tr(P&#931;P) &#8722; 1/n_c)",
-         f"Tahoe real vehicle &#8594; 55% control-pool-limited"])
+    # 1. question ---------------------------------------------------------------------
+    q = c.box(cx, 8.10, 5.9, 0.62, "Question",
+              [r"How many cells resolve a perturbation's $\it{direction}$ to an angular tolerance $\theta_\star$?"],
+              body_pt=9.4, title_gap=0.19)
 
-    # ---- airtight proof foundation (grouping box + aligned name chips) ------
-    with g.subgraph(name="cluster_proof") as c:
-        header(c, "Airtight foundation  &#183;  proven four independent ways")
-        c.attr(rank="same")
-        add(c, "P1", "Independent impl.")
-        add(c, "P2", "Monte-Carlo")
-        add(c, "P3", "SymPy")
-        add(c, "P4", "Lean 4 / Mathlib")
-        for a, b in (("P1", "P2"), ("P2", "P3"), ("P3", "P4")):  # lock left-to-right order
-            c.edge(a, b, style="invis")
+    # 2. closed-form quota ------------------------------------------------------------
+    t = c.box(cx, 6.94, 5.9, 1.22, "Closed-form two-arm cell quota", body_pt=9.0, title_gap=0.34,
+              lines=[r"$n_t^{\star} \;=\; \dfrac{1}{\,m^{2}\theta_\star^{2}\,/\,\mathrm{tr}(P\Sigma P)\;-\;1/n_c\,}$",
+                     "",
+                     r"only noise perpendicular to the effect rotates it $\;\cdot\;$ control-pool floor "
+                     r"$m_{\min}=\sqrt{\mathrm{tr}(P\Sigma P)/(n_c\theta_\star^{2})}$, below it $n_t^{\star}=\infty$"])
+    # nudge: the formula line is taller than a text line; the "" spacer above absorbs it.
+    c.arrow(cx, q["bot"], cx, t["top"])
 
-    # ---- shared embedding engine --------------------------------------------
-    add(g, "ENG", "Shared embedding engine", [f"Estimates within-condition {S2}"])
+    # 3. verification strip -----------------------------------------------------------
+    gy0, gy1 = 5.24, 6.06
+    c.group(0.45, gy0, W - 0.45, gy1, "Verified four independent ways")
+    chips = [("Symbolic Jacobian", "SymPy, residual 0"),
+             ("Monte-Carlo", r"$K=50{,}000$, error 0.13%"),
+             ("Independent", "implementation"),
+             ("Lean 4 / Mathlib", "deterministic core")]
+    cw, ch, xs = 1.45, 0.46, [1.25, 2.83, 4.37, 5.95]
+    for (ttl, sub), x in zip(chips, xs):
+        c.box(x, gy0 + 0.34, cw, ch, ttl, [sub], title_pt=9.2, body_pt=8.0, title_gap=0.16)
+    c.arrow(cx, t["bot"], cx, gy1)
 
-    # ---- two parallel columns inside a grouping box -------------------------
-    with g.subgraph(name="cluster_emp") as emp:
-        header(emp, "Cross-Modality Empirical Validation")
-        with emp.subgraph(name="cluster_chem") as ch:
-            header(ch, "Chemical modality")
-            add(ch, "TA", "Tahoe-100M",
-                [f"{S2} = 0.957", f"in-regime slope 0.94 &#183; {R2} &#8776; 0.999"])
-            add(ch, "EB", "EmeraldBay",
-                [f"{S2} = 0.917", f"held-out slope 0.98 &#183; {R2} &#8776; 0.999"])
-            ch.edge("TA", "EB", label="  &#963;&#178; transfers &#8776; 0.92&#8211;0.96")
-        with emp.subgraph(name="cluster_gen") as ge:
-            header(ge, "Genetic modality")
-            add(ge, "OR", "X-Atlas/Orion",
-                [f"{S2} = 0.91 / 1.03", f"{N} &#8776; 4,475 / 5,064 / {M2}"])
-            add(ge, "TR", "TRADE",
-                [f"{S2} = 1.50 / 1.87", f"slope 1.02 / 0.96 &#183; {R2} = 0.996"])
-            ge.edge("OR", "TR", label="  direct falsification")
+    # 4. shared embedding -------------------------------------------------------------
+    e = c.box(cx, 4.64, 5.9, 0.68, "One from-raw embedding for every atlas", body_pt=8.8, title_gap=0.19,
+              lines=[r"normalize to $10^{4}$ $\rightarrow$ $\log(1+x)$ $\rightarrow$ 2,000 HVG $\rightarrow$ PCA(50); "
+                     r"within-condition $\Sigma$ from single cells; real control pool $n_c$"])
+    c.arrow(cx, gy0, cx, e["top"])
 
-    # ---- strict horizontal alignment of the two columns ---------------------
-    for a, b in (("TA", "OR"), ("EB", "TR")):
-        with g.subgraph() as s:
-            s.attr(rank="same")
-            s.node(a)
-            s.node(b)
+    # 5. two validation columns -------------------------------------------------------
+    oy0, oy1 = 0.28, 3.80
+    c.group(0.30, oy0, W - 0.30, oy1, "Five public atlases, two modalities, three platforms")
+    lx0, lx1 = 0.52, 3.50
+    rx0, rx1 = 3.70, W - 0.52
+    iy1 = oy1 - 0.34
+    c.group(lx0, oy0 + 0.16, lx1, iy1, "Chemical (Vevo Mosaic)", align="right")
+    c.group(rx0, oy0 + 0.16, rx1, iy1, "Genetic (CRISPRi)", align="right")
+    lcx, rcx = (lx0 + lx1) / 2, (rx0 + rx1) / 2
+    bw, bh = 2.62, 0.86
+    ytop, ybot = 2.74, 1.08
 
-    # ---- edges (spine ends at the validations) ------------------------------
-    g.edge("Q", "TH")
-    g.edge("TH", "P3", label="  proven", lhead="cluster_proof")
-    g.edge("P3", "ENG", ltail="cluster_proof")
-    g.edge("ENG", "TA", label="  calibrate", lhead="cluster_chem")
-    g.edge("ENG", "OR", label="  transfer", lhead="cluster_gen")
-    return g
+    ta = c.box(lcx, ytop, bw, bh, "Tahoe-100M",
+               ["56,827 conditions, 95.6 M cells", r"$\sigma^{2}=0.957$, held-out slope 0.94",
+                "shared DMSO vehicle: 55% control-pool-limited"])
+    eb = c.box(lcx, ybot, bw, bh, "EmeraldBay",
+               ["4,912 conditions, 1.83 M cells", r"$\sigma^{2}=0.917$, held-out slope 0.98",
+                "large per-line pool: 83% treated-depth-limited"])
+    orn = c.box(rcx, ytop, bw, bh, "X-Atlas/Orion (HCT116, HEK293T)",
+                ["35,441 knockdowns, about 8 M cells", r"$\sigma^{2}=0.91\,/\,1.03$",
+                 "genome-wide: 15 to 35% detectable, none deep enough"])
+    tr = c.box(rcx, ybot, bw, bh, "TRADE (Jurkat, HepG2)",
+               ["4,070 essential-gene knockdowns", r"$\sigma^{2}=1.50\,/\,1.87$, slope 1.02 / 0.96",
+                "strong effects at 48 to 85 cells per gene"])
+
+    c.arrow(lcx, ta["bot"], lcx, eb["top"], label=r"$\sigma^{2}$ transfers across timepoints", lx=0.08)
+    c.arrow(rcx, orn["bot"], rcx, tr["top"], label=r"direct test at $m>4$", lx=0.08)
+
+    ymid = (e["bot"] + oy1) / 2
+    c.elbow(cx, e["bot"], lcx, ta["top"], ymid, label="calibrate", side="right")
+    c.elbow(cx, e["bot"], rcx, orn["top"], ymid, label="transfer", side="left")
+
+    return c
 
 
 if __name__ == "__main__":
     os.makedirs("figures", exist_ok=True)
-    g = build()
-    stem = "figures/fig1_study_flowchart"
-    with open(stem + ".dot", "w") as f:
-        f.write(g.source)
-    for fmt in ("pdf", "png"):
-        g.render(stem, format=fmt, cleanup=True, engine="dot")
-        print(f"wrote {stem}.{fmt}")
+    build().save("figures/fig1_study_flowchart")
