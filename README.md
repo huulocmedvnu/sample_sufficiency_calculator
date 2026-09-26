@@ -119,7 +119,8 @@ scripts/
   run_unified_spectrum.py           # runs the engine over all six screens -> fixtures + Table 5
   {tahoe,emeraldbay,orion,trade}_recompute/   # from-raw streaming; held-out falsification & gating
   make_manuscript_figures.py, make_study_flowchart.py, make_heldout_figure.py, normalize_manuscript.py
-docs/   MANUSCRIPT_DEEPSEEK.md (source) · manuscript.md (built) · SUPPLEMENT.md (constants of record)
+docs/   MANUSCRIPT_DEEPSEEK.md (main text source) · SUPPLEMENTARY.md (supplementary source) · manuscript.md,
+        supplementary.md (built) · SUPPLEMENT.md (constants of record)
         THEORY.md · ARCHITECTURE.md · AUDIT_LOG.md · AUDIT_DENOMINATORS.md · HANDOFF.md · FALSIFICATION.md
 lean/   Lean 4 / Mathlib proof of the deterministic core
 tests/  engine golden · σ² golden · calculator suite · verify_theory (SymPy + Monte-Carlo) · two guards
