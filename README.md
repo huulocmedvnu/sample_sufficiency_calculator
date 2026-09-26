@@ -118,9 +118,11 @@ src/
 scripts/
   run_unified_spectrum.py           # runs the engine over all six screens -> fixtures + Table 5
   {tahoe,emeraldbay,orion,trade}_recompute/   # from-raw streaming; held-out falsification & gating
-  make_manuscript_figures.py, make_study_flowchart.py, make_heldout_figure.py, normalize_manuscript.py
-docs/   MANUSCRIPT_DEEPSEEK.md (main text source) · SUPPLEMENTARY.md (supplementary source) · manuscript.md,
-        supplementary.md (built) · SUPPLEMENT.md (constants of record)
+  make_manuscript_figures.py, make_study_flowchart.py, make_heldout_figure.py
+  build_manuscript.py (source .md -> submission-format .docx + .pdf), normalize_manuscript.py,
+  make_reference_docx.py (Word style sheet -> docs/templates/reference.docx)
+docs/   MANUSCRIPT_DEEPSEEK.md (main text source) · SUPPLEMENTARY.md (supplementary source) ·
+        templates/reference.docx (journal Word styles) · SUPPLEMENT.md (constants of record)
         THEORY.md · ARCHITECTURE.md · AUDIT_LOG.md · AUDIT_DENOMINATORS.md · HANDOFF.md · FALSIFICATION.md
 lean/   Lean 4 / Mathlib proof of the deterministic core
 tests/  engine golden · σ² golden · calculator suite · verify_theory (SymPy + Monte-Carlo) · two guards
@@ -139,9 +141,10 @@ cd lean && lake exe cache get && lake build   # machine-checks the Lean proofs
 CI (GitHub Actions, py3.10–3.12) runs the suite. The two guards keep the quota in one place: the semantic
 one (`test_no_duplicate_math.py`) also fails if retired-thesis constants reappear outside the four exempt
 docs; the AST one (`test_only_engine_imports_math.py`) fails if any `src/`/`scripts/` file (except
-`engine.py`) recomputes a quota formula. Rebuild the manuscript with
-`python scripts/normalize_manuscript.py && pandoc docs/manuscript.md -o manuscript.pdf --citeproc
---pdf-engine=tectonic` (keep the `\$` count even, or figures drop silently; verify by rendering pages).
+`engine.py`) recomputes a quota formula. Rebuild the manuscript (Briefings in Bioinformatics submission
+format: A4, Times 12 pt, double-spaced, line-numbered DOCX plus a PDF rendered from it) with
+`python scripts/build_manuscript.py --all` (needs `pip install pypandoc-binary python-docx` and LibreOffice;
+keep the `\$` count even, or figures drop silently; verify by rendering pages).
 
 ## Status
 
