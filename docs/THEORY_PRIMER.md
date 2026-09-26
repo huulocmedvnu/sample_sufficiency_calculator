@@ -351,11 +351,12 @@ drug's signal strength $m$:
 | $m = 1$ (very weak) | $\approx 4{,}700$ |
 
 But the *operational* rule is Section 6b, and Tahoe's real control is **not** a large pool: its
-plate-shared DMSO vehicle is only about **1,514 cells shared across ~94 conditions**. Putting that $n_c$
-into the control-pool floor gives $m_{\min}\approx 1.75$ — *larger* than the median (bias-corrected)
-effect $m\approx 1.22$. So for the majority of (drug $\times$ dose $\times$ line) conditions the effect
-sits below the floor and $n_t^\star=\infty$: **69% of the whole atlas is control-pool-limited**,
-unresolvable at any treated depth; only ~10% are over-sampled and ~14% are treated-depth-limited. That —
+plate-shared DMSO vehicle (the plate's two or three vehicle wells pooled) is only about **3,100 cells
+shared across ~94 conditions**. Putting that $n_c$ into the control-pool floor gives $m_{\min}\approx 1.22$,
+*larger* than the median (bias-corrected) effect $m\approx 1.10$. So for the majority of (drug $\times$
+dose $\times$ line) conditions the effect sits below the floor and $n_t^\star=\infty$: **55% of the whole
+atlas is control-pool-limited**, unresolvable at any treated depth; only ~11% are over-sampled and ~25% are
+treated-depth-limited. That —
 not a large treated cell count — is the single most important practical consequence of the formula: on
 the largest single-cell atlas assembled, the binding constraint is the size of the *shared control*.
 

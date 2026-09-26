@@ -56,10 +56,10 @@ v = np.zeros(50); v[0] = 2.97          # perturbation vector (m = ‖v‖)
 Sigma = 0.9567 * np.ones(50)           # within-condition per-cell variance (diagonal or dxd)
 
 cell_quota(v, Sigma, tolerance=0.1, control_pool_size=1_500_000)   # RECOMMENDED; n_c REQUIRED
-cell_quota(v, Sigma, tolerance=0.1, control_pool_size=1514)        # small shared vehicle → may be math.inf
+cell_quota(v, Sigma, tolerance=0.1, control_pool_size=3113)        # small shared vehicle → may be math.inf
 cell_quota_large_pool(v, Sigma, tolerance=0.1)                     # n_c → ∞ limit
 cell_quota_equal_arm(v, Sigma, tolerance=0.1)                      # matched 1:1 vehicle only (= 2× large-pool)
-cell_quota_report(v, Sigma, 0.1, control_pool_size=1514, confidence=0.05)  # + m_min, d_eff, tail quota
+cell_quota_report(v, Sigma, 0.1, control_pool_size=3113, confidence=0.05)  # + m_min, d_eff, tail quota
 ```
 
 `cell_quota_isotropic(σ², d, m, tolerance, control_pool_size)` is the scalar convenience form. All raise
@@ -72,7 +72,7 @@ embedding (normalize 1e4 → log1p → HVG 2000 → PCA 50). `C` is the large-co
 
 | screen | within σ² | C bound | det % | over % | pool-lim % | control |
 |---|--:|--:|--:|--:|--:|---|
-| **Tahoe-100M** (56,827 cond.) | 0.9567 | 4,688 | 94.2 | **10.3** | **69.2** | real shared DMSO vehicle (n_c ≈ 1,514 / ~94 cond.) |
+| **Tahoe-100M** (56,827 cond.) | 0.9567 | 4,688 | 94.4 | **11.4** | **55.4** | real shared DMSO vehicle (2-3 wells pooled, n_c ≈ 3,113 / ~94 cond.) |
 | **EmeraldBay** (4,912) | 0.9174 | 4,495 | 87.6 | 2.7 | 0.5 | per-line mean (large pool) |
 | Orion HCT116 (17,585) | 0.9133 | 4,475 | 14.7 | 0.0* | 0.0 | shared NTC pool |
 | Orion HEK293T (17,856) | 1.0334 | 5,063 | 35.3 | 0.1* | 0.0 | shared NTC pool |
@@ -81,13 +81,13 @@ embedding (normalize 1e4 → log1p → HVG 2000 → PCA 50). `C` is the large-co
 
 *genetic over% is among the *detectable* subset (Table 4).
 
-**Headline (Tahoe, real shared DMSO vehicle).** The plate-shared DMSO pool of only ~1,514 cells (shared
-across ~94 conditions) sets a floor `m_min = 1.75` above the median bias-corrected effect (1.216), so
-**69.2% of conditions are control-pool-limited** — unresolvable at any treated depth — and only 10.3% are
-over-sampled. The binding constraint on the largest single-cell atlas is the size of the shared control
+**Headline (Tahoe, real shared DMSO vehicle).** The plate-shared DMSO pool (the plate's 2-3 vehicle wells
+pooled, ~3,113 cells shared across ~94 conditions) sets a floor `m_min = 1.22` above the median bias-corrected
+effect (1.096), so **55.4% of conditions are control-pool-limited** — unresolvable at any treated depth — and
+only 11.4% are over-sampled (25.2% treated-depth-limited). The binding constraint on the largest single-cell atlas is the size of the shared control
 pool, not treated depth. Referencing each condition to a large per-line pool instead (a different
 estimand, reported only as a sensitivity) removes the floor and leaves 21.7% over-sampled. Tolerance is a
-second lever: loosening 5.7° → 17° frees the control-pool-limited fraction from 69% to 13%.
+second lever: loosening 5.7° → 17° frees the control-pool-limited fraction from 55% to 7%.
 
 **σ² transfers across platform and modality** (≈ 1.0 on every chemical and genome-wide-genetic dataset).
 **Held-out downsample-and-measure test** (parameter-free slope `tr(PΣP)/m²`, run on every atlas):

@@ -42,7 +42,7 @@ def test_headline_spectrum_golden():
     js = json.load(open(US)); by = _by_name(js)
     gold = {  # detectable, over, under, ghost, pool-limited, C bound  (real diagonal Sigma)
         # HEADLINE: Tahoe on its real shared DMSO vehicle -> control-pool-limited majority
-        "Tahoe-100M":   (94.2, 10.3, 13.8, 1.0, 69.2, 4688),
+        "Tahoe-100M":   (94.4, 11.4, 25.2, 2.4, 55.4, 4688),   # all DMSO_TF wells pooled (n_c~3,113)
         "EmeraldBay":   (87.6, 2.7, 82.5, 2.0, 0.5, 4495),
         "Orion HCT116": (14.7, 0.0, 14.7, 0.0, 0.0, 4475),
         "Orion HEK293T": (35.3, 0.0, 35.3, 0.0, 0.0, 5063),

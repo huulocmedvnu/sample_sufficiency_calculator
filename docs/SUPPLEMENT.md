@@ -27,7 +27,7 @@ is the large-control bound each screen approaches; med. m is the bias-corrected 
 
 | screen | within sigma^2 | C bound /m^2 | conditions | det % | over % | under % | ghost % | pool-lim % | not-det % | med m | med n* | control |
 |---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|---|
-| **Tahoe-100M** | **0.9567** | **4,688** | 56,827 | 94.2 | **10.3** | 13.8 | 1.0 | **69.2** | 5.8 | 1.216 | 2,401 | shared DMSO vehicle (n_c≈1,514, m_min=1.75) |
+| **Tahoe-100M** | **0.9567** | **4,688** | 56,827 | 94.4 | **11.4** | 25.2 | 2.4 | **55.4** | 5.6 | 1.096 | 3,622 | shared DMSO vehicle, all 2-3 wells/plate pooled (n_c≈3,113, m_min=1.22) |
 | **EmeraldBay** | **0.9174** | 4,495 | 4,912 | 87.6 | 2.7 | 82.5 | 2.0 | 0.5 | 12.4 | 1.175 | 3,673 | per-line mean (n_c≈22.8k) |
 | Orion HCT116 | 0.9133 | 4,475 | 17,585 | 14.7 | 0.0 | 14.7 | 0.0 | 0.0 | 85.3 | 0.141 | 21,376 | NTC pool (165,562) |
 | Orion HEK293T | 1.0334 | 5,063 | 17,856 | 35.3 | 0.0 | 35.3 | 0.0 | 0.0 | 64.7 | 0.351 | 7,592 | NTC pool (218,838) |
@@ -37,10 +37,12 @@ is the large-control bound each screen approaches; med. m is the bias-corrected 
 The genetic over/under split is also reported among **detectable** knockdowns (Table 4): over(det) =
 0.0 (HCT116) / 0.1 (HEK293T) / 1.2 (Jurkat) / 4.4 (HepG2) %.
 
-**Headline (Tahoe, real shared DMSO vehicle).** The plate-shared DMSO_TF pool (median ≈1,514 cells shared
-across ≈94 conditions) sets a magnitude floor `m_min = 1.75` above the median bias-corrected effect
-(1.216), so **69.2 % of conditions are control-pool-limited** and only 10.3 % over-sampled; median
-resolvable `n* = 2,401` cells/arm vs median acquired `N0 = 1,296`. Marginal Tahoe `sigma^2 = 2.406`
+**Headline (Tahoe, real shared DMSO vehicle).** The plate-shared DMSO_TF pool (the plate's 2-3 vehicle wells
+pooled; median ≈3,113 cells shared across ≈94 conditions) sets a magnitude floor `m_min = 1.22` above the
+median bias-corrected effect (1.096), so **55.4 % of conditions are control-pool-limited** and only 11.4 %
+over-sampled (25.2 % treated-depth-limited); median resolvable `n* = 3,622` cells/arm vs median acquired
+`N0 = 1,296`. (Before 2026-09-26 the loader kept only ONE DMSO_TF well per plate, giving n_c≈1,514 and
+69.2 % pool-limited; those numbers are retired.) Marginal Tahoe `sigma^2 = 2.406`
 (all cells) is retained only as a conservative bound.
 
 **Sensitivity (Tahoe, per-line-mean reference, a large pool).** Removes the floor: 21.7 % over-sampled,
@@ -48,13 +50,14 @@ resolvable `n* = 2,401` cells/arm vs median acquired `N0 = 1,296`. Marginal Taho
 
 ## 3. Tolerance lever, reliability, budget (`fixtures/tahoe_applications.json`)
 
-- **Tolerance (Table 6).** Control-pool-limited fraction 69.2 -> 46.0 -> 29.3 -> 18.7 -> 12.8 % as
-  theta* goes 0.10 -> 0.15 -> 0.20 -> 0.25 -> 0.30 rad; over-sampled 10.3 -> 25.6 -> 41.9 -> 55.6 -> 65.9 %.
-- **Reliability.** Conditions resolved 10.3 / 41.9 / 65.9 % at theta* = 0.1/0.2/0.3; k-NN (k=10)
-  similarity-graph edges with both endpoints resolved **7.0 / 36.5 / 61.7 %**.
+- **Tolerance (Table 6).** Control-pool-limited fraction 55.4 -> 31.5 -> 17.9 -> 11.1 -> 7.2 % as
+  theta* goes 0.10 -> 0.15 -> 0.20 -> 0.25 -> 0.30 rad; over-sampled 11.4 -> 27.9 -> 44.8 -> 58.4 -> 68.1 %
+  (`tolerance_sweep` in the fixture).
+- **Reliability.** Conditions resolved 11.4 / 44.8 / 68.1 % at theta* = 0.1/0.2/0.3; k-NN (k=10)
+  similarity-graph edges with both endpoints resolved **7.5 / 38.6 / 64.0 %**.
 - **Budget** (600-condition screen, per-line-mean reference): 90th-percentile quota 10,973 cells ->
   uniform 6.6 M cells vs quota-guided (cap 10k) 2.4 M, a **2.8x** reduction (~$1.98 M vs ~$0.72 M @ $0.30/cell).
-- **Multiplex exemplar.** Homoharringtonine 5 uM x NCI-H460 (N0=6,060): m=15.5, n*=19, ~320x multiplexing gain.
+- **Multiplex exemplar.** Homoharringtonine 5 uM x NCI-H460 (N0=6,060): m=14.9, n*=21, ~290x multiplexing gain.
 
 ## 4. Verification (`fixtures/*`, `tests/`, `outputs/`)
 
@@ -64,8 +67,10 @@ resolvable `n* = 2,401` cells/arm vs median acquired `N0 = 1,296`. Marginal Taho
 - **Held-out slope** (`docs/FALSIFICATION.md`): in-regime realized/predicted slope 0.94 (Tahoe, 1,790
   conditions) / 0.98 (EmeraldBay, 32 groups), R^2 ≈ 0.999; TRADE strong-knockdown slope 1.02 (Jurkat) /
   0.96 (HepG2), R^2 = 0.996 (`fixtures/trade_{jurkat,hepg2}_falsification.json`).
-- **OVER downsample gate**: 5,824/5,851 predicted-over Tahoe conditions (shared vehicle) meet tolerance at
-  n* (`fixtures/verification_over.json`); 13,964/13,964 under the per-line-mean gate; EmeraldBay 706/706.
+- **OVER downsample gate**: 6,442/6,467 (99.6%) predicted-over Tahoe conditions (shared vehicle) meet tolerance at
+  n* (`fixtures/verification_over.json`, generator `scripts/tahoe_recompute/pass4d_gating_vehicle.py`; 25
+  exceptions, 23 in NCI-H460, realized <= 6.5 deg; the gate shares the control centroid so it tests the
+  treated-arm term only); 13,964/13,964 under the per-line-mean gate; EmeraldBay 706/706.
 - **Downsampling invariance** (`outputs/emeraldbay_invariance.json`, `pass6_invariance.py`): over-sampled
   DMSO_T0 x HS-578T (n*=92) stays stable when downsampled to its quota (drift ≤0.6 %, cos-SD 0.008); the
   under-sampled Gemcitabine x MIA PaCa-2 (n*=42,666) destabilises at the same depth (+19 %, cos-SD 0.10).
@@ -76,7 +81,7 @@ resolvable `n* = 2,401` cells/arm vs median acquired `N0 = 1,296`. Marginal Taho
 
 1. **Variance definition.** Headline uses the within-condition residual sigma^2 (Tahoe 0.9567, EmeraldBay
    0.9174 full-atlas / 0.8673 five-shared-line); marginal Tahoe 2.406 is a conservative bound only.
-2. **Tahoe control = the real plate-shared DMSO vehicle**, small (n_c≈1,514) -> control-pool-limited
+2. **Tahoe control = the real plate-shared DMSO vehicle**, small (n_c≈3,113, all wells pooled) -> control-pool-limited
    majority. The per-line-mean reference is a different estimand, reported only as a sensitivity.
 3. **Chemical Sigma is diagonal** (the chemical sufficient statistics store per-PC variances); the genetic
    TRADE path carries the full 50x50 Sigma. tr(PSP) varies only +-1.5-3 % on the chemical atlases.

@@ -1,14 +1,193 @@
 {
- "note": "OVER/UNDER downsample-and-measure verification on the predicted-OVER set (Tahoe, shared DMSO vehicle, real Sigma, theta=0.1). Downsample treated cells to n*, RMS angle vs full-depth direction.",
+ "note": "OVER/UNDER downsample-and-measure verification on the predicted-OVER set (Tahoe, shared DMSO vehicle with ALL DMSO_TF wells per plate pooled, real diagonal Sigma, theta=0.1). Downsample treated cells to n*, RMS angle vs full-depth direction (same control centroid for both).",
+ "generator": "scripts/tahoe_recompute/pass4d_gating_vehicle.py",
+ "reps": 200,
  "tahoe_shared_dmso_theta0.1": {
-  "predicted_over": 5851,
-  "verified": 5824,
-  "pass_fraction": 0.9954,
+  "predicted_over": 6467,
+  "verified": 6442,
+  "pass_fraction": 0.9961,
   "gate": "RMS angle <= 1.05*theta",
-  "median_rms": 0.0581,
-  "p95_rms": 0.0931,
-  "max_rms": 0.1228,
-  "exceptions": 27,
-  "exception_note": "the 27 are aggressive-downsampling curvature cases (arc-vs-tangent, Note S1); realized angle <= 7.0 deg, direction still resolved"
+  "median_rms": 0.0602,
+  "p95_rms": 0.0935,
+  "max_rms": 0.1131,
+  "exceptions": 25,
+  "exception_list": [
+   {
+    "cond": "Binimetinib|0.05|CVCL_0459",
+    "n_star": 881.1,
+    "N0": 12851,
+    "m": 2.34,
+    "rms_deg": 6.27
+   },
+   {
+    "cond": "Trametinib|0.05|CVCL_0459",
+    "n_star": 677.9,
+    "N0": 6417,
+    "m": 2.65,
+    "rms_deg": 6.27
+   },
+   {
+    "cond": "Binimetinib|0.5|CVCL_0459",
+    "n_star": 493.3,
+    "N0": 11001,
+    "m": 3.09,
+    "rms_deg": 6.46
+   },
+   {
+    "cond": "Tomivosertib|0.5|CVCL_0459",
+    "n_star": 509.4,
+    "N0": 5944,
+    "m": 3.05,
+    "rms_deg": 6.05
+   },
+   {
+    "cond": "Brivudine|0.5|CVCL_0459",
+    "n_star": 238.2,
+    "N0": 4285,
+    "m": 4.42,
+    "rms_deg": 6.07
+   },
+   {
+    "cond": "Trametinib|0.5|CVCL_0459",
+    "n_star": 259.8,
+    "N0": 9093,
+    "m": 4.23,
+    "rms_deg": 6.11
+   },
+   {
+    "cond": "Ipatasertib|0.5|CVCL_0459",
+    "n_star": 99.6,
+    "N0": 1181,
+    "m": 6.8,
+    "rms_deg": 6.1
+   },
+   {
+    "cond": "Sapanisertib|0.5|CVCL_0459",
+    "n_star": 92.3,
+    "N0": 3304,
+    "m": 7.07,
+    "rms_deg": 6.04
+   },
+   {
+    "cond": "Sonidegib|0.5|CVCL_0459",
+    "n_star": 145.0,
+    "N0": 1948,
+    "m": 5.65,
+    "rms_deg": 6.05
+   },
+   {
+    "cond": "Binimetinib|5.0|CVCL_0459",
+    "n_star": 337.0,
+    "N0": 13005,
+    "m": 3.77,
+    "rms_deg": 6.3
+   },
+   {
+    "cond": "Trametinib|5.0|CVCL_0459",
+    "n_star": 279.0,
+    "N0": 15184,
+    "m": 4.12,
+    "rms_deg": 6.06
+   },
+   {
+    "cond": "TAK-901|5.0|CVCL_0459",
+    "n_star": 57.5,
+    "N0": 3772,
+    "m": 9.12,
+    "rms_deg": 6.39
+   },
+   {
+    "cond": "Homoharringtonine|0.05|CVCL_0459",
+    "n_star": 50.5,
+    "N0": 2904,
+    "m": 9.6,
+    "rms_deg": 6.48
+   },
+   {
+    "cond": "Idarubicin (hydrochloride)|0.5|CVCL_0459",
+    "n_star": 197.4,
+    "N0": 3475,
+    "m": 4.9,
+    "rms_deg": 6.04
+   },
+   {
+    "cond": "Tucidinostat|0.5|CVCL_0459",
+    "n_star": 326.5,
+    "N0": 2195,
+    "m": 3.84,
+    "rms_deg": 6.13
+   },
+   {
+    "cond": "Homoharringtonine|0.5|CVCL_0459",
+    "n_star": 22.4,
+    "N0": 2114,
+    "m": 14.36,
+    "rms_deg": 6.33
+   },
+   {
+    "cond": "Chlorhexidine (diacetate)|5.0|CVCL_0459",
+    "n_star": 510.7,
+    "N0": 9340,
+    "m": 3.06,
+    "rms_deg": 6.21
+   },
+   {
+    "cond": "Tucidinostat|5.0|CVCL_0459",
+    "n_star": 374.2,
+    "N0": 8164,
+    "m": 3.56,
+    "rms_deg": 6.25
+   },
+   {
+    "cond": "Tucidinostat|5.0|CVCL_C466",
+    "n_star": 385.5,
+    "N0": 3017,
+    "m": 3.61,
+    "rms_deg": 6.04
+   },
+   {
+    "cond": "Homoharringtonine|5.0|CVCL_C466",
+    "n_star": 22.6,
+    "N0": 1414,
+    "m": 14.41,
+    "rms_deg": 6.03
+   },
+   {
+    "cond": "Harringtonine|0.05|CVCL_0459",
+    "n_star": 187.0,
+    "N0": 1458,
+    "m": 5.08,
+    "rms_deg": 6.11
+   },
+   {
+    "cond": "Harringtonine|0.5|CVCL_0459",
+    "n_star": 31.9,
+    "N0": 7920,
+    "m": 12.1,
+    "rms_deg": 6.27
+   },
+   {
+    "cond": "Harringtonine|5.0|CVCL_0459",
+    "n_star": 35.0,
+    "N0": 7919,
+    "m": 11.57,
+    "rms_deg": 6.07
+   },
+   {
+    "cond": "Malotilate|0.05|CVCL_0459",
+    "n_star": 676.9,
+    "N0": 8771,
+    "m": 2.65,
+    "rms_deg": 6.03
+   },
+   {
+    "cond": "Gefitinib|5.0|CVCL_0459",
+    "n_star": 167.6,
+    "N0": 12913,
+    "m": 5.31,
+    "rms_deg": 6.31
+   }
+  ],
+  "median_n_c": 3113
  }
 }

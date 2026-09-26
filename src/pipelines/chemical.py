@@ -9,8 +9,8 @@ re-stream):
   EmeraldBay:  <eb_work>/out/pseudobulk.npz                                     (already in PCA space)
 
 Control design (finding #9, gap 2): the Tahoe HEADLINE control is its real vehicle-matched shared
-DMSO_TF pool (n_c ~ 1,500 cells, shared across ~94 conditions), which is control-pool-limited for most
-conditions. The per-line mean (a large pool, n_c = all cells in the line) is reported as a sensitivity
+DMSO_TF pool (all 2-3 vehicle wells on the plate pooled; n_c ~ 3,100 cells, shared across ~94
+conditions), which is control-pool-limited for most conditions. The per-line mean (a large pool, n_c = all cells in the line) is reported as a sensitivity
 analysis. EmeraldBay references the per-line mean.
 
 No cell-count filter on the spectrum (finding #2/#4): every non-empty condition is included.
@@ -53,7 +53,11 @@ def load_tahoe(control="per-line-mean"):
         drug, ds, plate = mt
         lsum[line] = lsum.get(line, 0) + sums[i]; lcnt[line] = lcnt.get(line, 0) + counts[i]
         if drug == CTRL:
-            dmso_c[(plate, line)] = coords[i]; dmso_n[(plate, line)] = counts[i]
+            # POOL every DMSO_TF well on this (plate, line): Tahoe plates carry 2-3 vehicle wells each.
+            # (A plain assignment here silently kept only the last well -- halving n_c; audit 2026-09.)
+            k2 = (plate, line); n_prev = dmso_n.get(k2, 0.0)
+            dmso_c[k2] = (dmso_c.get(k2, 0.0) * n_prev + coords[i] * counts[i]) / (n_prev + counts[i])
+            dmso_n[k2] = n_prev + counts[i]
         else:
             cond.setdefault((drug, ds, line), []).append((coords[i], counts[i], plate))
     linebase = {l: (lsum[l] / lcnt[l] - pmean) @ comps.T for l in lsum}

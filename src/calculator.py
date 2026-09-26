@@ -17,7 +17,7 @@ no treated depth resolves the direction. It reduces to the matched EQUAL-ARM spe
 2 tr(PSP)/(m^2 tol^2) when n_c = n_t and to the LARGE-POOL limit tr(PSP)/(m^2 tol^2) as n_c -> inf.
 
 **n_c is a REQUIRED argument of the recommended entry points.** Ignoring the control-pool size is
-exactly the error this paper documents: against the largest atlas's real shared DMSO pool, ~69% of
+exactly the error this paper documents: against the largest atlas's real shared DMSO pool, ~55% of
 conditions are control-pool-limited (unresolvable at any treated depth) -- invisible to any equal-arm
 formula. Use `cell_quota(v, Sigma, tolerance, control_pool_size)`; the `_equal_arm` / `_large_pool`
 variants are the two limits, provided only for the cases where they genuinely apply.
@@ -60,7 +60,7 @@ def cell_quota(perturbation_vector, covariance, tolerance, control_pool_size):
     covariance          : array              within-condition per-cell Sigma (length-d diagonal or d x d).
     tolerance           : float              target RMS angular error in radians (paper standard: 0.1).
     control_pool_size   : float  (REQUIRED)  the real number of control cells n_c. There is no default:
-        the whole point of the paper is that ignoring n_c is wrong (69% of the largest atlas is
+        the whole point of the paper is that ignoring n_c is wrong (55% of the largest atlas is
         control-pool-limited). Pass math.inf explicitly for a truly unbounded shared pool.
 
     Returns
@@ -198,5 +198,5 @@ if __name__ == "__main__":
     for m, lab in [(15.5, "Homoharringtonine 5uM (strong)"), (1.22, "median signature")]:
         v = np.zeros(50); v[0] = m
         big = cell_quota(v, Sig, 0.1, control_pool_size=1e9)
-        small = cell_quota(v, Sig, 0.1, control_pool_size=1514)          # Tahoe's real shared DMSO pool
-        print(f"{lab:30s} m={m:.2f}  large-pool n*={big:,.0f}  |  shared-pool(n_c=1514) n*={small}")
+        small = cell_quota(v, Sig, 0.1, control_pool_size=3113)          # Tahoe's real shared DMSO pool
+        print(f"{lab:30s} m={m:.2f}  large-pool n*={big:,.0f}  |  shared-pool(n_c=3113) n*={small}")

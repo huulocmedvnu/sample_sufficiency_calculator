@@ -51,11 +51,21 @@ cost = dict(cost_per_cell_usd=COST_PER_CELL, screen="100 drugs x 3 doses x 2 lin
             adaptive_cap10k_cells=int(adapt), adaptive_cap10k_cost_usd=round(adapt * COST_PER_CELL),
             cell_savings_factor=round(flat / adapt, 2), flat_M=round(flat / 1e6, 1), adaptive_M=round(adapt / 1e6, 1))
 
-out = dict(reliability_audit=rel, cost=cost)
+# --- Table 6: tolerance sweep on the real shared vehicle (pool-limited vs over-sampled fraction) ---
+sweep = {}
+for th in (0.10, 0.15, 0.20, 0.25, 0.30):
+    reg = compute(sp["mu_t"], sp["mu_c"], sp["n_t"], sp["n_c"], sp["Sigma"], theta=th)["regime"]
+    pc = lambda k: round(100 * float(np.mean(reg == k)), 1)
+    sweep[f"{th:.2f}"] = dict(pct_pool_limited=pc("POOL-LIMITED"), pct_over=pc("OVER"), pct_under=pc("UNDER"),
+                              pct_ghost=pc("GHOST"), pct_not_detectable=pc("NOT-DETECTABLE"))
+
+out = dict(reliability_audit=rel, cost=cost, tolerance_sweep=sweep)
 json.dump(out, open(os.path.join(FIXDIR, "tahoe_applications.json"), "w"), indent=1)
 
 for th in ("0.1", "0.2", "0.3"):
     print(f"[B] theta={th}: resolved {rel[th]['pct_resolved']}%  graph-edges both-resolved {rel[th]['pct_graph_edges_both_resolved']}%")
+for th, r in sweep.items():
+    print(f"[T6] theta={th}: pool-limited {r['pct_pool_limited']}%  over {r['pct_over']}%  under {r['pct_under']}%")
 print(f"[C] 90th-pct quota {cost['flat_p90_quota']:,}; uniform {cost['flat_M']}M vs quota-guided {cost['adaptive_M']}M "
       f"-> {cost['cell_savings_factor']}x reduction")
 print("wrote fixtures/tahoe_applications.json")

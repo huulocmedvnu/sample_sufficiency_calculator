@@ -1,16 +1,16 @@
 {
  "reliability_audit": {
   "0.1": {
-   "pct_resolved": 10.3,
-   "pct_graph_edges_both_resolved": 7.0
+   "pct_resolved": 11.4,
+   "pct_graph_edges_both_resolved": 7.5
   },
   "0.2": {
-   "pct_resolved": 41.9,
-   "pct_graph_edges_both_resolved": 36.5
+   "pct_resolved": 44.8,
+   "pct_graph_edges_both_resolved": 38.6
   },
   "0.3": {
-   "pct_resolved": 65.9,
-   "pct_graph_edges_both_resolved": 61.7
+   "pct_resolved": 68.1,
+   "pct_graph_edges_both_resolved": 64.0
   }
  },
  "cost": {
@@ -25,5 +25,42 @@
   "cell_savings_factor": 2.76,
   "flat_M": 6.6,
   "adaptive_M": 2.4
+ },
+ "tolerance_sweep": {
+  "0.10": {
+   "pct_pool_limited": 55.4,
+   "pct_over": 11.4,
+   "pct_under": 25.2,
+   "pct_ghost": 2.4,
+   "pct_not_detectable": 5.6
+  },
+  "0.15": {
+   "pct_pool_limited": 31.5,
+   "pct_over": 27.9,
+   "pct_under": 33.3,
+   "pct_ghost": 1.7,
+   "pct_not_detectable": 5.6
+  },
+  "0.20": {
+   "pct_pool_limited": 17.9,
+   "pct_over": 44.8,
+   "pct_under": 30.7,
+   "pct_ghost": 0.9,
+   "pct_not_detectable": 5.6
+  },
+  "0.25": {
+   "pct_pool_limited": 11.1,
+   "pct_over": 58.4,
+   "pct_under": 24.4,
+   "pct_ghost": 0.5,
+   "pct_not_detectable": 5.6
+  },
+  "0.30": {
+   "pct_pool_limited": 7.2,
+   "pct_over": 68.1,
+   "pct_under": 18.8,
+   "pct_ghost": 0.2,
+   "pct_not_detectable": 5.6
+  }
  }
 }

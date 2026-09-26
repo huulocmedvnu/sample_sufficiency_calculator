@@ -243,3 +243,31 @@ tahoe passes, and figure dead code. Regenerated `docs/SUPPLEMENT.md` (constants 
 **Final state:** 26 tests green; both guards 0; `unified_spectrum.json` unchanged (69.2% pool-limited /
 10.3% over / sigma^2 transfer / held-out slopes 0.94/0.98, 1.02/0.96 all intact); PDF ~1.15 MB / 5
 figures (confirmed by rendering pages) + DOCX. Committed on `master` (HEAD `dbf301c`), pushed to origin.
+
+## 9. Round 4 (2026-09-26): the DMSO_TF pool overwrite
+
+`src/pipelines/chemical.py` assigned `dmso_c[(plate, line)] = coords[i]` for each DMSO_TF sample, so on
+Tahoe plates that carry 2-3 vehicle wells only the LAST well survived: the headline "n_c ~ 1,514 cells"
+was an artifact, not the design. Fixed to pool every DMSO_TF well (cell-weighted). Regenerated:
+`run_unified_spectrum.py`, `applications/reliability_and_cost.py` (now also emits the Table 6 sweep),
+all figures, `verification_over.json` (new committed generator `pass4d_gating_vehicle.py`; the old
+5,824/5,851 number had no script), manuscript, SUPPLEMENT, README, HANDOFF, THEORY_PRIMER.
+
+| Tahoe (shared vehicle, theta 0.1) | before | after |
+|---|--:|--:|
+| median n_c | 1,514 | 3,113 |
+| control-pool-limited % | 69.2 | 55.4 |
+| treated-depth-limited % | 13.8 | 25.2 |
+| over % / ghost % / not-det % | 10.3 / 1.0 / 5.8 | 11.4 / 2.4 / 5.6 |
+| median m_min / m_corr | 1.75 / 1.216 | 1.22 / 1.096 |
+| median resolvable n* | 2,401 | 3,622 |
+| OVER gate | 5,824/5,851 | 6,442/6,467 |
+
+The other five screens and the per-line-mean sensitivity are unchanged. The 25 gate exceptions are
+strong-effect conditions, 23 of them in NCI-H460; the earlier "arc-vs-tangent curvature" explanation
+was withdrawn because that term has the opposite sign (a shortfall). The same audit recorded design
+issues NOT fixed here: the held-out downsample test is a finite-population identity; the OVER gate
+shares the control centroid and so never tests the 1/n_c term; EmeraldBay references the per-line mean
+while Tahoe references the vehicle (against its own vehicle EmeraldBay is ~62% pool-limited);
+between-well DMSO variance (~2.6x the sampling floor) is absent from Sigma; the MoA-recovery null
+(`fixtures/tahoe_moa_recovery.json`) is not reported in the manuscript.
