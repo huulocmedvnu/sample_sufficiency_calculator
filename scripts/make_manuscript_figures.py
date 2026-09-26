@@ -40,36 +40,64 @@ def save(fig, name):
 
 
 def fig2_geometry():
-    fig, axs = plt.subplots(1, 2, figsize=(7.6, 3.5))
-    v = np.array([3.2, 0.0]); m = np.linalg.norm(v); u = v / m
-    for ax, n, ttl, draw_decomp in [(axs[0], 12, "few cells", True), (axs[1], 200, "many cells", False)]:
-        rng = np.random.default_rng(3)
-        sd = 3.0 / np.sqrt(n)
-        est = v + rng.normal(0, sd, size=(70, 2))
-        ax.scatter(est[:, 0], est[:, 1], s=10, color=SKY, alpha=0.5, edgecolor="none", zorder=2)
-        ax.annotate("", xy=v, xytext=(0, 0), arrowprops=dict(arrowstyle="-|>", lw=2.6, color=BLACK), zorder=4)
-        ax.text(v[0] * 0.52, -0.22, r"$v$ (true direction)", color=BLACK, fontsize=8.5, ha="center", va="top")
-        if draw_decomp:
-            vh = np.array([3.9, 1.25])                       # one illustrative estimate
+    """Schematic: the sampling error of the estimated effect vector splits into an along-signal part
+    (changes the length only) and an across-signal part (rotates the direction). The cloud of
+    estimates, and its RMS radius, shrink as 1/sqrt(n); only the across-signal part enters theta."""
+    from matplotlib.patches import Circle, Arc, Polygon
+    fig, axs = plt.subplots(1, 2, figsize=(7.4, 2.7), gridspec_kw=dict(wspace=0.04))
+    v = np.array([3.0, 0.0]); m = np.linalg.norm(v); u = v / m
+    ORIGIN = np.zeros(2)
+    NOISE = 2.6                                          # per-cell scatter (illustrative units)
+    for ax, n, letter in [(axs[0], 12, "a"), (axs[1], 200, "b")]:
+        rng = np.random.default_rng(7)
+        sd = NOISE / np.sqrt(n)
+        est = v + rng.normal(0, sd, size=(60, 2))
+        # cloud of possible estimates + its RMS radius
+        ax.add_patch(Circle(v, sd, facecolor=SKY, alpha=0.12, edgecolor=SKY, lw=0.9, ls="--", zorder=1))
+        ax.scatter(est[:, 0], est[:, 1], s=7, color=SKY, alpha=0.55, edgecolor="none", zorder=2)
+        # true effect vector
+        ax.annotate("", xy=v, xytext=ORIGIN, arrowprops=dict(arrowstyle="-|>", lw=2.4, color=BLACK,
+                    shrinkA=0, shrinkB=0, mutation_scale=14), zorder=5)
+        ax.plot(0, 0, "o", color=BLACK, ms=3.5, zorder=6)
+        ax.text(1.15, -0.26, r"$v$  true effect", color=BLACK, fontsize=8, ha="center", va="top")
+        if n == 12:
+            vh = np.array([3.50, 0.70])                  # one illustrative estimate, at ~1 RMS radius
             e = vh - v; along = (e @ u) * u; perp = e - along
-            ax.annotate("", xy=vh, xytext=(0, 0), arrowprops=dict(arrowstyle="-|>", lw=1.4, color=GRAY), zorder=3)
-            ax.annotate("", xy=v + along, xytext=v, arrowprops=dict(arrowstyle="-|>", lw=2.0, color=BLUE), zorder=5)
-            ax.annotate("", xy=vh, xytext=v + along, arrowprops=dict(arrowstyle="-|>", lw=2.0, color=VERM), zorder=5)
-            ax.scatter(*vh, s=32, color=BLACK, zorder=6)
-            ax.text(vh[0] + 0.08, vh[1] + 0.02, r"$\hat v$ (estimate)", fontsize=8.5, va="center")
-            th = np.arctan2(vh[1], vh[0]); arc = np.linspace(0, th, 40); r = 1.5
-            ax.plot(r * np.cos(arc), r * np.sin(arc), color="#666666", lw=1.1, zorder=3)
-            ax.text(1.72, 0.42, r"$\theta$", color="#444444", fontsize=12)
-            ax.text((v[0] + vh[0]) / 2, -0.42, "along-signal\n(changes length)", color=BLUE, fontsize=7.5, ha="center", va="top")
-            ax.text(vh[0] + 0.12, 0.72, "across-signal\n(rotates $\\hat v$)", color=VERM, fontsize=7.5, ha="left", va="center")
+            foot = v + along
+            # estimate
+            ax.annotate("", xy=vh, xytext=ORIGIN, arrowprops=dict(arrowstyle="-|>", lw=1.3, color="#7A7A7A",
+                        shrinkA=0, shrinkB=0, mutation_scale=12), zorder=4)
+            ax.plot(*vh, "o", color=BLACK, ms=4, zorder=7)
+            ax.text(vh[0] - 0.12, vh[1] + 0.12, r"$\hat v$  estimate", fontsize=8, ha="right", va="bottom")
+            # decomposition of the error e = vh - v
+            ax.plot([v[0], foot[0]], [v[1], foot[1]], color=BLUE, lw=2.4, solid_capstyle="round", zorder=6)
+            ax.plot([foot[0], vh[0]], [foot[1], vh[1]], color=VERM, lw=2.4, solid_capstyle="round", zorder=6)
+            s = 0.13                                     # right-angle marker at the foot
+            ax.add_patch(Polygon([foot + (-s, 0), foot + (-s, s), foot + (0, s)], closed=False,
+                                 fill=False, edgecolor="#555555", lw=0.8, zorder=6))
+            # labels for the two components, placed clear of the cloud
+            ax.annotate("along-signal\nchanges length only", xy=(v[0] + along[0] * 0.5, -0.04), xytext=(5.05, -0.7),
+                        color=BLUE, fontsize=7.5, ha="center", va="top",
+                        arrowprops=dict(arrowstyle="-", color=BLUE, lw=0.7, shrinkB=3), zorder=8)
+            ax.annotate("across-signal\nrotates the direction", xy=(foot[0] + 0.04, foot[1] + perp[1] * 0.5),
+                        xytext=(4.25, 0.85), color=VERM, fontsize=7.5, ha="left", va="center",
+                        arrowprops=dict(arrowstyle="-", color=VERM, lw=0.7, shrinkB=3), zorder=8)
+            # angle
+            th = np.degrees(np.arctan2(vh[1], vh[0]))
+            ax.add_patch(Arc(ORIGIN, 2.4, 2.4, theta1=0, theta2=th, color="#555555", lw=1.0, zorder=5))
+            ax.text(1.45, 0.20, r"$\theta$", color="#333333", fontsize=11, ha="center", va="center")
+            ax.text(v[0] - 0.95, -sd - 0.12, r"RMS scatter $\propto 1/\sqrt{n}$", color="#3A7CA5", fontsize=7.5,
+                    ha="center", va="top")
         else:
-            ax.text(2.9, 0.55, "jitter cancels,\n$\\hat v$ locks onto $v$", color="#444444", fontsize=8, ha="center")
-        ax.set_title(f"{ttl}  (n = {n})", fontsize=9.5)
-        ax.set_xlim(-0.6, 5.2); ax.set_ylim(-1.9, 2.1); ax.set_aspect("equal")
-        ax.set_xticks([]); ax.set_yticks([]); ax.grid(False)
-        for s in ("left", "bottom"): ax.spines[s].set_visible(False)
-    fig.suptitle("Only noise perpendicular to the effect rotates the estimated direction --- "
-                 r"the scatter shrinks as $1/\sqrt{n}$", fontsize=9.5, y=1.01)
+            ax.text(v[0], sd + 0.16, r"RMS scatter $\propto 1/\sqrt{n}$", color="#3A7CA5", fontsize=7.5,
+                    ha="center", va="bottom")
+            ax.text(v[0] + 0.1, -0.55, r"$\hat v$ locks onto $v$,  $\theta \to 0$", color="#333333",
+                    fontsize=8, ha="center", va="top")
+        ax.set_title(f"({letter})  {'few' if n == 12 else 'many'} cells per arm,  $n$ = {n}",
+                     fontsize=9, loc="left", pad=6)
+        ax.set_xlim(-0.3, 6.2); ax.set_ylim(-1.75, 1.6); ax.set_aspect("equal")
+        ax.set_xticks([]); ax.set_yticks([]); ax.grid(False); ax.set_facecolor("none")
+        for sp in ax.spines.values(): sp.set_visible(False)
     save(fig, "fig2_geometry")
 
 
