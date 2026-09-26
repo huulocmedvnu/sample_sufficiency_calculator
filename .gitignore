@@ -38,3 +38,6 @@ lean/.lake/
 
 # generated manuscript intermediates (build_manuscript.py)
 build/
+
+# Microsoft Word lock files
+~$*.docx
