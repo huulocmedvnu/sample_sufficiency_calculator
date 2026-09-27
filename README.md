@@ -154,3 +154,7 @@ keep the `\$` count even, or figures drop silently; verify by rendering pages).
 Research utility, calibrated and validated on four public reference perturbation atlases (six screens). Provided as-is;
 **re-estimate σ² and supply the real control-pool size `n_c` for your own platform** before planning a
 screen.
+
+## License
+
+Code, scripts and derived fixtures: MIT (see `LICENSE`). Manuscript text and figures: CC BY 4.0, as posted on bioRxiv.
