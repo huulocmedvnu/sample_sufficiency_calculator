@@ -152,5 +152,11 @@ def build():
 
 
 if __name__ == "__main__":
+    import sys
+    if "--legacy" not in sys.argv:
+        print("Figure 1 is produced as native Word shapes by scripts/make_fig1_word.py since 2026-09-27 "
+              "(it also writes figures/fig1_study_flowchart.{docx,pdf,png}). Pass --legacy to draw the old "
+              "matplotlib version.")
+        sys.exit(0)
     os.makedirs("figures", exist_ok=True)
     build().save("figures/fig1_study_flowchart")
