@@ -5,7 +5,7 @@ Uses the committed fixtures (per-PC within-condition variance, example per-drug 
 NCI-H460). Every quota comes from src/calculator.py, which calls the single engine (src/engine.py); this
 script assembles no formula of its own. The recommended quota is the two-arm form
 n_t* = 1/(m^2 theta^2/tr(P Sigma P) - 1/n_c): the control-pool size n_c is REQUIRED, because against
-Tahoe's real shared DMSO pool (n_c ~ 1,514) most conditions are control-pool-limited (n* = inf) -- the
+Tahoe's real shared DMSO pool (median n_c ~ 3,113) most conditions are control-pool-limited (n* = inf) -- the
 error this tool exists to prevent. The large-pool limit (d-1)sigma^2/theta^2 and the equal-arm 2x it are
 shown as the special cases they are.
 
@@ -26,7 +26,9 @@ SIGMA2 = float(CAL["sigma2_mean_within_condition"])          # 0.9567 within-con
 SIGMA2_MARGINAL = float(CAL["sigma2_mean"])                  # 2.406 marginal (conservative bound only)
 NUM_DIMS = int(CAL["num_dimensions"])                        # 50
 BASELINE = float(CONST["median_N0"])                         # 1296 median cells / (drug x dose x line)
-N_C_VEHICLE = 1514                                           # Tahoe's real shared DMSO pool (median)
+SPEC = json.load(open(os.path.join(FIX, "unified_spectrum.json")))
+TAHOE = next(s for s in SPEC["headline"] if s["name"] == "Tahoe-100M")
+N_C_VEHICLE = int(TAHOE["median_n_c"])                        # Tahoe's real shared DMSO pool (median, all wells pooled)
 ELL = np.array(CAL["per_component_variance"]) * (SIGMA2 / SIGMA2_MARGINAL)   # within-cond Sigma diagonal
 VECS = {k: np.array(v) for k, v in CAL["example_perturbation_vectors"].items()}   # drug vectors (NCI-H460)
 
@@ -58,9 +60,9 @@ def main():
         sv = rep["required_cells_treated"]
         sv_str = "inf (POOL-LIMITED)" if not math.isfinite(sv) else f"{sv:,.0f}"
         print(f"{name[:22]:22s} {mags[name]:>6.2f} {rep['m_min']:>7.2f} {lp:>14,.0f} {sv_str:>18s}")
-    print(f"Across the 56,827 (drug x dose x line) conditions at 0.1 rad against the real vehicle: "
-          f"{CONST['pct_over']}% over, {CONST['pct_pool_limited']}% control-pool-limited, "
-          f"{CONST['pct_under']}% treated-depth-limited (fixtures/unified_spectrum.json).")
+    print(f"Across the {TAHOE['n_conditions']:,} (drug x dose x line) conditions at 0.1 rad against the real vehicle: "
+          f"{TAHOE['pct_over']}% over, {TAHOE['pct_pool_limited']}% control-pool-limited, "
+          f"{TAHOE['pct_under']}% treated-depth-limited (fixtures/unified_spectrum.json).")
 
     # --- DUAL-SIDED resource allocation (large per-line pool: every quota finite) ---
     print(f"\n=== dual-sided allocation @ 0.1 rad, baseline N0={BASELINE:.0f}, large per-line pool ===")
