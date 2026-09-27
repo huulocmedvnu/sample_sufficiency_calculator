@@ -67,7 +67,7 @@ if `control_pool_size` is missing or ≤ 0. Run the calibrated demo: `python src
 
 ## Calibration & validation (all from `fixtures/unified_spectrum.json`, θ★ = 0.1 rad)
 
-Five public atlases across two modalities and three platforms, reprocessed from raw through one fixed
+Four public atlases (six screens) across two modalities and three platforms, reprocessed from raw through one fixed
 embedding (normalize 1e4 → log1p → HVG 2000 → PCA 50). `C` is the large-control bound `(d−1)σ²/θ★²`.
 
 | screen | within σ² | C bound | det % | over % | pool-lim % | control |
@@ -148,6 +148,6 @@ keep the `\$` count even, or figures drop silently; verify by rendering pages).
 
 ## Status
 
-Research utility, calibrated and validated on five public reference perturbation atlases. Provided as-is;
+Research utility, calibrated and validated on four public reference perturbation atlases (six screens). Provided as-is;
 **re-estimate σ² and supply the real control-pool size `n_c` for your own platform** before planning a
 screen.

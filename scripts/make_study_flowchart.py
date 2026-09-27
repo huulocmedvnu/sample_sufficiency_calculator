@@ -118,7 +118,7 @@ def build():
 
     # 5. two validation columns -------------------------------------------------------
     oy0, oy1 = 0.28, 3.80
-    c.group(0.30, oy0, W - 0.30, oy1, "Five public atlases, two modalities, three platforms")
+    c.group(0.30, oy0, W - 0.30, oy1, "Four public atlases, six screens, two modalities, three platforms")
     lx0, lx1 = 0.52, 3.50
     rx0, rx1 = 3.70, W - 0.52
     iy1 = oy1 - 0.34
