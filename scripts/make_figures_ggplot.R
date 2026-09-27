@@ -41,7 +41,9 @@ theme_paper <- function(base = BASE) {
 }
 save_fig <- function(p, name, width, height) {
   ggsave(file.path(FIG, paste0(name, ".pdf")), p, width = width, height = height, device = cairo_pdf)
-  ggsave(file.path(FIG, paste0(name, ".png")), p, width = width, height = height, dpi = 600, bg = "white")
+  # cairo png writes the 600-dpi pHYs tag (macOS quartz png does not); journals check it
+  ggsave(file.path(FIG, paste0(name, ".png")), p, width = width, height = height, dpi = 600, bg = "white",
+         device = "png", type = "cairo")
   cat("  wrote figures/", name, ".{pdf,png}\n", sep = "")
 }
 
