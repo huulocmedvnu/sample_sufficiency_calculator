@@ -3,11 +3,13 @@
 [![CI](https://github.com/huulocmedvnu/sample_sufficiency_calculator/actions/workflows/ci.yml/badge.svg)](https://github.com/huulocmedvnu/sample_sufficiency_calculator/actions/workflows/ci.yml)
 
 > **Single source of truth.** Every number in this study is produced by `src/engine.py` (via
-> `scripts/run_unified_spectrum.py` → `fixtures/unified_spectrum.json`). The authoritative write-up is
-> `docs/MANUSCRIPT.md`; the constants of record are `docs/SUPPLEMENT.md`; the audit narrative
-> is `docs/AUDIT_LOG.md`. A prior *equal-arm* thesis (the constants `9,376/m²`, `10.6% over`, `89%
-> under`) was retired by the control-pool audit and now survives **only** in `AUDIT_LOG.md` /
-> `AUDIT_DENOMINATORS.md` / `ARCHITECTURE.md` / this file — anywhere else, treat those numbers as stale.
+> `scripts/run_unified_spectrum.py` → `fixtures/unified_spectrum.json`); the constants of record are
+> `docs/SUPPLEMENT.md` and the audit narrative is `docs/AUDIT_LOG.md`. The manuscript ("How many cells
+> resolve a perturbation direction? A closed-form, control-aware cell quota for single-cell perturbation
+> screens", Tran and Nguyen, 2026) is posted on bioRxiv and is not part of this repository. A prior
+> *equal-arm* thesis (the constants `9,376/m²`, `10.6% over`, `89% under`) was retired by the control-pool
+> audit and now survives **only** in `AUDIT_LOG.md` / `AUDIT_DENOMINATORS.md` / `ARCHITECTURE.md` / this
+> file — anywhere else, treat those numbers as stale.
 
 A small, dependency-light calculator that answers one question for a direction-based perturbation
 screen: **how many cells does it take to resolve a perturbation's transcriptomic *direction* to a target
@@ -118,15 +120,11 @@ src/
 scripts/
   run_unified_spectrum.py           # runs the engine over all six screens -> fixtures + Table 5
   {tahoe,emeraldbay,orion,trade}_recompute/   # from-raw streaming; held-out falsification & gating
-  make_figures_ggplot.R (Figures 2-5, ggplot2), make_fig1_word.py (Figure 1 as native Word shapes),
-  make_study_flowchart.py (--legacy: old matplotlib Figure 1),
-  make_manuscript_figures.py (figure fixtures; --legacy for the old matplotlib figures), make_heldout_figure.py (legacy)
-  build_tcbb.py (source .md -> IEEE TCBB two-column tcbb.pdf via IEEEtran), build_manuscript.py (.docx/.pdf;
-  --preprint for bioRxiv), normalize_manuscript.py,
-  make_reference_docx.py (Word style sheet -> docs/templates/reference.docx)
-docs/   MANUSCRIPT.md (main text source) · SUPPLEMENTARY.md (supplementary source) ·
-        templates/reference.docx (journal Word styles) · SUPPLEMENT.md (constants of record)
-        THEORY.md · ARCHITECTURE.md · AUDIT_LOG.md · AUDIT_DENOMINATORS.md · HANDOFF.md · FALSIFICATION.md
+  make_figures_ggplot.R (Figures 2-5, ggplot2, from the committed fixtures), make_manuscript_figures.py
+  (writes fixtures/fig3_hist.json, fig4_kde.json; --legacy draws the matplotlib figures),
+  make_heldout_figure.py, make_study_flowchart.py (legacy matplotlib figures)
+docs/   SUPPLEMENT.md (constants of record) · THEORY.md · THEORY_PRIMER.md · ARCHITECTURE.md ·
+        AUDIT_LOG.md · AUDIT_DENOMINATORS.md · FALSIFICATION.md
 lean/   Lean 4 / Mathlib proof of the deterministic core
 tests/  engine golden · σ² golden · calculator suite · verify_theory (SymPy + Monte-Carlo) · two guards
 ```
@@ -144,10 +142,8 @@ cd lean && lake exe cache get && lake build   # machine-checks the Lean proofs
 CI (GitHub Actions, py3.10–3.12) runs the suite. The two guards keep the quota in one place: the semantic
 one (`test_no_duplicate_math.py`) also fails if retired-thesis constants reappear outside the four exempt
 docs; the AST one (`test_only_engine_imports_math.py`) fails if any `src/`/`scripts/` file (except
-`engine.py`) recomputes a quota formula. Rebuild the manuscript (Briefings in Bioinformatics submission
-format: A4, Times 12 pt, double-spaced, line-numbered DOCX plus a PDF rendered from it) with
-`python scripts/build_manuscript.py --all` (needs `pip install pypandoc-binary python-docx` and LibreOffice;
-keep the `\$` count even, or figures drop silently; verify by rendering pages).
+`engine.py`) recomputes a quota formula. Figures are regenerated with `Rscript scripts/make_figures_ggplot.R`
+(R >= 4.1 with ggplot2, jsonlite, dplyr, scales, patchwork, ggridges).
 
 ## Status
 
