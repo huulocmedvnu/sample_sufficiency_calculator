@@ -42,3 +42,4 @@ build/
 # Microsoft Word lock files
 ~$*.docx
 !cover_letter.pdf
+!preprint.pdf
