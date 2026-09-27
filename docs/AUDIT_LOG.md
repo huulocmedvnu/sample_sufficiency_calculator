@@ -2,7 +2,7 @@
 
 A complete, self-contained record of the audit that overhauled this study. Written so a reader who
 was never involved can understand what was wrong, what changed, and why. Authoritative current state:
-`docs/MANUSCRIPT_DEEPSEEK.md` + `src/engine.py`. Architecture: `docs/ARCHITECTURE.md`. Original
+`docs/MANUSCRIPT.md` + `src/engine.py`. Architecture: `docs/ARCHITECTURE.md`. Original
 findings ledger: `docs/AUDIT_DENOMINATORS.md`. Rollback point: git tag `pre-audit-original`.
 
 ## 1. Executive summary

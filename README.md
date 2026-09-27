@@ -4,7 +4,7 @@
 
 > **Single source of truth.** Every number in this study is produced by `src/engine.py` (via
 > `scripts/run_unified_spectrum.py` → `fixtures/unified_spectrum.json`). The authoritative write-up is
-> `docs/MANUSCRIPT_DEEPSEEK.md`; the constants of record are `docs/SUPPLEMENT.md`; the audit narrative
+> `docs/MANUSCRIPT.md`; the constants of record are `docs/SUPPLEMENT.md`; the audit narrative
 > is `docs/AUDIT_LOG.md`. A prior *equal-arm* thesis (the constants `9,376/m²`, `10.6% over`, `89%
 > under`) was retired by the control-pool audit and now survives **only** in `AUDIT_LOG.md` /
 > `AUDIT_DENOMINATORS.md` / `ARCHITECTURE.md` / this file — anywhere else, treat those numbers as stale.
@@ -121,7 +121,7 @@ scripts/
   make_manuscript_figures.py, make_study_flowchart.py, make_heldout_figure.py
   build_manuscript.py (source .md -> submission-format .docx + .pdf), normalize_manuscript.py,
   make_reference_docx.py (Word style sheet -> docs/templates/reference.docx)
-docs/   MANUSCRIPT_DEEPSEEK.md (main text source) · SUPPLEMENTARY.md (supplementary source) ·
+docs/   MANUSCRIPT.md (main text source) · SUPPLEMENTARY.md (supplementary source) ·
         templates/reference.docx (journal Word styles) · SUPPLEMENT.md (constants of record)
         THEORY.md · ARCHITECTURE.md · AUDIT_LOG.md · AUDIT_DENOMINATORS.md · HANDOFF.md · FALSIFICATION.md
 lean/   Lean 4 / Mathlib proof of the deterministic core

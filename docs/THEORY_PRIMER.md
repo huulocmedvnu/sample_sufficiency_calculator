@@ -1,6 +1,6 @@
 > **Current.** A plain-math companion to `docs/THEORY.md`. It derives the matched **equal-arm** quota,
 > then (Section 6b) the general **two-arm** quota with the real control-pool size and the control-pool
-> floor — the operational rule. Authoritative source: `docs/MANUSCRIPT_DEEPSEEK.md` + `src/engine.py`;
+> floor — the operational rule. Authoritative source: `docs/MANUSCRIPT.md` + `src/engine.py`;
 > constants of record: `docs/SUPPLEMENT.md`.
 
 ---

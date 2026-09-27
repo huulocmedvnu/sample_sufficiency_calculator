@@ -2,7 +2,7 @@
 
 Consolidated, **current** constants for the study after the control-pool audit. Every number here is
 produced by the single engine (`src/engine.py`) via `scripts/run_unified_spectrum.py` and lives in
-`fixtures/unified_spectrum.json`; do not paraphrase. Authoritative narrative: `docs/MANUSCRIPT_DEEPSEEK.md`.
+`fixtures/unified_spectrum.json`; do not paraphrase. Authoritative narrative: `docs/MANUSCRIPT.md`.
 Audit trail: `docs/AUDIT_LOG.md`, `docs/AUDIT_DENOMINATORS.md`, `docs/ARCHITECTURE.md`.
 
 ## 1. The rule (one formula, one owner)

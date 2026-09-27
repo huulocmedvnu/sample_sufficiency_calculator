@@ -68,7 +68,7 @@ control pool, not treated depth.
 These files were **deleted** because they carried retired-thesis numbers/logic and were not consumed by
 the engine, manuscript, tests, or figures. They are listed so that anyone who encounters a copy (in an
 old checkout, a cache, or an AI's memory) recognises it as stale. The current story is in
-`docs/MANUSCRIPT_DEEPSEEK.md`, `docs/SUPPLEMENT.md`, and `src/engine.py`.
+`docs/MANUSCRIPT.md`, `docs/SUPPLEMENT.md`, and `src/engine.py`.
 
 **Retired-thesis fingerprints** (appear now only in AUDIT_LOG / AUDIT_DENOMINATORS / this file / README):
 `n★ = 9,376/m²` (equal-arm headline), `10.6% over / 89.0% under / 0.4% ghost` (retired within-condition
