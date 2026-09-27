@@ -43,3 +43,4 @@ build/
 ~$*.docx
 !cover_letter.pdf
 !preprint.pdf
+!tcbb.pdf

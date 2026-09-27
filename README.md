@@ -121,7 +121,8 @@ scripts/
   make_figures_ggplot.R (Figures 2-5, ggplot2), make_fig1_word.py (Figure 1 as native Word shapes),
   make_study_flowchart.py (--legacy: old matplotlib Figure 1),
   make_manuscript_figures.py (figure fixtures; --legacy for the old matplotlib figures), make_heldout_figure.py (legacy)
-  build_manuscript.py (source .md -> submission-format .docx + .pdf), normalize_manuscript.py,
+  build_tcbb.py (source .md -> IEEE TCBB two-column tcbb.pdf via IEEEtran), build_manuscript.py (.docx/.pdf;
+  --preprint for bioRxiv), normalize_manuscript.py,
   make_reference_docx.py (Word style sheet -> docs/templates/reference.docx)
 docs/   MANUSCRIPT.md (main text source) · SUPPLEMENTARY.md (supplementary source) ·
         templates/reference.docx (journal Word styles) · SUPPLEMENT.md (constants of record)
