@@ -124,7 +124,7 @@ scripts/
   run_unified_spectrum.py          engine over all six screens -> fixtures/unified_spectrum.json
   {tahoe,emeraldbay,orion,trade}_recompute/   from-raw streaming, held-out tests, gating (need the raw atlases)
   applications/                    tolerance sweep, budget, reliability, mechanism-label recovery
-  make_figures_ggplot.R            Figures 2-5 from the committed fixtures (R, ggplot2)
+  make_figures_plotly.py           Figures 2-5 from the committed fixtures (plotly)
 fixtures/               committed derived data: spectrum, per-screen calibrations, held-out results, figure inputs
 tests/                  26 tests: golden values, calculator suite, tail coverage, symbolic + Monte-Carlo, two guards
 lean/                   Lean 4 / Mathlib proofs of the deterministic core
@@ -139,7 +139,7 @@ docs/                   THEORY.md (derivation), THEORY_PRIMER.md, ARCHITECTURE.m
 | tests and guards | `PYTHONPATH=src python -m pytest tests/ -q` | Python 3.10 to 3.12 |
 | symbolic and Monte-Carlo checks | `python tests/verify_theory.py` | sympy, numpy |
 | Lean proofs | `cd lean && lake exe cache get && lake build` | Lean 4 toolchain (pinned in `lean/lean-toolchain`) |
-| figures | `Rscript scripts/make_figures_ggplot.R` | R ≥ 4.1 with ggplot2, jsonlite, dplyr, scales, patchwork, ggridges |
+| figures | `python3 scripts/make_figures_plotly.py` | plotly ≥ 5.20 with kaleido 0.2.x, numpy, scipy, pillow |
 | six-screen spectrum | `python scripts/run_unified_spectrum.py` | per-condition caches from the recompute pipelines |
 | from-raw recompute | `scripts/*_recompute/` | the raw atlases (Tahoe-100M, EmeraldBay, X-Atlas/Orion, TRADE) |
 

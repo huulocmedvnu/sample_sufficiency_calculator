@@ -49,7 +49,7 @@ PANELS = [("tahoe", "Tahoe-100M (chemical)"), ("emb", "EmeraldBay (chemical)"),
 
 import sys
 if "--legacy" not in sys.argv:
-    print("Figure 5 is produced by scripts/make_figures_ggplot.R (ggplot2) since 2026-09-27. Pass --legacy to draw "
+    print("Figure 5 is produced by scripts/make_figures_plotly.py (plotly) since 2026-10-03. Pass --legacy to draw "
           "the old matplotlib version.")
     sys.exit(0)
 fig, axes = plt.subplots(2, 3, figsize=(11, 6.4))

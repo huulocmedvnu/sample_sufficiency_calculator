@@ -294,7 +294,7 @@ if __name__ == "__main__":
     if os.path.exists(f"{FX}/unified_spectrum_per_condition.npz"):
         export_figure_fixtures()                           # refresh the small committed fixtures when the npz is present
     if "--legacy" not in sys.argv:
-        print("Figures 2-4 are produced by scripts/make_figures_ggplot.R (ggplot2) since 2026-09-27; this script now "
+        print("Figures 2-4 are produced by scripts/make_figures_plotly.py (plotly) since 2026-10-03; this script now "
               "only refreshes fixtures/fig3_hist.json and fixtures/fig4_kde.json. Pass --legacy to draw the old "
               "matplotlib versions.")
         sys.exit(0)
