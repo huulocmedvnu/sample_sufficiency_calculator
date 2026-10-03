@@ -113,7 +113,7 @@ def build():
     # 4. shared embedding -------------------------------------------------------------
     e = c.box(cx, 4.64, 5.9, 0.68, "One from-raw embedding for every atlas", body_pt=8.8, title_gap=0.19,
               lines=[r"normalize to $10^{4}$ $\rightarrow$ $\log(1+x)$ $\rightarrow$ 2,000 HVG $\rightarrow$ PCA(50); "
-                     r"within-condition $\Sigma$ from single cells; real control pool $n_c$"])
+                     r"within-condition $\Sigma$ from single cells, real control pool $n_c$"])
     c.arrow(cx, gy0, cx, e["top"])
 
     # 5. two validation columns -------------------------------------------------------
