@@ -8,7 +8,7 @@
 This repository provides a closed-form answer, the code that calibrates it on public single-cell atlases, and the
 tests and machine-checked proofs behind it.
 
-It accompanies the manuscript *Closed-form sample size calculation for estimating perturbation directions in single-cell screens* (Tran and Nguyen, 2026, posted on bioRxiv). The manuscript itself is not
+It accompanies the manuscript *Closed-form sample size calculation for estimating perturbation directions in single-cell screens* (Tran and Nguyen, 2026, in preparation). The manuscript itself is not
 part of this repository.
 
 ## The problem
@@ -166,12 +166,14 @@ centroid only, not cell-level structure.
 
 ## Citation
 
-Tran T.T.H., Nguyen T.V. (2026). *Closed-form sample size calculation for estimating perturbation directions in single-cell screens.* bioRxiv. DOI to be added on posting.
+Please cite the software as described in `CITATION.cff`. The archived releases are on Zenodo (DOI added with the first release).
+
+The accompanying manuscript: Tran T.H.L., Nguyen T.V. (2026). *Closed-form sample size calculation for estimating perturbation directions in single-cell screens.* In preparation.
 
 ## License
 
 Code, scripts and derived fixtures are released under the MIT License (see `LICENSE`). The manuscript text and figures
-are distributed under CC BY 4.0 with the bioRxiv preprint.
+are not part of this repository.
 
 ## Contact
 
