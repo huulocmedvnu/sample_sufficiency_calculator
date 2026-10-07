@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/huulocmedvnu/sample_sufficiency_calculator/actions/workflows/ci.yml/badge.svg)](https://github.com/huulocmedvnu/sample_sufficiency_calculator/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/code-MIT-blue.svg)](LICENSE)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23217497.svg)](https://doi.org/10.5281/zenodo.23217497)
 [![Lean 4](https://img.shields.io/badge/proofs-Lean%204%20%2B%20Mathlib-green.svg)](lean/)
 
 **How many cells does a perturbation condition need before the *direction* of its transcriptomic effect can be trusted?**
@@ -166,7 +167,7 @@ centroid only, not cell-level structure.
 
 ## Citation
 
-Please cite the software as described in `CITATION.cff`. The archived releases are on Zenodo (DOI added with the first release).
+Please cite the software as described in `CITATION.cff`. The archived releases are on Zenodo (DOI [10.5281/zenodo.23217497](https://doi.org/10.5281/zenodo.23217497), all versions).
 
 The accompanying manuscript: Tran T.H.L., Nguyen T.V. (2026). *Closed-form sample size calculation for estimating perturbation directions in single-cell screens.* In preparation.
 
