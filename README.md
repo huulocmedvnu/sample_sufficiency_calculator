@@ -8,8 +8,7 @@
 This repository provides a closed-form answer, the code that calibrates it on public single-cell atlases, and the
 tests and machine-checked proofs behind it.
 
-It accompanies the manuscript *How many cells resolve a perturbation direction? A closed-form, control-aware cell
-quota for single-cell perturbation screens* (Tran and Nguyen, 2026, posted on bioRxiv). The manuscript itself is not
+It accompanies the manuscript *Closed-form sample size calculation for estimating perturbation directions in single-cell screens* (Tran and Nguyen, 2026, posted on bioRxiv). The manuscript itself is not
 part of this repository.
 
 ## The problem
@@ -167,8 +166,7 @@ centroid only, not cell-level structure.
 
 ## Citation
 
-Tran T.T.H., Nguyen T.V. (2026). *How many cells resolve a perturbation direction? A closed-form, control-aware cell
-quota for single-cell perturbation screens.* bioRxiv. DOI to be added on posting.
+Tran T.T.H., Nguyen T.V. (2026). *Closed-form sample size calculation for estimating perturbation directions in single-cell screens.* bioRxiv. DOI to be added on posting.
 
 ## License
 
