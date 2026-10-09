@@ -97,7 +97,7 @@ def fig2():
         # true effect
         fig.add_annotation(x=v[0], y=v[1], ax=0, ay=0, xref=xr, yref=yr, axref=xr, ayref=yr, showarrow=True,
                            arrowhead=2, arrowsize=1, arrowwidth=2.4, arrowcolor=INK, text="")
-        fig.add_annotation(x=1.2, y=-0.3, xref=xr, yref=yr, text="<i>v</i>  true effect", showarrow=False,
+        fig.add_annotation(x=1.2, y=-0.3, xref=xr, yref=yr, text="<b><i>v</i></b>  true effect", showarrow=False,
                            font=dict(size=11), yanchor="top")
         if n == 12:
             vh = np.array([3.5, 0.7])
@@ -114,7 +114,7 @@ def fig2():
             fig.add_trace(go.Scatter(x=arc_r * np.cos(t), y=arc_r * np.sin(t), mode="lines", showlegend=False,
                                      line=dict(color=INK, width=1)), row=1, col=1)
             fig.add_annotation(x=1.5, y=0.2, xref=xr, yref=yr, text="<i>θ</i>", showarrow=False, font=dict(size=14))
-            fig.add_annotation(x=vh[0] - 0.1, y=vh[1] + 0.1, xref=xr, yref=yr, text="<i>v̂</i>  estimate",
+            fig.add_annotation(x=vh[0] - 0.1, y=vh[1] + 0.1, xref=xr, yref=yr, text="<b><i>v̂</i></b>  estimate",
                                showarrow=False, xanchor="right", yanchor="bottom", font=dict(color=C[1]))
             fig.add_annotation(x=vh[0] + 0.03, y=vh[1] / 2, xref=xr, yref=yr, showarrow=True, ax=5.0, ay=1.2,
                                axref=xr, ayref=yr, arrowhead=0, arrowwidth=0.8, arrowcolor=C[3], yanchor="bottom",
@@ -128,7 +128,7 @@ def fig2():
             fig.add_annotation(x=v[0], y=sd + 0.3, xref=xr, yref=yr, showarrow=False, yanchor="bottom",
                                text="RMS scatter ∝ 1/√<i>n</i>", font=dict(size=10))
             fig.add_annotation(x=v[0] + 0.1, y=-0.55, xref=xr, yref=yr, showarrow=False, yanchor="top",
-                               text="<i>v̂</i> locks onto <i>v</i>,  <i>θ</i> → 0")
+                               text="<b><i>v̂</i></b> locks onto <b><i>v</i></b>,  <i>θ</i> → 0")
         fig.add_trace(go.Scatter(x=[0], y=[0], mode="markers", marker=dict(size=6, color=INK), showlegend=False),
                       row=1, col=col)
     for col in (1, 2):
