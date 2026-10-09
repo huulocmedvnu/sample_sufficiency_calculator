@@ -77,6 +77,23 @@ over-sampled (25.2 % treated-depth-limited); median resolvable `n* = 3,622` cell
 - **Symbolic + Monte-Carlo + Lean 4/Mathlib** proof of the deterministic core (`tests/verify_theory.py`,
   `lean/`): Jacobian residual zero; MC angle matches closed form to 0.13 %; tail coverage 0.34 % <= 10 %.
 
+## 4b. Simulation study with known truth (`outputs/simulation_study.json`, `fixtures/simulation_summary.json`)
+
+`scripts/simulation_study.py` (seed 20261009; 198 scenarios; 28 min on 90 workers; `--quick` in CI). Base case d=50,
+Tahoe diagonal Sigma, random direction, n_c=3,100, theta*=0.1, m=2 m_min (m_min=1.23, n*=1,033, d_eff=42.5).
+Ratio = realized RMS angle at the rule's quota / tolerance.
+
+| block | headline |
+|---|---|
+| A correctness | ratio 0.995-1.002 over 30 magnitude x pool scenarios (SE 0.0008); tolerance 0.05/0.1/0.2/0.3 rad -> 0.999/0.997/0.987/0.973 (Note S1 second order predicts 0.999/0.997/0.987/0.971); isotropic 0.998; top/middle/bottom eigenvector 0.996/0.998/0.997; exceedance at n*_delta (delta=0.1) 0.3-1.0% wherever finite; confidence floor sqrt(kappa)=1.31 m_min |
+| B noise laws | t5/t3/mixture(full Sigma) 0.992-1.003; t3 exceedance up to 5.6% at 31 cells; mixture with within-component Sigma: quota 13-31% too small, ratio 1.07-1.08; NB counts through the real Tahoe basis 0.998/0.995/0.984 at k=1.25/2/4 (sigma2_emb 0.76; treated-arm sigma2 0.73 at k=4) |
+| C plug-in | base case n_hat/n* 5-95%: 0.72-1.56 (50 cells/arm), 0.85-1.19 (200), 0.93-1.08 (1,000); realized within 1.05 theta* in 73/90/99%; Ledoit-Wolf changes nothing (<0.01); false pool-limited at 1.1 m_min: 0% (50; verdict unreachable), 12% (200), 0.4% (1,000); at 1.25 m_min a 50-cell pilot calls 54% not detectable |
+| D baselines | n_c=3,100: equal-arm ratio 1.15 (k=1.1) -> 0.71 (k=10); large-pool 1.34 -> 1.00; isotropic with real n_c within 0.4% everywhere |
+
+Defect found and fixed 2026-10-09: `cell_quota_report(..., confidence=delta)` multiplied the MEAN quota by the
+Laurent-Massart ratio kappa; correct two-arm form is `quota_two_arm(kappa*tr(PSP), m^2, n_c, theta)` (same as n_c->inf;
+the old form under-covered near the floor, exceedance 29-35% at k=1.1). README example updated (1,036 -> 1,187).
+
 ## 5. Honesty ledger
 
 1. **Variance definition.** Headline uses the within-condition residual sigma^2 (Tahoe 0.9567, EmeraldBay

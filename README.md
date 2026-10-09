@@ -68,7 +68,7 @@ cell_quota(v, Sigma, tolerance=0.1, control_pool_size=300)       # inf: control-
 
 cell_quota_report(v, Sigma, 0.1, control_pool_size=3_113, confidence=0.05)
 # {'required_cells_treated': 641, 'control_pool_limited': False, 'm_min': 1.23,
-#  'effective_dimensions': 49.0, 'required_cells_treated_confident': 1036, ...}
+#  'effective_dimensions': 49.0, 'required_cells_treated_confident': 1187, 'm_min_confident': 1.56, ...}
 ```
 
 `tolerance` is in radians (0.1 rad = 5.7°). `cell_quota_isotropic(σ², d, m, tolerance, control_pool_size)` is the scalar
@@ -126,7 +126,7 @@ scripts/
   applications/                    tolerance sweep, budget, reliability, mechanism-label recovery
   make_figures_plotly.py           Figures 2-5 from the committed fixtures (plotly)
 fixtures/               committed derived data: spectrum, per-screen calibrations, held-out results, figure inputs
-tests/                  26 tests: golden values, calculator suite, tail coverage, symbolic + Monte-Carlo, two guards
+tests/                  27 tests: golden values, calculator suite, tail coverage, symbolic + Monte-Carlo, simulation study (quick), two guards
 lean/                   Lean 4 / Mathlib proofs of the deterministic core
 docs/                   THEORY.md (derivation), THEORY_PRIMER.md, ARCHITECTURE.md, SUPPLEMENT.md (constants of record),
                         FALSIFICATION.md, AUDIT_LOG.md, AUDIT_DENOMINATORS.md

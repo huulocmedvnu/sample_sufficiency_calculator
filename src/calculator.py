@@ -141,10 +141,15 @@ def cell_quota_report(perturbation_vector, covariance, tolerance, control_pool_s
         if not (0.0 < confidence < 1.0):
             raise ValueError("confidence (delta) must be in (0,1)")
         # Laurent-Massart (2000) tail for X = sum nu_i z_i^2 inflates the perpendicular-energy target from
-        # tr to tr + 2||M||_F sqrt(L) + 2||M||_op L; scale the mean quota by that same ratio.
+        # tr to tr + 2||M||_F sqrt(L) + 2||M||_op L. With S = Sigma (1/n_t + 1/n_c) every term scales with the
+        # same (1/n_t + 1/n_c), so the tail-controlled quota is the two-arm quota evaluated with the inflated
+        # trace. (Until 2026-10-09 the mean quota was multiplied by the ratio instead, which is the same thing
+        # only as n_c -> inf; for a finite pool it under-covers near the floor -- the simulation study found it.)
         fro = math.sqrt(tr_sq); op = float(np.linalg.eigvalsh(M)[-1]); L = math.log(1.0 / confidence)
         factor = (tr + 2.0 * math.sqrt(L) * fro + 2.0 * L * op) / tr if tr > 0 else float("inf")
-        out["required_cells_treated_confident"] = n_mean * factor if math.isfinite(n_mean) else float("inf")
+        out["required_cells_treated_confident"] = quota_two_arm(tr * factor, m ** 2, control_pool_size, tolerance)
+        out["m_min_confident"] = float(m_min_floor(tr * factor, control_pool_size, tolerance))
+        out["tail_inflation"] = factor
         out["confidence"] = confidence
     return out
 
